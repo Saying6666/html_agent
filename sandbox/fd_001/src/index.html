@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fd_001 - cloud sync platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: rgba(15, 23, 42, 0.72);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --secondary: #ec4899;
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 20px 60px rgba(15, 23, 42, 0.28);
+      --radius: 24px;
+      --max-width: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(99, 102, 241, 0.28), transparent 32%),
+        radial-gradient(circle at right, rgba(236, 72, 153, 0.16), transparent 24%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    nav, section, footer { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+    nav {
+      position: sticky;
+      top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      margin-top: 16px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      transition: background 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+      z-index: 20;
+    }
+    nav.scrolled {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(18px);
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .hero, .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 72px 48px;
+      margin-top: 40px;
+    }
+
+    .button, .card {
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .button:hover { transform: scale(1.03); }
+    .button:active { transform: scale(0.98); }
+    .card:hover { transform: translateY(-6px); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <strong>Cloud Sync Platform</strong>
+    <a href="#hero">Jump to hero</a>
+  </nav>
+
+  <section class="hero reveal" id="hero">
+    <div>
+      <p>Replace this starter with the final production layout.</p>
+      <h1>Single-file landing page scaffold</h1>
+      <p>Keep CSS and JS inline. Replace copy, sections, visuals, and interactions before delivery.</p>
+      <button class="button">Primary CTA</button>
+    </div>
+    <div class="panel card" style="padding: 24px; min-height: 280px; display: grid; place-items: center;">
+      Mockup area
+    </div>
+  </section>
+
+  <script>
+    const nav = document.querySelector("nav");
+    const reveals = document.querySelectorAll(".reveal");
+
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 12);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    reveals.forEach((element) => observer.observe(element));
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Design Pipeline"
+  short_description: "Plan, validate, and package web design dataset tasks."
+  default_prompt: "Use this skill to produce or QA a Web Design dataset task from prompt drafting through packaging."
