@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncVault | The Engineering Collaboration Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-base: #050505;
+            --zinc-950: #09090b;
+            --cyan-accent: #06b6d4;
+            --border-muted: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: #a1a1aa;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Typography Polish */
+        .text-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #71717A 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Subtle Technical Background */
+        .grid-overlay {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: center center;
+        }
+
+        /* Custom UI Components */
+        .glass-panel {
+            background: rgba(15, 15, 18, 0.6);
+            border: 1px solid var(--border-muted);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            background: rgba(20, 20, 25, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Sophisticated Tab Transitions */
+        .perspective-pane {
+            display: none;
+            animation: paneFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .perspective-pane.active {
+            display: flex;
+        }
+
+        @keyframes paneFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* FAQ Accordion Logic */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        /* Interactive Navigation */
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="grid-overlay">
+
+    <nav class="fixed top-0 w-full z-[100] border-b border-zinc-900/50 bg-black/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-12">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div
+                        class="w-8 h-8 bg-white rounded flex items-center justify-center group-hover:bg-cyan-500 transition-colors duration-500">
+                        <i data-lucide="layers" class="text-black w-4 h-4"></i>
+                    </div>
+                    <span class="text-white font-extrabold tracking-tighter text-xl">SyncVault</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8 text-[11px] mono tracking-widest font-bold">
+                    <a href="#workflow" class="nav-link text-zinc-500">ARCHITECTURE</a>
+                    <a href="#spotlight" class="nav-link text-zinc-500">CASE_STUDIES</a>
+                    <a href="#protocol" class="nav-link text-zinc-500">PROTOCOL</a>
+                    <a href="#faq" class="nav-link text-zinc-500">RESOURCES</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <button
+                    class="bg-zinc-900 border border-zinc-800 text-white px-6 py-2 rounded-full text-[11px] mono font-bold hover:bg-zinc-800 transition-all">
+                    CONSOLE_LOGIN
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-48 pb-32 px-6 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-cyan-500/10 blur-[140px] -z-10"></div>
+
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-7 space-y-8" data-aos="fade-right">
+                    <div
+                        class="inline-flex items-center gap-3 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[10px] mono text-cyan-400 font-bold uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+                        Version 4.2.0 Deploying
+                    </div>
+                    <h1 class="text-6xl md:text-8xl font-extrabold text-gradient tracking-tight leading-[0.95]">
+                        The Bridge Between <span class="text-zinc-400 font-light italic">Storage</span> & <span
+                            class="text-white">Success</span>.
+                    </h1>
+                    <p class="text-lg text-zinc-400 leading-relaxed max-w-xl">
+                        SyncVault replaces fragmented storage tools with a single, high-performance orchestration layer.
+                        Built for developers who treat non-code assets with code-level rigor.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button
+                            class="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-cyan-400 transition-all shadow-xl shadow-white/5">
+                            Request Technical Demo
+                        </button>
+                        <button
+                            class="bg-zinc-900 border border-zinc-800 text-white px-8 py-4 rounded-xl font-bold hover:border-zinc-500 transition-all">
+                            View CLI Docs
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative" data-aos="fade-left">
+                    <div class="glass-panel p-6 rounded-3xl border-zinc-800/50 shadow-2xl">
+                        <div class="flex justify-between items-center mb-8 border-b border-zinc-800 pb-4">
+                            <span class="text-[10px] mono text-zinc-500">SYNC_ORCHESTRATOR_V4</span>
+                            <div class="flex gap-1.5">
+                                <div class="w-2 h-2 rounded-full bg-zinc-800"></div>
+                                <div class="w-2 h-2 rounded-full bg-zinc-800"></div>
+                                <div class="w-2 h-2 rounded-full bg-zinc-800"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm font-medium text-white flex items-center gap-2">
+                                    <i data-lucide="globe" class="w-4 h-4 text-cyan-500"></i> Edge Nodes
+                                </div>
+                                <span class="mono text-xs text-zinc-500">144/144 Active</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500 w-[94%]"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-black/40 p-4 rounded-xl border border-zinc-900">
+                                    <div class="text-[10px] mono text-zinc-600 mb-1">LATENCY</div>
+                                    <div class="text-xl font-bold text-white tracking-tighter">18ms</div>
+                                </div>
+                                <div class="bg-black/40 p-4 rounded-xl border border-zinc-900">
+                                    <div class="text-[10px] mono text-zinc-600 mb-1">PARITY</div>
+                                    <div class="text-xl font-bold text-emerald-500 tracking-tighter">100%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-cyan-500/20 blur-[60px] -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="workflow" class="py-32 px-6 border-t border-zinc-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-24 gap-8">
+                <div class="max-w-2xl" data-aos="fade-up">
+                    <h2
+                        class="text-xs mono text-cyan-500 font-bold tracking-[0.4em] uppercase mb-4 underline underline-offset-8">
+                        Functional Scopes</h2>
+                    <h3 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Systematic Synergy.</h3>
+                </div>
+                <p class="max-w-sm text-zinc-500 text-sm leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                    Standardizing the asset lifecycle across distributed engineering teams to eliminate fragmentation
+                    and drift.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-panel p-10 rounded-3xl group" data-aos="fade-up">
+                    <div
+                        class="w-12 h-12 bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center justify-center mb-10 group-hover:border-cyan-500/50 transition-colors">
+                        <i data-lucide="git-merge" class="text-cyan-500 w-6 h-6"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-4">Branch-Native Assets</h4>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Map your asset versions directly to Git branches.
+                        Ensure design and documentation parity with code releases automatically.</p>
+                </div>
+                <div class="glass-panel p-10 rounded-3xl group" data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-12 h-12 bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center justify-center mb-10 group-hover:border-cyan-500/50 transition-colors">
+                        <i data-lucide="shield-check" class="text-cyan-500 w-6 h-6"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-4">Atomic Audit Trails</h4>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Every action—from a CLI push to a stakeholder
+                        approval—is cryptographically signed and stored in an immutable log.</p>
+                </div>
+                <div class="glass-panel p-10 rounded-3xl group" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-12 h-12 bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center justify-center mb-10 group-hover:border-cyan-500/50 transition-colors">
+                        <i data-lucide="zap" class="text-cyan-500 w-6 h-6"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-4">Delta-Sync Engine</h4>
+                    <p class="text-zinc-500 text-sm leading-relaxed">Sync only the byte-level changes. Optimized for
+                        10GB+ monorepos and globally distributed remote infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="spotlight" class="py-40 px-6 bg-zinc-950/40 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div class="relative" data-aos="fade-right">
+                    <div class="absolute -top-12 -left-12 w-64 h-64 bg-cyan-500/5 blur-[100px]"></div>
+                    <div class="glass-panel p-2 rounded-[2rem] overflow-hidden relative z-10">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200"
+                            class="rounded-[1.5rem] opacity-30 grayscale contrast-125" alt="Engineering Center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div
+                        class="absolute -bottom-8 -right-8 glass-panel p-8 rounded-2xl border-cyan-500/20 max-w-[240px]">
+                        <div class="text-[10px] mono text-cyan-500 font-bold mb-3">TECHNICAL_IMPACT</div>
+                        <div class="text-4xl font-extrabold text-white tracking-tighter">-92%</div>
+                        <p class="text-[10px] text-zinc-500 mono mt-1">REDUCTION_IN_DRIFT</p>
+                    </div>
+                </div>
+                <div class="space-y-10" data-aos="fade-left">
+                    <div class="space-y-4">
+                        <h3 class="text-4xl font-extrabold text-white tracking-tight leading-tight">Global Resilience:
+                            <br>The AeroLogistics Story.
+                        </h3>
+                        <p class="text-zinc-400 text-lg leading-relaxed italic border-l-4 border-cyan-500/50 pl-8 py-2">
+                            "Before SyncVault, our global regions were consistently out of sync by up to 4 hours. Now,
+                            we maintain 100% parity with sub-second propagation."
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-10 border-t border-zinc-900 pt-10">
+                        <div>
+                            <div class="text-white font-bold text-sm mb-2">The Challenge</div>
+                            <p class="text-xs text-zinc-500 leading-relaxed">Massive binary data fragmentation across 18
+                                regional data centers led to deployment instability.</p>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-sm mb-2">The Solution</div>
+                            <p class="text-xs text-zinc-500 leading-relaxed">Implemented SyncVault Orchestrator as the
+                                single truth layer with automated region pinning.</p>
+                        </div>
+                    </div>
+                    <a href="#"
+                        class="inline-flex items-center gap-2 text-white text-xs font-bold tracking-widest hover:gap-4 transition-all">
+                        READ FULL CASE STUDY <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-500"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 px-6">
+        <div class="max-w-5xl mx-auto text-center mb-16" data-aos="fade-up">
+            <h3 class="text-4xl font-extrabold text-white tracking-tight mb-4">Engineered for Every Stakeholder.</h3>
+            <p class="text-zinc-500">Sophisticated tools require multiple viewpoints. Select your focus.</p>
+
+            <div class="inline-flex p-1.5 bg-zinc-950 rounded-full border border-zinc-800 gap-2 mt-12">
+                <button onclick="switchTab('eng')" id="tab-btn-eng"
+                    class="tab-trigger active px-8 py-3 rounded-full text-[10px] mono font-bold bg-white text-black transition-all">ENGINEERING</button>
+                <button onclick="switchTab('ops')" id="tab-btn-ops"
+                    class="tab-trigger px-8 py-3 rounded-full text-[10px] mono font-bold text-zinc-500 hover:text-white transition-all">OPERATIONS</button>
+                <button onclick="switchTab('sec')" id="tab-btn-sec"
+                    class="tab-trigger px-8 py-3 rounded-full text-[10px] mono font-bold text-zinc-500 hover:text-white transition-all">SECURITY</button>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto min-h-[450px]" data-aos="zoom-in">
+            <div id="pane-eng"
+                class="perspective-pane active glass-panel p-16 rounded-[3rem] flex-col lg:flex-row gap-16 items-center">
+                <div class="flex-1 space-y-8">
+                    <h4 class="text-3xl font-extrabold text-white tracking-tight">CLI-First, Code-Native.</h4>
+                    <p class="text-zinc-400 leading-relaxed">Developers should never leave the terminal. SyncVault
+                        provides a Go-based binary that treats asset synchronization as a first-class citizen of your
+                        `git commit` workflow.</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="terminal" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">Native VS Code and JetBrains extensions for live asset
+                                previews.</p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="package" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">Automated dependency tracking for binary versioning.</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex-1 w-full bg-zinc-950 p-6 rounded-2xl border border-zinc-900 mono text-xs text-zinc-500 leading-relaxed">
+                    <p class="text-emerald-500">$ sv sync --branch main --verbose</p>
+                    <p class="mt-2">[INFO] Resolving local hash mapping...</p>
+                    <p>[INFO] Detected 4 changed objects (18.4 MB total)</p>
+                    <p>[INFO] Syncing to global cluster (US-East, EU-Central)...</p>
+                    <p class="text-cyan-500">[SUCCESS] Assets propagated to 12 edge nodes in 482ms</p>
+                </div>
+            </div>
+
+            <div id="pane-ops"
+                class="perspective-pane glass-panel p-16 rounded-[3rem] flex-col lg:flex-row gap-16 items-center">
+                <div class="flex-1 space-y-8">
+                    <h4 class="text-3xl font-extrabold text-white tracking-tight">Operational Clarity at Scale.</h4>
+                    <p class="text-zinc-400 leading-relaxed">Monitor the state of your global infrastructure from a
+                        single pane of glass. SyncVault detects drift instantly and auto-heals misaligned regions
+                        without manual intervention.</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="activity" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">Real-time throughput and latency metrics per region.</p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="refresh-ccw" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">Auto-recovery protocols for network partitions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 grid grid-cols-2 gap-4">
+                    <div class="bg-zinc-900 p-8 rounded-2xl border border-zinc-800 text-center">
+                        <div class="text-[10px] mono text-zinc-500 mb-2">HEALTH</div>
+                        <div class="text-4xl font-extrabold text-white">99.99%</div>
+                    </div>
+                    <div class="bg-zinc-900 p-8 rounded-2xl border border-zinc-800 text-center">
+                        <div class="text-[10px] mono text-zinc-500 mb-2">NODES</div>
+                        <div class="text-4xl font-extrabold text-cyan-500">2,481</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pane-sec"
+                class="perspective-pane glass-panel p-16 rounded-[3rem] flex-col lg:flex-row gap-16 items-center">
+                <div class="flex-1 space-y-8">
+                    <h4 class="text-3xl font-extrabold text-white tracking-tight">Zero-Trust Asset Governance.</h4>
+                    <p class="text-zinc-400 leading-relaxed">Enterprise security isn't an addon; it's the core.
+                        SyncVault integrates with your existing OIDC/Okta setup to ensure every asset interaction is
+                        authenticated and authorized.</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="key" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">BYOK (Bring Your Own Key) via HashiCorp Vault.</p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-5 h-5 bg-cyan-500/10 rounded flex items-center justify-center mt-1">
+                                <i data-lucide="clipboard-check" class="w-3 h-3 text-cyan-500"></i>
+                            </div>
+                            <p class="text-sm text-zinc-300">Immutable, signed audit logs for SOC2 compliance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-4">
+                    <div
+                        class="h-14 bg-zinc-900 border border-zinc-800 rounded-xl px-6 flex items-center justify-between">
+                        <span class="text-xs text-zinc-400">SOC2 Type II Report</span>
+                        <i data-lucide="download" class="w-4 h-4 text-zinc-500"></i>
+                    </div>
+                    <div
+                        class="h-14 bg-zinc-900 border border-zinc-800 rounded-xl px-6 flex items-center justify-between">
+                        <span class="text-xs text-zinc-400">ISO 27001 Certification</span>
+                        <i data-lucide="download" class="w-4 h-4 text-zinc-500"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="protocol" class="py-32 px-6 border-y border-zinc-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24" data-aos="fade-up">
+                <h3 class="text-4xl font-extrabold text-white tracking-tight mb-4">The Synchronized Protocol.</h3>
+                <p class="text-zinc-500">A rigorous standard for modern asset handoff.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-12">
+                <div class="space-y-6" data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-[10px] mono text-cyan-500 font-bold border-b border-zinc-800 pb-4">01_INGEST</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">Assets enter the vault via CLI or API. Checksums
+                        are calculated immediately to ensure data integrity before any propagation.</p>
+                </div>
+                <div class="space-y-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-[10px] mono text-cyan-500 font-bold border-b border-zinc-800 pb-4">02_REVIEW</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">Stakeholders preview assets in secure staging
+                        environments. Comments and approvals are tied to specific object versions.</p>
+                </div>
+                <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-[10px] mono text-cyan-500 font-bold border-b border-zinc-800 pb-4">03_SIGN</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">Once approved, the system generates a signed
+                        manifest. This creates an immutable link between the asset and the release.</p>
+                </div>
+                <div class="space-y-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-[10px] mono text-cyan-500 font-bold border-b border-zinc-800 pb-4">04_SYNC</div>
+                    <p class="text-sm text-zinc-400 leading-relaxed">Proprietary Delta-Sync logic pushes bits to the
+                        global edge. Propagation occurs in parallel with 100% parity verification.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-32 px-6">
+        <div class="max-w-3xl mx-auto">
+            <h3 class="text-3xl font-extrabold text-white tracking-tight mb-12 text-center">Documentation / FAQ</h3>
+            <div class="space-y-6">
+                <div class="accordion-item glass-panel p-6 rounded-2xl cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="flex justify-between items-center group">
+                        <span class="text-sm font-bold text-white tracking-wide uppercase">What is the performance
+                            overhead?</span>
+                        <i data-lucide="chevron-down"
+                            class="w-4 h-4 text-zinc-500 transition-transform group-hover:text-cyan-500"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-zinc-500 text-sm leading-relaxed pt-6">
+                            SyncVault is built in Rust for zero-cost abstractions. Our CLI overhead is typically <15ms
+                                for local operations, and global sync times are limited only by the speed of light and
+                                your edge-node distribution. </p>
+                    </div>
+                </div>
+                <div class="accordion-item glass-panel p-6 rounded-2xl cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="flex justify-between items-center group">
+                        <span class="text-sm font-bold text-white tracking-wide uppercase">Can I use this with
+                            CI/CD?</span>
+                        <i data-lucide="chevron-down"
+                            class="w-4 h-4 text-zinc-500 transition-transform group-hover:text-cyan-500"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-zinc-500 text-sm leading-relaxed pt-6">
+                            Yes. SyncVault offers a native GitHub Action and Jenkins plugin. You can trigger asset syncs
+                            as part of your build pipeline, ensuring assets are live before your code deploy completes.
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion-item glass-panel p-6 rounded-2xl cursor-pointer" onclick="toggleAccordion(this)">
+                    <div class="flex justify-between items-center group">
+                        <span class="text-sm font-bold text-white tracking-wide uppercase">How is data encrypted?</span>
+                        <i data-lucide="chevron-down"
+                            class="w-4 h-4 text-zinc-500 transition-transform group-hover:text-cyan-500"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-zinc-500 text-sm leading-relaxed pt-6">
+                            We use AES-256-GCM at rest and TLS 1.3 in transit. For enterprise customers, we support
+                            regional hardware security modules (HSM) for total key sovereignty.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-24 px-6 border-t border-zinc-900 bg-zinc-950/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between gap-16 mb-20">
+                <div class="space-y-6 max-w-sm">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                            <i data-lucide="layers" class="text-black w-3 h-3"></i>
+                        </div>
+                        <span class="text-white font-extrabold text-sm tracking-tighter uppercase">SyncVault</span>
+                    </div>
+                    <p class="text-xs text-zinc-600 leading-relaxed">The global standard for engineering asset
+                        orchestration. Built for reliability, designed for speed, and trusted by the world's leading
+                        platform teams.</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-12 lg:gap-24">
+                    <div class="space-y-4">
+                        <h5 class="text-[10px] mono text-white font-bold tracking-[0.2em] uppercase">Product</h5>
+                        <ul class="text-xs text-zinc-600 space-y-3">
+                            <li><a href="#" class="hover:text-cyan-500 transition">Changelog</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">Cloud Engine</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">CLI Tools</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h5 class="text-[10px] mono text-white font-bold tracking-[0.2em] uppercase">Resources</h5>
+                        <ul class="text-xs text-zinc-600 space-y-3">
+                            <li><a href="#" class="hover:text-cyan-500 transition">Documentation</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">API Reference</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">Whitepapers</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h5 class="text-[10px] mono text-white font-bold tracking-[0.2em] uppercase">Company</h5>
+                        <ul class="text-xs text-zinc-600 space-y-3">
+                            <li><a href="#" class="hover:text-cyan-500 transition">About Us</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">Security</a></li>
+                            <li><a href="#" class="hover:text-cyan-500 transition">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-10 border-t border-zinc-900/50 flex flex-col sm:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] mono text-zinc-700 uppercase">© 2026 SyncVault Systems // Secure Assets . Global
+                    Edge</p>
+                <div class="flex gap-8">
+                    <i data-lucide="github"
+                        class="w-4 h-4 text-zinc-700 hover:text-white cursor-pointer transition"></i>
+                    <i data-lucide="twitter"
+                        class="w-4 h-4 text-zinc-700 hover:text-white cursor-pointer transition"></i>
+                    <i data-lucide="linkedin"
+                        class="w-4 h-4 text-zinc-700 hover:text-white cursor-pointer transition"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize Animate On Scroll
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'cubic-bezier(0.19, 1, 0.22, 1)',
+            offset: 120
+        });
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Update Buttons
+            document.querySelectorAll('.tab-trigger').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-black');
+                btn.classList.add('text-zinc-500');
+            });
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            activeBtn.classList.add('bg-white', 'text-black');
+            activeBtn.classList.remove('text-zinc-500');
+
+            // Update Panes
+            document.querySelectorAll('.perspective-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            document.getElementById(`pane-${tabId}`).classList.add('active');
+
+            // Re-init icons in new pane
+            lucide.createIcons();
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const isActive = element.classList.contains('active');
+
+            // Close others
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('i').style.transform = 'rotate(0deg)';
+            });
+
+            // Open target
+            if (!isActive) {
+                element.classList.add('active');
+                element.querySelector('i').style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+
+</html>

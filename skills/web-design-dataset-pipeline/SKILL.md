@@ -1,176 +1,262 @@
 ---
 name: web-design-dataset-pipeline
-description: Brainstorm, scaffold, generate, judge, validate, and package Web Design dataset tasks that must comply with strict `fdu_xxx` delivery rules. Use when Codex needs to run a prompt-first workflow with topic planning, prompt optimization, dual-model HTML generation, validation repair loops, or final packaging.
+description: Delivery-first workflow for Web Design dataset tasks. Use when Codex needs to define page style, prompt rounds, final folder structure, and optional automation for `fdu_xxx` submissions.
 ---
 
 # Web Design Dataset Pipeline
 
-Use this skill to run a Codex-assisted pipeline for the Web Design dataset spec: brainstorm concrete topics, scaffold a compliant task folder, generate optimized prompts, run Gemini and GPT as competing builders, repair failures through validator feedback, choose the stronger candidate, and package the final zip.
+Use this skill when the goal is to produce a Web Design dataset submission that is ready to hand off as `fdu_xxx`. This skill is delivery-first: lock the brief, define style clearly, generate prompts, produce a runnable single-file page, capture assets, and only use validation or packaging scripts if the user wants them.
 
-## Quick Start
+If the workflow is not prompt-only, the generation route should use `anthropic-sdk-helper` and a fixed 4-step Claude conversation that ends by writing the final `src/index.html`.
 
-Choose the smallest useful entry point:
+## Default Mode
 
-- Plan a daily batch: run `scripts/generate_daily_plan.py`.
-- Start one task: run `scripts/bootstrap_task.py fdu_001`.
-- Run automated dual-model generation: run `scripts/run_dual_model_pipeline.py fdu_001`.
-- Check an in-progress prompt package: run `scripts/validate_task.py <task-folder> --stage scaffold`.
-- Check a final delivery: run `scripts/validate_task.py <task-folder> --stage final`.
-- Build the submission zip: run `scripts/package_task.py <task-folder>`.
+Default to **manual-first delivery mode**.
 
-Load `references/spec-summary.md` when you need the exact acceptance criteria. Load `references/team-playbook.md` when the user wants a subagent or team-based workflow.
+- Start from the final deliverable structure, not the automation pipeline.
+- Default to prompt-only scaffolding when starting a task.
+- Treat local validation as optional by default.
+- Treat packaging scripts as optional by default.
+- Use automated generation only when the user wants final HTML output from a scripted 4-step Claude generation flow.
 
-## Workflow
+If the user does not explicitly ask for validator-driven checks, do not make validation a required step in the workflow.
 
-### 1. Brainstorm the batch
+## Final Deliverable First
 
-Keep daily output diverse across category, visual style, audience, and content angle.
+Every task should be planned backward from the final submission folder.
 
-1. Generate a diversified daily plan with category, style, concept, audience, and interaction pack.
-2. Avoid repeating the same landing-page pattern too many times in a row.
-3. For each task, lock these fields before building:
-   - `taskid`
-   - page category
-   - visual style
-   - product or brand concept
-   - target audience
-   - required sections
-   - required interactions
+### Single-page preview delivery
 
-If the user asks for brainstorming, produce concrete combinations instead of vague genres. Prefer combinations like `AI observability SaaS + dark mode + glassmorphism + DevOps audience` over vague requests like `make a SaaS page`.
+```text
+fdu_001/
+├── prompt.md
+├── preview.png
+├── src/
+│   └── index.html
+└── video.mp4
+```
 
-### 2. Scaffold the task
+### Multi-preview delivery
 
-Run:
+```text
+fdu_001/
+├── prompt.md
+├── preview/
+│   ├── preview_01.png
+│   ├── preview_02.png
+│   └── preview_03.png
+├── src/
+│   └── index.html
+└── video.mp4
+```
 
-`python skills/web-design-dataset-pipeline/scripts/bootstrap_task.py fdu_001 --category "SaaS landing page" --style "Dark Mode" --concept "AI observability platform"`
+### Packaging rule
 
-This creates a dual-model prompt-first structure with:
+- The outer archive should be `fdu_001.zip`.
+- The folder inside the zip should be `fdu_001/`.
+- Do not ship `.pen` files.
+- Do not ship prompt working folders, hidden pipeline folders, or model scratch files unless the user explicitly asks for an internal workflow package instead of the final submission package.
 
-- `task-brief.json` with the locked brief
-- `prompt.md` with shared 4-round prompt guidance
-- `prompts/builder-gemini.md` and `prompts/builder-gpt.md`
-- `prompts/repair.md` and `prompts/judge.md`
-- `generation-notes.md` with automated and manual routes
-- `src/` as the final destination folder for the winning HTML
-- optional `preview/` folder for multi-state captures
+## Lock The Brief Before Building
 
-Do not prefill `src/index.html` with an HTML template. In this workflow, the page is generated by external models from the prompt package.
+Before generating or refining prompts, always lock these fields:
 
-### 3. Generate two candidates
+- `taskid`
+- `category`
+- `visual style`
+- `concept`
+- `audience`
+- `required sections`
+- `required interactions`
 
-Preferred automated route:
+Do not accept vague inputs like `modern landing page` as a finished brief. Push the brief toward something concrete such as `AI observability SaaS`, `dark mode`, `glassmorphism`, `DevOps audience`, `pricing + FAQ + integrations`, and `scroll reveal + counter + accordion`.
 
-`python skills/web-design-dataset-pipeline/scripts/run_dual_model_pipeline.py fdu_001`
+## Style Must Be Explicit
 
-Required environment variables:
+Each task must specify style direction clearly inside the brief and prompts.
 
-- `X666_API_KEY`
-- optional `X666_BASE_URL` (defaults to `https://x666.me`)
-- optional `X666_MODEL_GEMINI` (defaults to `gemini-3.1-pro-high`)
-- optional `X666_MODEL_GPT` (defaults to `gpt-5.4`)
+### Style stack
 
-The automated pipeline will:
+Every task should define all of the following:
 
-1. Send `prompts/builder-gemini.md` to the Gemini track.
-2. Send `prompts/builder-gpt.md` to the GPT track.
-3. Stage both HTML candidates in a hidden work area.
-4. Run validator-based repair loops when needed.
-5. Score both candidates and write the stronger one to `src/index.html`.
-6. Save a summary to `judge-report.md`.
+1. **Primary style reference**
+   - Choose one or two directions such as `Awwwards`, `Godly`, `Land-book`, `Bento Grid`, `Dark Mode`, `Neo-Brutalism`, `Clean Corporate`, or `Gradient Mesh`.
+2. **Component reference**
+   - Choose a UI language such as `Aceternity UI`, `Magic UI`, or `Shadcn/ui`.
+3. **Color direction**
+   - Define palette mood, contrast level, and accent behavior.
+4. **Typography direction**
+   - Define heading feel and body feel.
+5. **Motion direction**
+   - Define whether motion should feel subtle, product-like, dramatic, playful, or editorial.
 
-Manual route:
+### Style guidance
 
-1. Paste either builder prompt into your target generator.
-2. Save the chosen HTML into `src/index.html`.
-3. Run final validation before packaging.
+- Reference style families, not exact branded clones.
+- Borrow visual language and interaction patterns, not copyrighted compositions.
+- Keep the design aligned with the target audience.
+- Make the page feel like a real 2025-2026 product site rather than a classroom demo.
 
-### 4. Capture assets
+## Prompt Rules
 
-For the final handoff, ensure:
+`prompt.md` is part of the final delivery and must follow these rules:
 
-- Screenshot is a full-page PNG with no browser UI.
-- Video is MP4, full-screen, and target 24 fps.
-- All animations are visibly triggered before screenshotting.
-- Counters and async visual states have reached their final values.
+- Include exactly 4 rounds of prompts.
+- Include prompts only, not AI responses.
+- Keep prompts concrete and design-directed.
+- Explicitly mention style, palette, typography, sections, interactions, motion, and compliance constraints.
+- Keep the later rounds focused on depth, polish, and compliance rather than restating the same high-level idea.
 
-### 5. Validate and package
+Good prompt progression:
 
-Before packaging, run:
+- Round 1: define concept, audience, structure, and visual direction.
+- Round 2: deepen layout, content density, hierarchy, and section detail.
+- Round 3: polish interaction states, responsiveness, and compliance.
+- Round 4: final refinement and compliance pass.
 
-`python skills/web-design-dataset-pipeline/scripts/validate_task.py fdu_001 --stage final`
+## HTML Rules
 
-Then package:
+`src/index.html` must meet the delivery spec directly.
 
-`python skills/web-design-dataset-pipeline/scripts/package_task.py fdu_001`
+- Single-file HTML only.
+- Inline `<style>` and inline `<script>`.
+- Opens directly in a browser with no build step.
+- No React, Vue, Svelte, jQuery, or compile step.
+- No local images, local fonts, local CSS, or local JS.
+- Use remote imagery such as Unsplash or placeholder services if needed.
+- Use inline SVG icons or approved icon sources translated into inline SVG.
 
-The packager includes only the required deliverables in `<taskid>.zip`, so working files such as `prompts/` or hidden pipeline folders are never shipped.
+The page should look complete without relying on any local project assets.
+
+## Screenshot Rules
+
+For preview assets:
+
+- Use long full-page screenshots.
+- Remove browser tabs, address bars, and popups.
+- Hide the cursor if possible, or keep it off to the side.
+- Use `preview.png` for a single-page preview.
+- Use `preview/preview_01.png`, `preview/preview_02.png`, and so on for multi-state or multi-screen delivery.
+- Ensure the preview matches the prompt and final HTML exactly.
+
+## Video Rules
+
+For `video.mp4`:
+
+- Record the full screen.
+- Use MP4.
+- Target 24 fps.
+- Keep duration between 4 and 60 seconds.
+- Show the full interaction story: scrolling, hover states, toggles, accordions, tabs, counters, or similar behaviors.
+- Avoid browser chrome, system popups, unrelated windows, and partial-window capture.
+
+## Quality Bar
+
+The result should feel like a polished modern website.
+
+- strong visual hierarchy
+- coherent spacing and rhythm
+- professional typography
+- clear hover and active states
+- believable product copy and section depth
+- natural animation and interaction timing
+- enough vertical content for long screenshot capture
+
+## Recommended Working Sequence
+
+Use this order unless the user wants a different workflow:
+
+1. Lock the brief.
+2. Lock the style stack.
+3. Write `prompt.md` with exactly 4 rounds.
+4. Generate or refine `src/index.html`.
+5. Capture `preview.png` or `preview/preview_*.png`.
+6. Record `video.mp4`.
+7. Review against the checklist.
+8. Optionally validate or package.
+
+## Delivery Checklist
+
+Before handoff, verify:
+
+- file structure is correct
+- naming is correct
+- `src/index.html` opens directly
+- preview matches the page and prompt
+- all images load correctly
+- hover and active states exist
+- there is no copyright risk
+- video is full-screen MP4 and intended for 24 fps delivery
+- browser zoom changes do not break the layout badly
+
+## Optional Automation
+
+These tools are available, but they are optional unless the user asks for them.
+
+### Planning and scaffolding
+
+- `python skills/web-design-dataset-pipeline/scripts/generate_daily_plan.py`
+- `python skills/web-design-dataset-pipeline/scripts/run_task_workflow.py fdu_001 --category "SaaS landing page" --style "Dark Mode" --concept "AI observability platform"`
+- `python skills/web-design-dataset-pipeline/scripts/bootstrap_task.py fdu_001 --category "SaaS landing page" --style "Dark Mode" --concept "AI observability platform"`
+
+The `run_task_workflow.py` entry defaults to `--mode prompt-only`, which creates the prompt package and task scaffold without calling any external model API.
+
+### Anthropic generation
+
+- `python skills/web-design-dataset-pipeline/scripts/run_claude_generation.py fdu_001`
+- `python skills/web-design-dataset-pipeline/scripts/run_task_workflow.py fdu_001 --mode generate --category "SaaS landing page" --style "Dark Mode" --concept "AI observability platform"`
+
+Use this only when the user wants the final HTML generated automatically. The script should use `anthropic-sdk-helper`, read Claude credentials from ccswitch or Claude config, and run exactly 4 conversation steps based on `prompt.md` before writing the final `src/index.html`.
+
+### Validation
+
+- `python skills/web-design-dataset-pipeline/scripts/validate_task.py fdu_001 --stage scaffold`
+- `python skills/web-design-dataset-pipeline/scripts/validate_task.py fdu_001 --stage final`
+
+Validation is an optional self-check. Do not present it as mandatory unless the user asks for strict local QA.
+
+### Packaging
+
+- `python skills/web-design-dataset-pipeline/scripts/package_task.py fdu_001`
+
+Packaging is optional during production. Use it when the user wants a final zip or batch handoff artifact.
 
 ## Team Mode
 
-If subagents or teams are available, split the work into these roles.
+If the user wants a team-style or subagent workflow, use these roles:
 
 ### Planner
 
-Owns concept selection and prompt quality.
+- locks category, style, concept, audience, sections, and interactions
+- defines the style stack clearly
+- writes the 4 prompt rounds
 
-- Propose and score candidate concepts.
-- Lock category, style, concept, audience, sections, and interactions.
-- Draft the shared prompt package and builder prompts.
-- Hand off a concise brief with acceptance criteria.
+### Builder
 
-### Builder Gemini
+- turns the prompt package into a single polished `src/index.html`
+- keeps CSS and JS inline
+- keeps assets remote-only
+- uses the 4-step Anthropic conversation when generation is automated
 
-Owns the Gemini candidate.
+### QA Packager
 
-- Run the Gemini builder prompt.
-- Bias toward stronger layout completeness and visual direction.
-- Keep all CSS and JS inline.
+- checks the final delivery structure
+- confirms preview and video completeness
+- optionally runs validation and packaging scripts
 
-### Builder GPT
-
-Owns the GPT candidate.
-
-- Run the GPT builder prompt.
-- Bias toward stronger semantics, accessibility, and micro-interactions.
-- Keep all CSS and JS inline.
-
-### Judge QA
-
-Owns validation, repair, winner selection, and packaging.
-
-- Run scaffold or final validation.
-- Feed validator failures into the repair prompt.
-- Compare both candidates and record the rationale.
-- Capture preview and video.
-- Build the zip and report any rejection risks.
-
-Use the handoff schema from `references/team-playbook.md` so each role passes structured data instead of loose prose.
+Use `references/team-playbook.md` when the user specifically asks for handoff schema or team coordination.
 
 ## Operating Rules
 
-- Never hardcode API keys in the repo, scripts, or prompts.
-- Never leave `.pen`, `package.json`, `node_modules`, or extra source files inside the delivery folder.
-- Never allow files under `src/` other than `index.html`.
-- Never reference local images, local fonts, or local CSS/JS.
-- Never accept short, placeholder-heavy HTML as good enough.
+- Never hardcode API keys in prompts or tracked files.
+- Never ship `.pen`, `package.json`, `node_modules`, or extra files under `src/`.
+- Never use local asset paths.
+- Never treat validator output as required by default.
+- Never accept weak placeholder-heavy pages as final.
+- Never bypass `anthropic-sdk-helper` when the task uses automated Claude generation.
 - Prefer English prompts unless the user asks otherwise.
 
-## Resources
+## References
 
-### `scripts/`
-
-- `generate_daily_plan.py`: create a diversified batch plan.
-- `bootstrap_task.py`: create a dual-model task folder and prompt package.
-- `run_dual_model_pipeline.py`: call Gemini and GPT, repair failures, choose a winner.
-- `validate_task.py`: run scaffold or final checks.
-- `package_task.py`: build the submission zip from required deliverables only.
-
-### `references/`
-
-- `spec-summary.md`: condensed delivery standard.
-- `team-playbook.md`: subagent/team orchestration guide and handoff contract.
-
-### `assets/`
-
-No HTML starter template is used in the prompt-first workflow.
+- `references/spec-summary.md`: condensed acceptance criteria.
+- `references/team-playbook.md`: team workflow and handoff contract.

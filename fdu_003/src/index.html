@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet Leaf | Rare Tea Membership</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@200;300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --porcelain: #F9F8F6;
+            --tea-green: #1C261C;
+            --brass: #927D56;
+            --stone: #E5E2DD;
+            --charcoal: #121212;
+            --cream-soft: rgba(249, 248, 246, 0.92);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--porcelain);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .serif {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+        }
+
+        /* 防碎图机制：如果图片加载失败，隐藏难看的浏览器默认图标和文字，仅显示优雅的背景色 */
+        img {
+            color: transparent;
+            font-size: 0;
+            background-color: var(--stone);
+            object-fit: cover;
+        }
+
+        img::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--stone);
+        }
+
+        /* Navigation Refinement */
+        nav {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border 0.4s ease;
+            transform: translateY(0);
+        }
+
+        nav.scrolled {
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            background: var(--cream-soft);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        /* Motion System */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 {
+            transition-delay: 150ms;
+        }
+
+        .delay-2 {
+            transition-delay: 250ms;
+        }
+
+        .delay-3 {
+            transition-delay: 300ms;
+        }
+
+        .tracking-luxe {
+            letter-spacing: 0.3em;
+        }
+
+        .btn-luxe {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(18, 18, 18, 0.1);
+        }
+
+        .btn-luxe:hover {
+            background: var(--charcoal);
+            color: var(--porcelain);
+            border-color: var(--charcoal);
+            letter-spacing: 0.4em;
+        }
+
+        .img-zoom-container {
+            overflow: hidden;
+            background-color: var(--stone);
+        }
+
+        .img-zoom-container img {
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+            filter: saturate(0.85);
+        }
+
+        .img-zoom-container:hover img {
+            transform: scale(1.06);
+            filter: saturate(1.1);
+        }
+
+        .toggle-track {
+            width: 48px;
+            height: 24px;
+            background: var(--stone);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-handle {
+            width: 18px;
+            height: 18px;
+            background: var(--tea-green);
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .is-quarterly .toggle-handle {
+            transform: translateX(24px);
+        }
+
+        .plan-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.4s ease, background 0.4s ease;
+        }
+
+        .plan-card:hover {
+            border-color: var(--brass);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .plan-card.active {
+            border-color: var(--brass);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        #cart-sidebar {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .overlay-blur {
+            transition: opacity 0.6s ease;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="grain-overlay"></div>
+
+    <nav id="nav" class="fixed top-0 w-full z-50 h-20 md:h-24 flex items-center">
+        <div class="max-w-[1600px] mx-auto px-6 md:px-12 w-full flex justify-between items-center">
+            <div class="hidden lg:flex items-center gap-12 text-[10px] tracking-luxe font-medium uppercase">
+                <a href="#collection" class="hover:text-brass transition-colors">The Vault</a>
+                <a href="#philosophy" class="hover:text-brass transition-colors">Philosophy</a>
+            </div>
+
+            <a href="#" class="text-2xl md:text-3xl tracking-[0.4em] font-light italic uppercase">Velvet Leaf</a>
+
+            <div class="flex items-center gap-8 md:gap-12">
+                <a href="#membership"
+                    class="hidden sm:block text-[10px] tracking-luxe uppercase border-b border-black/20 pb-1">Join</a>
+                <button onclick="toggleCart(true)" class="flex items-center gap-2 group">
+                    <span
+                        class="text-[9px] tracking-luxe uppercase group-hover:opacity-40 transition-opacity">Cart</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.2">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6z" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="relative min-h-[90vh] flex items-center pt-20 px-6 md:px-12 bg-white">
+            <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 md:gap-24 items-center">
+                <div class="reveal active">
+                    <span class="text-[10px] tracking-[0.5em] text-brass mb-8 block font-semibold uppercase">Spring
+                        Harvest 2026</span>
+                    <h1 class="text-6xl md:text-8xl mb-8 leading-[1.1]">The Art of <br><span class="italic">The Slow
+                            Steep.</span></h1>
+                    <p class="text-lg text-gray-500 font-light max-w-sm mb-12 leading-relaxed">
+                        A curated subscription for the discerning palate. Rare origins, hand-packed in architectural
+                        violet glass to preserve the molecular soul of the leaf.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="#membership"
+                            class="btn-luxe bg-[var(--tea-green)] text-white px-12 py-5 text-[10px] tracking-luxe uppercase text-center border-none">Reserve
+                            Membership</a>
+                        <a href="#collection"
+                            class="btn-luxe px-12 py-5 text-[10px] tracking-luxe uppercase text-center">View
+                            Collections</a>
+                    </div>
+                </div>
+                <div class="relative reveal active delay-2">
+                    <div class="aspect-[4/5] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] bg-stone-200">
+                        <img src="https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                            class="w-full h-full object-cover"
+                            alt="Velvet Leaf Reserve loose leaf tea in minimalist setting">
+                    </div>
+                    <div
+                        class="absolute -bottom-8 -left-8 md:-left-16 bg-[var(--porcelain)] p-10 hidden md:block border border-stone/40">
+                        <p class="serif italic text-3xl leading-tight">"A masterclass in <br>restrained luxury."</p>
+                        <p class="text-[9px] tracking-widest mt-6 text-gray-400 uppercase font-semibold">— Wallpaper*
+                            Magazine</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="philosophy" class="py-40 bg-white">
+            <div class="max-w-4xl mx-auto px-6 text-center reveal">
+                <h2 class="text-4xl md:text-5xl mb-12 font-light leading-snug">Every month, we choose a single origin
+                    that defines the season. No filler, no dust—only the whole leaf.</h2>
+                <div class="grid md:grid-cols-3 gap-16 mt-24 text-left">
+                    <div>
+                        <h4 class="text-[10px] tracking-widest font-bold uppercase mb-6 text-brass">01 / Pure Origin
+                        </h4>
+                        <p class="text-sm text-gray-500 font-light leading-relaxed">Direct trade with high-altitude
+                            estates in Yunnan, Uji, and Alishan.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] tracking-widest font-bold uppercase mb-6 text-brass">02 / Violet Glass
+                        </h4>
+                        <p class="text-sm text-gray-500 font-light leading-relaxed">Miron glass technology that blocks
+                            the aging spectrum of light.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] tracking-widest font-bold uppercase mb-6 text-brass">03 / Guided Ritual
+                        </h4>
+                        <p class="text-sm text-gray-500 font-light leading-relaxed">Precision brewing metrics and
+                            mindfulness guides in every delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="collection" class="py-40 px-6 md:px-12 bg-stone-50/50">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-baseline mb-24 reveal">
+                    <h2 class="text-5xl font-light mb-4 md:mb-0 italic">Current Profiles</h2>
+                    <p class="text-[10px] tracking-widest text-gray-400 uppercase">Available for single-order members
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+                    <div class="reveal group">
+                        <div class="img-zoom-container aspect-[3/4] mb-10 shadow-sm">
+                            <img src="https://images.pexels.com/photos/227908/pexels-photo-227908.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                class="w-full h-full object-cover" alt="Moonlight White tea leaves">
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-[9px] tracking-widest text-brass font-bold uppercase mb-2">White Tea /
+                                    Limited</p>
+                                <h3 class="text-3xl">Moonlight White</h3>
+                            </div>
+                            <span class="text-xl serif italic">$42</span>
+                        </div>
+                        <p class="mt-6 text-sm text-gray-400 font-light leading-relaxed">Notes of honey, wild sage, and
+                            mountain air. Harvested at night.</p>
+                    </div>
+                    <div class="reveal group delay-1">
+                        <div class="img-zoom-container aspect-[3/4] mb-10 shadow-sm">
+                            <img src="https://images.pexels.com/photos/461428/pexels-photo-461428.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                class="w-full h-full object-cover" alt="Roasted Rock Wuyi Oolong tea">
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-[9px] tracking-widest text-brass font-bold uppercase mb-2">Oolong /
+                                    Roasted</p>
+                                <h3 class="text-3xl">Rock Wuyi</h3>
+                            </div>
+                            <span class="text-xl serif italic">$58</span>
+                        </div>
+                        <p class="mt-6 text-sm text-gray-400 font-light leading-relaxed">Deep minerality, charcoal-fired
+                            with hints of dark chocolate.</p>
+                    </div>
+                    <div class="reveal group delay-3">
+                        <div class="img-zoom-container aspect-[3/4] mb-10 shadow-sm">
+                            <img src="https://images.pexels.com/photos/1592687/pexels-photo-1592687.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                class="w-full h-full object-cover" alt="Aged Jin Jun Mei black tea">
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-[9px] tracking-widest text-brass font-bold uppercase mb-2">Black / Wild
+                                </p>
+                                <h3 class="text-3xl">Aged Jin Jun Mei</h3>
+                            </div>
+                            <span class="text-xl serif italic">$65</span>
+                        </div>
+                        <p class="mt-6 text-sm text-gray-400 font-light leading-relaxed">Refined sweetness, complex malt
+                            notes, and a velvety finish.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="membership" class="py-40 bg-[var(--tea-green)] text-[var(--porcelain)] overflow-hidden">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-24 reveal">
+                    <span class="text-[10px] tracking-[0.5em] text-brass mb-6 block font-bold uppercase">The
+                        Program</span>
+                    <h2 class="text-5xl md:text-7xl mb-12 italic">Join the Collective</h2>
+
+                    <div class="flex items-center justify-center gap-6" id="billing-nav">
+                        <span class="text-[10px] tracking-widest uppercase opacity-40 transition-opacity"
+                            id="bill-m">Monthly</span>
+                        <div class="toggle-track" id="price-toggle" onclick="toggleBilling()">
+                            <div class="toggle-handle"></div>
+                        </div>
+                        <span class="text-[10px] tracking-widest uppercase opacity-100 transition-opacity"
+                            id="bill-q">Quarterly <span class="text-brass ml-2 font-bold">— SAVE 20%</span></span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="plan-card p-12 reveal active" onclick="setActivePlan(this)">
+                        <div class="flex justify-between items-start mb-16">
+                            <div>
+                                <h3 class="text-4xl mb-2">The Ritualist</h3>
+                                <p class="text-[10px] tracking-widest opacity-50 uppercase">Two curated origins / month
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-5xl serif italic price-val" data-m="48" data-q="38">$38</span>
+                                <p class="text-[9px] tracking-widest opacity-40 uppercase mt-2">Per Shipment</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-6 text-sm font-light opacity-70 mb-16">
+                            <li class="flex items-center gap-4"><span>—</span> Monthly Sommelier Selection</li>
+                            <li class="flex items-center gap-4"><span>—</span> Architectural Glass Jars (First Month)
+                            </li>
+                            <li class="flex items-center gap-4"><span>—</span> Compostable Refill Pouches</li>
+                        </ul>
+                        <button
+                            class="w-full border border-white/20 py-5 text-[10px] tracking-widest uppercase hover:bg-white hover:text-[var(--tea-green)] transition-all">Select
+                            Experience</button>
+                    </div>
+
+                    <div class="plan-card p-12 reveal delay-2" onclick="setActivePlan(this)">
+                        <div class="flex justify-between items-start mb-16">
+                            <div>
+                                <h3 class="text-4xl mb-2">The Collector</h3>
+                                <p class="text-[10px] tracking-widest opacity-50 uppercase">Four curated origins / month
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-5xl serif italic price-val" data-m="85" data-q="68">$68</span>
+                                <p class="text-[9px] tracking-widest opacity-40 uppercase mt-2">Per Shipment</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-6 text-sm font-light opacity-70 mb-16">
+                            <li class="flex items-center gap-4"><span>—</span> Inc. One 'Vault Reserve' Batch</li>
+                            <li class="flex items-center gap-4"><span>—</span> Hand-Pressed Tasting Journal</li>
+                            <li class="flex items-center gap-4"><span>—</span> Private Sommelier Masterclasses</li>
+                        </ul>
+                        <button
+                            class="w-full border border-white/20 py-5 text-[10px] tracking-widest uppercase hover:bg-white hover:text-[var(--tea-green)] transition-all">Select
+                            Experience</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-12 bg-white">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
+                <div class="reveal">
+                    <span class="text-[10px] tracking-[0.4em] text-brass mb-8 block font-bold uppercase">Our
+                        Terroir</span>
+                    <h2 class="text-5xl md:text-6xl mb-10 italic leading-tight">Beyond the <br>Surface of the Cup.</h2>
+                    <div class="space-y-8 text-gray-500 font-light leading-relaxed">
+                        <p>We believe tea is an agricultural legacy, not a commodity. We visit every estate, from the
+                            misty peaks of Alishan to the ancient forests of Yunnan, ensuring the preservation of
+                            biodiversity and the dignity of the farmer.</p>
+                        <p>Our direct-trade model provides 3x the local market rate to our partners, allowing for the
+                            continued craftsmanship of wild-harvested batches that would otherwise be lost to
+                            industrialization.</p>
+                        <div class="pt-6">
+                            <a href="#"
+                                class="text-[10px] tracking-widest uppercase font-bold border-b border-brass pb-2 hover:opacity-50 transition">The
+                                Sourcing Trip: Journal 01</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal bg-stone-200">
+                    <img src="https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                        class="w-full grayscale hover:grayscale-0 transition-all duration-[2s]"
+                        alt="Panoramic view of misty mountain tea plantation">
+                </div>
+            </div>
+        </section>
+
+        <section class="py-60 bg-white text-center border-t border-stone/30">
+            <div class="reveal max-w-2xl mx-auto px-6">
+                <h2 class="text-6xl md:text-8xl mb-12 font-light italic">Refine your ritual.</h2>
+                <button onclick="toggleCart(true)"
+                    class="btn-luxe bg-black text-white px-16 py-6 text-[11px] tracking-[0.4em] uppercase border-none">Start
+                    Membership</button>
+                <p class="mt-10 text-[9px] tracking-widest text-gray-400 uppercase italic">New harvest shipment departs
+                    in 72 hours.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-32 bg-stone-50 border-t border-stone/30 px-6 md:px-12">
+        <div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-2xl tracking-widest italic mb-8 uppercase">Velvet Leaf</h4>
+                <p class="text-[11px] text-gray-400 uppercase tracking-tighter leading-relaxed">Dedicated to the
+                    sommelier-grade curation of rare tea origins and the modern tea ritual. Sourced with intent.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 col-span-1 md:col-span-3 gap-12">
+                <div class="flex flex-col gap-6">
+                    <h5 class="text-[10px] tracking-widest font-bold uppercase text-brass">Explore</h5>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Collection</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Gifting</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Wholesale</a>
+                </div>
+                <div class="flex flex-col gap-6">
+                    <h5 class="text-[10px] tracking-widest font-bold uppercase text-brass">Journal</h5>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Sourcing</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Brewing</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Sustainability</a>
+                </div>
+                <div class="flex flex-col gap-6">
+                    <h5 class="text-[10px] tracking-widest font-bold uppercase text-brass">Connect</h5>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Instagram</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Spotify</a>
+                    <a href="#"
+                        class="text-[11px] uppercase tracking-widest text-gray-500 hover:text-black transition">Support</a>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-[1600px] mx-auto mt-32 pt-12 border-t border-stone/30 flex flex-col md:flex-row justify-between gap-6 text-[9px] tracking-widest text-gray-300 uppercase">
+            <p>&copy; 2026 Velvet Leaf Collective Ltd.</p>
+            <div class="flex gap-8">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cart-overlay"
+        class="fixed inset-0 z-[100] bg-black/40 opacity-0 pointer-events-none flex justify-end overlay-blur">
+        <div class="absolute inset-0" onclick="toggleCart(false)"></div>
+        <div id="cart-sidebar"
+            class="relative w-full max-w-md bg-[var(--porcelain)] h-full translate-x-full shadow-2xl p-12 flex flex-col">
+            <div class="flex justify-between items-center mb-20">
+                <h3 class="text-3xl italic">Your Selection</h3>
+                <button onclick="toggleCart(false)" class="group" aria-label="Close cart sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                        class="group-hover:rotate-90 transition-transform duration-500">
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex-grow flex flex-col justify-center items-center text-center">
+                <div class="w-16 h-1px bg-stone/50 mb-10"></div>
+                <p class="text-[10px] tracking-[0.2em] text-gray-400 uppercase italic">The basket is currently empty.
+                </p>
+                <div class="mt-12">
+                    <button onclick="toggleCart(false)"
+                        class="btn-luxe bg-charcoal text-white px-10 py-4 text-[9px] tracking-widest uppercase border-none">Begin
+                        Exploration</button>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-10 border-t border-stone/30">
+                <p class="text-[9px] tracking-[0.2em] uppercase text-center text-gray-400">Complimentary Global Shipping
+                    on Membership</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Logic
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            if (currentScroll > lastScroll && currentScroll > 500) {
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                nav.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Reveal Logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Pricing Toggle
+        let isQuarterly = true;
+
+        function toggleBilling() {
+            isQuarterly = !isQuarterly;
+            const container = document.getElementById('billing-nav');
+            const billM = document.getElementById('bill-m');
+            const billQ = document.getElementById('bill-q');
+
+            container.classList.toggle('is-quarterly', isQuarterly);
+            billM.style.opacity = isQuarterly ? '0.4' : '1';
+            billQ.style.opacity = isQuarterly ? '1' : '0.4';
+
+            document.querySelectorAll('.price-val').forEach(p => {
+                const val = isQuarterly ? p.getAttribute('data-q') : p.getAttribute('data-m');
+                p.innerText = '$' + val;
+            });
+        }
+
+        // Active Plan UI
+        function setActivePlan(el) {
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Cart Drawer
+        function toggleCart(open) {
+            const overlay = document.getElementById('cart-overlay');
+            const sidebar = document.getElementById('cart-sidebar');
+            if (open) {
+                overlay.classList.remove('pointer-events-none');
+                overlay.style.opacity = '1';
+                sidebar.style.transform = 'translateX(0)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.style.opacity = '0';
+                sidebar.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    overlay.classList.add('pointer-events-none');
+                    document.body.style.overflow = 'auto';
+                }, 600);
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('billing-nav').classList.add('is-quarterly');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Verre | The Architecture of Presence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #0a0a0b;
+            --charcoal-elevated: #141416;
+            --ivory: #f9f7f4;
+            --champagne: #e2ddd3;
+            --rose-gold: #c5a9a1;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-active: rgba(255, 255, 255, 0.12);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--charcoal);
+        }
+
+        body {
+            background-color: var(--charcoal);
+            color: var(--champagne);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-serif);
+            color: var(--ivory);
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        p {
+            font-size: 1.05rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--rose-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .glass {
+            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(25px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 6%;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 20px 6%;
+            background: rgba(10, 10, 11, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: var(--ivory);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ivory);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            opacity: 0.6;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--rose-gold);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 40px;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--rose-gold);
+            color: var(--charcoal);
+        }
+
+        .btn-primary:hover {
+            background: var(--ivory);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--ivory);
+        }
+
+        .btn-ghost:hover {
+            background: var(--glass-active);
+            border-color: var(--rose-gold);
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1542314831-c6a4d142104d?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--champagne);
+            margin-bottom: 40px;
+        }
+
+        .booking-bar {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) auto;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .b-field {
+            padding: 20px 30px;
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: 0.3s;
+        }
+
+        .b-field:hover {
+            background: var(--glass-active);
+        }
+
+        .b-field:last-of-type {
+            border: none;
+        }
+
+        .b-field label {
+            font-size: 0.6rem;
+            color: var(--rose-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .b-field input,
+        .b-field select {
+            background: transparent;
+            border: none;
+            color: var(--ivory);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        section {
+            padding: 180px 8% 100px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .center-heading {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mt-md {
+            margin-top: 20px;
+        }
+
+        .mt-lg {
+            margin-top: 40px;
+        }
+
+        .mt-xl {
+            margin-top: 80px;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .room-card {
+            height: 800px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .room-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 2s var(--transition);
+            z-index: 0;
+        }
+
+        .room-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .room-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .room-info {
+            position: relative;
+            z-index: 2;
+            margin: 30px;
+            padding: 50px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .room-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .room-features {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .feature-chip {
+            font-size: 0.65rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 40px;
+            letter-spacing: 1px;
+        }
+
+        .room-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 25px;
+        }
+
+        .price-text {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+        }
+
+        .price-sub {
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        .img-mask {
+            overflow: hidden;
+            position: relative;
+            height: 700px;
+        }
+
+        .img-mask img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 1.5s var(--transition);
+        }
+
+        .img-mask:hover img {
+            transform: scale(1.05);
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .num {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--ivory);
+        }
+
+        .quote-block {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 0;
+        }
+
+        .quote-block blockquote {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-style: italic;
+            line-height: 1.3;
+            color: var(--ivory);
+            margin-bottom: 30px;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        .faq-btn {
+            width: 100%;
+            padding: 40px 0;
+            background: none;
+            border: none;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: var(--ivory);
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+        }
+
+        .faq-btn span:last-child {
+            transition: 0.5s var(--transition);
+            font-size: 1rem;
+            opacity: 0.5;
+        }
+
+        .faq-content {
+            max-height: 0;
+            opacity: 0;
+            transition: 0.6s var(--transition);
+            padding-right: 100px;
+            color: var(--champagne);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 200px;
+            opacity: 0.7;
+            padding-bottom: 40px;
+        }
+
+        .faq-item.active .faq-btn span:last-child {
+            transform: rotate(45deg);
+            opacity: 1;
+            color: var(--rose-gold);
+        }
+
+        .cta-section {
+            background: linear-gradient(rgba(10, 10, 11, 0.7), rgba(10, 10, 11, 0.7)), url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            text-align: center;
+            padding: 220px 5%;
+        }
+
+        footer {
+            background: var(--charcoal-elevated);
+            padding: 120px 8% 60px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .f-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .f-col h5 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--rose-gold);
+            margin-bottom: 30px;
+        }
+
+        .f-col ul {
+            list-style: none;
+        }
+
+        .f-col li {
+            margin-bottom: 15px;
+            opacity: 0.5;
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .f-col li:hover {
+            opacity: 1;
+            color: var(--rose-gold);
+            transform: translateX(8px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            opacity: 0.4;
+        }
+
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s var(--transition);
+        }
+
+        [data-reveal].visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1100px) {
+            .booking-bar {
+                grid-template-columns: 1fr;
+                transform: none;
+                position: relative;
+                margin-top: -60px;
+                width: 100%;
+            }
+
+            .b-field {
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .grid-2,
+            .rooms-grid,
+            .metrics,
+            .f-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .img-mask {
+                height: 400px;
+            }
+
+            .room-card {
+                height: 600px;
+            }
+
+            nav {
+                padding: 20px 6%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="nav">
+        <a href="#" class="logo">MAISON VERRE</a>
+        <div class="nav-links">
+            <a href="#about">The Ethos</a>
+            <a href="#rooms">Suites</a>
+            <a href="#spa">Wellness</a>
+            <a href="#faq">Journal</a>
+        </div>
+        <a href="#book" class="btn btn-ghost">Reservation</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="label">Boutique Hospitality</span>
+            <h1>The Architecture of Presence</h1>
+            <p>A masterclass in restraint, light, and curated atmosphere for the creative visionary.</p>
+            <a href="#rooms" class="btn btn-primary">Discover the Collection</a>
+        </div>
+
+        <div class="booking-bar glass">
+            <div class="b-field">
+                <label for="check-in">Check In</label>
+                <input id="check-in" type="text" value="12 Oct 2026" placeholder="Check In Date" title="Check In Date"
+                    onfocus="(this.type='date')">
+            </div>
+            <div class="b-field">
+                <label for="check-out">Check Out</label>
+                <input id="check-out" type="text" value="16 Oct 2026" placeholder="Check Out Date"
+                    title="Check Out Date" onfocus="(this.type='date')">
+            </div>
+            <div class="b-field">
+                <label for="travelers">Travelers</label>
+                <select id="travelers" title="Number of Travelers">
+                    <option>01 Individual</option>
+                    <option selected>02 Partners</option>
+                    <option>Creative Residency</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">Check Dates</button>
+        </div>
+    </header>
+
+    <section id="about" class="grid-2">
+        <div class="img-mask">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200"
+                alt="Minimalist Interior Architecture">
+        </div>
+        <div data-reveal>
+            <span class="label">Our Ethos</span>
+            <h2>Space to think. Room to breathe.</h2>
+            <p class="mt-md">Maison Verre was founded on a singular premise: that travel should be an act of curation.
+                We reject the generic luxury of the many for the specific atmosphere of the few. </p>
+            <p class="mt-md">Every angle, shadow, and scent has been art-directed to foster a state of deep focus and
+                aesthetic appreciation.</p>
+            <a href="#" class="btn btn-ghost mt-lg">The Journal</a>
+        </div>
+    </section>
+
+    <section id="rooms">
+        <div class="center-heading">
+            <span class="label">The Collection</span>
+            <h2>Where brutalism meets the poetic.</h2>
+        </div>
+
+        <div class="rooms-grid">
+            <div class="room-card" data-reveal>
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"
+                    alt="The Atelier Suite Interior">
+                <div class="room-overlay"></div>
+                <div class="room-info glass">
+                    <span class="label">Level 01-03</span>
+                    <h3>The Atelier Suite</h3>
+                    <div class="room-features">
+                        <span class="feature-chip">65 SQM</span>
+                        <span class="feature-chip">Library</span>
+                        <span class="feature-chip">Analog Sound</span>
+                    </div>
+                    <div class="room-price-row">
+                        <span class="price-text">$650 <small class="price-sub">/ NIGHT</small></span>
+                        <a href="#" class="btn btn-primary">Reserve</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room-card" data-reveal>
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200"
+                    alt="The Glasshouse Penthouse Interior">
+                <div class="room-overlay"></div>
+                <div class="room-info glass">
+                    <span class="label">Penthouse</span>
+                    <h3>The Glasshouse</h3>
+                    <div class="room-features">
+                        <span class="feature-chip">120 SQM</span>
+                        <span class="feature-chip">360° View</span>
+                        <span class="feature-chip">Private Onsen</span>
+                    </div>
+                    <div class="room-price-row">
+                        <span class="price-text">$1,800 <small class="price-sub">/ NIGHT</small></span>
+                        <a href="#" class="btn btn-primary">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="spa" class="grid-2">
+        <div data-reveal>
+            <span class="label">Wellness</span>
+            <h2>The Obsidian Spa</h2>
+            <p class="mt-md">A sensory sanctuary focusing on thermal gradients and sound-frequency healing. Our
+                signature "Dark Meditation" sessions help visionaries disconnect to reconnect.</p>
+            <div class="metrics">
+                <div class="metric-item">
+                    <span class="num" data-target="12">0</span>
+                    <span class="label">Rituals</span>
+                </div>
+                <div class="metric-item">
+                    <span class="num" data-target="4">0</span>
+                    <span class="label">Thermal Pools</span>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary">Book Treatment</a>
+        </div>
+        <div class="img-mask">
+            <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?q=80&w=1200&auto=format&fit=crop"
+                alt="Serene Thermal Bath Environment">
+        </div>
+    </section>
+
+    <section class="quote-block" data-reveal>
+        <blockquote>
+            "Maison Verre doesn't just provide a bed; it provides a new perspective. The attention to light and texture
+            is unmatched."
+        </blockquote>
+        <span class="label">— Elena Rossi, Creative Director</span>
+    </section>
+
+    <section id="faq">
+        <div class="center-heading">
+            <span class="label">Information</span>
+            <h2>The Guest Charter</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-btn"><span>Check-in & Transfers</span> <span>+</span></button>
+                <div class="faq-content">
+                    Check-in is hosted from 3:00 PM. We offer bespoke electric chauffeur transfers from all major
+                    transit hubs. Simply coordinate with your personal concierge 24 hours prior.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn"><span>Commercial Production</span> <span>+</span></button>
+                <div class="faq-content">
+                    As an art-led property, we welcome editorial photography. Commercial shoots require a separate
+                    booking and site fee to ensure guest privacy is maintained.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn"><span>Cancellation & Flexibility</span> <span>+</span></button>
+                <div class="faq-content">
+                    We offer full flexibility up to 72 hours before arrival. Within 72 hours, 50% of the booking is
+                    retained as a credit for a future stay.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div data-reveal>
+            <h2>Reserve Your Presence.</h2>
+            <p class="mt-md">A sanctuary for those who see the world differently.</p>
+            <a href="#" class="btn btn-primary mt-lg">Request a Suite</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="f-grid">
+            <div class="f-col">
+                <a href="#" class="logo">MAISON VERRE</a>
+                <p class="mt-md">The definitive boutique stay for the global creative community.</p>
+            </div>
+            <div class="f-col">
+                <h5>Properties</h5>
+                <ul>
+                    <li>Paris, Marais</li>
+                    <li>Kyoto, Gion</li>
+                    <li>Copenhagen</li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h5>Experience</h5>
+                <ul>
+                    <li>Suites</li>
+                    <li>Spa</li>
+                    <li>Dining</li>
+                    <li>Studio</li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h5>Inquiry</h5>
+                <ul>
+                    <li>Contact</li>
+                    <li>Press</li>
+                    <li>Careers</li>
+                    <li>Privacy</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MAISON VERRE HOSPITALITY GROUP.</span>
+            <span>DESIGNED BY MV STUDIO</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 100) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const counters = entry.target.querySelectorAll('.num');
+                    counters.forEach(c => animateCounter(c));
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+        function animateCounter(el) {
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const speed = 2000 / target;
+            const update = () => {
+                count++;
+                el.innerText = count;
+                if (count < target) setTimeout(update, speed);
+            };
+            if (el.innerText == "0") update();
+        }
+    </script>
+</body>
+
+</html>

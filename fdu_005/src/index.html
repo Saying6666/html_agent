@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseTrace | Enterprise Mobile Observability & Incident Response</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #020617;
+            --surface: #0f172a;
+            --accent: #3b82f6;
+            --border: rgba(255, 255, 255, 0.08);
+            --signal-green: #22c55e;
+            --signal-amber: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* --- Refined Layout & Component System --- */
+
+        .nav-glass {
+            background: rgba(2, 6, 23, 0);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-glass.scrolled {
+            background: rgba(2, 6, 23, 0.85);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: 72px;
+        }
+
+        .bar-h-45 {
+            height: 45%;
+        }
+
+        .bar-h-60 {
+            height: 60%;
+        }
+
+        .bar-h-70 {
+            height: 70%;
+        }
+
+        .bar-h-85 {
+            height: 85%;
+        }
+
+        .bar-h-95 {
+            height: 95%;
+        }
+
+        .bento-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(30, 41, 59, 0.6);
+            transform: translateY(-4px);
+        }
+
+        .interactive-btn {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .interactive-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* --- Scroll Reveal System --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Phone Mockup Polish --- */
+        .phone-container {
+            width: 310px;
+            height: 640px;
+            background: #020617;
+            border: 12px solid #1e293b;
+            border-radius: 54px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: #1e293b;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 50;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-blue-500/30">
+
+    <nav id="navbar" class="fixed top-0 w-full z-[100] h-20 flex items-center nav-glass px-6">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="font-extrabold text-xl tracking-tighter uppercase">PulseTrace</span>
+            </div>
+
+            <div
+                class="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">
+                <a href="#governance" class="hover:text-blue-500 transition-colors">Governance</a>
+                <a href="#observability" class="hover:text-blue-500 transition-colors">Observability</a>
+                <a href="#integrations" class="hover:text-blue-500 transition-colors">Integrations</a>
+            </div>
+
+            <div class="flex items-center gap-5">
+                <button class="text-sm font-bold text-slate-400 hover:text-white transition-colors">Sign In</button>
+                <button
+                    class="interactive-btn bg-white text-slate-950 px-6 py-2.5 rounded-full text-sm font-black shadow-lg">
+                    Request Demo
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative pt-44 pb-32 px-6 overflow-hidden">
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)] -z-10">
+        </div>
+
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal active">
+                <div
+                    class="inline-flex items-center gap-2 bg-slate-900 border border-white/5 px-4 py-1.5 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]"></span>
+                    Now SOC2 Type II Compliant
+                </div>
+                <h1 class="text-6xl lg:text-8xl font-extrabold tracking-tighter leading-[0.9] mb-8">
+                    Infrastructure <br />
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-slate-500">Unchained.</span>
+                </h1>
+                <p class="text-xl text-slate-400 mb-12 leading-relaxed max-w-lg">
+                    PulseTrace Mobile delivers full-stack observability to your pocket. Identify latency drifts, resolve
+                    P1 incidents, and audit egress costs without opening a laptop.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button
+                        class="interactive-btn bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-xl shadow-blue-600/20 flex items-center gap-3">
+                        Deploy Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                    <button
+                        class="interactive-btn bg-slate-900 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-lg">
+                        Pricing
+                    </button>
+                </div>
+
+                <div class="mt-20 flex gap-12 border-t border-white/5 pt-12">
+                    <div>
+                        <div class="text-4xl font-extrabold tracking-tighter counter" data-target="99.99">0</div>
+                        <div class="text-[10px] font-black uppercase text-slate-500 tracking-widest mt-1">SLA Guarantee
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-extrabold tracking-tighter counter" data-target="400">0</div>
+                        <div class="text-[10px] font-black uppercase text-slate-500 tracking-widest mt-1">Global Nodes
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal active flex justify-center lg:justify-end relative">
+                <div class="phone-container">
+                    <div class="phone-notch"></div>
+                    <div class="p-6 pt-16 h-full flex flex-col">
+                        <div class="flex justify-between items-center mb-10">
+                            <div>
+                                <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Platform
+                                    Health</h4>
+                                <p class="text-xs font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Optimal
+                                </p>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-2xl bg-slate-800 flex items-center justify-center text-slate-400">
+                                <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-600/10 border border-blue-500/20 rounded-[2rem] p-5 mb-6">
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="text-[10px] font-black text-blue-400 uppercase">Throughput</span>
+                                <span class="text-[10px] font-mono text-blue-500">LIVE</span>
+                            </div>
+                            <div class="flex items-end gap-1.5 h-20">
+                                <div class="bg-blue-500/40 w-full rounded-t-sm transition-all duration-1000 bar-h-60"></div>
+                                <div class="bg-blue-500/60 w-full rounded-t-sm transition-all duration-1000 bar-h-85"></div>
+                                <div class="bg-blue-500 w-full rounded-t-sm transition-all duration-1000 bar-h-45"></div>
+                                <div class="bg-blue-500/80 w-full rounded-t-sm transition-all duration-1000 bar-h-95"></div>
+                                <div class="bg-blue-500/40 w-full rounded-t-sm transition-all duration-1000 bar-h-70"></div>
+                            </div>
+                            <div class="mt-4 text-2xl font-black">1.42 <span
+                                    class="text-xs font-medium text-slate-500">M/min</span></div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div
+                                class="p-4 bg-slate-800/40 rounded-2xl border border-white/5 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="database" class="w-4 h-4 text-slate-400"></i>
+                                    <span class="text-xs font-bold">PostgreSQL Main</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-emerald-500">UP</span>
+                            </div>
+                            <div
+                                class="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/20 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
+                                    <span class="text-xs font-bold">Redis Cache Delay</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-amber-500">120ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="absolute -left-12 bottom-20 bg-slate-900/90 backdrop-blur-xl border border-white/10 p-5 rounded-2xl shadow-2xl hidden md:block w-48 reveal">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                        <span class="text-[10px] font-black uppercase text-slate-400">Security Trace</span>
+                    </div>
+                    <p class="text-[11px] font-medium leading-relaxed">Encrypted payload verified via hardware-root key.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="observability" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal">
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6">Designed for the <br />Modern
+                    Platform Lead.</h2>
+                <p class="text-slate-400 max-w-2xl text-lg">Moving beyond simple metrics. PulseTrace correlates logs,
+                    traces, and mobile-native interactions into a single governance framework.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px]">
+
+                <div class="md:col-span-8 bento-card p-10 flex flex-col justify-between group reveal">
+                    <div class="max-w-md relative z-10">
+                        <div
+                            class="w-12 h-12 bg-blue-600/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform">
+                            <i data-lucide="brain-circuit" class="text-blue-500"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Anomaly Correlation</h3>
+                        <p class="text-slate-400 leading-relaxed">Automatically link spike in 5xx errors to recent CI/CD
+                            deployments or upstream provider outages. Resolve root causes with one-tap rollback
+                            commands.</p>
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 w-1/2 h-2/3 bg-gradient-to-t from-blue-500/5 to-transparent flex items-end px-10">
+                        <div class="w-full flex gap-1 items-end h-32 opacity-20">
+                            <div class="flex-1 bg-blue-500 h-[20%]"></div>
+                            <div class="flex-1 bg-blue-500 h-[40%]"></div>
+                            <div class="flex-1 bg-blue-500 h-[90%]"></div>
+                            <div class="flex-1 bg-blue-500 h-[60%]"></div>
+                            <div class="flex-1 bg-blue-500 h-[30%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-4 bento-card p-10 flex flex-col justify-between reveal">
+                    <div class="flex justify-between items-start">
+                        <i data-lucide="wallet" class="text-emerald-500 w-8 h-8"></i>
+                        <span class="text-[10px] font-black text-emerald-500/50 uppercase">FinOps</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Egress Guard</h3>
+                        <p class="text-slate-400 text-sm">Monitor real-time egress spend across multiple clouds. Set
+                            hard mobile-kill switches for budget overflows.</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-4 bento-card p-10 flex flex-col justify-between reveal">
+                    <div class="flex items-center gap-3 text-indigo-400">
+                        <i data-lucide="git-branch" class="w-6 h-6"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Distributed</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Edge Tracing</h3>
+                        <p class="text-slate-400 text-sm">Full waterfall request tracing directly in-app. Identify which
+                            microservice is dropping frames in ms.</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-8 bento-card p-10 flex items-center gap-12 reveal">
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-4">Granular RBAC</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Assign mobile permissions by cluster,
+                            region, or environment. Ensure juniors can monitor health while only leads can trigger
+                            infrastructure changes.</p>
+                        <div class="flex gap-4">
+                            <div class="px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-[10px] font-bold">
+                                READ_ONLY</div>
+                            <div class="px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-[10px] font-bold">
+                                REDEPLOY_S3</div>
+                        </div>
+                    </div>
+                    <div
+                        class="hidden lg:block w-48 h-48 bg-slate-950 rounded-full border border-white/5 flex items-center justify-center relative">
+                        <div class="w-32 h-32 border border-blue-500/20 rounded-full animate-spin-slow"></div>
+                        <i data-lucide="lock" class="absolute text-slate-500"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="governance" class="py-32 bg-slate-950/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24 items-center">
+            <div class="reveal">
+                <h2 class="text-4xl font-extrabold tracking-tighter mb-8 leading-tight">Auditable Actions.
+                    <br />Verified Execution.
+                </h2>
+                <div class="space-y-10">
+                    <div class="flex gap-6">
+                        <div
+                            class="w-12 h-12 bg-blue-600/10 border border-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 text-blue-500">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-2">Identity Governance</h4>
+                            <p class="text-slate-400 text-sm">Every critical mobile action (Rollback, Flush Cache, Kill
+                                Node) requires secondary MFA or biometric verification recorded in the global audit
+                                trail.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div
+                            class="w-12 h-12 bg-blue-600/10 border border-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 text-blue-500">
+                            <i data-lucide="fingerprint"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-2">Zero-Trust Mobile</h4>
+                            <p class="text-slate-400 text-sm">No sensitive credentials ever stored on device. All
+                                telemetry streamed via encrypted metadata tunnels to prevent data leak.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card p-8 mono reveal text-[11px]">
+                <div class="text-slate-500 mb-6 flex justify-between uppercase font-black text-[9px]">
+                    <span>Security Log v4.1</span>
+                    <span class="text-emerald-500">ACTIVE_STREAM</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-slate-400"><span class="text-blue-500">[21:42:01]</span> AUTH_SUCCESS: User_882
+                        (Platform_Lead)</div>
+                    <div class="text-slate-400"><span class="text-blue-500">[21:42:15]</span> CMD_INVOKED: <span
+                            class="text-amber-500">/rollback_service_v2</span></div>
+                    <div class="text-slate-400"><span class="text-blue-500">[21:42:16]</span> MFA_VERIFIED:
+                        FaceID_SecureEnclave</div>
+                    <div class="text-slate-300 pl-4 border-l border-white/10">» Cluster: US-WEST-2 (Oregon)</div>
+                    <div class="text-slate-300 pl-4 border-l border-white/10">» Status: Rolling back to hash: b28fa1
+                    </div>
+                    <div class="text-slate-400 mt-4 animate-pulse"><span class="text-blue-500">[21:42:30]</span>
+                        BROADCAST: Alert_Resolved_Push_Sent</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 px-6 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-blue-600/5 -z-10"></div>
+        <div class="max-w-3xl mx-auto reveal">
+            <h2 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-10 leading-[0.9]">Upgrade your
+                <br /><span class="text-blue-500">Platform IQ.</span>
+            </h2>
+            <p class="text-lg text-slate-400 mb-12">The global standard for platform teams. Onboard your first cluster
+                in under 10 minutes.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button
+                    class="interactive-btn bg-white text-slate-950 px-12 py-5 rounded-2xl font-black text-xl shadow-2xl">
+                    Get Access
+                </button>
+                <button
+                    class="interactive-btn bg-slate-900 border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xl">
+                    Speak to Sales
+                </button>
+            </div>
+            <div class="mt-16 flex flex-wrap justify-center gap-10 opacity-30 grayscale contrast-125">
+                <span class="font-black text-xl">AWS</span>
+                <span class="font-black text-xl">AZURE</span>
+                <span class="font-black text-xl">GCP</span>
+                <span class="font-black text-xl">CLOUDFLARE</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 border-t border-white/5 bg-slate-950/80">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+            <div class="max-w-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <span class="font-black text-xl tracking-tighter uppercase">PulseTrace</span>
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed">The only mobile-first observability suite built for
+                    mission-critical infrastructure governance.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-16 text-sm">
+                <div>
+                    <h5 class="font-black text-white uppercase tracking-widest text-xs mb-6">Product</h5>
+                    <ul class="space-y-4 text-slate-500">
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">Compliance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black text-white uppercase tracking-widest text-xs mb-6">Connect</h5>
+                    <ul class="space-y-4 text-slate-500">
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">Status</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">Twitter</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition-colors">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 flex justify-between items-center text-[10px] font-black text-slate-600 uppercase tracking-widest">
+            <span>© 2026 PulseTrace Systems</span>
+            <span>San Francisco • London • Singapore</span>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Logic
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Reveal Motion
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const counter = entry.target.querySelector('.counter');
+                    if (counter) animateCounter(counter);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Counter Animation
+        function animateCounter(el) {
+            if (el.dataset.done) return;
+            const target = parseFloat(el.getAttribute('data-target'));
+            let count = 0;
+            const duration = 2000;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                count = eased * target;
+
+                if (target % 1 === 0) {
+                    el.innerText = Math.floor(count);
+                } else {
+                    el.innerText = count.toFixed(2);
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.innerText = target + (target > 100 ? '+' : '');
+                    el.dataset.done = "true";
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // Active Button Feedback
+        document.querySelectorAll('.interactive-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.boxShadow = '0 10px 30px rgba(59, 130, 246, 0.2)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -160,8 +160,7 @@ Make sure there are at least 5 distinct interaction patterns, enough vertical co
 
 def build_builder_prompt(brief: dict[str, object], provider: str) -> str:
     provider_hint = {
-        "gemini": "Bias toward strong layout completeness, richer content density, and premium visual direction.",
-        "gpt": "Bias toward polished micro-interactions, semantic HTML, accessibility, and cleaner final code.",
+        "claude": "Bias toward coherent multi-round refinement, premium visual hierarchy, and polished interaction quality.",
     }[provider]
     sections = "\n".join(f"- {section}" for section in brief["sections"])
     interactions = "\n".join(f"- {interaction}" for interaction in brief["interactions"])
@@ -224,9 +223,9 @@ Rules:
 
 
 def build_judge_prompt(task_id: str) -> str:
-    return f"""You are judging two HTML candidates for task `{task_id}`.
+    return f"""You are reviewing the final HTML candidate for task `{task_id}`.
 
-Score both candidates on:
+Check the final candidate on:
 - compliance
 - visual hierarchy
 - interaction richness
@@ -234,32 +233,36 @@ Score both candidates on:
 - semantic structure
 
 Return:
-1. winner: gemini or gpt
-2. concise rationale
-3. risky weaknesses in the losing candidate
+1. concise quality summary
+2. risky weaknesses to address
+3. confidence level
 
-Candidate A (Gemini):
-{{GEMINI_HTML}}
-
-Candidate B (GPT):
-{{GPT_HTML}}
+Candidate HTML:
+{{FINAL_HTML}}
 """
 
 
 def build_generation_notes(task_id: str) -> str:
     return f"""# Generation Notes
 
+## Default route
+
+1. Run `python skills/web-design-dataset-pipeline/scripts/run_task_workflow.py {task_id}` to keep the workflow prompt-only.
+2. Use `prompt.md` and `prompts/builder-claude.md` manually if you want a human-driven generation pass.
+3. Save the chosen final HTML into `src/index.html`.
+
 ## Automated route
 
-1. Set `X666_API_KEY` and optionally `X666_BASE_URL`, `X666_MODEL_GEMINI`, and `X666_MODEL_GPT`.
-2. Run `python skills/web-design-dataset-pipeline/scripts/run_dual_model_pipeline.py {task_id}`.
-3. Review `judge-report.md` and the final `src/index.html`.
-4. Capture `preview.png` or `preview/preview_*.png`, plus `video.mp4`.
-5. Run `python skills/web-design-dataset-pipeline/scripts/package_task.py {task_id}`.
+1. Make sure `anthropic-sdk-helper` is available and your ccswitch or Claude config is set.
+2. Run `python skills/web-design-dataset-pipeline/scripts/run_task_workflow.py {task_id} --mode generate` or `python skills/web-design-dataset-pipeline/scripts/run_claude_generation.py {task_id}`.
+3. The generator runs exactly 4 rounds based on `prompt.md` and writes the final page into `src/index.html`.
+4. Review `generation-report.md` and the final `src/index.html`.
+5. Capture `preview.png` or `preview/preview_*.png`, plus `video.mp4`.
+6. Run `python skills/web-design-dataset-pipeline/scripts/package_task.py {task_id}`.
 
 ## Manual route
 
-1. Use `prompts/builder-gemini.md` or `prompts/builder-gpt.md` in your target generator.
+1. Use the 4 rounds in `prompt.md` or the condensed `prompts/builder-claude.md` in your target generator.
 2. Save the chosen final HTML into `src/index.html`.
 3. Run `python skills/web-design-dataset-pipeline/scripts/validate_task.py {task_id} --stage final`.
 4. Add preview assets and video before packaging.
@@ -267,7 +270,7 @@ def build_generation_notes(task_id: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Create a dual-model Web Design dataset task scaffold.")
+    parser = argparse.ArgumentParser(description="Create an Anthropic-ready Web Design dataset task scaffold.")
     parser.add_argument("task_id", help="Task id like fdu_001")
     parser.add_argument("--root", default=".", help="Output root directory")
     parser.add_argument("--category", default="SaaS landing page")
@@ -292,15 +295,15 @@ def main() -> int:
     write_if_missing(task_root / "task-brief.json", json.dumps(brief, indent=2, ensure_ascii=False) + "\n")
     write_if_missing(task_root / "prompt.md", build_prompt(brief))
     write_if_missing(task_root / "generation-notes.md", build_generation_notes(args.task_id))
-    write_if_missing(prompts_dir / "builder-gemini.md", build_builder_prompt(brief, "gemini"))
-    write_if_missing(prompts_dir / "builder-gpt.md", build_builder_prompt(brief, "gpt"))
+    write_if_missing(prompts_dir / "builder-claude.md", build_builder_prompt(brief, "claude"))
     write_if_missing(prompts_dir / "repair.md", build_repair_prompt(args.task_id))
     write_if_missing(prompts_dir / "judge.md", build_judge_prompt(args.task_id))
 
-    print(f"Created dual-model scaffold at {task_root}")
+    print(f"Created Anthropic-ready scaffold at {task_root}")
     print("Next steps:")
-    print("- Run the automated dual-model pipeline or use prompts/ manually")
-    print("- Review judge-report.md after generation")
+    print("- Use prompt.md or prompts/ manually by default")
+    print("- Run the 4-step Anthropic pipeline only if you want automated generation")
+    print("- Review generation-report.md after automated generation, if used")
     print("- Capture preview assets and video before final packaging")
     return 0
 
