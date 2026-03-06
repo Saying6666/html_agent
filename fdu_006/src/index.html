@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LetterMoss | The Calm OS for Premium Newsletters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette: Oat, Sand, Clay, Espresso, Muted Sage, Warm Amber */
+            --bg-oat: #F9F7F3;
+            --bg-sand: #EFEBE4;
+            --surface: #FFFFFF;
+            --surface-hover: #FCFAf8;
+            --text-espresso: #2C2825;
+            --text-muted: #6B655F;
+            --accent-clay: #C2765A;
+            --accent-amber: #D98C4A;
+            --accent-sage: #8A9A86;
+            --border-soft: #E5E0D8;
+            --border-dark: #D1C9BE;
+
+            /* Typography */
+            --font-display: 'Instrument Serif', serif;
+            --font-ui: 'DM Sans', sans-serif;
+
+            /* Spacing & Radii */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 999px;
+
+            /* Shadows & Transitions */
+            --shadow-sm: 0 2px 8px rgba(44, 40, 37, 0.04);
+            --shadow-md: 0 8px 24px rgba(44, 40, 37, 0.06);
+            --shadow-lg: 0 20px 40px rgba(44, 40, 37, 0.08);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-oat);
+            color: var(--text-espresso);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--text-espresso);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- Utilities --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .text-sage {
+            color: var(--accent-sage);
+        }
+
+        .text-clay {
+            color: var(--accent-clay);
+        }
+
+        .section-padding {
+            padding: 120px 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            background: var(--bg-sand);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-clay);
+            color: white;
+            box-shadow: 0 4px 12px rgba(194, 118, 90, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #A96147;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(194, 118, 90, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--border-dark);
+            color: var(--text-espresso);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-sand);
+            border-color: var(--text-muted);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(249, 247, 243, 0.85);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(229, 224, 216, 0.5);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-sage);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-espresso);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 180px 0 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Abstract Dashboard UI */
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            perspective: 1000px;
+        }
+
+        .mock-dashboard {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 110%;
+            height: 100%;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-lg);
+            transform: rotateY(-5deg) rotateX(2deg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: rotateY(-5deg) rotateX(2deg) translateY(0);
+            }
+
+            50% {
+                transform: rotateY(-5deg) rotateX(2deg) translateY(-10px);
+            }
+
+            100% {
+                transform: rotateY(-5deg) rotateX(2deg) translateY(0);
+            }
+        }
+
+        .mock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .mock-title {
+            font-weight: 500;
+        }
+
+        .mock-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .mock-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            flex-grow: 1;
+        }
+
+        .mock-card {
+            background: var(--bg-oat);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .mock-chart-area {
+            height: 120px;
+            margin-top: 16px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .mock-bar {
+            flex: 1;
+            background: var(--bg-sand);
+            border-radius: 4px 4px 0 0;
+            transition: var(--transition-smooth);
+        }
+
+        .mock-bar:nth-child(1) {
+            height: 40%;
+        }
+
+        .mock-bar:nth-child(2) {
+            height: 60%;
+        }
+
+        .mock-bar:nth-child(3) {
+            height: 30%;
+        }
+
+        .mock-bar:nth-child(4) {
+            height: 80%;
+            background: var(--accent-sage);
+        }
+
+        .mock-bar:nth-child(5) {
+            height: 50%;
+        }
+
+        .mock-list-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-soft);
+            font-size: 0.85rem;
+        }
+
+        .mock-list-item:last-child {
+            border: none;
+        }
+
+        /* --- KPI Strip --- */
+        .kpi-strip {
+            background: var(--surface);
+            padding: 40px 0;
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .kpi-item h3 {
+            font-size: 3rem;
+            color: var(--accent-clay);
+            margin-bottom: 8px;
+            font-family: var(--font-display);
+        }
+
+        .kpi-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        /* --- Core Sections Layout --- */
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .panel:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-dark);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-oat);
+            color: var(--accent-clay);
+        }
+
+        /* --- Subscriber Health --- */
+        .health-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--bg-sand);
+        }
+
+        .metric-row:last-child {
+            border: none;
+            padding-bottom: 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .trend-up {
+            color: var(--accent-sage);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+        }
+
+        .trend-down {
+            color: var(--accent-clay);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* --- Sponsorship Pipeline --- */
+        .pipeline-wrapper {
+            background: var(--bg-sand);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            overflow-x: auto;
+        }
+
+        .kanban-board {
+            display: flex;
+            gap: 24px;
+            min-width: 900px;
+        }
+
+        .kanban-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .kanban-header {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kanban-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-sm);
+            cursor: grab;
+            transition: var(--transition-fast);
+        }
+
+        .kanban-card-amber {
+            border-left: 3px solid var(--accent-amber);
+        }
+
+        .kanban-card-sage {
+            border-left: 3px solid var(--accent-sage);
+        }
+
+        .kanban-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .sponsor-brand {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .sponsor-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-soft);
+        }
+
+        /* --- Editorial Calendar --- */
+        .editorial-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 32px;
+        }
+
+        .side-panel {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .issue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .issue-item {
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-oat);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .issue-item:hover,
+        .issue-item.active {
+            background: var(--surface);
+            border-color: var(--accent-amber);
+            box-shadow: 0 4px 12px rgba(217, 140, 74, 0.1);
+        }
+
+        .issue-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-draft {
+            background: var(--text-muted);
+        }
+
+        .dot-review {
+            background: var(--accent-amber);
+        }
+
+        .dot-scheduled {
+            background: var(--accent-sage);
+        }
+
+        .issue-title {
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Content Editor Preview */
+        .editor-preview {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            padding: 40px;
+            position: relative;
+        }
+
+        .editor-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .editor-header h3 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .editor-new-draft-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 10px;
+            border-style: dashed;
+        }
+
+        .editor-title-display {
+            font-family: var(--font-display);
+        }
+
+        .editor-meta-row {
+            display: flex;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .editor-intro {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .editor-quote-box {
+            padding: 24px;
+            background: var(--bg-oat);
+            border-left: 3px solid var(--accent-clay);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-bottom: 24px;
+        }
+
+        .editor-quote-text {
+            font-style: italic;
+            color: var(--text-espresso);
+        }
+
+        .editor-status-row {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .editor-status-chip {
+            padding: 8px 16px;
+            background: var(--bg-sand);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .mock-text-line {
+            height: 12px;
+            background: var(--bg-sand);
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .mock-text-line.short {
+            width: 60%;
+        }
+
+        .mock-text-line.med {
+            width: 85%;
+        }
+
+        /* --- Pricing --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .price-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .price-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-clay);
+        }
+
+        .price-card.popular {
+            background: var(--bg-sand);
+            border-color: var(--border-dark);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-clay);
+            color: white;
+            padding: 4px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .tier-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tier-price {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+        }
+
+        .tier-price span {
+            font-size: 1rem;
+            font-family: var(--font-ui);
+            color: var(--text-muted);
+        }
+
+        .tier-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .feature-list svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-sage);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* --- FAQ --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 24px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-espresso);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background: var(--text-muted);
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition-smooth);
+        }
+
+        .faq-icon::before {
+            width: 14px;
+            height: 2px;
+        }
+
+        .faq-icon::after {
+            width: 2px;
+            height: 14px;
+        }
+
+        .faq-item.active .faq-icon::after {
+            transform: translate(-50%, -50%) rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-in-out;
+        }
+
+        .faq-answer-inner {
+            overflow: hidden;
+            color: var(--text-muted);
+            padding-right: 40px;
+        }
+
+        .faq-item.active .faq-answer {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-item.active .faq-answer-inner {
+            padding-bottom: 24px;
+        }
+
+        /* --- CTA Footer Section --- */
+        .cta-section {
+            background: var(--text-espresso);
+            color: var(--bg-oat);
+            border-radius: var(--radius-lg);
+            padding: 80px 40px;
+            text-align: center;
+            margin: 120px 24px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section h2 {
+            color: var(--bg-oat);
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            color: #A8A096;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border-soft);
+            padding: 60px 0 40px;
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            max-width: 250px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-espresso);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-espresso);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-soft);
+            font-size: 0.85rem;
+        }
+
+        /* --- Inline Style Replacements --- */
+        .nav-cta-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        .mock-card-span-2 {
+            grid-column: span 2;
+        }
+
+        .mock-card-span-3 {
+            grid-column: span 3;
+        }
+
+        .mock-card-column-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mock-label {
+            font-size: 0.85rem;
+        }
+
+        .mock-stat {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .mock-growth {
+            font-size: 0.9rem;
+        }
+
+        .mock-bar-65 {
+            height: 65%;
+        }
+
+        .mock-bar-85-clay {
+            height: 85%;
+            background: var(--accent-clay);
+        }
+
+        .mock-track {
+            margin-top: 12px;
+            height: 4px;
+            background: var(--border-soft);
+            border-radius: 2px;
+        }
+
+        .mock-fill-70 {
+            width: 70%;
+            height: 100%;
+            background: var(--accent-amber);
+            border-radius: 2px;
+        }
+
+        .mock-upcoming-label {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .caption-small {
+            font-size: 0.85rem;
+        }
+
+        .panel-action-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 10px;
+        }
+
+        .cohort-intro {
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .cohort-block {
+            margin-bottom: 16px;
+        }
+
+        .cohort-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .cohort-track {
+            height: 6px;
+            background: var(--bg-sand);
+            border-radius: 3px;
+        }
+
+        .cohort-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .cohort-fill-72 {
+            width: 72%;
+            background: var(--accent-sage);
+        }
+
+        .cohort-fill-45 {
+            width: 45%;
+            background: var(--accent-clay);
+        }
+
+        .cohort-fill-88 {
+            width: 88%;
+            background: var(--accent-sage);
+        }
+
+        .section-surface-borders {
+            background: var(--surface);
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .kanban-note {
+            font-size: 0.85rem;
+        }
+
+        .kanban-reporting-card {
+            background: var(--bg-oat);
+            opacity: 0.8;
+        }
+
+        .link-medium {
+            font-weight: 500;
+        }
+
+        .side-panel-title {
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            font-family: var(--font-ui);
+            font-weight: 600;
+        }
+
+        .pricing-section {
+            background: var(--bg-sand);
+        }
+
+        .pricing-cta-btn {
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 48px;
+        }
+
+        .cta-alt-btn {
+            background: var(--bg-oat);
+            color: var(--text-espresso);
+            box-shadow: none;
+        }
+
+        .cta-section .cta-note {
+            font-size: 0.85rem;
+            margin-top: 24px;
+            color: #8A8076;
+            margin-bottom: 0;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 140px;
+            }
+
+            .hero-content p {
+                margin: 0 auto 40px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .mock-dashboard {
+                position: relative;
+                width: 100%;
+                transform: none;
+                animation: none;
+                right: auto;
+            }
+
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .editorial-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 48px auto 0;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .kanban-board {
+                min-width: 100%;
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                </svg>
+                LetterMoss
+            </a>
+            <div class="nav-links">
+                <a href="#platform">Platform</a>
+                <a href="#sponsorships">Sponsorships</a>
+                <a href="#editorial">Editorial</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="text-muted">Sign in</a>
+                <a href="#" class="btn btn-primary nav-cta-btn">Start Publishing</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container hero">
+        <div class="hero-content reveal">
+            <span class="badge">A new standard for operators</span>
+            <h1>The calm operating system for premium newsletters.</h1>
+            <p>LetterMoss unifies audience growth, sponsorship pipelines, and editorial flow into one beautifully human
+                workspace for creator-led startups.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">Start your 14-day trial</a>
+                <a href="#platform" class="btn btn-secondary">Explore dashboard</a>
+            </div>
+        </div>
+        <div class="hero-visual reveal">
+            <div class="mock-dashboard">
+                <div class="mock-header">
+                    <span class="mock-title">Workspace Overview</span>
+                    <span class="mock-date">Last 30 Days</span>
+                </div>
+                <div class="mock-grid">
+                    <div class="mock-card mock-card-span-2">
+                        <span class="text-muted mock-label">Audience Growth</span>
+                        <div class="mock-stat">12,480 <span class="text-sage mock-growth">+4.2%</span></div>
+                        <div class="mock-chart-area">
+                            <div class="mock-bar"></div>
+                            <div class="mock-bar"></div>
+                            <div class="mock-bar"></div>
+                            <div class="mock-bar"></div>
+                            <div class="mock-bar"></div>
+                            <div class="mock-bar mock-bar-65"></div>
+                            <div class="mock-bar mock-bar-85-clay"></div>
+                        </div>
+                    </div>
+                    <div class="mock-card mock-card-column-center">
+                        <span class="text-muted mock-label">Sponsor MRR</span>
+                        <div class="mock-stat">$8.2k</div>
+                        <div class="mock-track">
+                            <div class="mock-fill-70">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mock-card mock-card-span-3">
+                        <span class="text-muted mock-upcoming-label">Upcoming Issues</span>
+                        <div class="mock-list-item">
+                            <span>Deep Dive: Calm SaaS</span>
+                            <span class="text-sage">Scheduled</span>
+                        </div>
+                        <div class="mock-list-item">
+                            <span>Interview with Notion</span>
+                            <span class="text-muted">Draft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="kpi-strip">
+        <div class="container kpi-grid">
+            <div class="kpi-item reveal">
+                <h3 class="counter" data-target="42000">0</h3>
+                <p>Active Readers Managed</p>
+            </div>
+            <div class="kpi-item reveal">
+                <h3><span class="counter" data-target="58">0</span>%</h3>
+                <p>Avg Open Rate</p>
+            </div>
+            <div class="kpi-item reveal">
+                <h3>$<span class="counter" data-target="2.4">0</span>M</h3>
+                <p>Sponsorships Piped</p>
+            </div>
+            <div class="kpi-item reveal">
+                <h3><span class="counter" data-target="14">0</span>k+</h3>
+                <p>Referral Loops Closed</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="platform" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Grow with clarity, not anxiety.</h2>
+                <p>Move past generic charts. Understand cohort retention, spot churn signals before they happen, and
+                    track the real health of your community.</p>
+            </div>
+
+            <div class="dashboard-grid health-grid reveal">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <div class="panel-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg></div>
+                            Audience Segments
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Superfans (Opens >80%)</span>
+                        <div class="text-right">
+                            <div class="metric-value">2,840</div>
+                            <div class="trend-up"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg> +12%</div>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Casual Readers</span>
+                        <div class="text-right">
+                            <div class="metric-value">8,105</div>
+                            <div class="text-muted caption-small">Stable</div>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Slipping Away</span>
+                        <div class="text-right">
+                            <div class="metric-value">1,430</div>
+                            <div class="trend-down"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
+                                    <polyline points="16 17 22 17 22 11"></polyline>
+                                </svg> Action needed</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary panel-action-btn">Run
+                        Re-engagement</button>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <div class="panel-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg></div>
+                            Cohort Retention
+                        </div>
+                    </div>
+                    <p class="text-muted cohort-intro">How well are new subscribers
+                        sticking around after 30 days?</p>
+
+                    <div class="cohort-block">
+                        <div class="cohort-row">
+                            <span>Oct Cohort (Organic)</span>
+                            <strong>72%</strong>
+                        </div>
+                        <div class="cohort-track">
+                            <div class="cohort-fill cohort-fill-72">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cohort-block">
+                        <div class="cohort-row">
+                            <span>Nov Cohort (Twitter Ad)</span>
+                            <strong>45%</strong>
+                        </div>
+                        <div class="cohort-track">
+                            <div class="cohort-fill cohort-fill-45">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="cohort-row">
+                            <span>Dec Cohort (Referrals)</span>
+                            <strong>88%</strong>
+                        </div>
+                        <div class="cohort-track">
+                            <div class="cohort-fill cohort-fill-88">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <div class="panel-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                </svg></div>
+                            Growth Sources
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Cross-promotions</span>
+                        <span class="metric-value">42%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Direct Traffic</span>
+                        <span class="metric-value">28%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Built-in Referrals</span>
+                        <span class="metric-value">18%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Social Media</span>
+                        <span class="metric-value">12%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsorships" class="section-padding section-surface-borders">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Treat sponsorships like a relationship.</h2>
+                <p>Stop managing inventory in messy spreadsheets. Forecast revenue, manage ad copy, and auto-generate
+                    performance reports for your brand partners.</p>
+            </div>
+
+            <div class="pipeline-wrapper reveal">
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <span>Inbound (3)</span>
+                            <span>$4.5k</span>
+                        </div>
+                        <div class="kanban-card">
+                            <div class="sponsor-brand">Figma</div>
+                            <p class="text-muted kanban-note">Main sponsor for Design Systems issue.</p>
+                            <div class="sponsor-details">
+                                <span>Nov 12 Issue</span>
+                                <strong class="text-espresso">$1,500</strong>
+                            </div>
+                        </div>
+                        <div class="kanban-card">
+                            <div class="sponsor-brand">Stripe</div>
+                            <p class="text-muted kanban-note">Waiting on budget approval.</p>
+                            <div class="sponsor-details">
+                                <span>Dec 04 Issue</span>
+                                <strong class="text-espresso">$3,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <span>Copy Approved (2)</span>
+                            <span>$2.8k</span>
+                        </div>
+                        <div class="kanban-card kanban-card-amber">
+                            <div class="sponsor-brand">Webflow</div>
+                            <p class="text-muted kanban-note">Assets received. Ready for draft.</p>
+                            <div class="sponsor-details">
+                                <span>Oct 28 Issue</span>
+                                <strong class="text-espresso">$1,800</strong>
+                            </div>
+                        </div>
+                        <div class="kanban-card kanban-card-amber">
+                            <div class="sponsor-brand">Ahrefs</div>
+                            <p class="text-muted kanban-note">Secondary placement.</p>
+                            <div class="sponsor-details">
+                                <span>Oct 28 Issue</span>
+                                <strong class="text-espresso">$1,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <span>Scheduled (1)</span>
+                            <span>$2.0k</span>
+                        </div>
+                        <div class="kanban-card kanban-card-sage">
+                            <div class="sponsor-brand">Linear</div>
+                            <p class="text-muted kanban-note">Locked in. Invoice sent.</p>
+                            <div class="sponsor-details">
+                                <span>Oct 21 Issue</span>
+                                <strong class="text-espresso">$2,000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column">
+                        <div class="kanban-header">
+                            <span>Reporting (1)</span>
+                            <span>-</span>
+                        </div>
+                        <div class="kanban-card kanban-reporting-card">
+                            <div class="sponsor-brand">Vercel</div>
+                            <p class="text-muted kanban-note">Sent 48h performance snapshot.</p>
+                            <div class="sponsor-details">
+                                <span>Oct 14 Issue</span>
+                                <a href="#" class="text-clay link-medium">View Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="editorial" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>A publishing rhythm you can stick to.</h2>
+                <p>Write in a distraction-free, beautifully typed editor. Tag audience segments, schedule sends, and
+                    keep your editorial calendar flowing without the friction.</p>
+            </div>
+
+            <div class="editorial-layout reveal">
+                <div class="side-panel">
+                    <h3 class="side-panel-title">
+                        Upcoming Issues</h3>
+                    <div class="issue-list">
+                        <div class="issue-item active">
+                            <div class="issue-meta">
+                                <span class="status-dot dot-draft"></span> Draft • Oct 21
+                            </div>
+                            <div class="issue-title">The Economics of Calm Companies</div>
+                        </div>
+                        <div class="issue-item">
+                            <div class="issue-meta">
+                                <span class="status-dot dot-review"></span> Review • Oct 28
+                            </div>
+                            <div class="issue-title">Why we moved away from React</div>
+                        </div>
+                        <div class="issue-item">
+                            <div class="issue-meta">
+                                <span class="status-dot dot-scheduled"></span> Scheduled • Nov 04
+                            </div>
+                            <div class="issue-title">Interview: Building for designers</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary editor-new-draft-btn">+ New Draft</button>
+                </div>
+
+                <div class="editor-preview shadow-sm">
+                    <div class="editor-header">
+                        <span class="badge">Issue #142</span>
+                        <h3 class="editor-title-display">The Economics of Calm Companies</h3>
+                        <div class="editor-meta-row">
+                            <span>By Sarah Jenks</span>
+                            <span>Est. read: 4 mins</span>
+                        </div>
+                    </div>
+                    <div class="editor-body">
+                        <p class="editor-intro">
+                            There's a prevailing myth in startup culture that growth must be painful. That if you aren't
+                            burning the candle at both ends, you aren't moving fast enough. But looking at the data from
+                            our latest cohort of creator-led businesses, a different story emerges.
+                        </p>
+                        <div class="mock-text-line"></div>
+                        <div class="mock-text-line med"></div>
+                        <div class="mock-text-line"></div>
+                        <div class="mock-text-line short"></div>
+                        <br>
+                        <div class="editor-quote-box">
+                            <p class="editor-quote-text">"We decided to optimize for
+                                sleep and profitable unit economics rather than sheer user count. It changed
+                                everything."</p>
+                        </div>
+                        <div class="mock-text-line med"></div>
+                        <div class="mock-text-line"></div>
+                    </div>
+
+                    <div class="editor-status-row">
+                        <span class="editor-status-chip">Autosaved
+                            just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section-padding pricing-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Simple pricing for serious operators.</h2>
+                <p>No hidden fees based on subscriber counts. Just flat, predictable pricing that scales with your
+                    business needs.</p>
+            </div>
+
+            <div class="pricing-grid reveal">
+                <div class="price-card">
+                    <div class="tier-name">Seed</div>
+                    <div class="tier-price">$0<span>/mo</span></div>
+                    <div class="tier-desc">For writers just starting their journey to find product-market fit.</div>
+                    <ul class="feature-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Up to 1,000 subscribers</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Beautiful web editor</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Basic analytics</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> LetterMoss domain</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary pricing-cta-btn">Start for free</a>
+                </div>
+
+                <div class="price-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="tier-name">Growth</div>
+                    <div class="tier-price">$49<span>/mo</span></div>
+                    <div class="tier-desc">For operators treating their publication like a real business.</div>
+                    <ul class="feature-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Unlimited subscribers</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Custom domain</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Sponsorship pipeline</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Built-in referral system</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Audience segmentation</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary pricing-cta-btn">Start 14-day trial</a>
+                </div>
+
+                <div class="price-card">
+                    <div class="tier-name">Scale</div>
+                    <div class="tier-price">$199<span>/mo</span></div>
+                    <div class="tier-desc">For media networks and teams needing advanced controls.</div>
+                    <ul class="feature-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Everything in Growth</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Multiple publications</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Team collaboration roles</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> API access</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg> Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary pricing-cta-btn">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container faq-container reveal">
+            <h2 class="faq-title">Common Questions</h2>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How easy is it to migrate from Substack or Beehiiv?
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        We offer a 1-click import for all major platforms. Your subscriber list, past posts, and even
+                        your paid subscriber data (via Stripe) moves over seamlessly in minutes. We handle the technical
+                        heavy lifting so you don't drop a single email.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do you take a cut of my paid subscriptions or sponsorships?
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        No. We believe in flat software pricing. You keep 100% of your revenue from readers and sponsors
+                        (minus standard Stripe processing fees). LetterMoss is a tool, not a tollbooth.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I use my own custom domain?
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes, custom domains are available on our Growth and Scale plans. You can host your entire
+                        publication on your own URL (e.g., newsletter.yourdomain.com) for a fully white-labeled brand
+                        experience.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the sponsorship pipeline work?
+                    <span class="faq-icon"></span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        It's a built-in CRM specifically designed for newsletter ads. You can track inbound requests,
+                        manage ad copy, forecast revenue against your publishing schedule, and automatically generate
+                        post-send performance reports to send to your partners.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="cta-section reveal">
+            <h2>Ready to build a calmer business?</h2>
+            <p>Join hundreds of design-conscious founders who have moved their audience operations to LetterMoss.</p>
+            <a href="#" class="btn btn-primary cta-alt-btn">Start your 14-day
+                trial</a>
+            <p class="cta-note">No credit card required.
+                Cancel anytime.</p>
+        </div>
+    </div>
+
+    <footer class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                    </svg>
+                    LetterMoss
+                </a>
+                <p>The calm operating system for premium newsletters and creator-led startups.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Changelog</a></li>
+                    <li><a href="#">Migration Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">The Calm Founder Blog</a></li>
+                    <li><a href="#">Sponsorship Directory</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 LetterMoss Inc. All rights reserved.</span>
+            <div class="footer-socials">
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const button = item.querySelector('.faq-question');
+                button.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    // Close all
+                    faqItems.forEach(faq => faq.classList.remove('active'));
+                    // Open clicked if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Intersection Observer for scroll animations (Reveal)
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        // If it's the KPI strip, trigger counters
+                        if (entry.target.classList.contains('kpi-item')) {
+                            const counter = entry.target.querySelector('.counter');
+                            if (counter && !counter.classList.contains('counted')) {
+                                animateCounter(counter);
+                                counter.classList.add('counted');
+                            }
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealOnScroll.observe(el);
+            });
+
+            // Counter Animation
+            function animateCounter(element) {
+                const target = parseFloat(element.getAttribute('data-target'));
+                const duration = 2000; // ms
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        clearInterval(timer);
+                        current = target;
+                    }
+
+                    // Format based on value size
+                    if (target % 1 !== 0) {
+                        element.innerText = current.toFixed(1); // For decimals like 2.4M
+                    } else {
+                        element.innerText = Math.floor(current).toLocaleString();
+                    }
+                }, 16);
+            }
+        });
+    </script>
+</body>
+
+</html>

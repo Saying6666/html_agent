@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ember Table | A Culinary Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #0F1012;
+            --charcoal-surface: #1A1B1E;
+            --ivory: #F5F4EE;
+            --champagne: #E6DCC8;
+            --silver-blue: #A8B5C0;
+            --ember: #CF5C36;
+            --ember-muted: #8A4027;
+
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+
+            --glass-bg: rgba(245, 244, 238, 0.03);
+            --glass-border: rgba(245, 244, 238, 0.08);
+            --glass-blur: blur(20px);
+
+            --transition-smooth: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition-fast: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--charcoal);
+            color: var(--ivory);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Background Effects */
+        .ambient-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .glow-1 {
+            top: -10%;
+            left: -10%;
+            background: var(--silver-blue);
+        }
+
+        .glow-2 {
+            bottom: -20%;
+            right: -10%;
+            background: var(--ember);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--champagne);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Typography Utilities */
+        .text-sm {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .text-lg {
+            font-size: 1.25rem;
+        }
+
+        .text-xl {
+            font-size: 2.5rem;
+        }
+
+        .text-xxl {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+        }
+
+        .text-italic {
+            font-style: italic;
+        }
+
+        .text-ember {
+            color: var(--ember);
+        }
+
+        .text-silver {
+            color: var(--silver-blue);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 2px;
+        }
+
+        .glass-card {
+            padding: 3rem;
+            transition: var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            background: rgba(245, 244, 238, 0.06);
+            border-color: rgba(245, 244, 238, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--ember);
+            color: var(--ivory);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--ember-muted);
+            transform: scale(1.02);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-glass {
+            background: rgba(245, 244, 238, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--champagne);
+        }
+
+        .btn-glass:hover {
+            background: rgba(245, 244, 238, 0.1);
+            border-color: var(--champagne);
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-sm {
+            padding: 4rem 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.5rem 5%;
+            transition: var(--transition-smooth);
+        }
+
+        nav.scrolled {
+            background: rgba(15, 16, 18, 0.8);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--champagne);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ivory);
+            opacity: 0.7;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--ember);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15, 16, 18, 0.4) 0%, rgba(15, 16, 18, 0.8) 70%, rgba(15, 16, 18, 1) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 5rem;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        /* Reservation Widget */
+        .reservation-widget {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .widget-header {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .widget-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--silver-blue);
+        }
+
+        .custom-select {
+            appearance: none;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(245, 244, 238, 0.2);
+            color: var(--ivory);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .custom-select:focus {
+            border-bottom-color: var(--ember);
+        }
+
+        .custom-select option {
+            background: var(--charcoal);
+            color: var(--ivory);
+        }
+
+        /* Tasting Chapters */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .chapter-card {
+            grid-column: span 6;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 1px solid var(--glass-border);
+        }
+
+        .chapter-card:nth-child(even) {
+            grid-column: 7 / -1;
+            margin-top: 8rem;
+        }
+
+        .chapter-card:nth-child(odd) {
+            grid-column: 1 / 7;
+        }
+
+        .chapter-indicator {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 11px;
+            height: 11px;
+            background: var(--ember);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--ember);
+        }
+
+        .chapter-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 2px;
+            filter: grayscale(20%) brightness(0.8);
+            transition: var(--transition-smooth);
+        }
+
+        .chapter-card:hover .chapter-img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        /* Chef Philosophy */
+        .philosophy-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .philosophy-img {
+            position: relative;
+        }
+
+        .philosophy-img img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .philosophy-img::after {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--glass-border);
+            z-index: -1;
+        }
+
+        .quote-mark {
+            font-family: var(--font-serif);
+            font-size: 6rem;
+            color: var(--ember);
+            line-height: 0;
+            opacity: 0.5;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        /* Pairings Carousel */
+        .carousel-container {
+            position: relative;
+            margin-top: 3rem;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            padding-bottom: 2rem;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-item {
+            min-width: 350px;
+            scroll-snap-align: start;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border-radius: 2px;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--ivory);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .carousel-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        /* Metrics / Counters */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 4rem 0;
+        }
+
+        .metric-value {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--champagne);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Atmosphere Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.large {
+            grid-column: span 2;
+        }
+
+        /* FAQ Accordion */
+        .faq-wrap {
+            max-width: 800px;
+            margin: 4rem auto 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .faq-question {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            color: var(--champagne);
+            transition: var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            color: var(--ivory);
+        }
+
+        .faq-icon {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background: var(--ember);
+            transition: var(--transition-smooth);
+        }
+
+        .faq-icon::before {
+            top: 9px;
+            left: 0;
+            width: 20px;
+            height: 2px;
+        }
+
+        .faq-icon::after {
+            top: 0;
+            left: 9px;
+            width: 2px;
+            height: 20px;
+        }
+
+        .faq-item.active .faq-icon::after {
+            transform: rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+            opacity: 0.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 4rem 5% 2rem;
+            background: var(--charcoal-surface);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+        }
+
+        .footer-brand h2 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            opacity: 0.6;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--silver-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links ul a {
+            opacity: 0.7;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links ul a:hover {
+            opacity: 1;
+            color: var(--ember);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .nav-cta {
+            padding: 0.75rem 1.5rem;
+        }
+
+        .widget-subnote {
+            opacity: 0.6;
+            margin-top: 0.5rem;
+        }
+
+        .reservation-action {
+            margin-top: 1rem;
+        }
+
+        .reservation-note {
+            font-size: 0.75rem;
+            text-align: center;
+            opacity: 0.5;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-intro-title {
+            margin: 1rem 0;
+        }
+
+        .section-intro-copy {
+            opacity: 0.7;
+        }
+
+        .chapter-description {
+            opacity: 0.8;
+        }
+
+        .section-surface {
+            background: var(--charcoal-surface);
+        }
+
+        .philosophy-title {
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-copy-primary {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-copy-secondary {
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .pairings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .pairing-price {
+            margin-bottom: 1rem;
+        }
+
+        .pairing-description {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header {
+            text-align: center;
+        }
+
+        .footer-brand-logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-muted {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin: 0 auto 2rem;
+            }
+
+            .reservation-widget {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .philosophy-wrap {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .philosophy-img {
+                order: 2;
+            }
+
+            .philosophy-text {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .text-xxl {
+                font-size: 3rem;
+            }
+
+            .chapter-card:nth-child(even),
+            .chapter-card:nth-child(odd) {
+                grid-column: 1 / -1;
+                margin-top: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Simplified for mobile */
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item.large {
+                grid-column: span 1;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">Ember Table</div>
+            <div class="nav-links">
+                <a href="#chapters">The Journey</a>
+                <a href="#philosophy">Philosophy</a>
+                <a href="#pairings">Pairings</a>
+                <a href="#faq">Guest Notes</a>
+            </div>
+            <a href="#reserve" class="btn btn-glass nav-cta">Book Table</a>
+        </div>
+    </nav>
+
+    <header class="hero" id="reserve">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <p class="text-sm text-silver">A 12-Course Sensory Exploration</p>
+                <h1 class="text-xxl">The Hearth.<br>The Harvest.<br>The Ephemeral.</h1>
+                <p>An intimate dining experience grounded in fire, season, and provenance. We surrender to the
+                    micro-seasons, crafting a narrative that changes with the wind.</p>
+                <a href="#chapters" class="btn btn-glass">Discover the Menu</a>
+            </div>
+
+            <div class="glass reservation-widget">
+                <div class="widget-header">
+                    <h3>Secure a Seat</h3>
+                    <p class="text-sm widget-subnote">Releasing 1st of every month</p>
+                </div>
+
+                <div class="input-group">
+                    <label for="party-size">Party Size</label>
+                    <select id="party-size" name="party-size" class="custom-select" aria-label="Party size">
+                        <option>2 Guests</option>
+                        <option>3 Guests</option>
+                        <option>4 Guests</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="reservation-date">Date</label>
+                    <select id="reservation-date" name="reservation-date" class="custom-select"
+                        aria-label="Reservation date">
+                        <option>Select Available Date</option>
+                        <option>Nov 12 - 7:00 PM</option>
+                        <option>Nov 13 - 7:00 PM</option>
+                        <option>Nov 14 - 7:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="input-group reservation-action">
+                    <button class="btn btn-primary">Request Reservation</button>
+                </div>
+
+                <p class="reservation-note">Limited to 14 guests per evening.</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="section container" id="chapters">
+        <div class="section-intro">
+            <p class="text-sm text-ember">The Menu</p>
+            <h2 class="text-xl section-intro-title">A Sequence of Chapters</h2>
+            <p class="section-intro-copy">Rather than disconnected dishes, Ember Table presents an unfolding narrative. Each
+                chapter pays homage to a specific elevation, climate, and technique.</p>
+        </div>
+
+        <div class="chapter-grid">
+            <div class="chapter-card glass-card">
+                <div class="chapter-indicator"></div>
+                <p class="text-sm text-silver">Prologue</p>
+                <h3>Smoke & Sea</h3>
+                <img src="https://images.unsplash.com/photo-1599813295982-f5bf63674b0f?q=80&w=1000&auto=format&fit=crop"
+                    alt="Oyster dish" class="chapter-img">
+                <p class="chapter-description">Cold-smoked local bivalves, kelp oil, and a delicate spruce broth. An awakening
+                    of the palate referencing the mist-heavy mornings of the coastline.</p>
+            </div>
+
+            <div class="chapter-card glass-card">
+                <div class="chapter-indicator"></div>
+                <p class="text-sm text-silver">Act I</p>
+                <h3>Forest Floor</h3>
+                <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1000&auto=format&fit=crop"
+                    alt="Foraged mushrooms" class="chapter-img">
+                <p class="chapter-description">Foraged chanterelles, lacto-fermented root vegetables, and pine-needle ash. An
+                    earthy homage to the damp, fertile soil of the old-growth woods.</p>
+            </div>
+
+            <div class="chapter-card glass-card">
+                <div class="chapter-indicator"></div>
+                <p class="text-sm text-silver">Act II</p>
+                <h3>The Coals</h3>
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop"
+                    alt="Charred meat" class="chapter-img">
+                <p class="chapter-description">Dry-aged venison suspended over glowing embers of cherrywood, paired with
+                    preserved summer berries and reduced bone essence.</p>
+            </div>
+
+            <div class="chapter-card glass-card">
+                <div class="chapter-indicator"></div>
+                <p class="text-sm text-silver">Epilogue</p>
+                <h3>Ash & Orchard</h3>
+                <img src="https://images.unsplash.com/photo-1652438781682-628d3f66ed44?q=80&w=1000&auto=format&fit=crop"
+                    alt="Plated dessert" class="chapter-img">
+                <p class="chapter-description">Burnt honey ice cream, caramelized late-harvest apples, and a dusting of
+                    activated charcoal. A lingering, melancholic sweetness.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface" id="philosophy">
+        <div class="container philosophy-wrap">
+            <div class="philosophy-img">
+                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=1000&auto=format&fit=crop"
+                    alt="Chef plating">
+            </div>
+            <div class="philosophy-text">
+                <span class="quote-mark">“</span>
+                <h2 class="text-xl philosophy-title">We don't cook to transform; we cook to reveal.</h2>
+                <p class="philosophy-copy-primary">Fire is our oldest tool, yet our most unpredictable
+                    partner. At Ember Table, the kitchen relies entirely on open flames, burning local hardwoods to coax
+                    out hidden dimensions of flavor.</p>
+                <p class="philosophy-copy-secondary">Our relationships with foragers, farmers, and fishermen
+                    dictate the menu entirely. If the boats don't go out, the menu changes. It is a philosophy of
+                    extreme presence.</p>
+                <p class="text-sm text-ember">— Elias Vance, Executive Chef</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section container" id="pairings">
+        <div class="pairings-header">
+            <div>
+                <p class="text-sm text-ember">Liquid Narrative</p>
+                <h2 class="text-xl">Beverage Pairings</h2>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn prev" type="button" aria-label="Previous pairing" title="Previous pairing">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+                <button class="carousel-btn next" type="button" aria-label="Next pairing" title="Next pairing">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="carousel-item glass glass-card">
+                    <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=800&auto=format&fit=crop"
+                        alt="Wine pouring">
+                    <h3>Ancestral Vines</h3>
+                    <p class="text-sm text-silver pairing-price">$125 / Guest</p>
+                    <p class="pairing-description">A curated selection of low-intervention wines, focusing
+                        on small-plot vineyards and ancient varietals that mirror our culinary philosophy.</p>
+                </div>
+
+                <div class="carousel-item glass glass-card">
+                    <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=800&auto=format&fit=crop"
+                        alt="Cocktail">
+                    <h3>Curated Terroir</h3>
+                    <p class="text-sm text-silver pairing-price">$185 / Guest</p>
+                    <p class="pairing-description">Our premium pairing. Rare vintage wines, small-batch
+                        sakes, and bespoke distillations designed to elevate the sensory peaks of the menu.</p>
+                </div>
+
+                <div class="carousel-item glass glass-card">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=800&auto=format&fit=crop"
+                        alt="Infusions">
+                    <h3>Botanical Infusions</h3>
+                    <p class="text-sm text-silver pairing-price">$85 / Guest</p>
+                    <p class="pairing-description">A deeply complex, non-alcoholic sequence utilizing
+                        house-made kombuchas, clarified juices, and foraged teas tailored to each chapter.</p>
+                </div>
+
+                <div class="carousel-item glass glass-card">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=800&auto=format&fit=crop"
+                        alt="Cellar">
+                    <h3>The Cellar Collection</h3>
+                    <p class="text-sm text-silver pairing-price">Varies</p>
+                    <p class="pairing-description">Guests are invited to browse our subterranean cellar to
+                        select their own bottles from our deep library of classic and avant-garde producers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-sm container">
+        <div class="metrics-grid">
+            <div>
+                <div class="metric-value counter" data-target="12">0</div>
+                <p class="text-sm text-silver">Courses</p>
+            </div>
+            <div>
+                <div class="metric-value counter" data-target="14">0</div>
+                <p class="text-sm text-silver">Seats Per Night</p>
+            </div>
+            <div>
+                <div class="metric-value counter" data-target="180">0</div>
+                <p class="text-sm text-silver">Minutes of Dining</p>
+            </div>
+            <div>
+                <div class="metric-value counter" data-target="4">0</div>
+                <p class="text-sm text-silver">Micro-Seasons</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section container" id="atmosphere">
+        <div class="section-header">
+            <p class="text-sm text-ember">The Space</p>
+            <h2 class="text-xl">Intimate & Atmospheric</h2>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item large">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop"
+                    alt="Dining room">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop"
+                    alt="Table setting">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800&auto=format&fit=crop"
+                    alt="Kitchen fire">
+            </div>
+            <div class="gallery-item large">
+                <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?q=80&w=1200&auto=format&fit=crop"
+                    alt="Wine cellar">
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-surface" id="faq">
+        <div class="container">
+            <div class="faq-header">
+                <p class="text-sm text-ember">Details & Protocol</p>
+                <h2 class="text-xl">Guest Notes</h2>
+            </div>
+
+            <div class="faq-wrap">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does the reservation cadence work?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We release tables for the following month on the 1st of every month at 10:00 AM local time.
+                            Due to our strictly limited seating of 14 guests per evening, reservations often fill within
+                            hours. We recommend utilizing our waitlist feature for sudden cancellations.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can dietary restrictions be accommodated?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Because our narrative is strictly tied to specific techniques and micro-seasonal ingredients,
+                            we cannot accommodate severe aversions or vegan diets. We can, however, adjust for
+                            pescatarian and gluten-free diets with a minimum of 48 hours' notice prior to your
+                            reservation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the expected attire?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We request smart, elegant attire that reflects the elevated nature of the evening. Jackets
+                            are preferred for gentlemen, but not strictly required. Please refrain from wearing
+                            activewear, shorts, or open-toed shoes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the pacing of the tasting experience?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The 12-course sequence is designed to unfold over approximately two and a half to three
+                            hours. It is an immersive, leisurely experience meant to be savored without haste.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="nav-logo footer-brand-logo">Ember Table</div>
+                <p>A culinary destination exploring the tension between primal fire and precise refinement.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="#chapters">The Menu</a></li>
+                    <li><a href="#philosophy">Philosophy</a></li>
+                    <li><a href="#pairings">Beverage Program</a></li>
+                    <li><a href="#faq">Guest Notes</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li class="footer-muted">184 Culinary District, Floor 2<br>Metropolis, NY 10012</li>
+                    <li><a href="mailto:reservations@embertable.com">reservations@embertable.com</a></li>
+                    <li class="footer-muted">+1 (555) 019-2834</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Ember Table. All rights reserved.</span>
+            <span>Concept-driven Hospitality</span>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Carousel Logic
+        const track = document.querySelector('.carousel-track');
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        const nextBtn = document.querySelector('.carousel-btn.next');
+
+        const scrollAmount = 380; // Item width + gap
+
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 100;
+
+        const animateCounters = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                    observer.unobserve(counter);
+                }
+            });
+        };
+
+        const counterObserver = new IntersectionObserver(animateCounters, {
+            threshold: 0.5
+        });
+
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // Close other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

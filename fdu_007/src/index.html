@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MechaStudio Journal | The Future of Robotics Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette */
+            --bg-deep: #0b0510;
+            --plum-dark: #1f0b2e;
+            --plum-base: #3b1156;
+            --electric-blue: #00f0ff;
+            --vivid-violet: #8a2be2;
+            --cyan: #00e5ff;
+            --coral: #ff4081;
+
+            /* Text Colors */
+            --text-pure: #ffffff;
+            --text-main: #e8dff5;
+            --text-muted: #a392b8;
+
+            /* UI Elements */
+            --glass-bg: rgba(31, 11, 46, 0.4);
+            --glass-border: rgba(138, 43, 226, 0.2);
+            --glow-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+
+            /* Typography */
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-display);
+            color: var(--text-pure);
+            line-height: 1.1;
+        }
+
+        a {
+            color: var(--cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--electric-blue);
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Abstract Gradient Mesh Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg-deep);
+        }
+
+        .mesh-blob {
+            position: absolute;
+            filter: blur(90px);
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: float 20s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--plum-base);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            top: 40%;
+            right: -20%;
+            width: 60vw;
+            height: 60vw;
+            background: rgba(0, 240, 255, 0.15);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            bottom: -20%;
+            left: 20%;
+            width: 45vw;
+            height: 45vw;
+            background: rgba(138, 43, 226, 0.2);
+            animation-delay: -10s;
+        }
+
+        .blob-4 {
+            top: 20%;
+            left: 40%;
+            width: 30vw;
+            height: 30vw;
+            background: rgba(255, 64, 129, 0.1);
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(3%, 5%) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-3%, 2%) scale(0.95);
+            }
+        }
+
+        /* Layout Utility */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Typography Utilities */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--cyan), var(--vivid-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .coral-text {
+            color: var(--coral);
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 24px 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            background: rgba(11, 5, 16, 0.75);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-pure);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .nav-link {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--vivid-violet), var(--plum-base));
+            color: var(--text-pure);
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4);
+            background: linear-gradient(135deg, var(--vivid-violet), var(--electric-blue));
+            color: #fff !important;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-pure);
+            border: 1px solid var(--glass-border);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(138, 43, 226, 0.1);
+            border-color: var(--cyan);
+        }
+
+        /* Hero Section (Editorial Feature) */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .editorial-label {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editorial-label::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: var(--coral);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+        }
+
+        .hero-subhead {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            max-width: 540px;
+            font-weight: 300;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 48px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-pure);
+        }
+
+        /* Hero Feature Image/Modules */
+        .hero-visual {
+            position: relative;
+        }
+
+        .visual-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .module-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .module-list li {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-list li:hover {
+            border-color: rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+            transform: translateX(8px);
+        }
+
+        .module-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .module-tag {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(138, 43, 226, 0.2);
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 3vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+            }
+        }
+
+        /* Editorial Overview */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        @media (max-width: 900px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .quote-block {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2vw, 2.25rem);
+            line-height: 1.3;
+            font-weight: 500;
+            color: var(--text-pure);
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '“';
+            position: absolute;
+            top: -40px;
+            left: -20px;
+            font-size: 6rem;
+            color: rgba(138, 43, 226, 0.2);
+            font-weight: 800;
+            z-index: -1;
+        }
+
+        .editorial-text p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .editorial-text p strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Programs Grid & Toggle */
+        .program-controls {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 100px;
+            padding: 6px;
+            margin-bottom: 48px;
+            width: fit-content;
+            border: 1px solid var(--glass-border);
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: var(--plum-base);
+            color: var(--text-pure);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .programs-container {
+            position: relative;
+        }
+
+        .programs-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .programs-view.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .program-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .program-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            box-shadow: 0 0 0 0 var(--cyan);
+            transition: box-shadow 0.4s ease;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .program-card:hover {
+            transform: translateY(-8px);
+            background: rgba(43, 11, 63, 0.6);
+            border-color: var(--cyan);
+        }
+
+        .program-card:hover::after {
+            box-shadow: inset 0 0 40px rgba(0, 240, 255, 0.1);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--cyan);
+        }
+
+        .program-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .program-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        /* Lab Highlights & Luminous Chips */
+        .lab-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .lab-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lab-image-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: linear-gradient(45deg, var(--plum-dark), var(--plum-base));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .lab-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            mix-blend-mode: luminosity;
+        }
+
+        .lab-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(11, 5, 16, 0.8) 100%);
+        }
+
+        .hardware-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .stat-chip {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-chip:hover {
+            background: rgba(0, 240, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Editorial Resource Rail */
+        .resource-rail {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding-bottom: 24px;
+            -ms-overflow-style: none;
+        }
+
+        .resource-rail::-webkit-scrollbar {
+            display: none;
+        }
+
+        .article-card {
+            min-width: 340px;
+            flex: 0 0 auto;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover {
+            border-bottom-color: var(--cyan);
+        }
+
+        .article-card:hover .article-title {
+            color: var(--cyan);
+        }
+
+        .article-meta {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--coral);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .article-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-pure);
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .article-excerpt {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* FAQ Accordion */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            padding: 24px 0;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-pure);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background: var(--cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-icon::before {
+            top: 11px;
+            left: 0;
+            width: 24px;
+            height: 2px;
+        }
+
+        .faq-icon::after {
+            top: 0;
+            left: 11px;
+            width: 2px;
+            height: 24px;
+        }
+
+        .faq-item.active .faq-icon::after {
+            transform: rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--cyan);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-answer-inner {
+            padding-bottom: 24px;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Conversion CTA */
+        .cta-section {
+            background: linear-gradient(to right, rgba(43, 11, 63, 0.8), rgba(20, 5, 29, 0.9));
+            border-radius: 32px;
+            padding: 80px 64px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            margin: 64px 0;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.1), transparent 50%);
+            animation: pulse 10s infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-bottom: 24px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px 0 40px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 64px;
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 16px;
+            max-width: 300px;
+        }
+
+        .footer-heading {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-pure);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Modal Application */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 5, 16, 0.9);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--bg-deep);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            padding: 48px;
+            position: relative;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .modal-close:hover {
+            color: var(--coral);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 14px 16px;
+            color: var(--text-pure);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .visual-card-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .visual-card-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .overview-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+        }
+
+        .quote-author {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .quote-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-deep);
+            font-weight: bold;
+        }
+
+        .quote-author-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-pure);
+        }
+
+        .quote-author-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .section-header-note {
+            max-width: 400px;
+            color: var(--text-muted);
+        }
+
+        .card-icon-coral {
+            color: var(--coral);
+        }
+
+        .label-advanced {
+            color: var(--electric-blue);
+        }
+
+        .lab-overlay-content {
+            position: absolute;
+            bottom: 32px;
+            left: 32px;
+            right: 32px;
+            z-index: 10;
+        }
+
+        .lab-overlay-title {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .lab-overlay-subtitle {
+            color: var(--cyan);
+            font-family: var(--font-display);
+        }
+
+        .labs-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            margin-bottom: 24px;
+        }
+
+        .labs-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        .cta-description {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-button-lg {
+            font-size: 1.1rem;
+            padding: 16px 32px;
+        }
+
+        .section-header.section-header-centered {
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 16px;
+        }
+
+        .footer-legal-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+
+        .select-unstyled {
+            appearance: none;
+        }
+
+        .submit-full {
+            width: 100%;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mesh-bg">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+        <div class="mesh-blob blob-4"></div>
+    </div>
+
+    <header id="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                MechaStudio
+            </a>
+            <nav class="nav-links">
+                <a href="#overview" class="nav-link">Academy</a>
+                <a href="#programs" class="nav-link">Cohorts</a>
+                <a href="#labs" class="nav-link">Hardware Labs</a>
+                <a href="#editorial" class="nav-link">Journal</a>
+            </nav>
+            <button class="btn btn-primary cta-trigger">Apply for Fall '26</button>
+        </div>
+    </header>
+
+    <section class="hero container">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <span class="editorial-label">Vol. 4 — Feature Issue</span>
+                <h1 class="hero-title">The New Blueprint for <span class="gradient-text">Robotic Autonomy.</span></h1>
+                <p class="hero-subhead">Stop simulating. Start building. MechaStudio bridges the gap between theoretical
+                    computer science and physical hardware implementation for the next generation of robotics engineers.
+                </p>
+
+                <div class="hero-actions">
+                    <button class="btn btn-primary cta-trigger">View Program Syllabus</button>
+                    <a href="#overview" class="btn btn-outline">Read the Manifesto</a>
+                </div>
+
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Next Cohort</span>
+                        <span class="meta-value">September 2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Format</span>
+                        <span class="meta-value">12-Week Hybrid</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Acceptance</span>
+                        <span class="meta-value coral-text">14% Rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <h3 class="visual-card-title">
+                        Hardware-in-the-Loop</h3>
+                    <p class="visual-card-desc">Core curriculum modules deployed directly to
+                        custom edge-compute platforms.</p>
+
+                    <ul class="module-list">
+                        <li>
+                            <span class="module-title">ROS2 Foundations</span>
+                            <span class="module-tag">Week 1-3</span>
+                        </li>
+                        <li>
+                            <span class="module-title">Applied Kinematics</span>
+                            <span class="module-tag">Week 4-6</span>
+                        </li>
+                        <li>
+                            <span class="module-title">Computer Vision & SLAM</span>
+                            <span class="module-tag">Week 7-9</span>
+                        </li>
+                        <li>
+                            <span class="module-title">Autonomous Deployment</span>
+                            <span class="module-tag">Week 10-12</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section-padding container">
+        <div class="overview-grid">
+            <div class="editorial-text">
+                <span class="editorial-label">Editorial Focus</span>
+                <h2 class="overview-title">Beyond the
+                    Breadboard.</h2>
+                <p>Traditional STEM education stalls at the prototype phase. Generic classroom phrasing and theoretical
+                    robotics kits leave a massive capability gap when students face actual industry hardware.</p>
+                <p>MechaStudio was engineered by <strong>innovation leads and autonomous systems architects</strong> to
+                    simulate a modern tech product environment. We don't build toys; we engineer sensor-fused systems.
+                </p>
+                <p>Through mentor guidance and rigorous portfolio-driven outcomes, our alumni step directly into
+                    advanced R&D labs and mid-market product teams.</p>
+            </div>
+            <div>
+                <div class="quote-block">
+                    "We realized the industry didn't need more people who could write loop structures. We needed
+                    architects who understand what happens when code hits physics."
+                </div>
+                <div class="quote-author">
+                    <div class="quote-avatar">
+                        AK</div>
+                    <div>
+                        <div class="quote-author-name">Dr.
+                            Aris Kaelen</div>
+                        <div class="quote-author-role">Lead Systems Architect, MechaStudio
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="section-padding container">
+        <div class="section-header">
+            <div>
+                <span class="editorial-label">Curriculum</span>
+                <h2 class="section-title">Cohort Tracks</h2>
+            </div>
+            <p class="section-header-note">Intensive, outcome-driven architectures designed for
+                high-school innovators and early-career operators.</p>
+        </div>
+
+        <div class="program-controls">
+            <button class="toggle-btn active" onclick="switchPlan('core')">Core Modules</button>
+            <button class="toggle-btn" onclick="switchPlan('advanced')">Advanced Autonomy</button>
+        </div>
+
+        <div class="programs-container">
+            <div id="view-core" class="programs-view">
+                <div class="program-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                    </div>
+                    <h3>Kinematics & Control</h3>
+                    <p>Master inverse kinematics, motor control theory, and PID tuning using C++ and embedded RTOS
+                        environments. Build a functioning 4-DOF manipulator from scratch.</p>
+                    <div class="card-meta">
+                        <span>8 Weeks</span>
+                        <span class="coral-text">Foundational</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                    </div>
+                    <h3>Sensor Fusion Fundamentals</h3>
+                    <p>Process IMU, LiDAR, and depth camera data streams. Learn Kalman filtering and basic odometry to
+                        give hardware spatial awareness.</p>
+                    <div class="card-meta">
+                        <span>10 Weeks</span>
+                        <span class="coral-text">Foundational</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <h3>Edge Computing Protocols</h3>
+                    <p>Bridge the gap between hardware arrays and the cloud. Study MQTT, UDP packet structures, and
+                        low-latency communication networks.</p>
+                    <div class="card-meta">
+                        <span>8 Weeks</span>
+                        <span class="coral-text">Foundational</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-advanced" class="programs-view hidden">
+                <div class="program-card">
+                    <div class="card-icon card-icon-coral">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                        </svg>
+                    </div>
+                    <h3>Computer Vision Cohort</h3>
+                    <p>Deploy neural networks to edge devices. Object detection, semantic segmentation, and real-time
+                        processing using NVIDIA Jetson frameworks.</p>
+                    <div class="card-meta">
+                        <span>12 Weeks</span>
+                        <span class="label-advanced">Advanced</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="card-icon card-icon-coral">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                    </div>
+                    <h3>Applied SLAM Systems</h3>
+                    <p>Simultaneous Localization and Mapping. Build full environmental meshes using LiDAR point clouds
+                        and camera data to map unknown terrain autonomously.</p>
+                    <div class="card-meta">
+                        <span>12 Weeks</span>
+                        <span class="label-advanced">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="labs" class="section-padding container">
+        <div class="lab-showcase">
+            <div class="lab-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    alt="Hardware Circuit Boards">
+                <div class="lab-overlay"></div>
+                <div class="lab-overlay-content">
+                    <h3 class="lab-overlay-title">Studio Lab Kit Mk.IV</h3>
+                    <p class="lab-overlay-subtitle">Shipped globally to every cohort
+                        member.</p>
+                </div>
+            </div>
+
+            <div>
+                <span class="editorial-label">Equipment Base</span>
+                <h2 class="labs-title">
+                    Physical Hardware,<br>Uncompromised.</h2>
+                <p class="labs-description">
+                    Our program centers around the proprietary Studio Lab Kit. We bypass simulated environments as
+                    quickly as possible, forcing students to handle electrical noise, torque limits, and real-world
+                    latency.
+                </p>
+
+                <div class="hardware-specs">
+                    <div class="stat-chip">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        NVIDIA Orin Nano
+                    </div>
+                    <div class="stat-chip">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        Ouster OS0 LiDAR
+                    </div>
+                    <div class="stat-chip">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        Custom BLDC Actuators
+                    </div>
+                    <div class="stat-chip">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        Stereo Depth Array
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="editorial" class="section-padding container">
+        <div class="section-header">
+            <div>
+                <span class="editorial-label">Journal & Insights</span>
+                <h2 class="section-title">The Operator's Desk</h2>
+            </div>
+        </div>
+
+        <div class="resource-rail">
+            <div class="article-card">
+                <span class="article-meta">Alumni Showcase</span>
+                <h4 class="article-title">How Team Nova solved the warehouse localization drift problem</h4>
+                <p class="article-excerpt">A deep dive into the Kalman filter tuning that won the Fall 2025 capstone
+                    showcase.</p>
+            </div>
+            <div class="article-card">
+                <span class="article-meta">Tech Brief</span>
+                <h4 class="article-title">Moving from ROS1 to ROS2: What high-school teams get wrong</h4>
+                <p class="article-excerpt">Understanding DDS implementation and avoiding common node communication
+                    bottlenecks.</p>
+            </div>
+            <div class="article-card">
+                <span class="article-meta">Industry Outlook</span>
+                <h4 class="article-title">Why mid-market logistics companies are desperate for edge-engineers</h4>
+                <p class="article-excerpt">The talent gap between pure software devs and pure mechanical engineers is
+                    widening.</p>
+            </div>
+            <div class="article-card">
+                <span class="article-meta">Syllabus Note</span>
+                <h4 class="article-title">Introducing Computer Vision to the Core Track</h4>
+                <p class="article-excerpt">Why we shifted visual odometry from an elective to a mandatory foundational
+                    module.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2>Secure your spot in the lab.</h2>
+                <p class="cta-description">Admissions for the
+                    September 2026 cohort are currently open. We review technical backgrounds and raw potential, not
+                    just GPA.</p>
+                <button class="btn btn-primary cta-trigger cta-button-lg">Begin
+                    Application Process</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding container">
+        <div class="section-header section-header-centered">
+            <span class="editorial-label">Logistics</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do I need prior C++ experience?
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        While absolute beginners are welcome in our preparatory workshops, the Core Cohort assumes basic
+                        programming literacy (Python or C++). We provide a two-week pre-course primer for admitted
+                        students to level up their syntax before diving into ROS2 architectures.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the hardware kit work?
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Upon enrollment, you receive the Studio Lab Kit Mk.IV shipped to your door. It is yours to keep.
+                        The cost of the kit is bundled into the tuition. It includes everything necessary to complete
+                        the lab assignments and build your capstone autonomous system.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is this for high school students or professionals?
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Both. We group cohorts based on existing technical proficiency, not age. We have highly advanced
+                        16-year-olds building SLAM algorithms alongside 30-year-old software engineers looking to pivot
+                        into hardware robotics.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo footer-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    MechaStudio
+                </a>
+                <p>The definitive academy for the next generation of autonomous systems engineers.</p>
+            </div>
+            <div>
+                <h4 class="footer-heading">Academy</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Core Cohort</a></li>
+                    <li><a href="#">Advanced Track</a></li>
+                    <li><a href="#">Hardware Kits</a></li>
+                    <li><a href="#">Alumni Outcomes</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Editorial</h4>
+                <ul class="footer-links">
+                    <li><a href="#">The Journal</a></li>
+                    <li><a href="#">Capstone Archive</a></li>
+                    <li><a href="#">Tech Briefs</a></li>
+                    <li><a href="#">Manifesto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Admissions</a></li>
+                    <li><a href="#">For Parents</a></li>
+                    <li><a href="#">Enterprise Training</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 MechaStudio Learning Inc.</span>
+            <div class="footer-legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="applyModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <span class="editorial-label">Admissions</span>
+            <h3 class="modal-title">Fall '26 Application
+            </h3>
+
+            <form id="applicationForm"
+                onsubmit="event.preventDefault(); alert('Application submitted successfully!'); document.getElementById('closeModal').click();">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="Jane Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="jane@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Primary Interest</label>
+                    <select class="form-input select-unstyled" required>
+                        <option value="core">Core Cohort (Foundational)</option>
+                        <option value="advanced">Advanced Autonomy (CV & SLAM)</option>
+                        <option value="undecided">Undecided / Evaluate my portfolio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Github or Portfolio Link (Optional)</label>
+                    <input type="url" class="form-input" placeholder="https://github.com/...">
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-full">Submit Initial
+                    Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Navbar Blur on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Pricing/Plan Toggle Logic
+        function switchPlan(planType) {
+            // Update buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update views
+            const coreView = document.getElementById('view-core');
+            const advView = document.getElementById('view-advanced');
+
+            if (planType === 'core') {
+                advView.classList.add('hidden');
+                setTimeout(() => {
+                    coreView.classList.remove('hidden');
+                }, 50); // Small delay to allow display:none to switch before animating opacity
+            } else {
+                coreView.classList.add('hidden');
+                setTimeout(() => {
+                    advView.classList.remove('hidden');
+                }, 50);
+            }
+        }
+
+        // FAQ Accordion Logic
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const answer = button.nextElementSibling;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all others
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Modal Logic
+        const modal = document.getElementById('applyModal');
+        const triggers = document.querySelectorAll('.cta-trigger');
+        const closeBtn = document.getElementById('closeModal');
+
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

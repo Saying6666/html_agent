@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPRINT ASSEMBLY 2026 | Remote Design Sprint Summit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --acid-yellow: #DFFF00;
+            --cobalt: #2E5BFF;
+            --tomato: #FF4D00;
+            --mint: #00FF94;
+            --border-width: 3px;
+            --shadow-offset: 6px;
+            --transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .display-font {
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+
+        /* --- Utilities --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .neo-card {
+            background: var(--white);
+            border: var(--border-width) solid var(--black);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
+            transition: var(--transition);
+        }
+
+        .neo-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px var(--black);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--black);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            background: var(--white);
+        }
+
+        .badge-acid {
+            background: var(--acid-yellow);
+        }
+
+        .badge-mint {
+            background: var(--mint);
+        }
+
+        .badge-top {
+            align-self: flex-start;
+        }
+
+        .badge-pro {
+            align-self: flex-start;
+            background: var(--tomato);
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--acid-yellow);
+            color: var(--black);
+            padding: 1.5rem 3rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: var(--border-width) solid var(--black);
+            box-shadow: 5px 5px 0px var(--black);
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            font-size: 1.25rem;
+        }
+
+        .btn-centered {
+            text-align: center;
+        }
+
+        .btn-light {
+            background: var(--white);
+        }
+
+        .mt-4 {
+            margin-top: 4rem;
+        }
+
+        .btn-primary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--cobalt);
+            background: var(--white);
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--white);
+            border-bottom: var(--border-width) solid var(--black);
+            padding: 1rem 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 8rem 0 4rem 0;
+            background: var(--white);
+            border-bottom: var(--border-width) solid var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-label {
+            background: var(--cobalt);
+            color: var(--white);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 12vw, 10rem);
+            margin-bottom: 2rem;
+            letter-spacing: -4px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: end;
+        }
+
+        .hero-desc {
+            font-size: 1.75rem;
+            font-weight: 500;
+            max-width: 800px;
+        }
+
+        .event-meta {
+            border-left: var(--border-width) solid var(--black);
+            padding-left: 2rem;
+        }
+
+        .meta-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-label {
+            display: block;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--tomato);
+            font-size: 0.9rem;
+        }
+
+        .meta-value {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* --- Keynote Lineup --- */
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        .section-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 4rem;
+            border-bottom: var(--border-width) solid var(--black);
+            padding-bottom: 2rem;
+        }
+
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .speaker-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .speaker-img {
+            width: 100%;
+            height: 400px;
+            background: var(--acid-yellow);
+            border-bottom: var(--border-width) solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            transition: var(--transition);
+        }
+
+        .speaker-card:hover .speaker-img {
+            background: var(--cobalt);
+            color: var(--white);
+        }
+
+        .speaker-info {
+            padding: 1.5rem;
+        }
+
+        .speaker-role {
+            color: var(--tomato);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .speaker-name {
+            font-size: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .speaker-bio {
+            margin-top: 1rem;
+        }
+
+        /* --- Agenda (Tabs) --- */
+        .agenda-container {
+            margin-top: 3rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: -3px;
+        }
+
+        .tab-btn {
+            padding: 1.5rem 3rem;
+            border: var(--border-width) solid var(--black);
+            background: var(--white);
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        .tab-btn.active {
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            z-index: 2;
+        }
+
+        .agenda-content {
+            border: var(--border-width) solid var(--black);
+            background: var(--white);
+            display: none;
+        }
+
+        .agenda-content.active {
+            display: block;
+        }
+
+        .agenda-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 250px;
+            padding: 2rem;
+            border-bottom: var(--border-width) solid var(--black);
+            align-items: center;
+        }
+
+        .agenda-row:last-child {
+            border-bottom: none;
+        }
+
+        .agenda-time {
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .agenda-topic h4 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Workshop Tracks --- */
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .track-card {
+            padding: 2rem;
+        }
+
+        .track-card.mint {
+            background: var(--mint);
+        }
+
+        .track-card.yellow {
+            background: var(--acid-yellow);
+        }
+
+        .track-card.white {
+            background: var(--white);
+        }
+
+        .track-num {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: block;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .track-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Sponsors --- */
+        .marquee {
+            border-top: var(--border-width) solid var(--black);
+            border-bottom: var(--border-width) solid var(--black);
+            padding: 2rem 0;
+            overflow: hidden;
+            background: var(--black);
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            font-size: 3rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            margin-right: 4rem;
+            text-transform: uppercase;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* --- Ticket Tiers --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .price-card {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card-pro {
+            background: var(--cobalt);
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .price-val {
+            font-size: 5rem;
+            font-weight: 800;
+            font-family: 'Syne', sans-serif;
+            margin: 2rem 0;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 3rem;
+            flex-grow: 1;
+        }
+
+        .price-features li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+        }
+
+        /* --- FAQ (Accordion) --- */
+        .faq-item {
+            border-bottom: var(--border-width) solid var(--black);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 2rem 0;
+            background: none;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-bottom: 0;
+        }
+
+        .faq-answer p {
+            padding-bottom: 2rem;
+            font-size: 1.2rem;
+            max-width: 800px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            font-size: 2rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 6rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .footer-logo {
+            font-size: 4rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .footer-desc {
+            opacity: 0.7;
+            max-width: 400px;
+            font-size: 1.2rem;
+        }
+
+        .footer-heading {
+            margin-bottom: 2rem;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-link {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            margin-top: 6rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* --- Scroll Reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 992px) {
+
+            .hero-grid,
+            .track-grid,
+            .footer-grid,
+            .agenda-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .agenda-row {
+                gap: 1rem;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .tab-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo">SPRINT ASSEMBLY.</div>
+            <div class="nav-links">
+                <a href="#speakers">Speakers</a>
+                <a href="#agenda">Agenda</a>
+                <a href="#tickets">Tickets</a>
+            </div>
+            <a href="#tickets" class="badge badge-acid">Join the Assembly</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <span class="hero-label">SEPTEMBER 14-16, 2026 // VIRTUAL SUMMIT</span>
+            <h1>BREAK THE<br>PROCESS.</h1>
+            <div class="hero-grid">
+                <div class="hero-desc">
+                    A high-octane remote summit for facilitators, design leads, and strategists who are tired of stale
+                    digital whiteboards and dead-end workshops.
+                </div>
+                <div class="event-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Format</span>
+                        <span class="meta-value">100% REMOTE</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Capacity</span>
+                        <span class="meta-value">500 SEATS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="#tickets" class="btn-primary">Secure Your Access</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span class="marquee-item">Miro</span>
+            <span class="marquee-item">Figma</span>
+            <span class="marquee-item">Notion</span>
+            <span class="marquee-item">Linear</span>
+            <span class="marquee-item">Mural</span>
+            <span class="marquee-item">Slack</span>
+            <span class="marquee-item">Miro</span>
+            <span class="marquee-item">Figma</span>
+            <span class="marquee-item">Notion</span>
+            <span class="marquee-item">Linear</span>
+            <span class="marquee-item">Mural</span>
+            <span class="marquee-item">Slack</span>
+        </div>
+    </div>
+
+    <section id="speakers" class="container section-padding reveal">
+        <h2 class="section-title">THE ARCHITECTS</h2>
+        <div class="speaker-grid">
+            <div class="neo-card speaker-card">
+                <div class="speaker-img">✦</div>
+                <div class="speaker-info">
+                    <span class="speaker-role">Design Director @ Stripe</span>
+                    <h3 class="speaker-name">Aris Thorne</h3>
+                    <p class="speaker-bio">Specializing in rapid prototyping for high-stakes fintech
+                        infrastructure.</p>
+                </div>
+            </div>
+            <div class="neo-card speaker-card">
+                <div class="speaker-img">✺</div>
+                <div class="speaker-info">
+                    <span class="speaker-role">Head of Remote @ Airbnb</span>
+                    <h3 class="speaker-name">Lena Volkov</h3>
+                    <p class="speaker-bio">Master of asynchronous facilitation and distributed team rituals.</p>
+                </div>
+            </div>
+            <div class="neo-card speaker-card">
+                <div class="speaker-img">⧖</div>
+                <div class="speaker-info">
+                    <span class="speaker-role">Author of "Kill the Meeting"</span>
+                    <h3 class="speaker-name">Marcus Chen</h3>
+                    <p class="speaker-bio">Strategy lead focused on extreme efficiency in cross-functional
+                        sprints.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="agenda" class="container section-padding reveal">
+        <h2 class="section-title">THE LOG</h2>
+        <div class="agenda-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'day1')">DAY 01: STRATEGY</button>
+                <button class="tab-btn" onclick="openTab(event, 'day2')">DAY 02: EXECUTION</button>
+                <button class="tab-btn" onclick="openTab(event, 'day3')">DAY 03: SCALE</button>
+            </div>
+
+            <div id="day1" class="agenda-content active">
+                <div class="agenda-row">
+                    <div class="agenda-time">09:00 AM</div>
+                    <div class="agenda-topic">
+                        <h4>Opening: The State of Design 2026</h4>
+                        <p>Defining the new standard for remote collaboration.</p>
+                    </div>
+                    <div><span class="badge">Keynote</span></div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">11:30 AM</div>
+                    <div class="agenda-topic">
+                        <h4>Problem Framing at Speed</h4>
+                        <p>Techniques for aligning 12 stakeholders in 60 minutes.</p>
+                    </div>
+                    <div><span class="badge badge-mint">Workshop</span></div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">02:00 PM</div>
+                    <div class="agenda-topic">
+                        <h4>The Psychology of Video Fatigue</h4>
+                        <p>Keeping energy high during 6-hour sprint sessions.</p>
+                    </div>
+                    <div><span class="badge">Fireside</span></div>
+                </div>
+            </div>
+
+            <div id="day2" class="agenda-content">
+                <div class="agenda-row">
+                    <div class="agenda-time">10:00 AM</div>
+                    <div class="agenda-topic">
+                        <h4>Figma-First Sprints</h4>
+                        <p>Bypassing documentation for direct-to-code prototyping.</p>
+                    </div>
+                    <div><span class="badge badge-mint">Workshop</span></div>
+                </div>
+                <div class="agenda-row">
+                    <div class="agenda-time">01:00 PM</div>
+                    <div class="agenda-topic">
+                        <h4>Facilitating with AI</h4>
+                        <p>Using LLMs to synthesize user feedback in real-time.</p>
+                    </div>
+                    <div><span class="badge">Deep Dive</span></div>
+                </div>
+            </div>
+
+            <div id="day3" class="agenda-content">
+                <div class="agenda-row">
+                    <div class="agenda-time">11:00 AM</div>
+                    <div class="agenda-topic">
+                        <h4>Building an Internal Sprint Lab</h4>
+                        <p>How to make rapid experimentation a company-wide habit.</p>
+                    </div>
+                    <div><span class="badge">Strategy</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-padding reveal">
+        <h2 class="section-title">THE TRACKS</h2>
+        <div class="track-grid">
+            <div class="neo-card track-card mint">
+                <span class="track-num">01</span>
+                <h3 class="track-title">Facilitation Mastery</h3>
+                <p>Advanced techniques for managing difficult personalities, silent groups, and time-boxing.</p>
+            </div>
+            <div class="neo-card track-card yellow">
+                <span class="track-num">02</span>
+                <h3 class="track-title">System Design</h3>
+                <p>Building reusable sprint kits that allow you to spin up a new session in under 5 minutes.</p>
+            </div>
+            <div class="neo-card track-card white">
+                <span class="track-num">03</span>
+                <h3 class="track-title">Product Strategy</h3>
+                <p>Ensuring your sprint outcomes actually map to business KPIs and engineering roadmaps.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tickets" class="container section-padding reveal">
+        <h2 class="section-title">CHOOSE ACCESS</h2>
+        <div class="pricing-grid">
+            <div class="neo-card price-card">
+                <span class="badge badge-top">Individual</span>
+                <div class="price-val">$499</div>
+                <ul class="price-features">
+                    <li>3 Days of Main Stage Talks</li>
+                    <li>Access to Slack Community</li>
+                    <li>Session Recordings (30 Days)</li>
+                    <li>Digital Playbook 2026</li>
+                </ul>
+                <a href="#" class="btn-primary btn-centered">Get Started</a>
+            </div>
+            <div class="neo-card price-card price-card-pro">
+                <span class="badge badge-pro">Professional</span>
+                <div class="price-val">$899</div>
+                <ul class="price-features">
+                    <li>Everything in Individual</li>
+                    <li>All Workshop Track Access</li>
+                    <li>Facilitation Certification</li>
+                    <li>Miro & Figma Template Bundle</li>
+                    <li>Lifetime Recording Access</li>
+                </ul>
+                <a href="#" class="btn-primary btn-light btn-centered">Go Pro</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-padding reveal">
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is this just another webinar?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely not. Sprint Assembly is built on active participation. You'll be in boards, building
+                        prototypes, and collaborating with peers, not just staring at slides.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    What tools do I need to know?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>We primarily use Figma, Miro, and Slack. Familiarity is helpful, but we have "tooling primers"
+                        sent out a week before the event to get everyone up to speed.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I get a refund if I can't make it?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>We offer full refunds up to 14 days before the event. After that, you'll receive a full credit
+                        for next year's summit or can transfer your ticket to a colleague.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <div class="footer-logo">SA_2026</div>
+                <p class="footer-desc">Pushing the boundaries of how we think,
+                    build, and collaborate in a distributed world.</p>
+            </div>
+            <div>
+                <h4 class="footer-heading">NAV</h4>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Speakers</a>
+                    <a href="#" class="footer-link">Workshops</a>
+                    <a href="#" class="footer-link">Code of Conduct</a>
+                    <a href="#" class="footer-link">Privacy</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">FOLLOW</h4>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Twitter</a>
+                    <a href="#" class="footer-link">LinkedIn</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <span>© 2026 SPRINT ASSEMBLY</span>
+            <span>DESIGNED BY THE VOID</span>
+        </div>
+    </footer>
+
+    <script>
+        // Tabs Logic
+        function openTab(evt, tabName) {
+            const contents = document.getElementsByClassName("agenda-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Accordion Logic
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Scroll Reveal Logic
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
