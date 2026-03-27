@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint Dispatch - Remote Design Sprint Summit</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --soft-white: #FAFBFC;
+            --cool-slate: #64748B;
+            --muted-blue: #3B82F6;
+            --restrained-teal: #0D9488;
+            --graphite: #1E293B;
+            --light-gray: #F1F5F9;
+            --border-color: #E2E8F0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-white);
+            color: var(--graphite);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(250, 251, 252, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--graphite);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--restrained-teal);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            fill: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--cool-slate);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--graphite);
+        }
+
+        .nav-cta {
+            padding: 0.75rem 1.5rem;
+            background: var(--graphite);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--restrained-teal);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            padding: 10rem 5% 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: linear-gradient(135deg, var(--soft-white) 0%, var(--light-gray) 100%);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--restrained-teal);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--restrained-teal);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--graphite);
+        }
+
+        .hero h1 span {
+            color: var(--restrained-teal);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--cool-slate);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--graphite);
+        }
+
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--cool-slate);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--graphite);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--restrained-teal);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--graphite);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--restrained-teal);
+            color: var(--restrained-teal);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(30, 41, 59, 0.15);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(30, 41, 59, 0.1);
+        }
+
+        .floating-card.top {
+            top: -20px;
+            right: -20px;
+        }
+
+        .floating-card.bottom {
+            bottom: 40px;
+            left: -30px;
+        }
+
+        .floating-card-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .floating-card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--light-gray);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--restrained-teal);
+            fill: none;
+        }
+
+        .floating-card-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .floating-card-text p {
+            font-size: 0.8rem;
+            color: var(--cool-slate);
+        }
+
+        /* Summit Overview */
+        .overview {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--cool-slate);
+            font-size: 1.1rem;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .overview-card {
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover {
+            border-color: var(--restrained-teal);
+            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .overview-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .overview-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--restrained-teal);
+            fill: none;
+        }
+
+        .overview-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .overview-card p {
+            font-size: 0.95rem;
+            color: var(--cool-slate);
+            line-height: 1.7;
+        }
+
+        /* Featured Sessions */
+        .sessions {
+            padding: 6rem 5%;
+            background: var(--light-gray);
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            transition: all 0.3s ease;
+        }
+
+        .session-card:hover {
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .session-image {
+            width: 200px;
+            min-height: 100%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .session-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .session-content {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .session-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--light-gray);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--restrained-teal);
+            margin-bottom: 1rem;
+        }
+
+        .session-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .session-content p {
+            font-size: 0.9rem;
+            color: var(--cool-slate);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .session-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--cool-slate);
+        }
+
+        .session-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .session-meta svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--cool-slate);
+            fill: none;
+        }
+
+        /* Speakers */
+        .speakers {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .speaker-card {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .speaker-card:hover {
+            border-color: var(--restrained-teal);
+            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.08);
+        }
+
+        .speaker-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 3px solid var(--light-gray);
+        }
+
+        .speaker-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .speaker-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .speaker-role {
+            font-size: 0.85rem;
+            color: var(--restrained-teal);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .speaker-company {
+            font-size: 0.85rem;
+            color: var(--cool-slate);
+        }
+
+        /* Agenda Timeline */
+        .agenda {
+            padding: 6rem 5%;
+            background: var(--graphite);
+            color: white;
+        }
+
+        .agenda .section-header h2 {
+            color: white;
+        }
+
+        .agenda .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 2.5rem;
+            width: 14px;
+            height: 14px;
+            background: var(--restrained-teal);
+            border-radius: 50%;
+        }
+
+        .timeline-time {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--restrained-teal);
+            min-width: 100px;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .timeline-speaker {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-speaker img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .timeline-speaker span {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Sponsors */
+        .sponsors {
+            padding: 4rem 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .sponsors h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cool-slate);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sponsors-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .sponsor-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--cool-slate);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .sponsor-logo:hover {
+            opacity: 1;
+        }
+
+        /* Registration CTA */
+        .registration {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--restrained-teal) 0%, #0F766E 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .registration h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .registration>p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 300px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .pricing-card.featured {
+            background: white;
+            color: var(--graphite);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .pricing-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .pricing-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card li {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-card li::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-size: contain;
+        }
+
+        .pricing-card.featured li::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230D9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .pricing-card.featured .btn-primary {
+            background: var(--restrained-teal);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--restrained-teal);
+        }
+
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--cool-slate);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-top: 1rem;
+        }
+
+        .faq-answer p {
+            color: var(--cool-slate);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 5% 2rem;
+            background: var(--graphite);
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--restrained-teal);
+            border-color: var(--restrained-teal);
+        }
+
+        .footer-social svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            fill: none;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .overview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .speakers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .overview-grid,
+            .sessions-grid,
+            .speakers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .session-card {
+                flex-direction: column;
+            }
+
+            .session-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+            </div>
+            Sprint Dispatch
+        </a>
+        <ul class="nav-links">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#sessions">Sessions</a></li>
+            <li><a href="#speakers">Speakers</a></li>
+            <li><a href="#agenda">Agenda</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a href="#register" class="nav-cta">Register Now</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">March 24-26, 2026 • Virtual Summit</div>
+            <h1>Remote Design Sprints That <span>Actually Deliver</span></h1>
+            <p class="hero-subtitle">Join 2,000+ product leaders, designers, and strategists for three days of intensive
+                learning on facilitation, collaboration, and outcomes that matter.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number" data-count="3">0</div>
+                    <div class="hero-stat-label">Days</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number" data-count="24">0</div>
+                    <div class="hero-stat-label">Sessions</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number" data-count="18">0</div>
+                    <div class="hero-stat-label">Speakers</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number" data-count="2000">0</div>
+                    <div class="hero-stat-label">Attendees</div>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#register" class="btn btn-primary">Secure Your Spot</a>
+                <a href="#overview" class="btn btn-secondary">View Agenda</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Remote collaboration"
+                class="hero-image">
+            <div class="floating-card top">
+                <div class="floating-card-content">
+                    <div class="floating-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="floating-card-text">
+                        <h4>2,000+ Registered</h4>
+                        <p>From 45 countries</p>
+                    </div>
+                </div>
+            </div>
+            <div class="floating-card bottom">
+                <div class="floating-card-content">
+                    <div class="floating-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="floating-card-text">
+                        <h4>Early Bird Ends Soon</h4>
+                        <p>Save $200 until Feb 28</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="overview" id="overview">
+        <div class="section-header reveal">
+            <h2>Why Sprint Dispatch?</h2>
+            <p>Enterprise-grade training for teams who need remote design sprints to work at scale</p>
+        </div>
+        <div class="overview-grid">
+            <div class="overview-card reveal">
+                <div class="overview-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <h3>Proven Frameworks</h3>
+                <p>Learn battle-tested methodologies from facilitators who've run 100+ sprints for Fortune 500 companies
+                    and high-growth startups.</p>
+            </div>
+            <div class="overview-card reveal">
+                <div class="overview-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                </div>
+                <h3>Remote-First Tools</h3>
+                <p>Master the async and sync tooling stack that makes distributed collaboration feel seamless, from Miro
+                    to Loom to custom solutions.</p>
+            </div>
+            <div class="overview-card reveal">
+                <div class="overview-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                        </path>
+                    </svg>
+                </div>
+                <h3>Outcome-Focused</h3>
+                <p>Every session connects to real business outcomes. Leave with actionable strategies, not just
+                    inspiration and good intentions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Sessions -->
+    <section class="sessions" id="sessions">
+        <div class="section-header reveal">
+            <h2>Featured Sessions</h2>
+            <p>Deep dives into the challenges that matter most to enterprise teams</p>
+        </div>
+        <div class="sessions-grid">
+            <div class="session-card reveal">
+                <div class="session-image">
+                    <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=400&q=80"
+                        alt="Facilitation session">
+                </div>
+                <div class="session-content">
+                    <span class="session-tag">Workshop</span>
+                    <h3>Facilitating High-Stakes Decisions Across Time Zones</h3>
+                    <p>Learn how to run synchronous decision-making sessions when your team spans 12+ time zones,
+                        without burning anyone out.</p>
+                    <div class="session-meta">
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg> 90 min</span>
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                            </svg> Limited to 50</span>
+                    </div>
+                </div>
+            </div>
+            <div class="session-card reveal">
+                <div class="session-image">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80"
+                        alt="Async collaboration">
+                </div>
+                <div class="session-content">
+                    <span class="session-tag">Case Study</span>
+                    <h3>How Spotify Runs Async Design Sprints at Scale</h3>
+                    <p>An inside look at the systems, rituals, and tools that enable 30+ squads to run autonomous
+                        sprints with consistent quality.</p>
+                    <div class="session-meta">
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg> 60 min</span>
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                            </svg> Open to all</span>
+                    </div>
+                </div>
+            </div>
+            <div class="session-card reveal">
+                <div class="session-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80"
+                        alt="Stakeholder alignment">
+                </div>
+                <div class="session-content">
+                    <span class="session-tag">Masterclass</span>
+                    <h3>Executive Alignment Without the Theater</h3>
+                    <p>Practical techniques for getting C-suite buy-in before day one, and keeping stakeholders engaged
+                        without derailing the process.</p>
+                    <div class="session-meta">
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg> 120 min</span>
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                            </svg> Limited to 30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="session-card reveal">
+                <div class="session-image">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80"
+                        alt="Remote tools">
+                </div>
+                <div class="session-content">
+                    <span class="session-tag">Panel</span>
+                    <h3>The Remote Facilitator's Toolkit: 2026 Edition</h3>
+                    <p>A candid comparison of the latest collaboration tools, with real-world pros, cons, and
+                        integration strategies from practitioners.</p>
+                    <div class="session-meta">
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg> 75 min</span>
+                        <span><svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                            </svg> Open to all</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speakers -->
+    <section class="speakers" id="speakers">
+        <div class="section-header reveal">
+            <h2>Speaker Insights</h2>
+            <p>Learn from practitioners who've led sprints at the world's most innovative companies</p>
+        </div>
+        <div class="speakers-grid">
+            <div class="speaker-card reveal">
+                <div class="speaker-avatar">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80" alt="Sarah Chen">
+                </div>
+                <h4>Sarah Chen</h4>
+                <div class="speaker-role">Head of Design Ops</div>
+                <div class="speaker-company">Spotify</div>
+            </div>
+            <div class="speaker-card reveal">
+                <div class="speaker-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
+                        alt="Marcus Johnson">
+                </div>
+                <h4>Marcus Johnson</h4>
+                <div class="speaker-role">Principal Designer</div>
+                <div class="speaker-company">Airbnb</div>
+            </div>
+            <div class="speaker-card reveal">
+                <div class="speaker-avatar">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80"
+                        alt="Elena Rodriguez">
+                </div>
+                <h4>Elena Rodriguez</h4>
+                <div class="speaker-role">VP of Product</div>
+                <div class="speaker-company">Figma</div>
+            </div>
+            <div class="speaker-card reveal">
+                <div class="speaker-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="David Park">
+                </div>
+                <h4>David Park</h4>
+                <div class="speaker-role">Design Sprint Master</div>
+                <div class="speaker-company">Google</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda -->
+    <section class="agenda" id="agenda">
+        <div class="section-header reveal">
+            <h2>Summit Agenda</h2>
+            <p>Three days of intensive learning, structured for maximum retention and application</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-time">Day 1</div>
+                <div class="timeline-content">
+                    <h4>Foundation & Framework</h4>
+                    <p>Core principles of remote facilitation, tool setup, and pre-sprint preparation that sets teams up
+                        for success.</p>
+                    <div class="timeline-speaker">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80"
+                            alt="Sarah Chen">
+                        <span>Keynote by Sarah Chen</span>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-time">Day 2</div>
+                <div class="timeline-content">
+                    <h4>Execution & Facilitation</h4>
+                    <p>Deep dives into day-by-day facilitation techniques, managing energy remotely, and handling
+                        difficult dynamics.</p>
+                    <div class="timeline-speaker">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
+                            alt="Marcus Johnson">
+                        <span>Workshop by Marcus Johnson</span>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-time">Day 3</div>
+                <div class="timeline-content">
+                    <h4>Outcomes & Scale</h4>
+                    <p>Translating sprint outputs into roadmaps, measuring success, and building sprint culture across
+                        organizations.</p>
+                    <div class="timeline-speaker">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80"
+                            alt="Elena Rodriguez">
+                        <span>Panel with Elena Rodriguez</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors -->
+    <section class="sponsors">
+        <h3>Trusted by teams at</h3>
+        <div class="sponsors-grid">
+            <div class="sponsor-logo">Spotify</div>
+            <div class="sponsor-logo">Airbnb</div>
+            <div class="sponsor-logo">Stripe</div>
+            <div class="sponsor-logo">Notion</div>
+            <div class="sponsor-logo">Figma</div>
+            <div class="sponsor-logo">Linear</div>
+        </div>
+    </section>
+
+    <!-- Registration -->
+    <section class="registration" id="register">
+        <div class="reveal">
+            <h2>Secure Your Spot</h2>
+            <p>Join 2,000+ professionals transforming how their teams collaborate remotely. Early bird pricing ends
+                February 28.</p>
+        </div>
+        <div class="pricing-cards">
+            <div class="pricing-card reveal">
+                <h4>Individual</h4>
+                <div class="price">$299<span>/person</span></div>
+                <p>Full access for one attendee</p>
+                <ul>
+                    <li>All 24 live sessions</li>
+                    <li>30-day recording access</li>
+                    <li>Digital workbook</li>
+                    <li>Community Slack access</li>
+                </ul>
+                <a href="#" class="btn btn-secondary"
+                    style="background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Select</a>
+            </div>
+            <div class="pricing-card featured reveal">
+                <h4>Team (5+)</h4>
+                <div class="price">$249<span>/person</span></div>
+                <p>Built for team learning</p>
+                <ul>
+                    <li>Everything in Individual</li>
+                    <li>Private team channel</li>
+                    <li>1-hour team debrief session</li>
+                    <li>Custom toolkit templates</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Select Team</a>
+            </div>
+            <div class="pricing-card reveal">
+                <h4>Enterprise</h4>
+                <div class="price">Custom</div>
+                <p>For org-wide transformation</p>
+                <ul>
+                    <li>Unlimited attendees</li>
+                    <li>1-year recording access</li>
+                    <li>Private workshops</li>
+                    <li>Dedicated success manager</li>
+                </ul>
+                <a href="#" class="btn btn-secondary"
+                    style="background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Contact
+                    Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="section-header reveal">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about the summit</p>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    What time zone will sessions be in?
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>All sessions are scheduled in Pacific Time (PT) with recordings available within 4 hours. We also
+                        provide timezone-optimized schedules for Europe and Asia-Pacific attendees.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    Can I get a refund if I can't attend?
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Full refunds available until March 1, 2026. After that, tickets can be transferred to another
+                        attendee or converted to recording-only access with a 50% credit.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    Will recordings be available?
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, all sessions are recorded and available within 4 hours. Individual tickets include 30-day
+                        access; Team and Enterprise tickets include extended or unlimited access.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    What's the difference between live and recording access?
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Live attendees can participate in Q&A, breakout discussions, and networking. Recording access
+                        includes all content but excludes interactive elements.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    Do you offer group discounts?
+                    <svg viewBox="0 0 24 24" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, teams of 5+ receive automatic 17% discount. Teams of 20+ should contact us for custom
+                        enterprise pricing and private workshop options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Sprint Dispatch</h3>
+                <p>The premier remote design sprint summit for enterprise teams who need facilitation that delivers real
+                    outcomes.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" stroke-width="2">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg></a>
+                    <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Summit</h4>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#sessions">Sessions</a></li>
+                    <li><a href="#speakers">Speakers</a></li>
+                    <li><a href="#agenda">Agenda</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Sprint Guide</a></li>
+                    <li><a href="#">Tool Stack</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sprint Dispatch. All rights reserved.</p>
+            <p>Made for teams who ship</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Counter Animation
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.count);
+                    const duration = 2000;
+                    const startTime = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeProgress = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(target * easeProgress);
+
+                        entry.target.textContent = current.toLocaleString();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

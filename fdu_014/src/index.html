@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearthSignal | AI Observability Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --oat: #F5F1EB;
+            --sand: #E8E0D5;
+            --clay: #D4C4B0;
+            --espresso: #3D3229;
+            --sage: #8B9A7D;
+            --terracotta: #C17A5F;
+            --warm-white: #FDFCFA;
+            --text-muted: #6B5F55;
+
+            --font-display: 'Crimson Pro', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--warm-white);
+            color: var(--espresso);
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: var(--font-body);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            background: rgba(253, 252, 250, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 0 rgba(61, 50, 41, 0.1);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--espresso);
+        }
+
+        .nav-cta {
+            background: var(--espresso);
+            color: var(--warm-white);
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-cta:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 48px 80px;
+            background: linear-gradient(180deg, var(--oat) 0%, var(--warm-white) 100%);
+        }
+
+        .hero-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--sage);
+            color: var(--warm-white);
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--clay);
+        }
+
+        .hero-stat h3 {
+            font-size: 2.5rem;
+            color: var(--espresso);
+            margin-bottom: 4px;
+        }
+
+        .hero-stat p {
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            background: var(--sand);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-visual-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .hero-visual-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--sage);
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Selected Work */
+        .work-section {
+            padding: 120px 48px;
+        }
+
+        .section-header {
+            max-width: 1440px;
+            margin: 0 auto 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 400px;
+        }
+
+        .work-grid {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .work-card {
+            background: var(--oat);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all var(--transition-fast);
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(61, 50, 41, 0.1);
+        }
+
+        .work-card.featured {
+            grid-column: span 2;
+        }
+
+        .work-image {
+            height: 300px;
+            background: linear-gradient(135deg, var(--clay) 0%, var(--sand) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 4rem;
+            color: var(--espresso);
+            opacity: 0.6;
+        }
+
+        .work-card.featured .work-image {
+            height: 400px;
+        }
+
+        .work-info {
+            padding: 32px;
+        }
+
+        .work-tag {
+            display: inline-block;
+            background: var(--sage);
+            color: var(--warm-white);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .work-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .work-info p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+        }
+
+        /* Spotlight Section */
+        .spotlight {
+            padding: 120px 48px;
+            background: var(--espresso);
+            color: var(--warm-white);
+        }
+
+        .spotlight-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .spotlight h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 24px;
+        }
+
+        .spotlight p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+            font-size: 1.0625rem;
+        }
+
+        .spotlight-features {
+            list-style: none;
+            margin-top: 32px;
+        }
+
+        .spotlight-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .spotlight-features li::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--sage);
+            border-radius: 50%;
+        }
+
+        .spotlight-visual {
+            height: 450px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Outcomes Section */
+        .outcomes {
+            padding: 120px 48px;
+            background: var(--sand);
+        }
+
+        .outcomes-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .outcome-item {
+            padding: 40px 24px;
+            background: var(--warm-white);
+            border-radius: var(--radius-md);
+        }
+
+        .outcome-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            color: var(--espresso);
+            margin-bottom: 8px;
+        }
+
+        .outcome-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Process Section */
+        .process {
+            padding: 120px 48px;
+        }
+
+        .process-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 32px;
+            align-items: start;
+            padding: 32px;
+            background: var(--oat);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .process-step:hover {
+            background: var(--sand);
+        }
+
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--clay);
+            line-height: 1;
+        }
+
+        .step-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 48px;
+            background: var(--oat);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .testimonial-card {
+            background: var(--warm-white);
+            padding: 40px;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(61, 50, 41, 0.08);
+        }
+
+        .testimonial-quote {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--clay);
+            margin-bottom: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--espresso);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--sand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .author-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .author-role {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 120px 48px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--clay);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.0625rem;
+            font-weight: 500;
+            text-align: left;
+            background: transparent;
+            transition: color var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            color: var(--terracotta);
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-bottom: 24px;
+        }
+
+        .faq-answer p {
+            color: var(--text-muted);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 120px 48px;
+            background: var(--sage);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--warm-white);
+            margin-bottom: 24px;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.125rem;
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--warm-white);
+            color: var(--espresso);
+            padding: 16px 32px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 48px 40px;
+            background: var(--espresso);
+            color: var(--warm-white);
+        }
+
+        .footer-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9375rem;
+            margin-bottom: 24px;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--sage);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9375rem;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--warm-white);
+        }
+
+        .footer-bottom {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            transition: all var(--transition-fast);
+        }
+
+        .social-link:hover {
+            background: var(--sage);
+            border-color: var(--sage);
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-visual {
+                height: 350px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-card.featured {
+                grid-column: span 1;
+            }
+
+            .spotlight-content {
+                grid-template-columns: 1fr;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 24px 60px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .work-section,
+            .spotlight,
+            .outcomes,
+            .process,
+            .testimonials,
+            .faq,
+            .cta {
+                padding: 80px 24px;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">HearthSignal</div>
+        <div class="nav-links">
+            <a href="#work">Work</a>
+            <a href="#process">Process</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#faq">FAQ</a>
+            <button class="nav-cta" onclick="scrollToContact()">Get in Touch</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">AI Observability Platform</span>
+                <h1>Clarity in the Age of Intelligent Systems</h1>
+                <p>HearthSignal transforms how teams understand, monitor, and improve AI model performance—bringing
+                    human-centered observability to machine learning operations.</p>
+                <button class="nav-cta" onclick="scrollToContact()">Explore the Platform</button>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h3 data-count="47">0</h3>
+                        <p>Model Quality Incidents Prevented</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3 data-count="94">0</h3>
+                        <p>Faster Root Cause Detection</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3 data-count="12">0</h3>
+                        <p>Enterprise Teams Onboarded</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-visual-content">
+                    <div class="hero-visual-icon">HS</div>
+                    <p style="color: var(--text-muted); font-family: var(--font-display); font-size: 1.25rem;">Platform
+                        Dashboard</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Work -->
+    <section class="work-section" id="work">
+        <div class="section-header reveal">
+            <div>
+                <h2>Selected Work</h2>
+                <p>Case studies in AI observability, model governance, and cross-functional reliability engineering.</p>
+            </div>
+        </div>
+        <div class="work-grid">
+            <div class="work-card featured reveal">
+                <div class="work-image">Platform UI</div>
+                <div class="work-info">
+                    <span class="work-tag">Flagship Product</span>
+                    <h3>Model Quality Monitoring Dashboard</h3>
+                    <p>A comprehensive observability interface that gives ML teams real-time visibility into model
+                        drift, data quality, and prediction confidence across production environments.</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image" style="background: linear-gradient(135deg, var(--sage) 0%, var(--clay) 100%);">
+                    IR</div>
+                <div class="work-info">
+                    <span class="work-tag">Case Study</span>
+                    <h3>Incident Response Workflow</h3>
+                    <p>Streamlined alert management for model failures.</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image"
+                    style="background: linear-gradient(135deg, var(--terracotta) 0%, var(--clay) 100%);">AT</div>
+                <div class="work-info">
+                    <span class="work-tag">Tooling</span>
+                    <h3>Alert Tuning System</h3>
+                    <p>Intelligent threshold management for production alerts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spotlight Section -->
+    <section class="spotlight">
+        <div class="spotlight-content">
+            <div class="spotlight-text reveal">
+                <h2>Why Observability Matters for AI</h2>
+                <p>Traditional monitoring isn't built for the probabilistic nature of machine learning. Models drift,
+                    data shifts, and predictions that were once reliable become sources of risk.</p>
+                <p>HearthSignal provides the specialized tooling teams need to understand model behavior, catch issues
+                    before they impact users, and build trust in AI-powered products.</p>
+                <ul class="spotlight-features">
+                    <li>Real-time drift detection across feature distributions</li>
+                    <li>Automated root cause analysis for prediction errors</li>
+                    <li>Cross-functional dashboards for technical and business stakeholders</li>
+                    <li>Evaluation loops that improve models continuously</li>
+                </ul>
+            </div>
+            <div class="spotlight-visual reveal">
+                <span style="opacity: 0.3;">Observability</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes Section -->
+    <section class="outcomes">
+        <div class="outcomes-grid">
+            <div class="outcome-item reveal">
+                <div class="outcome-number" data-count="99.9">0</div>
+                <div class="outcome-label">Model Uptime Achieved</div>
+            </div>
+            <div class="outcome-item reveal">
+                <div class="outcome-number" data-count="73">0</div>
+                <div class="outcome-label">Reduction in False Alerts</div>
+            </div>
+            <div class="outcome-item reveal">
+                <div class="outcome-number" data-count="4">0</div>
+                <div class="outcome-label">Hours to Resolution (Avg)</div>
+            </div>
+            <div class="outcome-item reveal">
+                <div class="outcome-number" data-count="15">0</div>
+                <div class="outcome-label">Models Under Monitoring</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 64px;">
+            <h2>Our Approach</h2>
+            <p>How we partner with teams to implement effective AI observability</p>
+        </div>
+        <div class="process-container">
+            <div class="process-steps">
+                <div class="process-step reveal">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Discovery & Assessment</h3>
+                        <p>We audit your current ML infrastructure, identify critical models, and map stakeholder needs
+                            across engineering, product, and business teams.</p>
+                    </div>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Instrumentation Strategy</h3>
+                        <p>Design comprehensive logging and metrics collection that captures model inputs, outputs, and
+                            intermediate states without impacting latency.</p>
+                    </div>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Dashboard & Alert Configuration</h3>
+                        <p>Build role-appropriate views—from engineer-facing technical metrics to executive summaries—
+                            with intelligently tuned alert thresholds.</p>
+                    </div>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Runbook & Response Training</h3>
+                        <p>Document incident response procedures and train teams on effective debugging workflows using
+                            observability tooling.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 64px;">
+            <h2>Client Stories</h2>
+            <p>What teams say about working with HearthSignal</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">HearthSignal transformed how we think about model reliability. We went from
+                    reactive firefighting to proactive monitoring that actually prevents incidents.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SK</div>
+                    <div>
+                        <div class="author-name">Sarah Kim</div>
+                        <div class="author-role">VP of Engineering, FinTech Co</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">The cross-functional dashboards finally let our product team understand
+                    model performance in terms they can act on. Game changer for decision making.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div>
+                        <div class="author-name">Marcus Rodriguez</div>
+                        <div class="author-role">Head of Product, Health AI</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">Their approach to alert tuning eliminated the noise that was burning out our
+                    on-call engineers. We trust our alerts again.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JC</div>
+                    <div>
+                        <div class="author-name">Jennifer Chen</div>
+                        <div class="author-role">ML Platform Lead, E-commerce</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 64px;">
+            <h2>Common Questions</h2>
+            <p>Everything you need to know about AI observability</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                    What makes AI observability different from traditional monitoring?
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Traditional monitoring tracks deterministic systems where the same input always produces the same
+                        output. AI systems are probabilistic—model performance degrades gradually through data drift,
+                        concept drift, and changing input distributions. AI observability tracks these statistical
+                        changes and their business impact, not just system uptime.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                    How long does implementation typically take?
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Initial instrumentation and dashboard setup typically takes 2-3 weeks for a single critical
+                        model. Full organizational rollout with training and runbook development spans 6-8 weeks. We
+                        prioritize quick wins—teams see value from day one while we build toward comprehensive coverage.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                    Do you support custom model types and frameworks?
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Our instrumentation works with any model serving framework—TensorFlow Serving, TorchServe,
+                        custom Flask/FastAPI endpoints, or cloud ML platforms. We support tabular, NLP, computer vision,
+                        and recommendation models with appropriate metrics for each domain.</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                    How do you handle sensitive data in model monitoring?
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+                <div class="faq-answer">
+                    <p>We implement privacy-preserving monitoring techniques including feature hashing, differential
+                        privacy for statistical summaries, and PII redaction in logs. For highly regulated industries,
+                        we support on-premise deployment with no data leaving your infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="reveal">
+            <h2>Ready for Observable AI?</h2>
+            <p>Let's discuss how HearthSignal can bring clarity and confidence to your machine learning operations.</p>
+            <a href="mailto:hello@hearthsignal.com" class="cta-btn">Schedule a Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>HearthSignal</h3>
+                <p>AI observability for teams that take model reliability seriously. Based in San Francisco, working
+                    with teams worldwide.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">Platform</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Changelog</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">2024 HearthSignal. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#" class="social-link">Tw</a>
+                <a href="#" class="social-link">Li</a>
+                <a href="#" class="social-link">Gh</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ toggle
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+                faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // Scroll to contact
+        function scrollToContact() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Count up animation
+        function animateCounter(element, target, duration = 2000, suffix = '') {
+            const isDecimal = target % 1 !== 0;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                if (isDecimal) {
+                    element.textContent = current.toFixed(1) + suffix;
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, 16);
+        }
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    counters.forEach(counter => {
+                        const target = parseFloat(counter.getAttribute('data-count'));
+                        const suffix = counter.closest('.hero-stat') ? (target > 90 ? '%' : (target < 20 ? ' Models' : '')) :
+                            counter.closest('.outcome-item') ? (target > 90 ? '%' : target < 10 ? ' Hours' : '') : '';
+                        animateCounter(counter, target, 2000, suffix);
+                    });
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>

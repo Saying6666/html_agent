@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraScent | Your Soul, Bottled</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #fcfbfaf0;
+            --bg-secondary: #f4efed;
+            --text-primary: #1a1a1c;
+            --text-secondary: #5a5a60;
+            --text-inverse: #ffffff;
+            --accent-vapor-1: #d3cce3;
+            --accent-vapor-2: #e9e4f0;
+            --accent-vapor-3: #f1dfd1;
+            --accent-glow: #e2d1c3;
+            --border-light: rgba(26, 26, 28, 0.1);
+            --error: #cf6679;
+            --success: #a8b8a5;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.5rem;
+            --text-2xl: 2rem;
+            --text-4xl: 3.5rem;
+            --text-6xl: 5rem;
+            --line-height-tight: 1.1;
+            --line-height-base: 1.6;
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-4: 1rem;
+            --spacing-8: 2rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+            --spacing-24: 6rem;
+            --spacing-32: 8rem;
+            --container-max-width: 1440px;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 16px;
+            --border-radius-pill: 9999px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            --shadow-glow: 0 0 20px rgba(211, 204, 227, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: var(--line-height-base);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+            line-height: var(--line-height-tight);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: var(--font-sans);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Vapor Background Animation */
+        .vapor-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--accent-vapor-1) 0%, var(--accent-vapor-2) 50%, var(--accent-vapor-3) 100%);
+            background-size: 400% 400%;
+            animation: vaporFlow 15s ease infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes vaporFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-slow);
+        }
+
+        .header.scrolled {
+            background: rgba(252, 251, 250, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav a {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+
+        .nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            padding: 12px 24px;
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-cta:active {
+            transform: scale(0.98);
+        }
+
+        .nav-cta:focus {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 4px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, var(--text-6xl));
+            margin-bottom: var(--spacing-4);
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: var(--text-xl);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            padding: 16px 32px;
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-base);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .hero-cta:active {
+            transform: scale(0.98);
+        }
+
+        .hero-vapor {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-vapor-1) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-vapor-1 {
+            top: 10%;
+            left: -10%;
+        }
+
+        .hero-vapor-2 {
+            bottom: 10%;
+            right: -10%;
+            animation-delay: -4s;
+            background: radial-gradient(circle, var(--accent-vapor-3) 0%, transparent 70%);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+
+        /* Concept Section */
+        .concept {
+            padding: var(--spacing-32) 40px;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto var(--spacing-16);
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, var(--text-4xl));
+            margin-bottom: var(--spacing-4);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: var(--text-lg);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .concept-card {
+            text-align: center;
+            padding: var(--spacing-8);
+        }
+
+        .concept-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-4);
+            background: linear-gradient(135deg, var(--accent-vapor-1), var(--accent-vapor-3));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 2rem;
+        }
+
+        .concept-card h3 {
+            font-size: var(--text-xl);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .concept-card p {
+            color: var(--text-secondary);
+            font-size: var(--text-base);
+        }
+
+        /* Data Sources Section */
+        .data-sources {
+            padding: var(--spacing-32) 40px;
+        }
+
+        .tabs-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: var(--spacing-12);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-fast);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            border-color: var(--text-primary);
+        }
+
+        .tab-btn:focus {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 2px;
+        }
+
+        .tab-panel {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .tab-panel.active {
+            display: grid;
+        }
+
+        .tab-content h3 {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .tab-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .tab-visual {
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-vapor-1) 0%, var(--accent-vapor-2) 50%, var(--accent-vapor-3) 100%);
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--text-primary);
+            opacity: 0.7;
+        }
+
+        /* Process Section */
+        .process {
+            padding: var(--spacing-32) 40px;
+            background: var(--bg-secondary);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .process-card {
+            background: var(--bg-primary);
+            padding: var(--spacing-8);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            transition: all var(--transition-fast);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .process-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .process-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .process-number {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--accent-vapor-1);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .process-card h3 {
+            font-size: var(--text-lg);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .process-card p {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: var(--spacing-24) 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: var(--spacing-2);
+            background: linear-gradient(135deg, var(--accent-vapor-1), var(--text-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: var(--text-base);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: var(--spacing-32) 40px;
+            background: var(--bg-secondary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--accent-vapor-2), var(--accent-glow));
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--text-primary);
+            opacity: 0.6;
+            transition: all var(--transition-fast);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            opacity: 0.8;
+        }
+
+        .gallery-item.featured {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: var(--spacing-32) 40px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--bg-secondary);
+            padding: var(--spacing-8);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pricing-card.featured {
+            background: var(--text-primary);
+            color: var(--text-inverse);
+        }
+
+        .pricing-card.featured p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .pricing-name {
+            font-family: var(--font-serif);
+            font-size: var(--text-xl);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .pricing-price {
+            font-size: var(--text-4xl);
+            font-weight: 300;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            font-size: var(--text-sm);
+        }
+
+        .pricing-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            border: 1px solid var(--text-primary);
+        }
+
+        .pricing-card:not(.featured) .pricing-btn {
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .pricing-card.featured .pricing-btn {
+            background: var(--text-inverse);
+            color: var(--text-primary);
+            border-color: var(--text-inverse);
+        }
+
+        .pricing-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: var(--spacing-32) 40px;
+            background: var(--bg-secondary);
+        }
+
+        .faq-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: var(--spacing-4) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--text-base);
+            font-weight: 500;
+            text-align: left;
+            background: transparent;
+            transition: color var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            color: var(--text-secondary);
+        }
+
+        .faq-question:focus {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 4px;
+        }
+
+        .faq-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: var(--spacing-4);
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+        }
+
+        /* Footer */
+        .footer {
+            padding: var(--spacing-16) 40px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-content {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: var(--spacing-12);
+        }
+
+        .footer-brand h3 {
+            font-size: var(--text-xl);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .newsletter {
+            display: flex;
+            gap: 8px;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            background: transparent;
+        }
+
+        .newsletter input:focus {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 2px;
+        }
+
+        .newsletter button {
+            padding: 12px 20px;
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            font-weight: 500;
+        }
+
+        .footer-links h4 {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-4);
+            color: var(--text-secondary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-2);
+        }
+
+        .footer-links a {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding-top: var(--spacing-8);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-social a {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            transition: color var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 28, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            max-width: 500px;
+            width: 90%;
+            padding: var(--spacing-8);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .modal-title {
+            font-size: var(--text-xl);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: background var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            background: var(--border-light);
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            border-radius: var(--border-radius-pill);
+            font-weight: 500;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: var(--text-inverse);
+            padding: 12px 24px;
+            border-radius: var(--border-radius-pill);
+            font-size: var(--text-sm);
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.36, 1);
+        }
+
+        .toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-visual {
+                order: -1;
+                height: 250px;
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-item.featured {
+                grid-column: span 2;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item.featured {
+                grid-column: span 1;
+                aspect-ratio: 3/4;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .vapor-bg {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vapor-bg" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="logo">AuraScent</div>
+        <nav class="nav">
+            <a href="#concept">Concept</a>
+            <a href="#process">Process</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#pricing">Pricing</a>
+            <button class="nav-cta" onclick="openModal()">Craft My Aura</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-vapor hero-vapor-1" aria-hidden="true"></div>
+        <div class="hero-vapor hero-vapor-2" aria-hidden="true"></div>
+        <div class="hero-content">
+            <h1>Your Soul, Bottled</h1>
+            <p>AI-crafted fragrances inspired by your Spotify history, favorite books, and visual mood boards. A scent
+                as unique as your story.</p>
+            <button class="hero-cta" onclick="openModal()">
+                Begin Your Journey
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept" id="concept">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>The AI Olfactory Engine</h2>
+                <p>Our proprietary AI analyzes your digital footprint to create a fragrance that captures your essence
+                </p>
+            </div>
+            <div class="concept-grid">
+                <div class="concept-card reveal">
+                    <div class="concept-icon">S</div>
+                    <h3>Sonic Analysis</h3>
+                    <p>Your music taste reveals emotional patterns. Upbeat indie suggests citrus notes; melancholic jazz
+                        calls for amber and musk.</p>
+                </div>
+                <div class="concept-card reveal">
+                    <div class="concept-icon">L</div>
+                    <h3>Literary DNA</h3>
+                    <p>The books you love shape your intellectual aura. Romantic poetry inspires florals; sci-fi demands
+                        metallic, futuristic accords.</p>
+                </div>
+                <div class="concept-card reveal">
+                    <div class="concept-icon">V</div>
+                    <h3>Visual Mood</h3>
+                    <p>Your aesthetic preferences—colors, textures, compositions—translate into olfactory harmonies and
+                        contrasts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources Section -->
+    <section class="data-sources" id="data-sources">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Data That Inspires</h2>
+                <p>We connect to the platforms that define your digital life</p>
+            </div>
+            <div class="tabs-wrapper reveal">
+                <div class="tabs-nav" role="tablist">
+                    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-spotify"
+                        onclick="switchTab(0)">Spotify History</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-books"
+                        onclick="switchTab(1)">Literary Analysis</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-visual"
+                        onclick="switchTab(2)">Visual Moodboard</button>
+                </div>
+                <div class="tab-panel active" id="tab-spotify" role="tabpanel">
+                    <div class="tab-content">
+                        <h3>Your Music, Translated to Scent</h3>
+                        <p>Our AI analyzes your listening history—genres, artists, playlists, and listening patterns—to
+                            identify the emotional and atmospheric qualities that resonate with you.</p>
+                        <p>High-energy electronic might inspire sharp, crystalline notes. Acoustic folk suggests warm,
+                            earthy base notes. Your repeat tracks reveal the scents that will feel like home.</p>
+                    </div>
+                    <div class="tab-visual">Spotify</div>
+                </div>
+                <div class="tab-panel" id="tab-books" role="tabpanel">
+                    <div class="tab-content">
+                        <h3>Stories That Shape You</h3>
+                        <p>The literature you consume reflects your inner world. Classic novels suggest timeless,
+                            traditional compositions. Contemporary fiction calls for unexpected, avant-garde
+                            combinations.</p>
+                        <p>We analyze your Goodreads library, favorite quotes, and reading patterns to understand the
+                            narrative arcs that move you—and bottle them.</p>
+                    </div>
+                    <div class="tab-visual">Books</div>
+                </div>
+                <div class="tab-panel" id="tab-visual" role="tabpanel">
+                    <div class="tab-content">
+                        <h3>Aesthetics as Aroma</h3>
+                        <p>Your Pinterest boards and Instagram saves reveal your visual preferences—colors, textures,
+                            eras, moods. These translate directly into olfactory profiles.</p>
+                        <p>Soft pastels suggest powdery florals. Bold contrasts demand spicy, provocative compositions.
+                            Minimalist aesthetics inspire clean, single-note elegance.</p>
+                    </div>
+                    <div class="tab-visual">Visual</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>The Journey</h2>
+                <p>From digital analysis to physical fragrance in four steps</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-card" style="transition-delay: 0.1s;">
+                    <div class="process-number">01</div>
+                    <h3>Connect</h3>
+                    <p>Link your Spotify, Goodreads, and Pinterest accounts securely</p>
+                </div>
+                <div class="process-card" style="transition-delay: 0.2s;">
+                    <div class="process-number">02</div>
+                    <h3>Analyze</h3>
+                    <p>Our AI processes your data to identify your unique scent profile</p>
+                </div>
+                <div class="process-card" style="transition-delay: 0.3s;">
+                    <div class="process-number">03</div>
+                    <h3>Formulate</h3>
+                    <p>Master perfumers review and refine the AI-generated formula</p>
+                </div>
+                <div class="process-card" style="transition-delay: 0.4s;">
+                    <div class="process-number">04</div>
+                    <h3>Ship</h3>
+                    <p>Your bespoke fragrance arrives in custom packaging</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <h3 data-count="1000000">0</h3>
+                    <p>Unique Scent Notes</p>
+                </div>
+                <div class="stat-item reveal">
+                    <h3 data-count="50000">0</h3>
+                    <p>Formulas Generated</p>
+                </div>
+                <div class="stat-item reveal">
+                    <h3 data-count="98">0</h3>
+                    <p>Satisfaction Rate %</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Bespoke Creations</h2>
+                <p>Each bottle is as unique as the person who inspired it</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item featured reveal">Featured Creation</div>
+                <div class="gallery-item reveal">Bottle 01</div>
+                <div class="gallery-item reveal">Bottle 02</div>
+                <div class="gallery-item reveal">Bottle 03</div>
+                <div class="gallery-item reveal">Bottle 04</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Choose Your Aura</h2>
+                <p>Two ways to discover your signature scent</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <h3 class="pricing-name">The Essential Aura</h3>
+                    <div class="pricing-price">$89</div>
+                    <ul class="pricing-features">
+                        <li>AI-generated scent profile</li>
+                        <li>30ml eau de parfum</li>
+                        <li>Digital scent story</li>
+                        <li>Free shipping</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="showToast()">Get Started</button>
+                </div>
+                <div class="pricing-card featured reveal">
+                    <h3 class="pricing-name">The Signature Extrait</h3>
+                    <div class="pricing-price">$189</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Essential</li>
+                        <li>50ml pure parfum extrait</li>
+                        <li>Master perfumer refinement</li>
+                        <li>Custom engraved bottle</li>
+                        <li>Scent evolution over time</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="showToast()">Craft Yours</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Questions & Answers</h2>
+                <p>Everything you need to know about AuraScent</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item reveal">
+                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                        How does the AI create my scent?
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our AI analyzes patterns in your digital data—music genres, book themes, visual
+                            preferences—and maps them to fragrance families, notes, and accords using a proprietary
+                            algorithm developed with master perfumers.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                        Is my data secure?
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use read-only access to your accounts and never store your login credentials.
+                            Your data is processed securely and only used to generate your fragrance profile.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                        Can I reorder my scent?
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Your formula is saved in your account. You can reorder anytime, or create variations as
+                            your taste evolves.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                        What if I don't like my scent?
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We offer a satisfaction guarantee. If you're not happy with your fragrance, we'll reformulate
+                            it once for free or provide a full refund.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>AuraScent</h3>
+                <p>Your soul, bottled. AI-crafted fragrances for the modern individual.</p>
+                <form class="newsletter" onsubmit="event.preventDefault(); showToast();">
+                    <input type="email" placeholder="Enter your email" aria-label="Email for newsletter">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">2024 AuraScent. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">TikTok</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+        onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Connect Your Spotify</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Connect your Spotify account to begin your fragrance journey. We'll analyze your listening history to
+                    create a scent profile unique to you.</p>
+                <button class="modal-btn" onclick="showToast(); closeModal();">Connect Spotify</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="alert" aria-live="polite">
+        Aura analysis complete! Formula added to cart.
+    </div>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                } else {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-selected', 'false');
+                }
+            });
+
+            panels.forEach((panel, i) => {
+                if (i === index) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            });
+        }
+
+        // FAQ toggle
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+                faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // Modal
+        function openModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Toast
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Count up animation
+        function animateCounter(element, target, duration = 2000) {
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                if (target >= 1000) {
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        animateCounter(counter, target);
+                    });
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .process-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>

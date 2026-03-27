@@ -1,59 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrameSchool | The Premium Photography Portfolio Academy</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                    colors: {
-                        fs: {
-                            white: '#FCFCFC',
-                            sand: '#F5F4F1',
-                            blue: '#7895B2',
-                            slate: '#64748B',
-                            charcoal: '#1C1917',
-                            border: '#E2E8F0',
-                            muted: '#F8FAFC'
-                        }
-                    },
-                    boxShadow: {
-                        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
-                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <title>FrameSchool - 摄影作品集教育平台</title>
     <style>
-        body {
-            background-color: #FCFCFC;
-            color: #1C1917;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Scroll Reveal Animations */
+        :root {
+            --color-white: #fafafa;
+            --color-slate: #64748b;
+            --color-slate-light: #94a3b8;
+            --color-blue: #3b82f6;
+            --color-blue-muted: #60a5fa;
+            --color-sand: #d4c4b0;
+            --color-sand-light: #e8dfd3;
+            --color-charcoal: #1e293b;
+            --color-charcoal-light: #334155;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-white);
+            color: var(--color-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
         .reveal.active {
@@ -61,1007 +47,1783 @@
             transform: translateY(0);
         }
 
-        .delay-100 {
-            transition-delay: 100ms;
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            transition: all 0.3s ease;
+            background: transparent;
         }
 
-        .delay-200 {
-            transition-delay: 200ms;
-        }
-
-        .delay-300 {
-            transition-delay: 300ms;
-        }
-
-        /* Interactive States */
-        .btn-interactive {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .btn-interactive:active {
-            transform: scale(0.97);
-        }
-
-        .btn-interactive:focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 2px #FCFCFC, 0 0 0 4px #7895B2;
-        }
-
-        .card-interactive {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-
-        .card-interactive:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-            border-color: #CBD5E1;
-        }
-
-        /* Navbar Sticky Transition */
-        #navbar {
-            transition: background-color 0.3s ease, border-bottom-color 0.3s ease, -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
-            border-bottom: 1px solid transparent;
-        }
-
-        #navbar.scrolled {
-            background-color: rgba(252, 252, 252, 0.85);
+        .navbar.scrolled {
+            background: rgba(250, 250, 250, 0.85);
             -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
-            border-bottom-color: #E2E8F0;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+            padding: 0.875rem 2rem;
+            box-shadow: var(--shadow-sm);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #F5F4F1;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-charcoal);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
         }
 
-        /* FAQ Accordion */
-        details>summary {
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
             list-style: none;
         }
 
-        details>summary::-webkit-details-marker {
-            display: none;
+        .nav-links a {
+            color: var(--color-slate);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            position: relative;
         }
 
-        details[open] summary~* {
-            animation: sweep .3s ease-in-out;
+        .nav-links a:hover {
+            color: var(--color-charcoal);
         }
 
-        @keyframes sweep {
-            0% {
-                opacity: 0;
-                margin-top: -10px
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-charcoal);
+            border: 1px solid var(--color-slate-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-charcoal);
+            color: white;
+            border-color: var(--color-charcoal);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--color-charcoal);
+            color: white;
+            border: 1px solid var(--color-charcoal);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-charcoal-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-large {
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 2rem 6rem;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, var(--color-white) 0%, #f1f5f9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(212, 196, 176, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--color-slate);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--color-charcoal);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            color: var(--color-blue);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--color-slate);
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-proof {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .hero-avatars {
+            display: flex;
+        }
+
+        .hero-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -12px;
+            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .hero-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .hero-proof-text {
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+        }
+
+        .hero-proof-text strong {
+            color: var(--color-charcoal);
+        }
+
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .hero-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(212, 196, 176, 0.1) 100%);
+        }
+
+        .hero-image svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            opacity: 0.3;
+        }
+
+        .hero-image-large {
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        /* Learning Outcomes Section */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.375rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-blue);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-charcoal);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--color-slate);
+        }
+
+        .outcomes-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .outcome-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(100, 116, 139, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .outcome-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .outcome-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-label {
+            font-size: 0.875rem;
+            color: var(--color-slate);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .outcome-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-desc {
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+        }
+
+        /* Course Tracks Section */
+        .tracks {
+            background: #f8fafc;
+        }
+
+        .tracks-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .track-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 116, 139, 0.08);
+        }
+
+        .track-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .track-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
+            color: white;
+        }
+
+        .track-level {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .track-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .track-duration {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+        }
+
+        .track-body {
+            padding: 2rem;
+        }
+
+        .track-modules {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .track-modules li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .track-modules li:last-child {
+            border-bottom: none;
+        }
+
+        .track-modules li::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .track-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .track-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-slate);
+        }
+
+        .track-cta {
+            width: 100%;
+        }
+
+        /* Critique Workflow Section */
+        .workflow {
+            background: white;
+        }
+
+        .workflow-steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-sand) 0%, var(--color-blue-muted) 50%, var(--color-sand) 100%);
+        }
+
+        .workflow-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .workflow-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--color-sand-light);
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover .workflow-icon {
+            transform: scale(1.1);
+            border-color: var(--color-blue);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .workflow-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--color-charcoal);
+        }
+
+        .workflow-step h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-step p {
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* Instructors Section */
+        .instructors {
+            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
+        }
+
+        .instructors-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .instructor-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 116, 139, 0.08);
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .instructor-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--color-charcoal);
+            transition: transform 0.3s ease;
+        }
+
+        .instructor-card:hover .instructor-avatar {
+            transform: scale(1.05);
+        }
+
+        .instructor-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            margin-bottom: 0.25rem;
+        }
+
+        .instructor-role {
+            font-size: 0.9375rem;
+            color: var(--color-blue);
+            margin-bottom: 1rem;
+        }
+
+        .instructor-bio {
+            font-size: 0.875rem;
+            color: var(--color-slate);
+            line-height: 1.6;
+        }
+
+        /* Student Gallery Section */
+        .gallery {
+            background: white;
+        }
+
+        .gallery-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.1) 0%, transparent 100%);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(30, 41, 59, 0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-student {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .gallery-project {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: #f8fafc;
+        }
+
+        .pricing-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--color-blue);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-blue);
+            color: white;
+            padding: 0.375rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            font-size: 1rem;
+            color: var(--color-slate);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-amount span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-slate);
+        }
+
+        .pricing-billing {
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            width: 100%;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: white;
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background: white;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .testimonial-quote {
+            font-size: 1.125rem;
+            color: var(--color-charcoal);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .testimonial-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .testimonial-info p {
+            font-size: 0.875rem;
+            color: var(--color-slate);
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            border: 1px solid rgba(100, 116, 139, 0.08);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(59, 130, 246, 0.02);
+        }
+
+        .faq-question h3 {
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            font-size: 0.9375rem;
+            color: var(--color-slate);
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--color-charcoal);
+        }
+
+        .btn-white:hover {
+            background: var(--color-sand-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--color-charcoal);
+            color: white;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1rem;
+            font-size: 0.9375rem;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer-social svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Counter Animation */
+        .counter {
+            display: inline-block;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
 
-            100% {
-                opacity: 1;
-                margin-top: 0px
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tracks-grid,
+            .instructors-grid,
+            .gallery-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .section h2 {
+                font-size: 1.875rem;
+            }
+
+            .outcomes-grid,
+            .tracks-grid,
+            .instructors-grid,
+            .gallery-grid,
+            .testimonials-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .workflow-steps::before {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cta h2 {
+                font-size: 1.875rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
             }
         }
     </style>
 </head>
-
-<body class="font-sans antialiased text-fs-charcoal bg-fs-white">
-
-    <header id="navbar"
-        class="fixed top-0 left-0 right-0 z-50 w-full py-4 px-6 md:px-12 flex items-center justify-between">
-        <div class="flex items-center gap-2 cursor-pointer group">
-            <svg class="w-6 h-6 text-fs-charcoal group-hover:text-fs-blue transition-colors" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                <circle cx="9" cy="9" r="2" />
-                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-            </svg>
-            <span class="font-display font-semibold tracking-tight text-lg">FrameSchool</span>
-        </div>
-        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-fs-slate">
-            <a href="#curriculum"
-                class="hover:text-fs-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded px-1">Curriculum</a>
-            <a href="#workflow"
-                class="hover:text-fs-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded px-1">Methodology</a>
-            <a href="#mentors"
-                class="hover:text-fs-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded px-1">Mentors</a>
-            <a href="#pricing"
-                class="hover:text-fs-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded px-1">Tuition</a>
-        </nav>
-        <div class="flex items-center gap-4">
-            <a href="#"
-                class="hidden md:block text-sm font-medium text-fs-slate hover:text-fs-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded px-1">Sign
-                in</a>
-            <a href="#pricing"
-                class="btn-interactive inline-flex items-center justify-center rounded-md bg-fs-charcoal text-fs-white px-5 py-2.5 text-sm font-medium hover:bg-fs-charcoal/90">
-                Apply Now
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                FrameSchool
             </a>
+            <ul class="nav-links">
+                <li><a href="#outcomes">学习成果</a></li>
+                <li><a href="#tracks">课程体系</a></li>
+                <li><a href="#instructors">导师团队</a></li>
+                <li><a href="#pricing">价格方案</a></li>
+                <li><a href="#faq">常见问题</a></li>
+            </ul>
+            <div class="nav-cta">
+                <button type="button" class="btn btn-secondary">登录</button>
+                <button type="button" class="btn btn-primary">免费试听</button>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <section class="pt-32 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="reveal">
-                    <div
-                        class="inline-flex items-center rounded-full border border-fs-border bg-fs-white px-3 py-1 text-sm font-medium text-fs-slate mb-6">
-                        <span class="flex h-2 w-2 rounded-full bg-fs-blue mr-2"></span>
-                        Applications open for Fall Cohort
-                    </div>
-                    <h1
-                        class="font-display text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-fs-charcoal">
-                        Master the art of <span class="text-fs-slate">the edit.</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-fs-slate mb-10 max-w-lg leading-relaxed">
-                        A premium curriculum for image-makers. Build taste, sequence with intention, and launch a
-                        credible creative portfolio that commands client respect.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#pricing"
-                            class="btn-interactive inline-flex items-center justify-center rounded-md bg-fs-charcoal text-fs-white px-6 py-3.5 text-base font-medium hover:bg-fs-charcoal/90">
-                            Apply for Next Cohort
-                        </a>
-                        <a href="#curriculum"
-                            class="btn-interactive inline-flex items-center justify-center rounded-md border border-fs-border bg-fs-white px-6 py-3.5 text-base font-medium text-fs-charcoal hover:bg-fs-sand hover:text-fs-charcoal">
-                            View Curriculum
-                        </a>
-                    </div>
-
-                    <div class="mt-12 pt-8 border-t border-fs-border grid grid-cols-3 gap-6">
-                        <div>
-                            <div class="text-2xl font-display font-bold text-fs-charcoal"><span class="counter"
-                                    data-target="8">0</span>w</div>
-                            <div class="text-sm text-fs-slate mt-1">Intensive Program</div>
-                        </div>
-                        <div>
-                            <div class="text-2xl font-display font-bold text-fs-charcoal"><span class="counter"
-                                    data-target="94">0</span>%</div>
-                            <div class="text-sm text-fs-slate mt-1">Publish Rate</div>
-                        </div>
-                        <div>
-                            <div class="text-2xl font-display font-bold text-fs-charcoal"><span class="counter"
-                                    data-target="12">0</span>+</div>
-                            <div class="text-sm text-fs-slate mt-1">Industry Mentors</div>
-                        </div>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content reveal">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    2024年摄影教育创新奖得主
                 </div>
-
-                <div class="relative lg:h-[600px] w-full reveal delay-200">
-                    <div class="absolute inset-0 bg-fs-sand rounded-2xl -rotate-3 transform-gpu"></div>
-                    <div
-                        class="absolute inset-0 bg-fs-muted border border-fs-border rounded-2xl rotate-1 transform-gpu overflow-hidden shadow-xl flex flex-col">
-                        <div class="h-12 border-b border-fs-border bg-fs-white flex items-center px-4 gap-2">
-                            <div class="flex gap-1.5">
-                                <div class="w-3 h-3 rounded-full bg-fs-border"></div>
-                                <div class="w-3 h-3 rounded-full bg-fs-border"></div>
-                                <div class="w-3 h-3 rounded-full bg-fs-border"></div>
-                            </div>
-                            <div class="ml-4 text-xs font-medium text-fs-slate">FrameSchool / Sequencing Studio</div>
-                        </div>
-                        <div class="flex-1 p-4 grid grid-cols-2 gap-4 bg-fs-muted">
-                            <div
-                                class="rounded-lg bg-gray-200 overflow-hidden relative group cursor-pointer border border-fs-border">
-                                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    alt="Editorial placeholder">
-                                <div
-                                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span
-                                        class="text-white text-xs font-medium px-3 py-1 border border-white/50 rounded-full">Selected</span>
-                                </div>
-                            </div>
-                            <div class="grid grid-rows-2 gap-4">
-                                <div
-                                    class="rounded-lg bg-gray-200 overflow-hidden relative group cursor-pointer border border-fs-border">
-                                    <img src="https://images.unsplash.com/photo-1509249704604-954388e28fb6?auto=format&fit=crop&q=80&w=800"
-                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                        alt="Architecture placeholder">
-                                </div>
-                                <div
-                                    class="rounded-lg bg-gray-200 overflow-hidden relative group cursor-pointer border border-fs-border">
-                                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800"
-                                        class="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
-                                        alt="Fashion placeholder">
-                                </div>
-                            </div>
-                        </div>
+                <h1>打造专业级<br><span>摄影作品集</span></h1>
+                <p class="hero-description">FrameSchool 是面向年轻创意人的摄影作品集教育平台。从审美培养到项目叙事，从作品筛选到呈现技巧，我们帮助你建立独特的视觉语言，打造能打动画廊、客户和观众的专业作品集。</p>
+                <div class="hero-ctas">
+                    <button type="button" class="btn btn-primary btn-large">开始免费课程</button>
+                    <button type="button" class="btn btn-secondary btn-large">查看学员作品</button>
+                </div>
+                <div class="hero-proof">
+                    <div class="hero-avatars">
+                        <div class="hero-avatar">李</div>
+                        <div class="hero-avatar">王</div>
+                        <div class="hero-avatar">张</div>
+                        <div class="hero-avatar">陈</div>
+                    </div>
+                    <p class="hero-proof-text"><strong>2,847</strong> 位学员已完成作品集构建</p>
+                </div>
+            </div>
+            <div class="hero-visual reveal">
+                <div class="hero-image-grid">
+                    <div class="hero-image hero-image-large">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="py-24 bg-fs-sand px-6 md:px-12">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-16 reveal">
-                    <h2 class="font-display text-3xl md:text-4xl font-bold text-fs-charcoal mb-4">Beyond the capture.
-                    </h2>
-                    <p class="text-fs-slate text-lg max-w-2xl">Taking great photos is only the baseline. We teach the
-                        critical soft skills of image curation, narrative sequencing, and client presentation.</p>
+    <!-- Learning Outcomes Section -->
+    <section class="section" id="outcomes">
+        <div class="section-header reveal">
+            <span class="section-label">学习成果</span>
+            <h2>从爱好者到专业创作者的蜕变</h2>
+            <p class="section-description">我们的课程体系经过精心设计，确保每位学员都能在四个核心维度上获得实质性提升</p>
+        </div>
+        <div class="outcomes-grid">
+            <div class="outcome-card reveal">
+                <div class="outcome-number"><span class="counter" data-target="12">0</span>周</div>
+                <div class="outcome-label">系统训练周期</div>
+                <h3 class="outcome-title">审美体系构建</h3>
+                <p class="outcome-desc">从视觉史论到当代摄影语言，建立完整的审美判断框架，学会识别和创造有深度的影像作品。</p>
+            </div>
+            <div class="outcome-card reveal">
+                <div class="outcome-number"><span class="counter" data-target="3">0</span>个项目</div>
+                <div class="outcome-label">完整作品集</div>
+                <h3 class="outcome-title">项目叙事能力</h3>
+                <p class="outcome-desc">掌握从概念发想、视觉调研到最终呈现的全流程，能够独立完成具有个人风格的摄影项目。</p>
+            </div>
+            <div class="outcome-card reveal">
+                <div class="outcome-number"><span class="counter" data-target="24">0</span>次</div>
+                <div class="outcome-label">专业点评</div>
+                <h3 class="outcome-title">作品精修打磨</h3>
+                <p class="outcome-desc">通过导师一对一作品点评和同伴互评，不断优化作品质量，达到专业展示水准。</p>
+            </div>
+            <div class="outcome-card reveal">
+                <div class="outcome-number"><span class="counter" data-target="85">0</span>%</div>
+                <div class="outcome-label">学员满意度</div>
+                <h3 class="outcome-title">职业发展支持</h3>
+                <p class="outcome-desc">获得画廊推荐、艺术驻留申请指导和商业合作机会对接，助力职业道路起步。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Tracks Section -->
+    <section class="section tracks" id="tracks">
+        <div class="section-header reveal">
+            <span class="section-label">课程体系</span>
+            <h2>为不同阶段量身定制的学习路径</h2>
+            <p class="section-description">无论你是刚接触摄影的初学者，还是希望精进技艺的进阶创作者，都能找到适合自己的成长路径</p>
+        </div>
+        <div class="tracks-grid">
+            <div class="track-card reveal">
+                <div class="track-header">
+                    <div class="track-level">基础阶段</div>
+                    <h3 class="track-title">视觉语言入门</h3>
+                    <p class="track-duration">8周 · 每周6小时</p>
                 </div>
+                <div class="track-body">
+                    <ul class="track-modules">
+                        <li>摄影史与视觉文化基础</li>
+                        <li>构图与光线控制原理</li>
+                        <li>色彩理论与情感表达</li>
+                        <li>单幅作品精修工作坊</li>
+                        <li>作品集基础规划</li>
+                    </ul>
+                    <div class="track-price">¥4,999 <span>/ 完整课程</span></div>
+                    <button type="button" class="btn btn-secondary track-cta">了解详情</button>
+                </div>
+            </div>
+            <div class="track-card reveal">
+                <div class="track-header">
+                    <div class="track-level">进阶阶段</div>
+                    <h3 class="track-title">项目叙事精进</h3>
+                    <p class="track-duration">12周 · 每周8小时</p>
+                </div>
+                <div class="track-body">
+                    <ul class="track-modules">
+                        <li>系列作品概念发想方法</li>
+                        <li>视觉调研与参考分析</li>
+                        <li>项目拍摄与编辑流程</li>
+                        <li>作品陈述与文字配合</li>
+                        <li>模拟画廊提案演练</li>
+                    </ul>
+                    <div class="track-price">¥8,999 <span>/ 完整课程</span></div>
+                    <button type="button" class="btn btn-primary track-cta">立即报名</button>
+                </div>
+            </div>
+            <div class="track-card reveal">
+                <div class="track-header">
+                    <div class="track-level">专业阶段</div>
+                    <h3 class="track-title">职业作品集构建</h3>
+                    <p class="track-duration">16周 · 灵活安排</p>
+                </div>
+                <div class="track-body">
+                    <ul class="track-modules">
+                        <li>个人风格定位与品牌塑造</li>
+                        <li>多项目组合策略</li>
+                        <li>线上/线下展示方案设计</li>
+                        <li>行业资源对接与推广</li>
+                        <li>毕业展览与出版机会</li>
+                    </ul>
+                    <div class="track-price">¥15,999 <span>/ 完整课程</span></div>
+                    <button type="button" class="btn btn-secondary track-cta">预约咨询</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="card-interactive bg-fs-white rounded-xl p-6 border border-fs-border shadow-card reveal">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-fs-muted flex items-center justify-center border border-fs-border mb-6">
-                            <svg class="w-5 h-5 text-fs-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        </div>
-                        <h3 class="font-display font-semibold text-lg mb-2">Developing Taste</h3>
-                        <p class="text-sm text-fs-slate leading-relaxed">Learn to evaluate your own work objectively.
-                            Separate emotional attachment from aesthetic value to identify your strongest pieces.</p>
-                    </div>
+    <!-- Critique Workflow Section -->
+    <section class="section workflow">
+        <div class="section-header reveal">
+            <span class="section-label">作品点评流程</span>
+            <h2>专业级作品打磨体系</h2>
+            <p class="section-description">我们的点评流程模拟真实画廊和出版机构的评审标准，帮助你从专业视角审视和提升作品</p>
+        </div>
+        <div class="workflow-steps reveal">
+            <div class="workflow-step">
+                <div class="workflow-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                </div>
+                <h3>提交作品</h3>
+                <p>上传你的项目草稿，包括作品图片和初步的项目陈述</p>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-icon">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h3>同伴互评</h3>
+                <p>与同期学员交换反馈，获得多元视角的观察和建议</p>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <h3>导师点评</h3>
+                <p>行业导师提供一对一深度反馈，指出改进方向和优化建议</p>
+            </div>
+            <div class="workflow-step">
+                <div class="workflow-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
+                </div>
+                <h3>迭代优化</h3>
+                <p>根据反馈修改作品，提交新版本进行复评，直至达到展示标准</p>
+            </div>
+        </div>
+    </section>
 
-                    <div
-                        class="card-interactive bg-fs-white rounded-xl p-6 border border-fs-border shadow-card reveal delay-100">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-fs-muted flex items-center justify-center border border-fs-border mb-6">
-                            <svg class="w-5 h-5 text-fs-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                            </svg>
-                        </div>
-                        <h3 class="font-display font-semibold text-lg mb-2">The Art of Sequencing</h3>
-                        <p class="text-sm text-fs-slate leading-relaxed">Discover how adjacent images create dialogue.
-                            Build pacing, rhythm, and narrative arcs across a collection of work.</p>
-                    </div>
+    <!-- Instructors Section -->
+    <section class="section instructors" id="instructors">
+        <div class="section-header reveal">
+            <span class="section-label">导师团队</span>
+            <h2>来自顶尖机构的行业专家</h2>
+            <p class="section-description">我们的导师团队由活跃于摄影、艺术策展和视觉出版领域的专业人士组成</p>
+        </div>
+        <div class="instructors-grid">
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar">林</div>
+                <h3 class="instructor-name">林晓薇</h3>
+                <p class="instructor-role">艺术总监 · 策展人</p>
+                <p class="instructor-bio">曾任上海当代艺术博物馆摄影策展人，策划过多场国际摄影展览，擅长帮助艺术家定位个人风格。</p>
+            </div>
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar">张</div>
+                <h3 class="instructor-name">张远航</h3>
+                <p class="instructor-role">商业摄影师 · 出版人</p>
+                <p class="instructor-bio">作品刊登于《Aperture》《Foam》等国际杂志，出版过三本个人摄影集，精通项目叙事与出版流程。</p>
+            </div>
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar">王</div>
+                <h3 class="instructor-name">王艺萌</h3>
+                <p class="instructor-role">图片编辑 · 视觉顾问</p>
+                <p class="instructor-bio">前《生活》杂志图片编辑，为多位摄影师策划展览和出版项目，擅长作品筛选与序列编排。</p>
+            </div>
+            <div class="instructor-card reveal">
+                <div class="instructor-avatar">陈</div>
+                <h3 class="instructor-name">陈默涵</h3>
+                <p class="instructor-role">纪实摄影师 · 教育者</p>
+                <p class="instructor-bio">玛格南图片社提名摄影师，长期关注城市空间与社会变迁，作品被多家美术馆和机构收藏。</p>
+            </div>
+        </div>
+    </section>
 
-                    <div
-                        class="card-interactive bg-fs-white rounded-xl p-6 border border-fs-border shadow-card reveal delay-200">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-fs-muted flex items-center justify-center border border-fs-border mb-6">
-                            <svg class="w-5 h-5 text-fs-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
-                        <h3 class="font-display font-semibold text-lg mb-2">Project Cohesion</h3>
-                        <p class="text-sm text-fs-slate leading-relaxed">Transform disparate shoots into unified bodies
-                            of work. Learn to identify through-lines and visual consistency in your archive.</p>
-                    </div>
+    <!-- Student Gallery Section -->
+    <section class="section gallery" id="gallery">
+        <div class="section-header reveal">
+            <span class="section-label">学员作品</span>
+            <h2>真实的学习成果展示</h2>
+            <p class="section-description">浏览我们学员的优秀作品集项目，了解 FrameSchool 的学习成果</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">李明远</p>
+                    <p class="gallery-project">《城市缝隙》系列</p>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">王思琪</p>
+                    <p class="gallery-project">《日常仪式》项目</p>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">张浩然</p>
+                    <p class="gallery-project">《边缘地带》纪实</p>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">陈雨萱</p>
+                    <p class="gallery-project">《光影对话》系列</p>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">刘子轩</p>
+                    <p class="gallery-project">《时间切片》项目</p>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <div class="gallery-overlay">
+                    <p class="gallery-student">赵雅琳</p>
+                    <p class="gallery-project">《静默之声》系列</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <div
-                        class="card-interactive bg-fs-white rounded-xl p-6 border border-fs-border shadow-card reveal delay-300">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-fs-muted flex items-center justify-center border border-fs-border mb-6">
-                            <svg class="w-5 h-5 text-fs-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <h3 class="font-display font-semibold text-lg mb-2">Client Readiness</h3>
-                        <p class="text-sm text-fs-slate leading-relaxed">Format your portfolio for art buyers, creative
-                            directors, and gallery curators. Master PDF treatments and physical book layouts.</p>
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="section-header reveal">
+            <span class="section-label">价格方案</span>
+            <h2>选择适合你的学习计划</h2>
+            <p class="section-description">我们提供灵活的付费方案，让优质摄影教育触手可及</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card reveal">
+                <h3 class="pricing-name">单课程购买</h3>
+                <p class="pricing-desc">按阶段购买，灵活学习</p>
+                <div class="pricing-amount">¥4,999<span> 起</span></div>
+                <p class="pricing-billing">一次性付费，永久访问课程内容</p>
+                <ul class="pricing-features">
+                    <li>完整视频课程访问权限</li>
+                    <li>课程资料下载</li>
+                    <li>学员社区讨论区</li>
+                    <li>8次作品点评机会</li>
+                    <li>结业证书</li>
+                </ul>
+                <button type="button" class="btn btn-secondary pricing-cta">选择此方案</button>
+            </div>
+            <div class="pricing-card featured reveal">
+                <span class="pricing-badge">最受欢迎</span>
+                <h3 class="pricing-name">完整学位计划</h3>
+                <p class="pricing-desc">三阶段系统学习，导师全程陪伴</p>
+                <div class="pricing-amount">¥24,999<span> / 全套</span></div>
+                <p class="pricing-billing">节省 ¥5,000，含 36周完整学习周期</p>
+                <ul class="pricing-features">
+                    <li>全部三个阶段课程内容</li>
+                    <li>1对1导师辅导（每月2次）</li>
+                    <li>无限次作品点评</li>
+                    <li>毕业展览机会</li>
+                    <li>行业资源对接</li>
+                    <li>出版咨询与推荐</li>
+                </ul>
+                <button type="button" class="btn btn-primary pricing-cta">立即报名</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="section-header reveal">
+            <span class="section-label">学员评价</span>
+            <h2>听听他们怎么说</h2>
+            <p class="section-description">来自不同背景的学员分享他们在 FrameSchool 的学习体验</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <p class="testimonial-quote">"FrameSchool 彻底改变了我对摄影的理解。以前我只关注技术参数，现在我学会了用图像讲故事。我的第一个项目《城市缝隙》已经在两个画廊展出。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">李</div>
+                    <div class="testimonial-info">
+                        <h4>李明远</h4>
+                        <p>自由摄影师 · 北京</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="curriculum" class="py-24 px-6 md:px-12 bg-fs-white">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16 reveal">
-                    <h2 class="font-display text-3xl md:text-4xl font-bold text-fs-charcoal mb-4">Structured for
-                        mastery.</h2>
-                    <p class="text-fs-slate text-lg">An 8-week structured pathway from raw archive to polished
-                        presentation.</p>
-                </div>
-
-                <div
-                    class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-fs-border before:to-transparent">
-
-                    <div
-                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active reveal">
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-full border border-fs-white bg-fs-slate text-fs-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-semibold text-sm">
-                            1
-                        </div>
-                        <div
-                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-fs-border bg-fs-white shadow-sm card-interactive">
-                            <div class="text-xs font-medium text-fs-blue tracking-wider uppercase mb-2">Weeks 1-2</div>
-                            <h3 class="font-display text-xl font-bold text-fs-charcoal mb-2">Deconstruction</h3>
-                            <p class="text-sm text-fs-slate mb-4">Audit your entire archive. We break down your visual
-                                habits, identify crutches, and surface the core themes of your visual identity.</p>
-                            <ul class="text-sm text-fs-slate space-y-2">
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> The 10,000 Image Audit</li>
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Identifying Visual Tropes</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal delay-100">
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-full border border-fs-border bg-fs-white text-fs-slate shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-semibold text-sm transition-colors group-hover:border-fs-blue group-hover:text-fs-blue">
-                            2
-                        </div>
-                        <div
-                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-fs-border bg-fs-white shadow-sm card-interactive">
-                            <div class="text-xs font-medium text-fs-blue tracking-wider uppercase mb-2">Weeks 3-4</div>
-                            <h3 class="font-display text-xl font-bold text-fs-charcoal mb-2">The Kill Your Darlings
-                                Phase</h3>
-                            <p class="text-sm text-fs-slate mb-4">The hardest part. Learning to exclude technically
-                                perfect images that don't serve the narrative. Building the tight 'A-Edit'.</p>
-                            <ul class="text-sm text-fs-slate space-y-2">
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Emotional Detachment</li>
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Pairings and Triptychs</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal delay-200">
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-full border border-fs-border bg-fs-white text-fs-slate shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-semibold text-sm transition-colors group-hover:border-fs-blue group-hover:text-fs-blue">
-                            3
-                        </div>
-                        <div
-                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-fs-border bg-fs-white shadow-sm card-interactive">
-                            <div class="text-xs font-medium text-fs-blue tracking-wider uppercase mb-2">Weeks 5-6</div>
-                            <h3 class="font-display text-xl font-bold text-fs-charcoal mb-2">Narrative Architecture</h3>
-                            <p class="text-sm text-fs-slate mb-4">Structuring the flow. We cover pacing, color-blocking,
-                                format mixing, and how to create pauses and crescendos in a sequence.</p>
-                            <ul class="text-sm text-fs-slate space-y-2">
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Rhythm and Whitespace</li>
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Sequencing Software Tools</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal delay-300">
-                        <div
-                            class="flex items-center justify-center w-10 h-10 rounded-full border border-fs-border bg-fs-white text-fs-slate shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-semibold text-sm transition-colors group-hover:border-fs-blue group-hover:text-fs-blue">
-                            4
-                        </div>
-                        <div
-                            class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-fs-border bg-fs-white shadow-sm card-interactive">
-                            <div class="text-xs font-medium text-fs-blue tracking-wider uppercase mb-2">Weeks 7-8</div>
-                            <h3 class="font-display text-xl font-bold text-fs-charcoal mb-2">The Final Presentation</h3>
-                            <p class="text-sm text-fs-slate mb-4">Translating the sequence into credible formats. PDF
-                                treatments, website architecture, and preparing for agency meetings.</p>
-                            <ul class="text-sm text-fs-slate space-y-2">
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> Digital vs Print Formatting</li>
-                                <li class="flex items-center gap-2"><svg class="w-4 h-4 text-fs-blue" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg> The Pitch and Defense</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="workflow" class="py-24 bg-fs-charcoal text-fs-white px-6 md:px-12">
-            <div class="max-w-7xl mx-auto">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
-                    <div class="reveal">
-                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Critique is where the growth
-                            happens.</h2>
-                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                            Stop designing in a vacuum. Our proprietary critique panels simulate real-world art
-                            direction. You don't just get a grade; you get actionable, industry-standard feedback on why
-                            an image works or fails.
-                        </p>
-
-                        <div class="space-y-6">
-                            <div class="flex gap-4">
-                                <div
-                                    class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-fs-slate/20 text-fs-blue border border-fs-blue/30">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">1. Upload the Raw Cut</h4>
-                                    <p class="text-sm text-gray-400 mt-1">Submit your 50-image broad edit directly into
-                                        the FrameSchool review portal.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div
-                                    class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-fs-slate/20 text-fs-blue border border-fs-blue/30">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">2. Peer Context Marking</h4>
-                                    <p class="text-sm text-gray-400 mt-1">Cohort members provide blind annotations on
-                                        narrative clarity before mentor review.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div
-                                    class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-fs-slate/20 text-fs-blue border border-fs-blue/30">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lg">3. Mentor Polish</h4>
-                                    <p class="text-sm text-gray-400 mt-1">Live video teardowns from industry editors,
-                                        helping you cut the filler and elevate the core.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative rounded-xl border border-gray-700 bg-[#252525] p-6 shadow-2xl reveal delay-200">
-                        <div class="flex items-center justify-between border-b border-gray-700 pb-4 mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gray-600 overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
-                                        alt="Mentor" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <div class="text-sm font-semibold text-white">Elena R. left a note</div>
-                                    <div class="text-xs text-gray-400">Mentor • Art Director</div>
-                                </div>
-                            </div>
-                            <span
-                                class="text-xs bg-fs-blue/20 text-fs-blue px-2 py-1 rounded border border-fs-blue/30">Sequence
-                                03</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <img src="https://images.unsplash.com/photo-1509249704604-954388e28fb6?auto=format&fit=crop&q=80&w=300"
-                                class="w-full h-24 object-cover rounded opacity-50" alt="Draft 1">
-                            <div class="relative border-2 border-fs-blue rounded">
-                                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=300"
-                                    class="w-full h-24 object-cover rounded" alt="Focus image">
-                                <div
-                                    class="absolute -top-2 -right-2 w-5 h-5 bg-fs-blue text-white rounded-full flex items-center justify-center text-xs font-bold">
-                                    1</div>
-                            </div>
-                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=300"
-                                class="w-full h-24 object-cover rounded opacity-50 grayscale" alt="Draft 3">
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-3 border border-gray-700">
-                            <p class="text-sm text-gray-300">
-                                "The middle frame disrupts the rhythm. The color palette fights with the starkness of
-                                the architectural shots. Try swapping this with frame #12 from your B-roll to maintain
-                                the cool tones."
-                            </p>
-                        </div>
+            <div class="testimonial-card reveal">
+                <p class="testimonial-quote">"导师的点评非常专业且具体，每次都能指出我自己看不到的问题。12周的学习让我的作品从业余水平提升到了可以投稿国际杂志的水准。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">王</div>
+                    <div class="testimonial-info">
+                        <h4>王思琪</h4>
+                        <p>视觉设计师 · 上海</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="mentors" class="py-24 bg-fs-muted px-6 md:px-12 border-b border-fs-border">
-            <div class="max-w-7xl mx-auto">
-                <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between reveal">
-                    <div>
-                        <h2 class="font-display text-3xl md:text-4xl font-bold text-fs-charcoal mb-4">Learn from those
-                            hiring.</h2>
-                        <p class="text-fs-slate text-lg max-w-xl">Our mentors aren't just educators; they are active
-                            photo editors, art directors, and gallery curators.</p>
+            <div class="testimonial-card reveal">
+                <p class="testimonial-quote">"作为转行进入摄影领域的人，FrameSchool 给了我系统性的知识框架和信心。现在我已经接到了第一个商业拍摄项目，感谢这个平台！"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">张</div>
+                    <div class="testimonial-info">
+                        <h4>张浩然</h4>
+                        <p>独立摄影师 · 深圳</p>
                     </div>
-                    <a href="#"
-                        class="hidden md:inline-flex text-sm font-medium text-fs-blue hover:text-fs-charcoal transition-colors items-center gap-1 mt-4 md:mt-0">
-                        View all 12 mentors <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="section-header reveal">
+            <span class="section-label">常见问题</span>
+            <h2>你可能想知道的</h2>
+            <p class="section-description">关于课程、学习和职业发展的常见问题解答</p>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>我需要具备什么摄影基础才能开始学习？</h3>
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>基础课程不需要任何摄影经验，我们会从相机操作、曝光三要素等基础知识讲起。进阶和专业课程建议先完成基础课程或具备相当的拍摄经验。如果你不确定自己的水平，可以预约免费的能力评估咨询。</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>课程是录播还是直播？学习时间灵活吗？</h3>
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>核心课程采用录播形式，你可以根据自己的时间安排学习。每周会有固定的直播答疑和作品点评环节，如果时间冲突可以观看回放。作业提交有截止时间，但我们会提供合理的延期机制。</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>完成课程后能获得什么证书或资质？</h3>
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>完成每个阶段的学习并通过作品评审后，你将获得 FrameSchool 的结业证书。完成完整学位计划的学员还将获得导师推荐信和毕业展览机会。我们与多家画廊和出版机构建立了合作关系，优秀学员可获得推荐。</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>如果我对课程不满意，可以退款吗？</h3>
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>我们提供14天无理由退款保证。如果你在购买后14天内觉得课程不适合自己，可以申请全额退款，无需说明理由。超过14天后，如果因特殊原因无法继续学习，可以联系我们协商课程延期或转让。</p>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>课程会教授后期修图技术吗？</h3>
+                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>我们的重点是培养摄影思维和项目构建能力，而非软件操作技巧。课程会涉及基本的后期调色和编辑原则，但不会深入讲解Photoshop或Lightroom的具体操作。如果你需要学习后期技术，我们会推荐优质的配套资源。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="reveal">
+            <h2>准备好开始你的摄影之旅了吗？</h2>
+            <p>加入 FrameSchool，与志同道合的创作者一起成长，打造属于你的专业作品集</p>
+            <div class="cta-buttons">
+                <button type="button" class="btn btn-white btn-large">免费试听课程</button>
+                <button type="button" class="btn btn-outline-white btn-large">预约咨询</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo" style="color: white;">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        FrameSchool
+                    </a>
+                    <p>FrameSchool 是面向年轻创意人的摄影作品集教育平台，致力于培养具有独特视觉语言的专业创作者。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>课程</h4>
+                    <ul>
+                        <li><a href="#">视觉语言入门</a></li>
+                        <li><a href="#">项目叙事精进</a></li>
+                        <li><a href="#">职业作品集构建</a></li>
+                        <li><a href="#">企业培训</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="#">学员作品</a></li>
+                        <li><a href="#">导师博客</a></li>
+                        <li><a href="#">摄影书单</a></li>
+                        <li><a href="#">行业资讯</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">加入团队</a></li>
+                        <li><a href="#">联系我们</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2024 FrameSchool. 保留所有权利。</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="微信">
+                        <svg viewBox="0 0 24 24"><path d="M8.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/><path d="M12 2C6.48 2 2 6.03 2 11c0 2.76 1.36 5.23 3.5 6.86V22l4.09-2.24c.78.15 1.58.24 2.41.24 5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
+                    </a>
+                    <a href="#" aria-label="微博">
+                        <svg viewBox="0 0 24 24"><path d="M20.2 12.8c.6-.2 1.1-.7 1.3-1.3.3-.9 0-1.9-.7-2.5-.7-.6-1.7-.7-2.5-.3-.3.1-.5.3-.7.5-.2-.7-.7-1.3-1.4-1.6-.9-.4-1.9-.3-2.7.2-.4.3-.7.6-.9 1.1-.5-.3-1.1-.4-1.7-.3-1 .2-1.8.9-2.1 1.9-.1.5-.1 1 .1 1.5-.6.1-1.2.4-1.6.9-.6.7-.7 1.7-.3 2.5.4.8 1.2 1.4 2.1 1.5-.1.3-.2.7-.1 1 .2 1 1 1.8 2 2 .5.1 1 0 1.5-.2.4.6 1.1 1 1.8 1.1 1 .1 1.9-.3 2.5-1.1.3-.4.5-.9.5-1.4.6.1 1.2 0 1.8-.2 1.2-.4 2-1.5 2-2.8 0-.6-.2-1.2-.5-1.7.4-.2.8-.5 1.1-.9.5-.7.6-1.6.2-2.4z"/></svg>
+                    </a>
+                    <a href="#" aria-label="小红书">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm5 8h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                     </a>
                 </div>
-
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div
-                        class="bg-fs-white rounded-xl overflow-hidden border border-fs-border shadow-sm card-interactive reveal">
-                        <div class="h-48 bg-gray-200 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
-                                alt="Sarah Jenkins"
-                                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                        </div>
-                        <div class="p-6">
-                            <div class="text-xs font-semibold text-fs-blue tracking-wider uppercase mb-1">Editorial
-                            </div>
-                            <h3 class="font-display font-bold text-lg text-fs-charcoal">Sarah Jenkins</h3>
-                            <p class="text-sm text-fs-slate mb-4">Former Director of Photography at VOGUE. Focuses on
-                                narrative fashion and portraiture sequencing.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">Conde
-                                    Nast</span>
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">Hearst</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-fs-white rounded-xl overflow-hidden border border-fs-border shadow-sm card-interactive reveal delay-100">
-                        <div class="h-48 bg-gray-200 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600"
-                                alt="Marcus Chen"
-                                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                        </div>
-                        <div class="p-6">
-                            <div class="text-xs font-semibold text-fs-blue tracking-wider uppercase mb-1">Commercial /
-                                Agency</div>
-                            <h3 class="font-display font-bold text-lg text-fs-charcoal">Marcus Chen</h3>
-                            <p class="text-sm text-fs-slate mb-4">Partner at W+K. Evaluates portfolios for commercial
-                                viability and brand campaign readiness.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">Wieden+Kennedy</span>
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">Nike</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-fs-white rounded-xl overflow-hidden border border-fs-border shadow-sm card-interactive reveal delay-200">
-                        <div class="h-48 bg-gray-200 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600"
-                                alt="Elena Rostova"
-                                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
-                        </div>
-                        <div class="p-6">
-                            <div class="text-xs font-semibold text-fs-blue tracking-wider uppercase mb-1">Fine Art /
-                                Gallery</div>
-                            <h3 class="font-display font-bold text-lg text-fs-charcoal">Elena Rostova</h3>
-                            <p class="text-sm text-fs-slate mb-4">Independent Curator. Guides students in building
-                                cohesive bodies of work for exhibition spaces.</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">Gagosian</span>
-                                <span
-                                    class="px-2 py-1 bg-fs-muted border border-fs-border rounded text-xs text-fs-slate">MoMA
-                                    PS1</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="md:hidden mt-8 text-sm font-medium text-fs-blue inline-flex items-center gap-1 hover:text-fs-charcoal transition-colors">
-                    View all 12 mentors <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                </a>
-            </div>
-        </section>
-
-        <section id="pricing" class="py-24 px-6 md:px-12 bg-fs-white">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16 reveal">
-                    <h2 class="font-display text-3xl md:text-4xl font-bold text-fs-charcoal mb-4">Invest in your
-                        presentation.</h2>
-                    <p class="text-fs-slate text-lg max-w-2xl mx-auto">A single commissioned job covers the cost of
-                        tuition. Choose the learning style that fits your schedule.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8 items-start">
-                    <div class="rounded-2xl border border-fs-border bg-fs-white p-8 shadow-sm reveal">
-                        <h3 class="font-display text-2xl font-bold text-fs-charcoal mb-2">Self-Paced</h3>
-                        <p class="text-fs-slate text-sm mb-6 h-10">Full access to the curriculum, assignments, and
-                            community, without live mentor reviews.</p>
-                        <div class="mb-6">
-                            <span class="text-4xl font-bold font-display text-fs-charcoal">$499</span>
-                            <span class="text-fs-slate">/ lifetime</span>
-                        </div>
-                        <a href="#"
-                            class="btn-interactive w-full flex items-center justify-center rounded-md border border-fs-border bg-fs-white px-4 py-3 text-sm font-medium text-fs-charcoal hover:bg-fs-sand mb-8">
-                            Start Learning Instantly
-                        </a>
-                        <ul class="space-y-4 text-sm text-fs-slate">
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-slate shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>All 8 modules of video curriculum</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-slate shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Interactive sequencing worksheets</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-slate shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Access to student Discord community</span>
-                            </li>
-                            <li class="flex items-start gap-3 opacity-50">
-                                <svg class="w-5 h-5 text-fs-slate shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                <span>Live mentor critique sessions</span>
-                            </li>
-                            <li class="flex items-start gap-3 opacity-50">
-                                <svg class="w-5 h-5 text-fs-slate shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                <span>1-on-1 final portfolio review</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div
-                        class="rounded-2xl border-2 border-fs-charcoal bg-fs-white p-8 shadow-card relative reveal delay-100">
-                        <div
-                            class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-fs-charcoal text-fs-white text-xs font-bold uppercase tracking-widest py-1 px-3 rounded-full">
-                            Cohort Mentorship
-                        </div>
-                        <h3 class="font-display text-2xl font-bold text-fs-charcoal mb-2">The Academy</h3>
-                        <p class="text-fs-slate text-sm mb-6 h-10">The definitive experience. 8 weeks of intensive
-                            guided learning and personalized critique.</p>
-                        <div class="mb-6">
-                            <span class="text-4xl font-bold font-display text-fs-charcoal">$1,499</span>
-                            <span class="text-fs-slate">/ cohort</span>
-                        </div>
-                        <a href="#"
-                            class="btn-interactive w-full flex items-center justify-center rounded-md bg-fs-charcoal text-fs-white px-4 py-3 text-sm font-medium hover:bg-fs-charcoal/90 mb-8">
-                            Apply for Fall 2026
-                        </a>
-                        <ul class="space-y-4 text-sm text-fs-charcoal font-medium">
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-blue shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Everything in Self-Paced</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-blue shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>4 live group critique sessions</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-blue shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Peer review matching system</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-blue shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Direct written feedback on assignments</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-fs-blue shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                <span>Final 1-on-1 portfolio review with a mentor</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-fs-sand px-6 md:px-12">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="font-display text-2xl font-bold text-fs-charcoal mb-12 text-center reveal">Proof of concept.
-                </h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-fs-white p-6 rounded-xl shadow-sm border border-fs-border reveal">
-                        <div class="flex items-center gap-1 mb-4 text-amber-400">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-fs-slate mb-6 italic">"I had a hard drive full of good images but no
-                            portfolio. FrameSchool taught me how to actually weave them together. Landed representation
-                            2 months after graduating."</p>
-                        <div class="font-semibold text-sm">David M.</div>
-                        <div class="text-xs text-fs-slate">Commercial Photographer</div>
-                    </div>
-
-                    <div class="bg-fs-white p-6 rounded-xl shadow-sm border border-fs-border reveal delay-100">
-                        <div class="flex items-center gap-1 mb-4 text-amber-400">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-fs-slate mb-6 italic">"The critique sessions were brutal but exactly what
-                            I needed. Learning to kill my darlings and trim a 60-image project down to 15 perfect frames
-                            changed my career."</p>
-                        <div class="font-semibold text-sm">Sarah L.</div>
-                        <div class="text-xs text-fs-slate">Documentary Artist</div>
-                    </div>
-
-                    <div class="bg-fs-white p-6 rounded-xl shadow-sm border border-fs-border reveal delay-200">
-                        <div class="flex items-center gap-1 mb-4 text-amber-400">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-fs-slate mb-6 italic">"As an art director, I can tell immediately when
-                            someone has taken this course. The PDF treatments and pacing are just on another level
-                            compared to the typical inbox submissions."</p>
-                        <div class="font-semibold text-sm">James K.</div>
-                        <div class="text-xs text-fs-slate">Art Buyer, NY</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 px-6 md:px-12 bg-fs-white">
-            <div class="max-w-3xl mx-auto">
-                <h2 class="font-display text-3xl font-bold text-fs-charcoal mb-10 text-center reveal">Frequently Asked
-                    Questions</h2>
-
-                <div class="space-y-4 reveal delay-100">
-                    <details
-                        class="group border border-fs-border bg-fs-white rounded-lg [&_summary::-webkit-details-marker]:hidden">
-                        <summary
-                            class="flex cursor-pointer items-center justify-between gap-1.5 p-4 text-fs-charcoal font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded-lg">
-                            Is this a photography technical course?
-                            <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-4 pb-4 text-sm text-fs-slate">
-                            No. We do not teach lighting, camera settings, or retouching. FrameSchool assumes you
-                            already have a body of work. We teach the curation, editing, sequencing, and presentation of
-                            that work.
-                        </div>
-                    </details>
-
-                    <details
-                        class="group border border-fs-border bg-fs-white rounded-lg [&_summary::-webkit-details-marker]:hidden">
-                        <summary
-                            class="flex cursor-pointer items-center justify-between gap-1.5 p-4 text-fs-charcoal font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded-lg">
-                            How much time does the cohort require?
-                            <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-4 pb-4 text-sm text-fs-slate">
-                            Expect to commit 4-6 hours per week. This includes watching the modules, completing the
-                            sequencing assignments, and attending or watching replays of the live critique sessions.
-                        </div>
-                    </details>
-
-                    <details
-                        class="group border border-fs-border bg-fs-white rounded-lg [&_summary::-webkit-details-marker]:hidden">
-                        <summary
-                            class="flex cursor-pointer items-center justify-between gap-1.5 p-4 text-fs-charcoal font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fs-blue rounded-lg">
-                            Can I upgrade from Self-Paced to the Cohort later?
-                            <svg class="h-5 w-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-4 pb-4 text-sm text-fs-slate">
-                            Yes. If you start with the Self-Paced tier, you can apply the amount paid toward the next
-                            available Cohort tuition, subject to seat availability.
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 px-6 md:px-12 bg-fs-charcoal text-fs-white text-center">
-            <div class="max-w-3xl mx-auto reveal">
-                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Your work deserves a proper stage.</h2>
-                <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">Stop letting strong images die in disorganized
-                    folders. Build a portfolio that commands attention and elevates your professional standing.</p>
-                <a href="#pricing"
-                    class="btn-interactive inline-flex items-center justify-center rounded-md bg-fs-white text-fs-charcoal px-8 py-4 text-base font-bold hover:bg-gray-100 transition-colors">
-                    Enroll in FrameSchool
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-fs-white py-12 px-6 md:px-12 border-t border-fs-border">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-fs-charcoal" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                    <circle cx="9" cy="9" r="2" />
-                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                </svg>
-                <span class="font-display font-semibold tracking-tight">FrameSchool</span>
-            </div>
-
-            <div class="flex gap-6 text-sm text-fs-slate">
-                <a href="#" class="hover:text-fs-charcoal transition-colors">Terms</a>
-                <a href="#" class="hover:text-fs-charcoal transition-colors">Privacy</a>
-                <a href="#" class="hover:text-fs-charcoal transition-colors">Contact</a>
-            </div>
-
-            <div class="text-sm text-fs-slate">
-                &copy; 2026 FrameSchool. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Sticky Navbar Transition
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 20) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
-            }, { passive: true });
-
-            // 2. Scroll Reveal Animations
-            const revealElements = document.querySelectorAll('.reveal');
-
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                root: null,
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
             });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-            revealElements.forEach(el => revealObserver.observe(el));
+        revealElements.forEach(el => revealObserver.observe(el));
 
-            // 3. Counter Animation
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // lower is slower
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
 
-            const counterObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = +counter.getAttribute('data-target');
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
 
-                        const updateCount = () => {
-                            const count = +counter.innerText;
-                            const inc = target / speed;
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
 
-                            if (count < target) {
-                                counter.innerText = Math.ceil(count + inc);
-                                setTimeout(updateCount, 15);
-                            } else {
-                                counter.innerText = target;
-                            }
-                        };
+        counters.forEach(counter => counterObserver.observe(counter));
 
-                        updateCount();
-                        observer.unobserve(counter);
+        // FAQ accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click feedback
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!this.getAttribute('href')?.startsWith('#')) {
+                    // Show coming soon for buttons without actual links
+                    const hasLink = this.getAttribute('href') || this.closest('a');
+                    if (!hasLink && !this.closest('.faq-question')) {
+                        const originalText = this.textContent;
+                        this.textContent = '即将推出';
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 1500);
                     }
-                });
-            }, { threshold: 0.5 });
-
-            counters.forEach(counter => counterObserver.observe(counter));
+                }
+            });
         });
     </script>
 </body>
-
 </html>
