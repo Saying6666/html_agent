@@ -3,25 +3,20 @@
 run_pipeline.py — Web Design Dataset 流水线入口
 
 用法:
-    # 半自动流程（自动生成 brief → prompt，HTML 由当前 agent 生成）
-    python run_pipeline.py --task fdu_012 --auto
+    # 手工模式：prompt 与 HTML 都由当前 agent 编写
+    python run_pipeline.py --task fdu_012 --steps prompt,html
 
-    # 半自动流程（手动指定参数）
-    python run_pipeline.py --task fdu_012 \
-        --category "SaaS Landing Page" \
-        --concept "AI code review tool" \
-        --audience "Engineering teams" \
-        --style "Modern Minimal" \
-        --site-name "CodeSight"
+    # 显式启用外部 API 流式生成 HTML
+    python run_pipeline.py --task fdu_012 --steps html --html-mode api
 
     # 仅执行某些步骤
     python run_pipeline.py --task fdu_012 --steps prompt
     python run_pipeline.py --task fdu_012 --steps html
     python run_pipeline.py --task fdu_012 --steps screenshot,video
 
-    # 批量处理
-    python run_pipeline.py --batch fdu_012,fdu_013,fdu_014 --auto
-    python run_pipeline.py --range 12-20 --auto
+    # 批量校验 prompt / HTML 是否已就绪
+    python run_pipeline.py --batch fdu_012,fdu_013,fdu_014 --steps prompt,html
+    python run_pipeline.py --range 12-20 --steps prompt,html
 """
 
 import argparse
@@ -33,22 +28,44 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from generate_prompt import generate_prompt
+from generate_html import generate_html
 from capture_screenshot import capture_screenshot
 from capture_video import capture_video
 
 ALL_STEPS = ["prompt", "html", "screenshot", "video"]
 
 
-def _print_html_generation_instructions(task_dir: Path):
-    """提示 HTML 步骤改为由当前 agent 手工完成。"""
+def _print_prompt_generation_instructions(task_dir: Path):
+    """提示 prompt 步骤改为由当前 agent 手工完成。"""
+    prompt_path = task_dir / "prompt.md"
+
+    print("[ACTION REQUIRED] Prompt 步骤不再调用外部 API 或脚本模型。")
+    print("[ACTION REQUIRED] 请由当前 agent 执行以下工作：")
+    print("  1. 按原有要求手工编写 4 轮渐进式 prompt")
+    print("  2. 保持原 prompt 结构和约束不变")
+    print(f"  3. 将最终内容写入 {prompt_path}")
+    print("  4. 完成后再继续 HTML / screenshot / video 步骤")
+
+
+def _print_html_generation_instructions(task_dir: Path, html_mode: str):
+    """提示 HTML 步骤的当前执行模式。"""
     prompt_path = task_dir / "prompt.md"
     html_path = task_dir / "src" / "index.html"
 
-    print("[ACTION REQUIRED] HTML 步骤不再调用外部 API 或脚本模型。")
-    print("[ACTION REQUIRED] 请由当前 agent 执行以下工作：")
-    print(f"  1. 阅读 {prompt_path}")
-    print("  2. 结合 web skill 与 frontend-design skill 设计并编写单文件 HTML")
-    print(f"  3. 将最终代码写入 {html_path}")
+    if html_mode == "manual":
+        print("[ACTION REQUIRED] HTML 步骤当前为 agent 手工模式。")
+        print("[ACTION REQUIRED] 请由当前 agent 执行以下工作：")
+        print(f"  1. 阅读 {prompt_path}")
+        print("  2. 结合 web skill 与 frontend-design skill 设计并编写单文件 HTML")
+        print(f"  3. 将最终代码写入 {html_path}")
+        print("  4. 完成后再继续 screenshot / video 步骤")
+        return
+
+    print("[ACTION REQUIRED] HTML 步骤当前为外部 API 流式模式。")
+    print("[ACTION REQUIRED] 仅在用户明确要求时使用该模式。")
+    print(f"  1. 读取 {prompt_path}")
+    print("  2. 通过 OpenAI 兼容接口以 stream=true 生成 HTML")
+    print(f"  3. 将流式结果落盘到 {html_path}")
     print("  4. 完成后再继续 screenshot / video 步骤")
 
 
@@ -70,7 +87,13 @@ def run_pipeline(task_id: str, root: Path, steps: list,
                  auto: bool = False, category: str = "",
                  concept: str = "", audience: str = "",
                  style: str = "", site_name: str = "",
-                 video_duration: int = 35):
+                 video_duration: int = 35,
+                 html_mode: str = "manual",
+                 api_provider: str = "openai-compatible",
+                 base_url_env: str = "X666_BASE_URL",
+                 api_key_env: str = "X666_API_KEY",
+                 model_env: str = "X666_MODEL_GEMINI",
+                 html_extra_instruction: str = ""):
     """对单个任务执行流水线。"""
     task_dir = root / task_id
     if not task_dir.exists():
@@ -81,32 +104,36 @@ def run_pipeline(task_id: str, root: Path, steps: list,
     print(f"\n{'='*60}")
     print(f"  任务: {task_id}")
     print(f"  步骤: {', '.join(steps)}")
+    print(f"  HTML 模式: {html_mode}")
     print(f"{'='*60}\n")
 
     start = time.time()
 
-    # Step 1: 生成 prompt
+    # Step 1: 校验 prompt
     if "prompt" in steps:
-        print(f"\n--- [1/4] 生成 prompt.md ---")
+        print(f"\n--- [1/4] 校验 prompt.md ---")
+        _print_prompt_generation_instructions(task_dir)
         generate_prompt(
             task_dir=task_dir, root=root,
             category=category, concept=concept,
             audience=audience, style=style,
             site_name=site_name, auto=auto,
         )
-        print("  [WAIT] 步骤间等待 5 秒...")
-        time.sleep(5)
 
     # Step 2: 生成 HTML
     if "html" in steps:
         print(f"\n--- [2/4] 生成 index.html ---")
-        _print_html_generation_instructions(task_dir)
-
-        html_path = task_dir / "src" / "index.html"
-        if not html_path.exists() or html_path.stat().st_size == 0:
-            raise RuntimeError(
-                "HTML 步骤已切换为 agent 手工生成模式，但 src/index.html 仍不存在或为空"
-            )
+        _print_html_generation_instructions(task_dir, html_mode)
+        generate_html(
+            task_dir=task_dir,
+            root=root,
+            mode=html_mode,
+            api_provider=api_provider,
+            base_url_env=base_url_env,
+            api_key_env=api_key_env,
+            model_env=model_env,
+            extra_instruction=html_extra_instruction,
+        )
 
     # Step 3: 截图
     if "screenshot" in steps:
@@ -171,18 +198,41 @@ def main():
     parser.add_argument("--steps", default=None,
                         help="执行步骤，逗号分隔 (prompt,html,screenshot,video)")
 
-    # prompt 参数
-    parser.add_argument("--auto", action="store_true", help="自动生成网站 brief")
-    parser.add_argument("--category", default="")
-    parser.add_argument("--concept", default="")
-    parser.add_argument("--audience", default="")
-    parser.add_argument("--style", default="")
-    parser.add_argument("--site-name", default="")
+    # prompt 参数（保留兼容，现已忽略）
+    parser.add_argument("--auto", action="store_true", help="兼容旧参数，现已忽略")
+    parser.add_argument("--category", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--concept", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--audience", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--style", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--site-name", default="", help="兼容旧参数，现已忽略")
 
     # 其他参数
     parser.add_argument("--root", default=None, help="项目根目录")
     parser.add_argument("--video-duration", type=int, default=35,
                         help="视频目标时长 (默认 35s)")
+    parser.add_argument(
+        "--html-mode",
+        choices=["manual", "api"],
+        default="manual",
+        help="manual=当前 agent 手工写 HTML；api=显式启用外部 API 流式生成",
+    )
+    parser.add_argument(
+        "--api-provider",
+        choices=["openai-compatible"],
+        default="openai-compatible",
+        help="HTML 外部 API 类型",
+    )
+    parser.add_argument("--base-url-env", default="X666_BASE_URL",
+                        help="在 .env.local 中读取 base url 的变量名")
+    parser.add_argument("--api-key-env", default="X666_API_KEY",
+                        help="在 .env.local 中读取 API key 的变量名")
+    parser.add_argument("--model-env", default="X666_MODEL_GEMINI",
+                        help="在 .env.local 中读取 model 的变量名")
+    parser.add_argument(
+        "--html-extra-instruction",
+        default="",
+        help="附加到 prompt.md 之后的运行时 HTML 指令，仅影响本次生成",
+    )
 
     args = parser.parse_args()
 
@@ -208,6 +258,7 @@ def main():
 
     print(f"[INFO] 共 {len(tasks)} 个任务: {', '.join(tasks)}")
     print(f"[INFO] 步骤: {', '.join(steps)}")
+    print(f"[INFO] HTML 模式: {args.html_mode}")
 
     for i, task_id in enumerate(tasks):
         print(f"\n{'#'*60}")
@@ -222,6 +273,12 @@ def main():
                 audience=args.audience, style=args.style,
                 site_name=getattr(args, "site_name", ""),
                 video_duration=args.video_duration,
+                html_mode=args.html_mode,
+                api_provider=args.api_provider,
+                base_url_env=args.base_url_env,
+                api_key_env=args.api_key_env,
+                model_env=args.model_env,
+                html_extra_instruction=args.html_extra_instruction,
             )
         except Exception as e:
             print(f"[ERROR] {task_id} 失败: {e}")

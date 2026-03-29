@@ -1,829 +1,1137 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maison Verre | The Architecture of Presence</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --charcoal: #0a0a0b;
-            --charcoal-elevated: #141416;
-            --ivory: #f9f7f4;
-            --champagne: #e2ddd3;
-            --rose-gold: #c5a9a1;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-active: rgba(255, 255, 255, 0.12);
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Inter', sans-serif;
-            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            background: var(--charcoal);
-        }
-
-        body {
-            background-color: var(--charcoal);
-            color: var(--champagne);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: var(--font-serif);
-            color: var(--ivory);
-            font-weight: 400;
-            line-height: 1.1;
-        }
-
-        p {
-            font-size: 1.05rem;
-            opacity: 0.8;
-            font-weight: 300;
-        }
-
-        .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--rose-gold);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .glass {
-            -webkit-backdrop-filter: blur(25px);
-            backdrop-filter: blur(25px);
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            transition: var(--transition);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 6%;
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            padding: 20px 6%;
-            background: rgba(10, 10, 11, 0.8);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            text-decoration: none;
-            color: var(--ivory);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--ivory);
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            opacity: 0.6;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-            color: var(--rose-gold);
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 40px;
-            border-radius: 2px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--rose-gold);
-            color: var(--charcoal);
-        }
-
-        .btn-primary:hover {
-            background: var(--ivory);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            color: var(--ivory);
-        }
-
-        .btn-ghost:hover {
-            background: var(--glass-active);
-            border-color: var(--rose-gold);
-        }
-
-        /* Hero */
-        .hero {
-            height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1542314831-c6a4d142104d?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-        }
-
-        .hero-content {
-            z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
-        }
-
-        .hero h1 {
-            font-size: clamp(3.5rem, 9vw, 7.5rem);
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-        }
-
-        .hero p {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 1.4rem;
-            color: var(--champagne);
-            margin-bottom: 40px;
-        }
-
-        .booking-bar {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translate(-50%, 50%);
-            width: 90%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr) auto;
-            padding: 10px;
-            z-index: 10;
-        }
-
-        .b-field {
-            padding: 20px 30px;
-            border-right: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            transition: 0.3s;
-        }
-
-        .b-field:hover {
-            background: var(--glass-active);
-        }
-
-        .b-field:last-of-type {
-            border: none;
-        }
-
-        .b-field label {
-            font-size: 0.6rem;
-            color: var(--rose-gold);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .b-field input,
-        .b-field select {
-            background: transparent;
-            border: none;
-            color: var(--ivory);
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            outline: none;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* Sections */
-        section {
-            padding: 180px 8% 100px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .center-heading {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .mt-md {
-            margin-top: 20px;
-        }
-
-        .mt-lg {
-            margin-top: 40px;
-        }
-
-        .mt-xl {
-            margin-top: 80px;
-        }
-
-        .rooms-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-top: 80px;
-        }
-
-        .room-card {
-            height: 800px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .room-card img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 2s var(--transition);
-            z-index: 0;
-        }
-
-        .room-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .room-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            z-index: 1;
-        }
-
-        .room-info {
-            position: relative;
-            z-index: 2;
-            margin: 30px;
-            padding: 50px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .room-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .room-features {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .feature-chip {
-            font-size: 0.65rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 40px;
-            letter-spacing: 1px;
-        }
-
-        .room-price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--glass-border);
-            padding-top: 25px;
-        }
-
-        .price-text {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-        }
-
-        .price-sub {
-            font-size: 0.7rem;
-            opacity: 0.5;
-        }
-
-        .img-mask {
-            overflow: hidden;
-            position: relative;
-            height: 700px;
-        }
-
-        .img-mask img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 1.5s var(--transition);
-        }
-
-        .img-mask:hover img {
-            transform: scale(1.05);
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            padding: 80px 0;
-        }
-
-        .metric-item {
-            text-align: center;
-        }
-
-        .num {
-            display: block;
-            font-family: var(--font-serif);
-            font-size: 4rem;
-            color: var(--ivory);
-        }
-
-        .quote-block {
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 100px 0;
-        }
-
-        .quote-block blockquote {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            font-style: italic;
-            line-height: 1.3;
-            color: var(--ivory);
-            margin-bottom: 30px;
-        }
-
-        .faq-list {
-            max-width: 800px;
-            margin: 60px auto 0;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--glass-border);
-            overflow: hidden;
-        }
-
-        .faq-btn {
-            width: 100%;
-            padding: 40px 0;
-            background: none;
-            border: none;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            color: var(--ivory);
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-        }
-
-        .faq-btn span:last-child {
-            transition: 0.5s var(--transition);
-            font-size: 1rem;
-            opacity: 0.5;
-        }
-
-        .faq-content {
-            max-height: 0;
-            opacity: 0;
-            transition: 0.6s var(--transition);
-            padding-right: 100px;
-            color: var(--champagne);
-        }
-
-        .faq-item.active .faq-content {
-            max-height: 200px;
-            opacity: 0.7;
-            padding-bottom: 40px;
-        }
-
-        .faq-item.active .faq-btn span:last-child {
-            transform: rotate(45deg);
-            opacity: 1;
-            color: var(--rose-gold);
-        }
-
-        .cta-section {
-            background: linear-gradient(rgba(10, 10, 11, 0.7), rgba(10, 10, 11, 0.7)), url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            text-align: center;
-            padding: 220px 5%;
-        }
-
-        footer {
-            background: var(--charcoal-elevated);
-            padding: 120px 8% 60px;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .f-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 80px;
-            margin-bottom: 80px;
-        }
-
-        .f-col h5 {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--rose-gold);
-            margin-bottom: 30px;
-        }
-
-        .f-col ul {
-            list-style: none;
-        }
-
-        .f-col li {
-            margin-bottom: 15px;
-            opacity: 0.5;
-            transition: 0.3s;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .f-col li:hover {
-            opacity: 1;
-            color: var(--rose-gold);
-            transform: translateX(8px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--glass-border);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.7rem;
-            opacity: 0.4;
-        }
-
-        [data-reveal] {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: 1s var(--transition);
-        }
-
-        [data-reveal].visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 1100px) {
-            .booking-bar {
-                grid-template-columns: 1fr;
-                transform: none;
-                position: relative;
-                margin-top: -60px;
-                width: 100%;
-            }
-
-            .b-field {
-                border-right: none;
-                border-bottom: 1px solid var(--glass-border);
-            }
-
-            .grid-2,
-            .rooms-grid,
-            .metrics,
-            .f-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .img-mask {
-                height: 400px;
-            }
-
-            .room-card {
-                height: 600px;
-            }
-
-            nav {
-                padding: 20px 6%;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aureline Sleeper Club | Premium Rail</title>
+  <style>
+    :root {
+      --bg-base: #030305;
+      --glass-bg: rgba(20, 20, 22, 0.3);
+      --glass-bg-hover: rgba(30, 30, 35, 0.4);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      --text-main: #f5f5f7;
+      --text-muted: #a1a1a6;
+      --accent: #d4af37;
+      /* subtle gold/amber */
+      --accent-glow: rgba(212, 175, 55, 0.4);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", "Segoe UI", sans-serif;
+      --font-mono: "SF Mono", "UI Mono", "Roboto Mono", Menlo, Courier, monospace;
+      --border-radius-lg: 24px;
+      --border-radius-md: 16px;
+      --border-radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+    }
+
+    /* Ambient Background */
+    .ambient-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #0a0a0f 0%, #000 100%);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      animation: drift 20s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.4), rgba(79, 70, 229, 0.1));
+      top: -10%;
+      left: 10%;
+      animation-duration: 25s;
+    }
+
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15), rgba(0, 0, 0, 0));
+      bottom: -20%;
+      right: -10%;
+      animation-duration: 30s;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.2), rgba(0, 0, 0, 0));
+      top: 40%;
+      left: 60%;
+      animation-duration: 22s;
+      animation-delay: -10s;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(5vw, 10vh) scale(1.05);
+      }
+
+      100% {
+        transform: translate(-5vw, -5vh) scale(0.95);
+      }
+    }
+
+    /* Layout & App Container */
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      perspective: 1000px;
+    }
+
+    /* Glassmorphic Panel Base */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--glass-highlight), 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.08) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .glass-panel:hover {
+      background: var(--glass-bg-hover);
+      box-shadow: var(--glass-highlight), 0 32px 64px -16px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Header */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-radius: 100px;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-diamond {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--accent);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+
+    .btn-accent:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 30px rgba(212, 175, 55, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Dashboard */
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+      overflow: hidden;
+      min-height: 480px;
+    }
+
+    .hero-content {
+      padding: 60px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.02);
+      width: max-content;
+      margin-bottom: 24px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 8px;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1.1;
+      font-weight: 400;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content h1 span {
+      display: block;
+      color: var(--text-muted);
+    }
+
+    .hero-content p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 90%;
+      margin-bottom: 40px;
+    }
+
+    /* Holographic Ticket Map */
+    .hologram-map {
+      position: relative;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    .hologram-map::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px);
+      pointer-events: none;
+    }
+
+    .route-ribbon-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .svg-ribbon {
+      width: 100%;
+      height: 200px;
+      overflow: visible;
+    }
+
+    .svg-path {
+      stroke: url(#glow-gradient);
+      stroke-width: 3;
+      fill: none;
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawLine 4s ease forwards infinite;
+    }
+
+    @keyframes drawLine {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .station-marker {
+      fill: #fff;
+      filter: drop-shadow(0 0 5px #fff);
+    }
+
+    .station-marker-ring {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      opacity: 0.6;
+      transform-origin: center;
+      animation: pulseMarker 3s infinite ease-out;
+    }
+
+    @keyframes pulseMarker {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    .route-label {
+      font-family: var(--font-mono);
+      fill: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .route-city {
+      font-family: var(--font-sans);
+      fill: #fff;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* Main Grid: Departure Board & Itinerary */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    /* Panoramic Departure Board */
+    .departure-board {
+      padding: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+
+    .departure-table {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .departure-table th {
+      text-align: left;
+      color: var(--text-muted);
+      font-weight: 400;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .departure-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      vertical-align: middle;
+      transition: background 0.3s;
+    }
+
+    .departure-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .dept-time {
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .dept-city {
+      font-family: var(--font-sans);
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .dept-code {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-on-time .status-dot {
+      background: #34d399;
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+    }
+
+    .status-boarding .status-dot {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .status-delayed .status-dot {
+      background: #f87171;
+      box-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+    }
+
+    .status-text {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-on-time .status-text {
+      color: #34d399;
+    }
+
+    .status-boarding .status-text {
+      color: var(--accent);
+    }
+
+    .status-delayed .status-text {
+      color: #f87171;
+    }
+
+    /* Split Section: Itinerary Desk & Journal/Booking */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 32px;
+    }
+
+    /* Itinerary Desk Tabs */
+    .itinerary-desk {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabs-header {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      color: #fff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .tab-highlight {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 1;
+    }
+
+    .tab-content-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 250px;
+    }
+
+    .tab-pane {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-pane.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .tab-pane h3 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .tab-pane p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .tab-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: auto;
+    }
+
+    .spec-item {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .spec-val {
+      font-size: 1.1rem;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* Sub-grid for Journal + Booking */
+    .side-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Journal Entry */
+    .journal-excerpt {
+      padding: 32px;
+      flex: 1;
+    }
+
+    .journal-excerpt blockquote {
+      font-style: italic;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #eaeaea;
+      margin-bottom: 16px;
+      border-left: 2px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    .journal-author {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding-left: 22px;
+    }
+
+    /* Booking Module */
+    .booking-module {
+      padding: 32px;
+      position: relative;
+    }
+
+    /* Glowing gradient border for booking module specifically */
+    .booking-module::before {
+      background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(212, 175, 55, 0.2) 90deg, transparent 180deg, rgba(255, 255, 255, 0.1) 270deg, transparent 360deg);
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-control:focus {
+      background: rgba(0, 0, 0, 0.5);
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-section {
+        grid-template-columns: 1fr;
+      }
+
+      .hologram-map {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .app-header {
+        padding: 12px 16px;
+      }
+
+      .nav-links {
+        display: none;
+        /* Hide on mobile for simplicity, or implement hamburger */
+      }
+
+      .hero-content {
+        padding: 40px 24px;
+      }
+
+      .departure-board,
+      .itinerary-desk,
+      .journal-excerpt,
+      .booking-module {
+        padding: 24px;
+      }
+
+      .tab-specs {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <nav id="nav">
-        <a href="#" class="logo">MAISON VERRE</a>
-        <div class="nav-links">
-            <a href="#about">The Ethos</a>
-            <a href="#rooms">Suites</a>
-            <a href="#spa">Wellness</a>
-            <a href="#faq">Journal</a>
-        </div>
-        <a href="#book" class="btn btn-ghost">Reservation</a>
+  <!-- Ambient Blurred Orbs Background -->
+  <div class="ambient-background" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- Top Navigation -->
+    <nav class="glass-panel app-header reveal">
+      <div class="logo">
+        <div class="logo-diamond"></div>
+        AURELINE
+      </div>
+      <ul class="nav-links">
+        <li><a href="#">The Experience</a></li>
+        <li><a href="#">Fleet</a></li>
+        <li><a href="#">Routes</a></li>
+        <li><a href="#">Journal</a></li>
+      </ul>
+      <button class="btn-glass">Sign In</button>
     </nav>
 
-    <header class="hero">
+    <main>
+      <!-- Hero Dashboard -->
+      <section class="glass-panel hero-section reveal" style="transition-delay: 0.1s;">
         <div class="hero-content">
-            <span class="label">Boutique Hospitality</span>
-            <h1>The Architecture of Presence</h1>
-            <p>A masterclass in restraint, light, and curated atmosphere for the creative visionary.</p>
-            <a href="#rooms" class="btn btn-primary">Discover the Collection</a>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Accepting Waitlist for 2026
+          </div>
+          <h1>
+            Slumber beyond
+            <span>the horizon.</span>
+          </h1>
+          <p>The premium sleeper club intertwining high-tech privacy with the slow-luxury reminiscent of rail's golden
+            era.</p>
+          <div class="hero-actions">
+            <button class="btn-glass btn-accent">Request Cabin Access</button>
+          </div>
         </div>
 
-        <div class="booking-bar glass">
-            <div class="b-field">
-                <label for="check-in">Check In</label>
-                <input id="check-in" type="text" value="12 Oct 2026" placeholder="Check In Date" title="Check In Date"
-                    onfocus="(this.type='date')">
+        <div class="hologram-map">
+          <!-- Inline SVG Ticket Map / Holographic -->
+          <div class="route-ribbon-wrapper">
+            <svg class="svg-ribbon" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="glow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="rgba(255,255,255,0.1)" />
+                  <stop offset="50%" stop-color="rgba(212,175,55,1)" />
+                  <stop offset="100%" stop-color="rgba(255,255,255,0.1)" />
+                </linearGradient>
+              </defs>
+              <!-- Route Line -->
+              <path class="svg-path" d="M 50,150 C 150,150 200,50 300,50 C 400,50 450,150 550,150" />
+
+              <!-- Paris -->
+              <g transform="translate(50, 150)">
+                <circle class="station-marker-ring" cx="0" cy="0" r="6" />
+                <circle class="station-marker" cx="0" cy="0" r="4" />
+                <text class="route-city" x="-20" y="-20">PAR</text>
+                <text class="route-label" x="-20" y="25">21:00</text>
+              </g>
+
+              <!-- Alps Pass -->
+              <g transform="translate(300, 50)">
+                <circle class="station-marker" cx="0" cy="0" r="3" fill="rgba(255,255,255,0.5)" />
+                <line x1="0" y1="-8" x2="0" y2="8" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                <text class="route-label" x="-30" y="-20" fill="rgba(255,255,255,0.5)">Alps Transit</text>
+              </g>
+
+              <!-- Venice -->
+              <g transform="translate(550, 150)">
+                <circle class="station-marker-ring" cx="0" cy="0" r="6" style="animation-delay: 1.5s;" />
+                <circle class="station-marker" cx="0" cy="0" r="4" />
+                <text class="route-city" x="-10" y="-20">VCE</text>
+                <text class="route-label" x="-15" y="25">08:30</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <div class="dashboard-grid reveal" style="transition-delay: 0.2s;">
+        <!-- Panoramic Departure Board -->
+        <section class="glass-panel departure-board">
+          <header class="section-header">
+            <h2 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Live Departures
+            </h2>
+            <div class="btn-glass" style="font-size: 0.75rem; padding: 4px 10px;">Update: Now</div>
+          </header>
+
+          <div class="table-container">
+            <table class="departure-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Destination</th>
+                  <th>Service</th>
+                  <th>Platform</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="departure-body">
+                <tr class="reveal">
+                  <td class="dept-time">21:00</td>
+                  <td class="dept-city">Venice (S. Lucia)</td>
+                  <td class="dept-code">ASC-01 VNT</td>
+                  <td class="dept-code">Plat. 4</td>
+                  <td>
+                    <div class="status status-boarding">
+                      <div class="status-dot"></div>
+                      <span class="status-text">Boarding</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="reveal" style="transition-delay: 0.1s;">
+                  <td class="dept-time">22:30</td>
+                  <td class="dept-city">Vienna (Südbahn)</td>
+                  <td class="dept-code">ASC-04 AUS</td>
+                  <td class="dept-code">Plat. 7</td>
+                  <td>
+                    <div class="status status-on-time">
+                      <div class="status-dot"></div>
+                      <span class="status-text">On Time</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="reveal" style="transition-delay: 0.2s;">
+                  <td class="dept-time">23:15</td>
+                  <td class="dept-city">Prague (Hbf)</td>
+                  <td class="dept-code">ASC-06 CZH</td>
+                  <td class="dept-code">Plat. 2</td>
+                  <td>
+                    <div class="status status-on-time">
+                      <div class="status-dot"></div>
+                      <span class="status-text">On Time</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="reveal" style="transition-delay: 0.3s;">
+                  <td class="dept-time">00:45</td>
+                  <td class="dept-city">Berlin (Hlv)</td>
+                  <td class="dept-code">ASC-09 DEU</td>
+                  <td class="dept-code">Pending</td>
+                  <td>
+                    <div class="status status-delayed">
+                      <div class="status-dot"></div>
+                      <span class="status-text">Delayed 20m</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="bento-grid reveal" style="transition-delay: 0.3s;">
+        <!-- Itinerary Desk Tabs -->
+        <section class="glass-panel itinerary-desk">
+          <header class="section-header">
+            <h2 class="section-title">En Route Amenities</h2>
+          </header>
+
+          <div class="tabs-header" role="tablist">
+            <div class="tab-highlight" id="tab-highlight"></div>
+            <button class="tab-btn" role="tab" aria-selected="true" aria-controls="pane-1" id="tab-1">Grand
+              Sleeper</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pane-2" id="tab-2">Dining
+              Cart</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pane-3"
+              id="tab-3">Concierge</button>
+          </div>
+
+          <div class="tab-content-wrapper">
+            <!-- Pane 1: Sleeper -->
+            <div class="tab-pane active" id="pane-1" role="tabpanel" aria-labelledby="tab-1">
+              <h3>The Grand Cabin</h3>
+              <p>Your sanctuary in motion. Sound-isolated walls, an en-suite rainfall shower, and a panoramic
+                smart-glass window that tints automatically to moonlight levels, ensuring perfect stargazing across the
+                Alps.</p>
+              <div class="tab-specs">
+                <div class="spec-item">
+                  <div class="spec-label">Bedting</div>
+                  <div class="spec-val">Queen-size memory core</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-label">Environment</div>
+                  <div class="spec-val">Atmos-Control Temp & H20</div>
+                </div>
+              </div>
             </div>
-            <div class="b-field">
-                <label for="check-out">Check Out</label>
-                <input id="check-out" type="text" value="16 Oct 2026" placeholder="Check Out Date"
-                    title="Check Out Date" onfocus="(this.type='date')">
+
+            <!-- Pane 2: Dining -->
+            <div class="tab-pane" id="pane-2" role="tabpanel" aria-labelledby="tab-2">
+              <h3>Astro-Lounge Dining</h3>
+              <p>A culinary journey tailored to your route. Local ingredients sourced from departure cities, prepared by
+                onboard Michelin-trained chefs. Open seating under a vaulted glass ceiling.</p>
+              <div class="tab-specs">
+                <div class="spec-item">
+                  <div class="spec-label">Hours</div>
+                  <div class="spec-val">19:00 - 02:00</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-label">Signature</div>
+                  <div class="spec-val">midnight truffle tasting</div>
+                </div>
+              </div>
             </div>
-            <div class="b-field">
-                <label for="travelers">Travelers</label>
-                <select id="travelers" title="Number of Travelers">
-                    <option>01 Individual</option>
-                    <option selected>02 Partners</option>
-                    <option>Creative Residency</option>
+
+            <!-- Pane 3: Concierge -->
+            <div class="tab-pane" id="pane-3" role="tabpanel" aria-labelledby="tab-3">
+              <h3>24/7 Butler Service</h3>
+              <p>One-touch holographic interface to summon nightcaps, garment pressing, or specialized destination
+                transfers upon arrival. Your transition from wheel to street is seamless.</p>
+              <div class="tab-specs">
+                <div class="spec-item">
+                  <div class="spec-label">Response</div>
+                  <div class="spec-val">Under 90 seconds</div>
+                </div>
+                <div class="spec-item">
+                  <div class="spec-label">Arrival Prep</div>
+                  <div class="spec-val">Included private Black Car</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Stack -->
+        <div class="side-stack">
+          <!-- Journal Editorial -->
+          <section class="glass-panel journal-excerpt">
+            <header class="section-header">
+              <h2 class="section-title">The Journal</h2>
+            </header>
+            <blockquote>"To sleep in Paris and wake to the mist rising off the Venetian lagoon is not merely travel—it
+              is teleportation woven with silk."</blockquote>
+            <div class="journal-author">— ASC Winter '25 Editorial</div>
+          </section>
+
+          <!-- Booking / Waitlist -->
+          <section class="glass-panel booking-module">
+            <header class="section-header">
+              <h2 class="section-title" style="color: var(--accent);">Secure a Passage</h2>
+            </header>
+            <form action="#" method="POST" id="booking-form">
+              <div class="form-group">
+                <label for="invite-code">Invitation Code / Node ID</label>
+                <input type="text" id="invite-code" class="form-control" placeholder="ASC-XXXX-XXXX" required
+                  aria-label="Invitation Code">
+              </div>
+              <div class="form-group" style="margin-bottom: 24px;">
+                <label for="route-pref">Preferred Arc</label>
+                <select id="route-pref" class="form-control" style="appearance: none;" aria-label="Preferred Arc">
+                  <option value="venice">Paris -> Venice (Alpine Arc)</option>
+                  <option value="vienna">Paris -> Vienna (Danube Arc)</option>
+                  <option value="berlin">London -> Berlin (Nordic Arc)</option>
                 </select>
-            </div>
-            <button class="btn btn-primary">Check Dates</button>
+              </div>
+              <button type="submit" class="btn-glass btn-accent"
+                style="width: 100%; padding: 14px; font-size: 1rem;">Authenticate Dossier</button>
+            </form>
+          </section>
         </div>
-    </header>
+      </div>
 
-    <section id="about" class="grid-2">
-        <div class="img-mask">
-            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200"
-                alt="Minimalist Interior Architecture">
-        </div>
-        <div data-reveal>
-            <span class="label">Our Ethos</span>
-            <h2>Space to think. Room to breathe.</h2>
-            <p class="mt-md">Maison Verre was founded on a singular premise: that travel should be an act of curation.
-                We reject the generic luxury of the many for the specific atmosphere of the few. </p>
-            <p class="mt-md">Every angle, shadow, and scent has been art-directed to foster a state of deep focus and
-                aesthetic appreciation.</p>
-            <a href="#" class="btn btn-ghost mt-lg">The Journal</a>
-        </div>
-    </section>
+    </main>
+  </div>
 
-    <section id="rooms">
-        <div class="center-heading">
-            <span class="label">The Collection</span>
-            <h2>Where brutalism meets the poetic.</h2>
-        </div>
+  <script>
+    // Tab Interaction Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const panes = document.querySelectorAll('.tab-pane');
+      const highlight = document.getElementById('tab-highlight');
 
-        <div class="rooms-grid">
-            <div class="room-card" data-reveal>
-                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200"
-                    alt="The Atelier Suite Interior">
-                <div class="room-overlay"></div>
-                <div class="room-info glass">
-                    <span class="label">Level 01-03</span>
-                    <h3>The Atelier Suite</h3>
-                    <div class="room-features">
-                        <span class="feature-chip">65 SQM</span>
-                        <span class="feature-chip">Library</span>
-                        <span class="feature-chip">Analog Sound</span>
-                    </div>
-                    <div class="room-price-row">
-                        <span class="price-text">$650 <small class="price-sub">/ NIGHT</small></span>
-                        <a href="#" class="btn btn-primary">Reserve</a>
-                    </div>
-                </div>
-            </div>
+      function updateHighlight(activeTab) {
+        const tabRect = activeTab.getBoundingClientRect();
+        const containerRect = activeTab.parentElement.getBoundingClientRect();
 
-            <div class="room-card" data-reveal>
-                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200"
-                    alt="The Glasshouse Penthouse Interior">
-                <div class="room-overlay"></div>
-                <div class="room-info glass">
-                    <span class="label">Penthouse</span>
-                    <h3>The Glasshouse</h3>
-                    <div class="room-features">
-                        <span class="feature-chip">120 SQM</span>
-                        <span class="feature-chip">360° View</span>
-                        <span class="feature-chip">Private Onsen</span>
-                    </div>
-                    <div class="room-price-row">
-                        <span class="price-text">$1,800 <small class="price-sub">/ NIGHT</small></span>
-                        <a href="#" class="btn btn-primary">Reserve</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        highlight.style.width = `${tabRect.width}px`;
+        highlight.style.transform = `translateX(${tabRect.left - containerRect.left - 6}px)`; // -6 for padding
+      }
 
-    <section id="spa" class="grid-2">
-        <div data-reveal>
-            <span class="label">Wellness</span>
-            <h2>The Obsidian Spa</h2>
-            <p class="mt-md">A sensory sanctuary focusing on thermal gradients and sound-frequency healing. Our
-                signature "Dark Meditation" sessions help visionaries disconnect to reconnect.</p>
-            <div class="metrics">
-                <div class="metric-item">
-                    <span class="num" data-target="12">0</span>
-                    <span class="label">Rituals</span>
-                </div>
-                <div class="metric-item">
-                    <span class="num" data-target="4">0</span>
-                    <span class="label">Thermal Pools</span>
-                </div>
-            </div>
-            <a href="#" class="btn btn-primary">Book Treatment</a>
-        </div>
-        <div class="img-mask">
-            <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?q=80&w=1200&auto=format&fit=crop"
-                alt="Serene Thermal Bath Environment">
-        </div>
-    </section>
+      // Initialize highlight
+      const initialTab = document.querySelector('.tab-btn[aria-selected="true"]');
+      if (initialTab) {
+        setTimeout(() => updateHighlight(initialTab), 50); // slight delay to ensure layout rendering
+      }
 
-    <section class="quote-block" data-reveal>
-        <blockquote>
-            "Maison Verre doesn't just provide a bed; it provides a new perspective. The attention to light and texture
-            is unmatched."
-        </blockquote>
-        <span class="label">— Elena Rossi, Creative Director</span>
-    </section>
+      window.addEventListener('resize', () => {
+        const activeTab = document.querySelector('.tab-btn[aria-selected="true"]');
+        if (activeTab) updateHighlight(activeTab);
+      });
 
-    <section id="faq">
-        <div class="center-heading">
-            <span class="label">Information</span>
-            <h2>The Guest Charter</h2>
-        </div>
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-btn"><span>Check-in & Transfers</span> <span>+</span></button>
-                <div class="faq-content">
-                    Check-in is hosted from 3:00 PM. We offer bespoke electric chauffeur transfers from all major
-                    transit hubs. Simply coordinate with your personal concierge 24 hours prior.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-btn"><span>Commercial Production</span> <span>+</span></button>
-                <div class="faq-content">
-                    As an art-led property, we welcome editorial photography. Commercial shoots require a separate
-                    booking and site fee to ensure guest privacy is maintained.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-btn"><span>Cancellation & Flexibility</span> <span>+</span></button>
-                <div class="faq-content">
-                    We offer full flexibility up to 72 hours before arrival. Within 72 hours, 50% of the booking is
-                    retained as a credit for a future stay.
-                </div>
-            </div>
-        </div>
-    </section>
+      tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          // Update aria states
+          tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+          tab.setAttribute('aria-selected', 'true');
 
-    <section class="cta-section">
-        <div data-reveal>
-            <h2>Reserve Your Presence.</h2>
-            <p class="mt-md">A sanctuary for those who see the world differently.</p>
-            <a href="#" class="btn btn-primary mt-lg">Request a Suite</a>
-        </div>
-    </section>
+          // Update highlight visual
+          updateHighlight(tab);
 
-    <footer>
-        <div class="f-grid">
-            <div class="f-col">
-                <a href="#" class="logo">MAISON VERRE</a>
-                <p class="mt-md">The definitive boutique stay for the global creative community.</p>
-            </div>
-            <div class="f-col">
-                <h5>Properties</h5>
-                <ul>
-                    <li>Paris, Marais</li>
-                    <li>Kyoto, Gion</li>
-                    <li>Copenhagen</li>
-                </ul>
-            </div>
-            <div class="f-col">
-                <h5>Experience</h5>
-                <ul>
-                    <li>Suites</li>
-                    <li>Spa</li>
-                    <li>Dining</li>
-                    <li>Studio</li>
-                </ul>
-            </div>
-            <div class="f-col">
-                <h5>Inquiry</h5>
-                <ul>
-                    <li>Contact</li>
-                    <li>Press</li>
-                    <li>Careers</li>
-                    <li>Privacy</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>&copy; 2026 MAISON VERRE HOSPITALITY GROUP.</span>
-            <span>DESIGNED BY MV STUDIO</span>
-        </div>
-    </footer>
-
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('nav');
-            if (window.scrollY > 100) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
+          // Update panels
+          const targetId = tab.getAttribute('aria-controls');
+          panes.forEach(pane => {
+            if (pane.id === targetId) {
+              pane.classList.add('active');
+            } else {
+              pane.classList.remove('active');
+            }
+          });
         });
+      });
 
-        document.querySelectorAll('.faq-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const item = btn.parentElement;
-                const isActive = item.classList.contains('active');
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-                if (!isActive) item.classList.add('active');
-            });
+      // Intersection Observer for scroll reveal
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
         });
+      }, observerOptions);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    const counters = entry.target.querySelectorAll('.num');
-                    counters.forEach(c => animateCounter(c));
-                }
-            });
-        }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
 
-        document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-
-        function animateCounter(el) {
-            const target = +el.getAttribute('data-target');
-            let count = 0;
-            const speed = 2000 / target;
-            const update = () => {
-                count++;
-                el.innerText = count;
-                if (count < target) setTimeout(update, speed);
-            };
-            if (el.innerText == "0") update();
-        }
-    </script>
+      // Form Prevent Default for demo
+      document.getElementById('booking-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Dossier Approved...";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          e.target.reset();
+        }, 2000);
+      });
+    });
+  </script>
 </body>
 
 </html>

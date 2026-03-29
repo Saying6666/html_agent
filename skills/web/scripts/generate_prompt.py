@@ -1,257 +1,207 @@
 #!/usr/bin/env python3
 """
-generate_prompt.py — 生成 4 轮格式化 prompt.md
+generate_prompt.py — Prompt 步骤说明器
+
+说明:
+    该步骤不再调用外部 API 生成 prompt.md。
+    prompt.md 必须由当前读取 web skill 的 agent 手工编写，
+    但 prompt 的 4 轮结构与原有要求保持不变。
 
 用法:
-    python generate_prompt.py --task fdu_012 --category "SaaS Landing Page" \
-        --concept "AI-powered code review tool" --audience "Software teams" \
-        --style "Modern Minimal"
-
-    python generate_prompt.py --task fdu_012 --auto
-        (使用 AI 自动生成所有参数)
+    python generate_prompt.py --task fdu_012
 """
 
 import argparse
-import json
-import os
+import re
 import sys
 from pathlib import Path
 
-import requests
 
-# ---------------------------------------------------------------------------
-# API helpers
-# ---------------------------------------------------------------------------
+REQUIRED_HEADINGS = [
+    "## round 1",
+    "## round 2",
+    "## round 3",
+    "## round 4",
+]
 
-def _load_env(env_path: Path) -> dict:
-    """从 .env.local 加载环境变量。"""
-    env = {}
-    if env_path.exists():
-        content = env_path.read_text(encoding="utf-8-sig")
-        for line in content.splitlines():
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            k, v = line.split("=", 1)
-            env[k.strip()] = v.strip()
-    return env
-
-
-def _api_config(root: Path) -> tuple:
-    """返回 (base_url, api_key, model)。"""
-    env = _load_env(root / ".env.local")
-    base_url = os.environ.get("X666_BASE_URL", env.get("X666_BASE_URL", ""))
-    api_key = os.environ.get("X666_API_KEY", env.get("X666_API_KEY", ""))
-    model = os.environ.get("X666_MODEL_GEMINI", env.get("X666_MODEL_GEMINI", ""))
-    if not all([base_url, api_key, model]):
-        sys.exit("[ERROR] 缺少 API 配置，请检查 .env.local")
-    return base_url, api_key, model
+RECOMMENDED_KEYWORDS = [
+    ":root",
+    "modal",
+    "accordion",
+    "toast",
+    "tabs",
+    "scroll reveal",
+    "stagger",
+    "count-up",
+    "navbar scroll transition",
+    "aria",
+    "default",
+    "hover",
+    "active",
+    "focus",
+    "reduced-motion",
+    "generate the final code now",
+]
 
 
-import time as _time
+GLOBAL_REQUIREMENT_GROUPS = [
+    ("禁用框架要求", ["do not use react", "do not use vue", "do not use svelte", "no external libraries", "no gsap", "no jquery", "no build step", "external frameworks", "禁止框架"]),
+    ("禁止本地资源要求", ["do not reference local images", "no local image", "禁止本地资源", "local fonts", "local css", "local js", "external resources", "do not reference local"]),
+]
 
-def _chat_stream(base_url: str, api_key: str, model: str,
-                messages: list, temperature: float = 0.9):
-    """流式 chat completions，yield content chunks。"""
-    url = f"{base_url.rstrip('/')}/chat/completions"
-    max_retries = 5
-    delay = 2
-    resp = None
+ROUND_REQUIREMENT_GROUPS = {
+    1: [
+        ("页面构建目标", ["create", "build", "design"]),
+        ("页面结构描述", ["section", "sections", "page structure", "layout"]),
+    ],
+    2: [
+        ("交互或动效要求", ["interaction", "interactions", "motion", "hover", "animation", "layout and content density", "deepen", "density"]),
+    ],
+    3: [
+        ("响应式要求", ["responsive", "tablet", "mobile", "desktop", "breakpoint"]),
+        ("可访问性或合规要求", ["accessibility", "a11y", "aria", "focus", "keyboard", "compliance"]),
+    ],
+    4: [
+        ("最终打磨要求", ["final", "polish", "refinement", "quality assurance"]),
+        ("最终交付要求", ["return one complete self-contained", "return only the final", "generate the final code now", "final code", "contained in a single `index.html`", "do not generate code if"]),
+    ],
+}
 
-    for attempt in range(max_retries):
-        try:
-            resp = requests.post(
-                url,
-                headers={
-                    "Content-Type": "application/json",
-                    "Authorization": f"Bearer {api_key}",
-                },
-                json={
-                    "model": model,
-                    "messages": messages,
-                    "temperature": temperature,
-                    "max_tokens": 16000,
-                    "stream": True,
-                },
-                stream=True,
-                timeout=180,
-                proxies={"http": None, "https": None},
-            )
-            if resp.status_code != 200:
-                sys.exit(f"[ERROR] API {resp.status_code}: {resp.text[:500]}")
-            break
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            if attempt < max_retries - 1:
-                print(f"  [RETRY] 连接失败，{delay}s 后重试 ({attempt + 1}/{max_retries})...")
-                _time.sleep(delay)
-                delay *= 2
-            else:
-                raise e
 
-    for line in resp.iter_lines(decode_unicode=True):
-        if not line:
+def _contains_any(text: str, candidates: list[str]) -> bool:
+    return any(candidate in text for candidate in candidates)
+
+
+def _has_single_file_requirement(text: str) -> bool:
+    return (
+        "index.html" in text and
+        _contains_any(text, ["single-file", "single file", "contained in a single", "self-contained"])
+    )
+
+
+def _has_inline_css_js_requirement(text: str) -> bool:
+    return (
+        "inline" in text and
+        _contains_any(text, ["css", "<style>", "`<style>`"]) and
+        _contains_any(text, ["js", "javascript", "<script>", "`<script>`"])
+    )
+
+
+def _extract_round_blocks(content: str) -> dict[int, str]:
+    pattern = re.compile(
+        r"(?im)^##\s*round\s*([1-4]).*$"
+    )
+    matches = list(pattern.finditer(content))
+    blocks: dict[int, str] = {}
+
+    for index, match in enumerate(matches):
+        round_no = int(match.group(1))
+        start = match.end()
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(content)
+        blocks[round_no] = content[start:end].strip()
+
+    return blocks
+
+
+def _validate_prompt_content(content: str) -> tuple[list[str], list[str]]:
+    """检查 prompt.md 是否满足手工模式下的最小结构要求。"""
+    errors: list[str] = []
+    warnings: list[str] = []
+    normalized = content.lower()
+    round_blocks = _extract_round_blocks(content)
+
+    for heading in REQUIRED_HEADINGS:
+        if heading not in normalized:
+            errors.append(f"缺少章节标题: {heading.replace('## ', '## ').title()}")
+
+    if len(round_blocks) != 4:
+        errors.append(f"Round 区块数量不正确，期望 4 个，实际 {len(round_blocks)} 个")
+
+    if len(content.strip()) < 1200:
+        errors.append("prompt.md 内容过短，无法支撑完整的 4 轮渐进式提示")
+
+    if not _has_single_file_requirement(normalized):
+        errors.append("缺少全局要求: 单文件 index.html 要求")
+
+    if not _has_inline_css_js_requirement(normalized):
+        warnings.append("建议确认是否覆盖原有要求: 内联 CSS/JS 要求")
+
+    for name, candidates in GLOBAL_REQUIREMENT_GROUPS:
+        if not _contains_any(normalized, candidates):
+            warnings.append(f"建议确认是否覆盖原有要求: {name}")
+
+    for round_no, checks in ROUND_REQUIREMENT_GROUPS.items():
+        block = round_blocks.get(round_no, "")
+        if not block:
             continue
-        line = line.strip()
-        if not line.startswith("data:"):
-            continue
-        data_str = line[5:].strip()
-        if data_str == "[DONE]":
-            return
-        try:
-            data = json.loads(data_str)
-            delta = data["choices"][0].get("delta", {})
-            content = delta.get("content", "")
-            if content:
-                yield content
-        except (json.JSONDecodeError, KeyError, IndexError):
-            continue
+
+        if len(block) < 180:
+            errors.append(f"Round {round_no} 内容过短，信息密度不足")
+
+        block_normalized = block.lower()
+        for name, candidates in checks:
+            if not _contains_any(block_normalized, candidates):
+                errors.append(f"Round {round_no} 缺少要求: {name}")
+
+    for keyword in RECOMMENDED_KEYWORDS:
+        if keyword not in normalized:
+            warnings.append(f"建议确认是否覆盖原有要求: {keyword}")
+
+    return errors, warnings
 
 
-# ---------------------------------------------------------------------------
-# Prompt generation
-# ---------------------------------------------------------------------------
-
-SYSTEM_PROMPT = """\
-你是一个专业的 Web Design Dataset 提示词工程师。
-你需要为一个单页 HTML 网站生成高质量的 4 轮渐进式设计提示词 (prompt)。
-
-生成规则：
-1. 输出必须是纯 Markdown，包含 4 个 Round
-2. Round 1: 角色定义 + 设计系统(CSS :root 变量) + 页面板块结构（至少10个section）
-3. Round 2: 交互 + 动效（至少 8 种功能交互，包含四态定义）
-4. Round 3: 响应式 + 无障碍（4 个断点 + ARIA + 键盘导航 + prefers-reduced-motion）
-5. Round 4: 最终打磨 + 验收清单（checklist）
-6. 设计系统必须包含完整的 CSS :root 变量定义（颜色、字体、布局、过渡）
-7. 交互必须包含: Modal, Accordion, Toast, Tabs, Scroll Reveal, Stagger Animation, Count-up, Navbar scroll transition
-8. 每种交互要有完整的 ARIA 说明
-9. 所有按钮和卡片必须有 Default/Hover/Active/Focus 四态定义
-10. 技术约束: 单文件 index.html，内联 CSS/JS，禁止框架，禁止本地资源
-11. 风格必须对标真实 2025-2026 产品站，不是课堂 demo
-12. Round 4 结尾必须要求模型生成最终代码
-
-格式参考:
-## Round 1 — Role + Design System + Page Structure
-## Round 2 — Interaction + Motion
-## Round 3 — Responsive + Accessibility
-## Round 4 — Polish + Acceptance Self-Check
-
-不要输出任何解释，只输出 prompt.md 的内容。"""
-
-
-def _build_user_msg(category: str, concept: str, audience: str,
-                    style: str, site_name: str) -> str:
-    return f"""\
-请为以下网站生成 4 轮渐进式提示词:
-
-- **网站名称**: {site_name}
-- **类别**: {category}
-- **概念**: {concept}
-- **目标受众**: {audience}
-- **视觉风格方向**: {style}
-
-请确保:
-- 设计系统配色与概念匹配，有完整的 CSS :root 变量
-- 板块设计具体且丰富（至少 10 个 section）
-- 交互设计炫酷且多样（至少 8 种功能交互）
-- 每个 Round 的内容充实、专业
-- Round 4 末尾必须要求 "GENERATE THE FINAL CODE NOW" 并列出完整验收清单"""
-
-
-def _auto_brief(base_url: str, api_key: str, model: str) -> dict:
-    """用 AI 自动生成网站 brief。"""
-    messages = [
-        {"role": "system", "content": (
-            "你是创意总监。请生成一个独特的单页网站创意。"
-            "输出纯 JSON，不要 markdown code fence。"
-            "字段: category, concept, audience, style, site_name"
-            "\n示例: {\"category\": \"SaaS Landing Page\", "
-            "\"concept\": \"AI-powered code review tool for enterprise teams\", "
-            "\"audience\": \"Engineering managers and CTOs\", "
-            "\"style\": \"Clean Corporate with gradient accents\", "
-            "\"site_name\": \"CodeSight\"}"
-        )},
-        {"role": "user", "content": (
-            "生成一个新的、独特的网站创意。"
-            "类别可以是: SaaS, Portfolio, Agency, E-commerce, Blog, "
-            "Dashboard, Restaurant, Fitness, Travel, Education, "
-            "Fintech, Healthcare, Music, NFT, AI Tool 等任意类别。"
-            "确保概念具体、有创意，不要与常见模板雷同。"
-        )}
-    ]
-    # 流式收集完整内容
-    full_text = ""
-    for chunk in _chat_stream(base_url, api_key, model, messages, temperature=1.0):
-        full_text += chunk
-    full_text = full_text.strip()
-    if full_text.startswith("```"):
-        full_text = full_text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
-    return json.loads(full_text)
-
-
-def generate_prompt(task_dir: Path, root: Path,
+def generate_prompt(task_dir: Path, root: Path | None = None,
                     category: str = "", concept: str = "",
                     audience: str = "", style: str = "",
                     site_name: str = "", auto: bool = False) -> Path:
-    """生成 prompt.md 并写入 task_dir。"""
-    base_url, api_key, model = _api_config(root)
-
-    if auto:
-        print("[INFO] 自动生成网站 brief...")
-        brief = _auto_brief(base_url, api_key, model)
-        category = brief.get("category", category)
-        concept = brief.get("concept", concept)
-        audience = brief.get("audience", audience)
-        style = brief.get("style", style)
-        site_name = brief.get("site_name", site_name)
-        print(f"  类别: {category}")
-        print(f"  概念: {concept}")
-        print(f"  受众: {audience}")
-        print(f"  风格: {style}")
-        print(f"  名称: {site_name}")
-        print("  [WAIT] 等待 3 秒后生成 prompt...")
-        import time as _time
-        _time.sleep(3)
-
-    if not all([category, concept, audience, style, site_name]):
-        sys.exit("[ERROR] 缺少必要参数。使用 --auto 或提供所有参数")
-
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": _build_user_msg(
-            category, concept, audience, style, site_name
-        )},
-    ]
-
-    print("[INFO] 正在流式生成 prompt.md ...")
-    content = ""
-    char_count = 0
-    for chunk in _chat_stream(base_url, api_key, model, messages):
-        content += chunk
-        char_count += len(chunk)
-        if char_count % 500 < len(chunk):
-            print(f"\r[STREAM] 已接收 {char_count} 字符...", end="", flush=True)
-    print(f"\r[STREAM] 总计接收 {char_count} 字符      ")
+    """校验 prompt.md 是否已由当前 agent 手工编写。"""
+    del root, category, concept, audience, style, site_name, auto
 
     prompt_path = task_dir / "prompt.md"
-    prompt_path.write_text(content, encoding="utf-8")
-    print(f"[OK] prompt.md 已写入 {prompt_path}")
+
+    print("[INFO] Prompt 步骤已切换为 agent 手工生成模式")
+    print("[INFO] prompt.md 的结构与要求保持不变，仍需包含原来的 4 轮内容")
+    print(f"[INFO] 最终文件路径: {prompt_path}")
+
+    if not prompt_path.exists() or prompt_path.stat().st_size == 0:
+        sys.exit(
+            "[ERROR] 未检测到有效的 prompt.md。"
+            "请先由当前 agent 按原有要求手工完成 prompt.md"
+        )
+
+    content = prompt_path.read_text(encoding="utf-8-sig")
+    errors, warnings = _validate_prompt_content(content)
+    if errors:
+        joined = "\n".join(f"  - {error}" for error in errors)
+        sys.exit(
+            "[ERROR] prompt.md 存在，但未通过结构校验。\n"
+            "请保持原有 prompt 要求不变，并补齐以下内容:\n"
+            f"{joined}"
+        )
+
+    if warnings:
+        print("[WARN] prompt.md 已通过最小结构校验，但建议再核对以下原有要求:")
+        for warning in warnings:
+            print(f"  - {warning}")
+
+    print(f"[OK] 检测到现有 prompt.md: {prompt_path}")
     return prompt_path
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
 def main():
-    parser = argparse.ArgumentParser(description="生成 4 轮 prompt.md")
+    parser = argparse.ArgumentParser(description="校验 prompt.md 是否已手工生成")
     parser.add_argument("--task", required=True, help="任务 ID，如 fdu_012")
     parser.add_argument("--root", default=None, help="项目根目录")
-    parser.add_argument("--auto", action="store_true", help="自动生成网站 brief")
-    parser.add_argument("--category", default="", help="网站类别")
-    parser.add_argument("--concept", default="", help="网站概念")
-    parser.add_argument("--audience", default="", help="目标受众")
-    parser.add_argument("--style", default="", help="视觉风格方向")
-    parser.add_argument("--site-name", default="", help="网站名称")
+    parser.add_argument(
+        "--auto",
+        action="store_true",
+        help="兼容旧参数，现已忽略；prompt.md 需手工生成",
+    )
+    parser.add_argument("--category", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--concept", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--audience", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--style", default="", help="兼容旧参数，现已忽略")
+    parser.add_argument("--site-name", default="", help="兼容旧参数，现已忽略")
     args = parser.parse_args()
 
     if args.root:
@@ -261,7 +211,7 @@ def main():
 
     task_dir = root / args.task
     if not task_dir.exists():
-        task_dir.mkdir(parents=True)
+        task_dir.mkdir(parents=True, exist_ok=True)
         (task_dir / "src").mkdir(exist_ok=True)
         print(f"[INFO] 创建任务目录 {task_dir}")
 

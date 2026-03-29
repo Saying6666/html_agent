@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synapse | Modern Glassmorphism & Glo UI</title>
+  <style>
+    :root {
+      --bg-color: #03000a;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-bg-hover: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      
+      --accent-cyan: #00f0ff;
+      --accent-magenta: #ff003c;
+      --accent-purple: #7a00ff;
+      --accent-blue: #0044ff;
+      
+      --section-spacing: 120px;
+      
+      --font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: float 20s infinite ease-in-out alternate;
+      pointer-events: none;
+    }
+
+    .orb-1 { width: 50vw; height: 50vw; background: var(--accent-purple); top: -10%; left: -10%; }
+    .orb-2 { width: 40vw; height: 40vw; background: var(--accent-magenta); bottom: 20%; right: -5%; animation-delay: -5s; }
+    .orb-3 { width: 60vw; height: 60vw; background: var(--accent-blue); top: 40%; left: 30%; animation-delay: -10s; opacity: 0.4; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(5%, 10%) scale(1.1); }
+      100% { transform: translate(-5%, -5%) scale(0.9); }
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.2; }
+    h1 { font-size: clamp(3rem, 6vw, 5.5rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+    h3 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    
+    .gradient-text {
+      background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple), var(--accent-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .text-center { text-align: center; }
+    .max-w-2xl { max-width: 42rem; margin-inline: auto; }
+    .max-w-4xl { max-width: 56rem; margin-inline: auto; }
+
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: var(--section-spacing) 0;
+      position: relative;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .glass-panel:hover::before { opacity: 1; }
+    .glass-panel:hover { background: var(--glass-bg-hover); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .glass-content { position: relative; z-index: 1; }
+
+    /* Conic Gradient Border */
+    .conic-border-wrapper {
+      position: relative;
+      padding: 1px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    
+    .conic-border-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(transparent, transparent, transparent, var(--accent-magenta), var(--accent-purple), var(--accent-cyan));
+      animation: rotate 4s linear infinite;
+      z-index: -1;
+    }
+    
+    @keyframes rotate { 100% { transform: rotate(360deg); } }
+    
+    .conic-inner {
+      background: #0a0a0a;
+      border-radius: 23px;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-family: var(--font-body);
+      border: none;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--accent-purple), var(--accent-magenta));
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+    }
+    .btn-primary:hover { box-shadow: 0 0 30px rgba(255, 0, 60, 0.6); transform: scale(1.05); }
+
+    .btn-glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      color: white;
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
+
+    /* 1. Navbar */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+    
+    header.scrolled {
+      background: rgba(3, 0, 10, 0.5);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.75rem 0;
+    }
+
+    .nav-container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900; text-decoration: none; color: white; display:flex; align-items: center; gap: 0.5rem; }
+    .logo span { background: var(--accent-cyan); width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); }
+    
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; font-size: 0.95rem; }
+    .nav-links a:hover { color: white; }
+
+    .mobile-menu-btn { display: none; background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+    @media(max-width: 900px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+    }
+
+    /* 2. Hero Section */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 120px; }
+    .hero p { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2.5rem; }
+    .hero-buttons { display: flex; gap: 1.5rem; justify-content: center; }
+
+    /* 3. About Us */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-image { aspect-ratio: 4/3; border-radius: 24px; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;}
+    .about-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; mix-blend-mode: luminosity; }
+    .about-text p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem; }
+    
+    @media(max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+
+    /* 4. Features */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .feature-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent-cyan); border: 1px solid var(--glass-border); }
+    .feature-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    /* 5. Services */
+    .services-stack { display: flex; flex-direction: column; gap: 4rem; margin-top: 4rem; }
+    .service-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .service-row:nth-child(even) .service-content { order: -1; }
+    .service-visual { height: 300px; border-radius: 24px; }
+    
+    @media(max-width: 900px) { .service-row { grid-template-columns: 1fr; gap: 2rem; } .service-row:nth-child(even) .service-content { order: 0; } }
+
+    /* 6. Portfolio */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .portfolio-item { height: 400px; padding: 0; border-radius: 24px; cursor: pointer; }
+    .portfolio-bg { position: absolute; inset: 0; background: linear-gradient(45deg, #111, #222); transition: transform 0.5s ease; }
+    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; transition: opacity 0.3s ease; }
+    .portfolio-item:hover .portfolio-bg { transform: scale(1.1); }
+    
+    /* 7. Statistics */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+    .stat-number { font-size: 3.5rem; font-family: var(--font-heading); font-weight: 900; background: linear-gradient(to right, var(--text-primary), var(--accent-cyan)); -webkit-background-clip: text; color: transparent; margin-bottom: 0.5rem; }
+    .stat-label { color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 600; }
+    @media(max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* 8. Testimonials */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .testimonial-text { font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.05rem; }
+    .author-info { display: flex; align-items: center; gap: 1rem; }
+    .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: #333; }
+    .author-name { font-weight: 600; display: block; }
+    .author-role { color: var(--text-secondary); font-size: 0.85rem; }
+    .stars { color: #ffd700; margin-bottom: 1rem; }
+
+    /* 9. Pricing */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; align-items: center; }
+    .pricing-card { display: flex; flex-direction: column; height: 100%; }
+    .price-tier { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--accent-purple); }
+    .price-amount { font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .price-period { color: var(--text-secondary); font-size: 0.9rem; }
+    .feature-list { list-style: none; margin: 2rem 0; flex-grow: 1; }
+    .feature-list li { margin-bottom: 1rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
+    .feature-list li::before { content: '✓'; color: var(--accent-cyan); font-weight: bold; }
+    
+    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .conic-border-wrapper { padding: 1px; } }
+
+    /* 10. Team */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .team-member { text-align: center; }
+    .member-image { width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1.5rem; background: linear-gradient(45deg, var(--accent-purple), var(--accent-blue)); padding: 4px; }
+    .member-inner { width: 100%; height: 100%; background: #111; border-radius: 50%; }
+    .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+    .social-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+    .social-links a:hover { color: var(--accent-cyan); }
+
+    /* 11. FAQ */
+    .faq-container { max-width: 800px; margin: 4rem auto 0; }
+    .faq-item { margin-bottom: 1rem; border-radius: 16px; border: 1px solid var(--glass-border); overflow: hidden; background: var(--glass-bg); transition: all 0.3s; }
+    .faq-question { padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+    .faq-answer { padding: 0 1.5rem; max-height: 0; opacity: 0; transition: all 0.4s ease; color: var(--text-secondary); }
+    .faq-item.active { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+    .faq-item.active .faq-answer { padding-bottom: 1.5rem; max-height: 500px; opacity: 1; }
+    .faq-icon { transition: transform 0.3s; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+    /* 12. Blog */
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .blog-card { padding: 0; }
+    .blog-image { height: 200px; background: #222; }
+    .blog-content { padding: 2rem; }
+    .blog-meta { font-size: 0.85rem; color: var(--accent-magenta); margin-bottom: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .blog-title { font-size: 1.3rem; margin-bottom: 1rem; }
+    .read-more { color: var(--text-primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s; }
+    .read-more:hover { gap: 0.8rem; color: var(--accent-cyan); }
+
+    /* 13. Contact */
+    .contact-wrapper { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    label { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+    input, textarea { background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; transition: all 0.3s; outline: none; }
+    input:focus, textarea:focus { background: rgba(255,255,255,0.05); border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+    textarea { min-height: 150px; resize: vertical; }
+    
+    /* 14. Footer */
+    footer { padding: 4rem 0 2rem; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); position: relative; z-index: 10; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+    .footer-col h4 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid var(--glass-border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: var(--text-secondary); font-size: 0.9rem; }
+    
+    @media(max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+    @media(max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; text-align: center; gap: 1rem; } }
+
+    /* Utility animations */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Global Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- 1. Navbar -->
+  <header id="header">
+    <div class="container nav-container">
+      <a href="#" class="logo"><span></span> Synapse</a>
+      <ul class="nav-links">
+        <li><a href="#features">Capabilities</a></li>
+        <li><a href="#services">Solutions</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Connect</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.95rem; display: none; @media(min-width: 900px){display: inline-flex;}">Get Started</a>
+      <button class="mobile-menu-btn">☰</button>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section class="hero container text-center">
+    <div class="max-w-4xl">
+      <h1 class="reveal">Design the Future of <br><span class="gradient-text">Digital Experiences</span></h1>
+      <p class="reveal" style="transition-delay: 0.1s;">Elevate your brand with immersive, high-performance interfaces built for the modern web. We blend visionary design with cutting-edge technology.</p>
+      <div class="hero-buttons reveal" style="transition-delay: 0.2s;">
+        <a href="#contact" class="btn btn-primary">Start a Project</a>
+        <a href="#portfolio" class="btn btn-glass">View Our Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. About Us -->
+  <section id="about" class="container">
+    <div class="about-grid">
+      <div class="about-image reveal">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Abstract tech">
+      </div>
+      <div class="about-text reveal">
+        <h2 class="gradient-text">Pioneering the Unknown</h2>
+        <h3 style="margin-bottom:1.5rem;">We are an elite collective of digital architects.</h3>
+        <p>At Synapse, we don't just build websites; we engineer digital ecosystems. Founded on the principle that aesthetics and performance are inseparable, we push the boundaries of what's possible on the web.</p>
+        <p>Our approach leverages next-generation technologies like WebGL, Glassmorphism, and dynamic physics engines to ensure your audience isn't just visiting a page—they are experiencing your brand.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Features -->
+  <section id="features" class="container text-center">
+    <h2 class="reveal gradient-text">Core Capabilities</h2>
+    <p class="reveal max-w-2xl mb-4">Everything you need to scale your digital presence.</p>
+    
+    <div class="features-grid block-glow">
+      <div class="feature-card glass-panel reveal">
+        <div class="glass-content">
+          <div class="feature-icon">⚡</div>
+          <h3>Ultra Performance</h3>
+          <p>Sub-100ms load times and 60fps animations. We optimize every asset and line of code for unparalleled speed.</p>
+        </div>
+      </div>
+      <div class="feature-card glass-panel reveal" style="transition-delay: 0.1s">
+        <div class="glass-content">
+          <div class="feature-icon">🛡️</div>
+          <h3>Enterprise Security</h3>
+          <p>Bank-grade encryption, secure data pipelines, and strict compliance protocols built into the core architecture.</p>
+        </div>
+      </div>
+      <div class="feature-card glass-panel reveal" style="transition-delay: 0.2s">
+        <div class="glass-content">
+          <div class="feature-icon">📱</div>
+          <h3>Fluid Responsiveness</h3>
+          <p>Pixel-perfect layouts that adapt seamlessly from ultrafast mobile devices to 8K desktop displays.</p>
+        </div>
+      </div>
+      <div class="feature-card glass-panel reveal" style="transition-delay: 0.3s">
+        <div class="glass-content">
+          <div class="feature-icon">🧠</div>
+          <h3>AI Integration</h3>
+          <p>Smart workflows, predictive UX, and integrated machine learning endpoints to personalize the user journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Services -->
+  <section id="services" class="container">
+    <div class="text-center max-w-2xl reveal">
+      <h2 class="gradient-text">Our Solutions</h2>
+      <p>Bespoke engineering for ambitious companies.</p>
+    </div>
+
+    <div class="services-stack">
+      <div class="service-row reveal block-glow">
+        <div class="service-content">
+          <h3>Immersive Web Apps</h3>
+          <p style="color: var(--text-secondary); margin: 1rem 0 2rem;">We build single-page applications that feel like native software. Utilizing React, Next.js, and Three.js, we craft environments that engage users and drive conversions.</p>
+          <ul style="list-style:none; display:grid; gap:1rem;">
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> Frontend Architecture</li>
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> 3D & WebGL Integration</li>
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> Micro-interaction Design</li>
+          </ul>
+        </div>
+        <div class="service-visual conic-border-wrapper">
+          <div class="conic-inner glass-panel" style="display:flex; align-items:center; justify-content:center;">
+             <div style="font-size:4rem">🎨</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="service-row reveal block-glow">
+        <div class="service-content">
+          <h3>Scalable Backend Systems</h3>
+          <p style="color: var(--text-secondary); margin: 1rem 0 2rem;">Robust, serverless API infrastructures designed to handle millions of requests without breaking a sweat. Data engineering that empowers your business intelligence.</p>
+          <ul style="list-style:none; display:grid; gap:1rem;">
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> Microservices & Serverless</li>
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> Database Optimization</li>
+            <li style="color:var(--text-secondary)"><strong style="color:white">+</strong> Cloud Native Deployments</li>
+          </ul>
+        </div>
+        <div class="service-visual glass-panel" style="display:flex; align-items:center; justify-content:center;">
+          <div style="font-size:4rem">⚙️</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Portfolio -->
+  <section id="portfolio" class="container text-center">
+    <h2 class="reveal gradient-text">Featured Work</h2>
+    <p class="reveal mb-4 max-w-2xl">A glimpse into the digital realities we've forged.</p>
+    
+    <div class="portfolio-grid">
+      <div class="portfolio-item glass-panel reveal overflow-hidden">
+        <div class="portfolio-bg"></div>
+        <div class="glass-content portfolio-overlay">
+          <h3 style="margin:0">Nexus Fintech</h3>
+          <p style="color:var(--text-secondary)">Web3 Trading Platform</p>
+        </div>
+      </div>
+      <div class="portfolio-item glass-panel reveal overflow-hidden" style="transition-delay:0.1s">
+        <div class="portfolio-bg"></div>
+        <div class="glass-content portfolio-overlay">
+          <h3 style="margin:0">Aura AI</h3>
+          <p style="color:var(--text-secondary)">Generative Interface</p>
+        </div>
+      </div>
+      <div class="portfolio-item glass-panel reveal overflow-hidden" style="transition-delay:0.2s">
+        <div class="portfolio-bg"></div>
+        <div class="glass-content portfolio-overlay">
+          <h3 style="margin:0">Vanguard</h3>
+          <p style="color:var(--text-secondary)">E-Commerce Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Statistics -->
+  <section id="stats" class="container relative">
+    <div class="glass-panel reveal">
+      <div class="glass-content stats-grid block-glow">
+        <div>
+          <div class="stat-number count-up" data-target="150">0</div>
+          <div class="stat-label">Projects Shipped</div>
+        </div>
+        <div>
+          <div class="stat-number count-up" data-target="42">0</div>
+          <div class="stat-label">Awards Won</div>
+        </div>
+        <div>
+          <div class="stat-number"><span class="count-up" data-target="99">0</span>%</div>
+          <div class="stat-label">Client Retention</div>
+        </div>
+        <div>
+          <div class="stat-number count-up" data-target="12">0</div>
+          <div class="stat-label">Global Offices</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Testimonials -->
+  <section id="testimonials" class="container text-center">
+    <h2 class="reveal gradient-text">Client Perspectives</h2>
+    
+    <div class="testimonials-grid block-glow">
+      <div class="glass-panel reveal" style="text-align:left">
+        <div class="glass-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Synapse completely transformed our digital identity. The new platform is not only visually stunning but incredibly fast. Our conversion rates doubled in the first month."</p>
+          <div class="author-info">
+            <div class="author-avatar"></div>
+            <div>
+              <span class="author-name">Elena Rodriguez</span>
+              <span class="author-role">CMO, Vertex Tech</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass-panel reveal" style="transition-delay:0.1s; text-align:left">
+        <div class="glass-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The level of technical expertise combined with design intuition is rare. They didn't just build what we asked for; they built what we didn't know was possible."</p>
+          <div class="author-info">
+            <div class="author-avatar"></div>
+            <div>
+              <span class="author-name">Marcus Chen</span>
+              <span class="author-role">Founder, Nova Labs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="glass-panel reveal" style="transition-delay:0.2s; text-align:left">
+        <div class="glass-content">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Working with Synapse is like getting a glimpse into the future. The Glo UI aesthetic perfectly captured the modern, high-tech vibe our blockchain startup needed to stand out."</p>
+          <div class="author-info">
+            <div class="author-avatar"></div>
+            <div>
+              <span class="author-name">Sarah Jenkins</span>
+              <span class="author-role">Product Lead, Cipher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Pricing -->
+  <section id="pricing" class="container text-center">
+    <h2 class="reveal gradient-text">Engagement Models</h2>
+    <p class="reveal max-w-2xl mb-4">Transparent pricing for unparalleled quality.</p>
+    
+    <div class="pricing-grid block-glow">
+      <div class="pricing-card glass-panel reveal">
+        <div class="glass-content">
+          <h3 class="price-tier" style="color: var(--text-primary)">Growth</h3>
+          <div class="price-amount">$5k</div>
+          <div class="price-period">Starting Phase</div>
+          <ul class="feature-list" style="text-align:left">
+            <li>Custom UI/UX Design</li>
+            <li>Standard Animations</li>
+            <li>CMS Integration</li>
+            <li>SEO Optimization</li>
+          </ul>
+          <a href="#contact" class="btn btn-glass" style="width:100%">Select Growth</a>
+        </div>
+      </div>
+      
+      <div class="conic-border-wrapper reveal" style="transition-delay:0.1s;">
+        <div class="conic-inner pricing-card glass-panel" style="background: rgba(10,5,20,0.6); padding:2rem;">
+          <div class="glass-content">
+            <div style="position:absolute; top:-10px; right: 20px; background:var(--accent-magenta);font-size:0.75rem;padding:4px 12px;border-radius:12px;font-weight:bold;">MOST POPULAR</div>
+            <h3 class="price-tier">Enterprise</h3>
+            <div class="price-amount">$15k</div>
+            <div class="price-period">Complete Transformation</div>
+            <ul class="feature-list" style="text-align:left">
+              <li>Advanced Glassmorphism & Glo UI</li>
+              <li>Custom WebGL & 3D Assets</li>
+              <li>Microservices Backend</li>
+              <li>Priority 24/7 Support</li>
+              <li>Advanced Analytics</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" style="width:100%">Scale Now</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="pricing-card glass-panel reveal" style="transition-delay:0.2s;">
+        <div class="glass-content">
+          <h3 class="price-tier" style="color: var(--text-primary)">Retainer</h3>
+          <div class="price-amount">Custom</div>
+          <div class="price-period">Monthly Dedicated Team</div>
+          <ul class="feature-list" style="text-align:left">
+            <li>Dedicated Engineers</li>
+            <li>Continuous Iteration</li>
+            <li>A/B Testing & Optimization</li>
+            <li>Direct Slack Channel</li>
+          </ul>
+          <a href="#contact" class="btn btn-glass" style="width:100%">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Team -->
+  <section id="team" class="container text-center">
+    <h2 class="reveal gradient-text">The Architects</h2>
+    
+    <div class="team-grid block-glow">
+      <div class="glass-panel team-member reveal">
+        <div class="glass-content">
+          <div class="member-image"><div class="member-inner"></div></div>
+          <h3>David K.</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Creative Director</p>
+          <div class="social-links">
+            <a href="#">X</a> <a href="#">IN</a> <a href="#">GH</a>
+          </div>
+        </div>
+      </div>
+      <div class="glass-panel team-member reveal" style="transition-delay:0.1s">
+        <div class="glass-content">
+          <div class="member-image"><div class="member-inner"></div></div>
+          <h3>Aria M.</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">Lead Engineer</p>
+          <div class="social-links">
+            <a href="#">X</a> <a href="#">IN</a> <a href="#">GH</a>
+          </div>
+        </div>
+      </div>
+      <div class="glass-panel team-member reveal" style="transition-delay:0.2s">
+        <div class="glass-content">
+          <div class="member-image"><div class="member-inner"></div></div>
+          <h3>Julian T.</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">WebGL Specialist</p>
+          <div class="social-links">
+            <a href="#">X</a> <a href="#">IN</a> <a href="#">GH</a>
+          </div>
+        </div>
+      </div>
+      <div class="glass-panel team-member reveal" style="transition-delay:0.3s">
+        <div class="glass-content">
+          <div class="member-image"><div class="member-inner"></div></div>
+          <h3>Maya R.</h3>
+          <p style="color:var(--text-secondary); font-size:0.9rem;">UX Researcher</p>
+          <div class="social-links">
+            <a href="#">X</a> <a href="#">IN</a> <a href="#">GH</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. FAQ -->
+  <section id="faq" class="container">
+    <div class="text-center reveal">
+      <h2 class="gradient-text">Common Queries</h2>
+    </div>
+    
+    <div class="faq-container">
+      <div class="faq-item reveal">
+        <div class="faq-question">
+          What technologies do you use for the Glo UI effect?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>We primarily utilize modern CSS features like CSS custom properties (variables) coupled with JavaScript mouse tracking, `backdrop-filter` for the glass effect, and complex `conic-gradient` and `radial-gradient` backgrounds to create the luminous, fluid aesthetic.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item reveal" style="transition-delay:0.1s">
+        <div class="faq-question">
+          How long does a typical project take?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>A standard interactive web experience takes between 6 to 8 weeks from initial discovery to final deployment. Enterprise custom solutions involving 3D or entirely bespoke backend architectures generally span 3 to 6 months.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item reveal" style="transition-delay:0.2s">
+        <div class="faq-question">
+          Do you handle post-launch maintenance?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>Absolutely. We offer dedicated retainer agreements to ensure your digital platform remains secure, performant, and up-to-date with evolving web standards and browser updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Blog -->
+  <section id="blog" class="container">
+    <div class="text-center reveal">
+      <h2 class="gradient-text">Insights & Intelligence</h2>
+    </div>
+    
+    <div class="blog-grid block-glow">
+      <article class="glass-panel blog-card reveal">
+        <div class="blog-image"></div>
+        <div class="glass-content blog-content">
+          <div class="blog-meta">Design Trends • Oct 12</div>
+          <h3 class="blog-title">The Evolution of Glassmorphism in 2024</h3>
+          <a href="#" class="read-more">Read Article <span>→</span></a>
+        </div>
+      </article>
+      
+      <article class="glass-panel blog-card reveal" style="transition-delay:0.1s">
+        <div class="blog-image"></div>
+        <div class="glass-content blog-content">
+          <div class="blog-meta">Engineering • Sep 28</div>
+          <h3 class="blog-title">Optimizing WebGL Performance for Mobile</h3>
+          <a href="#" class="read-more">Read Article <span>→</span></a>
+        </div>
+      </article>
+      
+      <article class="glass-panel blog-card reveal" style="transition-delay:0.2s">
+        <div class="blog-image"></div>
+        <div class="glass-content blog-content">
+          <div class="blog-meta">Strategy • Sep 10</div>
+          <h3 class="blog-title">Why Micro-interactions Drive Conversions</h3>
+          <a href="#" class="read-more">Read Article <span>→</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 13. Contact -->
+  <section id="contact" class="container">
+    <div class="contact-wrapper">
+      <div class="text-center reveal">
+        <h2 class="gradient-text">Initiate Contact</h2>
+        <p style="color:var(--text-secondary)">Ready to redefine your digital presence? Send us a signal.</p>
+      </div>
+      
+      <div class="glass-panel reveal">
+        <form class="glass-content contact-form">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="john@company.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="Project Inquiry" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your next big idea..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Transmit Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="logo" style="margin-bottom:1.5rem;"><span></span> Synapse</a>
+          <p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:300px;">Architecting premium, immersive web experiences for next-generation brands.</p>
+          <div style="color:var(--text-primary); font-weight:600;">hello@synapse.design</div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Work</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Social</h4>
+          <ul class="footer-links">
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Dribbble</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">Monthly insights from the edge of the web.</p>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="email" placeholder="Email address" style="padding:0.75rem; width:100%;">
+            <button class="btn btn-primary" style="padding:0 1rem; border-radius:12px;">→</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2024 Synapse Digital Interface. All rights reserved.</div>
+        <div style="display:flex; gap:1.5rem;">
+          <a href="#" style="color:inherit; text-decoration:none;">Privacy Policy</a>
+          <a href="#" style="color:inherit; text-decoration:none;">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Mouse Tracking for glass glow effect
+    const handleOnMouseMove = e => {
+      const { currentTarget: target } = e;
+      const rect = target.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      target.style.setProperty('--mouse-x', `${x}px`);
+      target.style.setProperty('--mouse-y', `${y}px`);
+    };
+
+    for(const card of document.querySelectorAll('.glass-panel')) {
+      card.onmousemove = e => handleOnMouseMove(e);
+    }
+
+    // 2. Scroll Animation Observer
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          
+          // Trigger counter animation if it's the stats section
+          if (entry.target.querySelector('.count-up')) {
+            startCounters(entry.target);
+          }
+          
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 3. Navbar Scroll Effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    // 4. Counter Animation
+    let countersStarted = false;
+    function startCounters(container) {
+      if(countersStarted) return;
+      countersStarted = true;
+      const counters = container.querySelectorAll('.count-up');
+      const speed = 200; 
+
+      counters.forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const inc = target / speed;
+
+          if (count < target) {
+            counter.innerText = Math.ceil(count + inc);
+            setTimeout(updateCount, 15);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // 5. FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        // Close all
+        faqItems.forEach(faq => faq.classList.remove('active'));
+        // Open clicked if it wasn't active
+        if (!isActive) item.classList.add('active');
+      });
+    });
+    
+    // 6. Form prevent default
+    const form = document.querySelector('.contact-form');
+    if(form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button');
+        const oldText = btn.innerText;
+        btn.innerText = 'Transmitting...';
+        setTimeout(() => {
+          btn.innerText = 'Signal Sent!';
+          btn.style.background = '#00f0ff';
+          btn.style.color = '#000';
+          form.reset();
+          setTimeout(() => {
+            btn.innerText = oldText;
+            btn.style.background = '';
+            btn.style.color = '';
+          }, 3000);
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>

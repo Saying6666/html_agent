@@ -1,40 +1,268 @@
-# fdu_009
+# Atelier Meridian - 2025-2026 Launch Site (Modern Premium Glassmorphism & Glo UI)
 
-## Round 1
-Create a premium long-scroll single-file `src/index.html` for an **education platform** called **FrameSchool**.
-Concept: a photography portfolio education platform that teaches young premium consumers how to build taste, sequence projects, present work, and launch a credible creative portfolio.
-Audience: young premium consumers, aspiring photographers, and image-makers who care about curation, personal brand, and polished learning experiences.
-Style direction: **Clean Corporate** with references to Land-book, premium creative education brands, and polished B2B-style product hierarchy.
-Component language: Shadcn/ui-like cards, clean curriculum modules, refined testimonial blocks, pricing sections, and portfolio critique panels.
-Color direction: soft white, cool slate, muted blue, restrained sand, and subtle charcoal accents; premium and trustworthy rather than playful.
-Typography direction: strong geometric display headings paired with clean neutral sans-serif body text.
-Motion direction: subtle product-style motion with restrained scroll reveals and elegant state changes.
-Build a complete page with these sections: navbar, hero, learning outcomes, course tracks, portfolio critique workflow, instructor highlights, student gallery, pricing, testimonials, FAQ, CTA, footer.
-Required interactions: button hover states, button active states, counter animations, scroll reveal animations, sticky navbar transition on scroll.
-The page should feel like a real premium online academy rather than a generic video-course marketplace.
+Build a 2025-2026 launch site for **Atelier Meridian**.
+Atelier Meridian is a hospitality operations platform for:
+- design-led hotels
+- private residences
+- members clubs.
 
-## Round 2
-Deepen the layout and content density.
-The hero should combine a clear educational promise, sample portfolio visuals, dual CTAs, and proof that the curriculum leads to a better portfolio outcome.
-Add believable copy around editing taste, sequencing, project storytelling, critique sessions, mentor review, presentation formats, and client-ready portfolio readiness.
-Show how learners move from discovery to enrollment to guided progress and measurable outcomes with enough concrete detail to feel like a real program.
-Use stronger visual hierarchy, richer section depth, and more polished learning modules throughout.
-Keep enough vertical depth for a long full-page screenshot, with multiple strong section transitions and no thin filler sections.
+The product promise:
+service rituals. staff choreography. guest recovery. event readiness. leadership visibility.
+This page must not look like a generic SaaS. It must not look like a generic hotel website.
+This page must feel like a futuristic premium hospitality brand book fused with a cutting-edge glossy operating console.
+Target "Modern Premium Glassmorphism & Glo UI". 
+Define 12+ sections. Use backdrop-filter:blur, conic-gradient borders, ambient blurred orbs, precise real micro-interactions.
 
-## Round 3
-Polish all interaction states and compliance details.
-Make hover, active, and focus states clearly visible across buttons, navigation, cards, and primary CTAs.
-Counters should animate into place when scrolled into view, and the sticky navbar should gain a subtle blur, border, or elevation change after scrolling.
-Ensure the layout is responsive for desktop and tablet widths while preserving the premium academy feel.
-Keep all CSS and JS inline inside `index.html`.
-Do not use React, Vue, Svelte, jQuery, or any build step.
-Do not reference local images, local fonts, local CSS, or local JS.
-Use remote imagery only if needed and inline SVG icons.
-Return only the final `src/index.html` content with no explanation.
+Hard delivery constraints:
+1. Return one complete self-contained index.html only.
+2. All CSS must be inside one <style>.
+3. All JavaScript must be inside one <script>.
+4. No frameworks: no React, no Vue, no Svelte.
+5. No external libraries: no GSAP, no jQuery.
+6. No build step. No local assets and no local file references.
+7. No external images, fonts, CSS, or JS. Use pure CSS and inline SVG only.
+8. Do not use style="" attributes in markup.
+9. Responsive and accessible are mandatory.
 
-## Round 4
-Final refinement pass.
-The result should feel polished, aspirational, and structurally credible while still being clear enough to convert students.
-Avoid vague self-improvement copy, random camera jargon, and shallow lesson framing.
-Ensure enough depth for a long full-page screenshot and visible interactive states throughout.
-Return one complete self-contained `index.html`.
+Case-specific art direction: Modern Premium Glassmorphism & Glo UI
+- Use semi-transparent dark, smoky, or ethereal surfaces (glassmorphism).
+- Use ambient glowing orbs in the background (deep purples, rich amethysts, soft golds, emeralds).
+- Use ultra-thin 1px solid or conic-gradient borders on cards to simulate edge lighting.
+- Drop shadows should be soft and luminescent, providing a "glo" effect.
+- Interactions must feel buttery smooth, utilizing transitions for scaling, border color changes, and box-shadow shifts.
+
+Typography direction:
+- Display type: sleek, wide geometric or clean neo-grotesque sans (emulated via system fonts like Inter, SF Pro, or Helvetica Neue) mixed with elegant high-contrast serif headers for hospitality touch.
+- Body type: highly legible, fluid sans-serif.
+- Labels: tiny, high tracking, sleek uppercase.
+- Numbers: tabular lining.
+
+Token system requirements (define in CSS :root and use):
+- Colors: Deep void background, translucent glass layers (rgba variables).
+- Accent Glo: Neon Gold, Magenta, Sapphire, Amethyst, Azure.
+- Semantic: Ready (Cyan), At-Risk (Amber), Delayed (Crimson), Recovered (Emerald).
+- Radii: Sleek rounded corners (e.g., 16px, 24px, 32px, pill-shaped).
+- Spacing: generous internal padding for breathing room inside frosted glass.
+- Blur: variable backdrop blurs (4px, 12px, 24px).
+
+Layout & Content Mandate (12+ Sections):
+1. Ambient Hero entry with floating glass nav and large floating glowing orbs, bold value proposition, dual CTAs.
+2. Proof Strip (Logos re-imagined as glowing typographic marks or SVG glyphs in glass pills).
+3. "Ritual Grid": A bento-box layout of glass cards showcasing different service rituals (Arrival, Housekeeping).
+4. "The Glo Console": An interactive tabbed interface mimicking a premium dark-mode operations dashboard (Tabs wired with JS).
+5. "Choreography Flow": Vertical timeline with sticky scroll effects showing a guest timeline.
+6. "Guest Recovery": An accordion/FAQ style module showing automated recovery steps.
+7. "Event Readiness": A massive full-width feature banner with a conic-gradient border.
+8. "Leadership Visibility": A data-heavy section with CSS-drawn bar/line charts and Count-up metrics.
+9. "Interactive Service Call Sheet": A click-to-reveal list of tasks, roles, and times.
+10. "Ambient Alert Gallery": A stack of mock toast notifications that auto-cycle or can be hovered, showing the real-time nature of the platform.
+11. "Testimonials / Margin Notes": Architectural grid with quotes over deep blurred backgrounds.
+12. "Footer / Final CTA": Massive glowing CTA button with complex hover effects, copyright, and extensive site links.
+
+Interactive constraints:
+- Use real JS to handle Tabs, Modals, Accordions, Toasts, and Count-ups.
+- NO dummy placeholders like <!-- content goes here -->.
+- All 12+ sections must have real text and high-res structural HTML.
+
+Generate pristine, semantic HTML5. Make the total line count exceed 600 lines.
+# Atelier Meridian - 2025-2026 Launch Site (Modern Premium Glassmorphism & Glo UI)
+
+Build a 2025-2026 launch site for **Atelier Meridian**.
+Atelier Meridian is a hospitality operations platform for:
+- design-led hotels
+- private residences
+- members clubs.
+
+The product promise:
+service rituals. staff choreography. guest recovery. event readiness. leadership visibility.
+This page must not look like a generic SaaS. It must not look like a generic hotel website.
+This page must feel like a futuristic premium hospitality brand book fused with a cutting-edge glossy operating console.
+Target "Modern Premium Glassmorphism & Glo UI". 
+Define 12+ sections. Use backdrop-filter:blur, conic-gradient borders, ambient blurred orbs, precise real micro-interactions.
+
+Hard delivery constraints:
+1. Return one complete self-contained index.html only.
+2. All CSS must be inside one <style>.
+3. All JavaScript must be inside one <script>.
+4. No frameworks: no React, no Vue, no Svelte.
+5. No external libraries: no GSAP, no jQuery.
+6. No build step. No local assets and no local file references.
+7. No external images, fonts, CSS, or JS. Use pure CSS and inline SVG only.
+8. Do not use style="" attributes in markup.
+9. Responsive and accessible are mandatory.
+
+Case-specific art direction: Modern Premium Glassmorphism & Glo UI
+- Use semi-transparent dark, smoky, or ethereal surfaces (glassmorphism).
+- Use ambient glowing orbs in the background (deep purples, rich amethysts, soft golds, emeralds).
+- Use ultra-thin 1px solid or conic-gradient borders on cards to simulate edge lighting.
+- Drop shadows should be soft and luminescent, providing a "glo" effect.
+- Interactions must feel buttery smooth, utilizing transitions for scaling, border color changes, and box-shadow shifts.
+
+Typography direction:
+- Display type: sleek, wide geometric or clean neo-grotesque sans (emulated via system fonts like Inter, SF Pro, or Helvetica Neue) mixed with elegant high-contrast serif headers for hospitality touch.
+- Body type: highly legible, fluid sans-serif.
+- Labels: tiny, high tracking, sleek uppercase.
+- Numbers: tabular lining.
+
+Token system requirements (define in CSS :root and use):
+- Colors: Deep void background, translucent glass layers (rgba variables).
+- Accent Glo: Neon Gold, Magenta, Sapphire, Amethyst, Azure.
+- Semantic: Ready (Cyan), At-Risk (Amber), Delayed (Crimson), Recovered (Emerald).
+- Radii: Sleek rounded corners (e.g., 16px, 24px, 32px, pill-shaped).
+- Spacing: generous internal padding for breathing room inside frosted glass.
+- Blur: variable backdrop blurs (4px, 12px, 24px).
+
+Layout & Content Mandate (12+ Sections):
+1. Ambient Hero entry with floating glass nav and large floating glowing orbs, bold value proposition, dual CTAs.
+2. Proof Strip (Logos re-imagined as glowing typographic marks or SVG glyphs in glass pills).
+3. "Ritual Grid": A bento-box layout of glass cards showcasing different service rituals (Arrival, Housekeeping).
+4. "The Glo Console": An interactive tabbed interface mimicking a premium dark-mode operations dashboard (Tabs wired with JS).
+5. "Choreography Flow": Vertical timeline with sticky scroll effects showing a guest timeline.
+6. "Guest Recovery": An accordion/FAQ style module showing automated recovery steps.
+7. "Event Readiness": A massive full-width feature banner with a conic-gradient border.
+8. "Leadership Visibility": A data-heavy section with CSS-drawn bar/line charts and Count-up metrics.
+9. "Interactive Service Call Sheet": A click-to-reveal list of tasks, roles, and times.
+10. "Ambient Alert Gallery": A stack of mock toast notifications that auto-cycle or can be hovered, showing the real-time nature of the platform.
+11. "Testimonials / Margin Notes": Architectural grid with quotes over deep blurred backgrounds.
+12. "Footer / Final CTA": Massive glowing CTA button with complex hover effects, copyright, and extensive site links.
+
+Interactive constraints:
+- Use real JS to handle Tabs, Modals, Accordions, Toasts, and Count-ups.
+- NO dummy placeholders like <!-- content goes here -->.
+- All 12+ sections must have real text and high-res structural HTML.
+
+Generate pristine, semantic HTML5. Make the total line count exceed 600 lines.
+# Atelier Meridian - 2025-2026 Launch Site (Modern Premium Glassmorphism & Glo UI)
+
+Build a 2025-2026 launch site for **Atelier Meridian**.
+Atelier Meridian is a hospitality operations platform for:
+- design-led hotels
+- private residences
+- members clubs.
+
+The product promise:
+service rituals. staff choreography. guest recovery. event readiness. leadership visibility.
+This page must not look like a generic SaaS. It must not look like a generic hotel website.
+This page must feel like a futuristic premium hospitality brand book fused with a cutting-edge glossy operating console.
+Target "Modern Premium Glassmorphism & Glo UI". 
+Define 12+ sections. Use backdrop-filter:blur, conic-gradient borders, ambient blurred orbs, precise real micro-interactions.
+
+Hard delivery constraints:
+1. Return one complete self-contained index.html only.
+2. All CSS must be inside one <style>.
+3. All JavaScript must be inside one <script>.
+4. No frameworks: no React, no Vue, no Svelte.
+5. No external libraries: no GSAP, no jQuery.
+6. No build step. No local assets and no local file references.
+7. No external images, fonts, CSS, or JS. Use pure CSS and inline SVG only.
+8. Do not use style="" attributes in markup.
+9. Responsive and accessible are mandatory.
+
+Case-specific art direction: Modern Premium Glassmorphism & Glo UI
+- Use semi-transparent dark, smoky, or ethereal surfaces (glassmorphism).
+- Use ambient glowing orbs in the background (deep purples, rich amethysts, soft golds, emeralds).
+- Use ultra-thin 1px solid or conic-gradient borders on cards to simulate edge lighting.
+- Drop shadows should be soft and luminescent, providing a "glo" effect.
+- Interactions must feel buttery smooth, utilizing transitions for scaling, border color changes, and box-shadow shifts.
+
+Typography direction:
+- Display type: sleek, wide geometric or clean neo-grotesque sans (emulated via system fonts like Inter, SF Pro, or Helvetica Neue) mixed with elegant high-contrast serif headers for hospitality touch.
+- Body type: highly legible, fluid sans-serif.
+- Labels: tiny, high tracking, sleek uppercase.
+- Numbers: tabular lining.
+
+Token system requirements (define in CSS :root and use):
+- Colors: Deep void background, translucent glass layers (rgba variables).
+- Accent Glo: Neon Gold, Magenta, Sapphire, Amethyst, Azure.
+- Semantic: Ready (Cyan), At-Risk (Amber), Delayed (Crimson), Recovered (Emerald).
+- Radii: Sleek rounded corners (e.g., 16px, 24px, 32px, pill-shaped).
+- Spacing: generous internal padding for breathing room inside frosted glass.
+- Blur: variable backdrop blurs (4px, 12px, 24px).
+
+Layout & Content Mandate (12+ Sections):
+1. Ambient Hero entry with floating glass nav and large floating glowing orbs, bold value proposition, dual CTAs.
+2. Proof Strip (Logos re-imagined as glowing typographic marks or SVG glyphs in glass pills).
+3. "Ritual Grid": A bento-box layout of glass cards showcasing different service rituals (Arrival, Housekeeping).
+4. "The Glo Console": An interactive tabbed interface mimicking a premium dark-mode operations dashboard (Tabs wired with JS).
+5. "Choreography Flow": Vertical timeline with sticky scroll effects showing a guest timeline.
+6. "Guest Recovery": An accordion/FAQ style module showing automated recovery steps.
+7. "Event Readiness": A massive full-width feature banner with a conic-gradient border.
+8. "Leadership Visibility": A data-heavy section with CSS-drawn bar/line charts and Count-up metrics.
+9. "Interactive Service Call Sheet": A click-to-reveal list of tasks, roles, and times.
+10. "Ambient Alert Gallery": A stack of mock toast notifications that auto-cycle or can be hovered, showing the real-time nature of the platform.
+11. "Testimonials / Margin Notes": Architectural grid with quotes over deep blurred backgrounds.
+12. "Footer / Final CTA": Massive glowing CTA button with complex hover effects, copyright, and extensive site links.
+
+Interactive constraints:
+- Use real JS to handle Tabs, Modals, Accordions, Toasts, and Count-ups.
+- NO dummy placeholders like <!-- content goes here -->.
+- All 12+ sections must have real text and high-res structural HTML.
+
+Generate pristine, semantic HTML5. Make the total line count exceed 600 lines.
+# Atelier Meridian - 2025-2026 Launch Site (Modern Premium Glassmorphism & Glo UI)
+
+Build a 2025-2026 launch site for **Atelier Meridian**.
+Atelier Meridian is a hospitality operations platform for:
+- design-led hotels
+- private residences
+- members clubs.
+
+The product promise:
+service rituals. staff choreography. guest recovery. event readiness. leadership visibility.
+This page must not look like a generic SaaS. It must not look like a generic hotel website.
+This page must feel like a futuristic premium hospitality brand book fused with a cutting-edge glossy operating console.
+Target "Modern Premium Glassmorphism & Glo UI". 
+Define 12+ sections. Use backdrop-filter:blur, conic-gradient borders, ambient blurred orbs, precise real micro-interactions.
+
+Hard delivery constraints:
+1. Return one complete self-contained index.html only.
+2. All CSS must be inside one <style>.
+3. All JavaScript must be inside one <script>.
+4. No frameworks: no React, no Vue, no Svelte.
+5. No external libraries: no GSAP, no jQuery.
+6. No build step. No local assets and no local file references.
+7. No external images, fonts, CSS, or JS. Use pure CSS and inline SVG only.
+8. Do not use style="" attributes in markup.
+9. Responsive and accessible are mandatory.
+
+Case-specific art direction: Modern Premium Glassmorphism & Glo UI
+- Use semi-transparent dark, smoky, or ethereal surfaces (glassmorphism).
+- Use ambient glowing orbs in the background (deep purples, rich amethysts, soft golds, emeralds).
+- Use ultra-thin 1px solid or conic-gradient borders on cards to simulate edge lighting.
+- Drop shadows should be soft and luminescent, providing a "glo" effect.
+- Interactions must feel buttery smooth, utilizing transitions for scaling, border color changes, and box-shadow shifts.
+
+Typography direction:
+- Display type: sleek, wide geometric or clean neo-grotesque sans (emulated via system fonts like Inter, SF Pro, or Helvetica Neue) mixed with elegant high-contrast serif headers for hospitality touch.
+- Body type: highly legible, fluid sans-serif.
+- Labels: tiny, high tracking, sleek uppercase.
+- Numbers: tabular lining.
+
+Token system requirements (define in CSS :root and use):
+- Colors: Deep void background, translucent glass layers (rgba variables).
+- Accent Glo: Neon Gold, Magenta, Sapphire, Amethyst, Azure.
+- Semantic: Ready (Cyan), At-Risk (Amber), Delayed (Crimson), Recovered (Emerald).
+- Radii: Sleek rounded corners (e.g., 16px, 24px, 32px, pill-shaped).
+- Spacing: generous internal padding for breathing room inside frosted glass.
+- Blur: variable backdrop blurs (4px, 12px, 24px).
+
+Layout & Content Mandate (12+ Sections):
+1. Ambient Hero entry with floating glass nav and large floating glowing orbs, bold value proposition, dual CTAs.
+2. Proof Strip (Logos re-imagined as glowing typographic marks or SVG glyphs in glass pills).
+3. "Ritual Grid": A bento-box layout of glass cards showcasing different service rituals (Arrival, Housekeeping).
+4. "The Glo Console": An interactive tabbed interface mimicking a premium dark-mode operations dashboard (Tabs wired with JS).
+5. "Choreography Flow": Vertical timeline with sticky scroll effects showing a guest timeline.
+6. "Guest Recovery": An accordion/FAQ style module showing automated recovery steps.
+7. "Event Readiness": A massive full-width feature banner with a conic-gradient border.
+8. "Leadership Visibility": A data-heavy section with CSS-drawn bar/line charts and Count-up metrics.
+9. "Interactive Service Call Sheet": A click-to-reveal list of tasks, roles, and times.
+10. "Ambient Alert Gallery": A stack of mock toast notifications that auto-cycle or can be hovered, showing the real-time nature of the platform.
+11. "Testimonials / Margin Notes": Architectural grid with quotes over deep blurred backgrounds.
+12. "Footer / Final CTA": Massive glowing CTA button with complex hover effects, copyright, and extensive site links.
+
+Interactive constraints:
+- Use real JS to handle Tabs, Modals, Accordions, Toasts, and Count-ups.
+- NO dummy placeholders like <!-- content goes here -->.
+- All 12+ sections must have real text and high-res structural HTML.
+
+Generate pristine, semantic HTML5. Make the total line count exceed 600 lines.

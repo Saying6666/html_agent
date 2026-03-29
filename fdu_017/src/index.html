@@ -1,1578 +1,1290 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprint Dispatch - Remote Design Sprint Summit</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --soft-white: #FAFBFC;
-            --cool-slate: #64748B;
-            --muted-blue: #3B82F6;
-            --restrained-teal: #0D9488;
-            --graphite: #1E293B;
-            --light-gray: #F1F5F9;
-            --border-color: #E2E8F0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--soft-white);
-            color: var(--graphite);
-            line-height: 1.6;
-        }
-
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.25rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(250, 251, 252, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 5%;
-        }
-
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--graphite);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--restrained-teal);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 18px;
-            height: 18px;
-            stroke: white;
-            fill: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--cool-slate);
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--graphite);
-        }
-
-        .nav-cta {
-            padding: 0.75rem 1.5rem;
-            background: var(--graphite);
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--restrained-teal);
-            transform: translateY(-2px);
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            padding: 10rem 5% 6rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            background: linear-gradient(135deg, var(--soft-white) 0%, var(--light-gray) 100%);
-        }
-
-        .hero-content {
-            max-width: 600px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--restrained-teal);
-            border: 1px solid var(--border-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--restrained-teal);
-            border-radius: 50%;
-        }
-
-        .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--graphite);
-        }
-
-        .hero h1 span {
-            color: var(--restrained-teal);
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--cool-slate);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat-number {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--graphite);
-        }
-
-        .hero-stat-label {
-            font-size: 0.85rem;
-            color: var(--cool-slate);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--graphite);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--restrained-teal);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.2);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--graphite);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--restrained-teal);
-            color: var(--restrained-teal);
-        }
-
-        .hero-visual {
-            position: relative;
-        }
-
-        .hero-image {
-            width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 30px 60px rgba(30, 41, 59, 0.15);
-        }
-
-        .floating-card {
-            position: absolute;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(30, 41, 59, 0.1);
-        }
-
-        .floating-card.top {
-            top: -20px;
-            right: -20px;
-        }
-
-        .floating-card.bottom {
-            bottom: 40px;
-            left: -30px;
-        }
-
-        .floating-card-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .floating-card-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--light-gray);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .floating-card-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--restrained-teal);
-            fill: none;
-        }
-
-        .floating-card-text h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-
-        .floating-card-text p {
-            font-size: 0.8rem;
-            color: var(--cool-slate);
-        }
-
-        /* Summit Overview */
-        .overview {
-            padding: 6rem 5%;
-            background: white;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: var(--cool-slate);
-            font-size: 1.1rem;
-        }
-
-        .overview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .overview-card {
-            padding: 2.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .overview-card:hover {
-            border-color: var(--restrained-teal);
-            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.08);
-            transform: translateY(-5px);
-        }
-
-        .overview-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--light-gray);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .overview-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--restrained-teal);
-            fill: none;
-        }
-
-        .overview-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-
-        .overview-card p {
-            font-size: 0.95rem;
-            color: var(--cool-slate);
-            line-height: 1.7;
-        }
-
-        /* Featured Sessions */
-        .sessions {
-            padding: 6rem 5%;
-            background: var(--light-gray);
-        }
-
-        .sessions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .session-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            transition: all 0.3s ease;
-        }
-
-        .session-card:hover {
-            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .session-image {
-            width: 200px;
-            min-height: 100%;
-            background: var(--light-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .session-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .session-content {
-            padding: 2rem;
-            flex: 1;
-        }
-
-        .session-tag {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--light-gray);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--restrained-teal);
-            margin-bottom: 1rem;
-        }
-
-        .session-content h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            line-height: 1.4;
-        }
-
-        .session-content p {
-            font-size: 0.9rem;
-            color: var(--cool-slate);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .session-meta {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--cool-slate);
-        }
-
-        .session-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .session-meta svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--cool-slate);
-            fill: none;
-        }
-
-        /* Speakers */
-        .speakers {
-            padding: 6rem 5%;
-            background: white;
-        }
-
-        .speakers-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .speaker-card {
-            text-align: center;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .speaker-card:hover {
-            border-color: var(--restrained-teal);
-            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.08);
-        }
-
-        .speaker-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            overflow: hidden;
-            border: 3px solid var(--light-gray);
-        }
-
-        .speaker-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .speaker-card h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .speaker-role {
-            font-size: 0.85rem;
-            color: var(--restrained-teal);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .speaker-company {
-            font-size: 0.85rem;
-            color: var(--cool-slate);
-        }
-
-        /* Agenda Timeline */
-        .agenda {
-            padding: 6rem 5%;
-            background: var(--graphite);
-            color: white;
-        }
-
-        .agenda .section-header h2 {
-            color: white;
-        }
-
-        .agenda .section-header p {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .timeline {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 2rem;
-            padding: 2rem 0;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
-            padding-left: 2rem;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -8px;
-            top: 2.5rem;
-            width: 14px;
-            height: 14px;
-            background: var(--restrained-teal);
-            border-radius: 50%;
-        }
-
-        .timeline-time {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--restrained-teal);
-            min-width: 100px;
-        }
-
-        .timeline-content h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content p {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-
-        .timeline-speaker {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-top: 1rem;
-        }
-
-        .timeline-speaker img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-        }
-
-        .timeline-speaker span {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Sponsors */
-        .sponsors {
-            padding: 4rem 5%;
-            background: white;
-            text-align: center;
-        }
-
-        .sponsors h3 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--cool-slate);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .sponsors-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .sponsor-logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--cool-slate);
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .sponsor-logo:hover {
-            opacity: 1;
-        }
-
-        /* Registration CTA */
-        .registration {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, var(--restrained-teal) 0%, #0F766E 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .registration h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .registration>p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .pricing-cards {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            width: 300px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .pricing-card.featured {
-            background: white;
-            color: var(--graphite);
-            transform: scale(1.05);
-        }
-
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-5px);
-        }
-
-        .pricing-card h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-card .price {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-card .price span {
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.7;
-        }
-
-        .pricing-card p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .pricing-card ul {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-card li {
-            padding: 0.5rem 0;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .pricing-card li::before {
-            content: '';
-            width: 16px;
-            height: 16px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-            background-size: contain;
-        }
-
-        .pricing-card.featured li::before {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230D9488' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-        }
-
-        .pricing-card .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .pricing-card.featured .btn-primary {
-            background: var(--restrained-teal);
-        }
-
-        /* FAQ */
-        .faq {
-            padding: 6rem 5%;
-            background: white;
-        }
-
-        .faq-grid {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border-color);
-            padding: 1.5rem 0;
-        }
-
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: color 0.3s ease;
-        }
-
-        .faq-question:hover {
-            color: var(--restrained-teal);
-        }
-
-        .faq-question svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--cool-slate);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-question svg {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding-top: 1rem;
-        }
-
-        .faq-answer p {
-            color: var(--cool-slate);
-            line-height: 1.7;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 4rem 5% 2rem;
-            background: var(--graphite);
-            color: white;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-brand h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: var(--restrained-teal);
-            border-color: var(--restrained-teal);
-        }
-
-        .footer-social svg {
-            width: 18px;
-            height: 18px;
-            stroke: white;
-            fill: none;
-        }
-
-        .footer-column h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-column a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content {
-                max-width: 100%;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                order: -1;
-            }
-
-            .overview-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .speakers-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .pricing-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .overview-grid,
-            .sessions-grid,
-            .speakers-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .session-card {
-                flex-direction: column;
-            }
-
-            .session-image {
-                width: 100%;
-                height: 200px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GloUI & Glassmorphism | FDU_017</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap');
+
+    :root {
+        --bg-color: #050508;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glow-cyan: #00f0ff;
+        --glow-purple: #8a2be2;
+        --glow-magenta: #ff00ff;
+        --glow-emerald: #50c878;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a5b5;
+        --transition-standard: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    ::selection {
+        background: var(--glow-cyan);
+        color: #000;
+    }
+
+    /* Ambient Orbs */
+    .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        z-index: -1;
+        opacity: 0.5;
+        animation: floatOrb 20s infinite alternate ease-in-out;
+    }
+
+    .orb-1 { width: 500px; height: 500px; background: var(--glow-cyan); top: -100px; left: -100px; }
+    .orb-2 { width: 600px; height: 600px; background: var(--glow-purple); top: 20%; right: -200px; animation-delay: -5s; }
+    .orb-3 { width: 400px; height: 400px; background: var(--glow-magenta); bottom: 10%; left: 30%; animation-delay: -10s; }
+    .orb-4 { width: 550px; height: 550px; background: var(--glow-emerald); top: 60%; left: -150px; opacity: 0.3; animation-delay: -15s; }
+    .orb-5 { width: 800px; height: 800px; background: var(--glow-purple); bottom: -300px; right: 10%; opacity: 0.4; }
+
+    @keyframes floatOrb {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* Shared Glass Class */
+    .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Conic Gradient Border Animation */
+    .conic-border-wrapper {
+        position: relative;
+        padding: 2px;
+        border-radius: 26px;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .conic-border-wrapper::before {
+        content: "";
+        position: absolute;
+        inset: -50%;
+        background: conic-gradient(
+            from var(--angle), 
+            transparent 0%, 
+            var(--glow-cyan) 25%, 
+            var(--glow-purple) 50%, 
+            var(--glow-magenta) 75%, 
+            transparent 100%
+        );
+        animation: spin 4s linear infinite;
+        z-index: -1;
+    }
+    .conic-inner {
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 2;
+    }
+
+    @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    @keyframes spin {
+        0% { --angle: 0deg; }
+        100% { --angle: 360deg; }
+    }
+
+    /* Layout & Utilities */
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 5%;
+    }
+
+    .section {
+        padding: 100px 0;
+        position: relative;
+        z-index: 10;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 24px;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #ffffff 0%, #a0a5b5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text-glow-accent {
+        background: linear-gradient(135deg, var(--glow-cyan) 0%, var(--glow-purple) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+    }
+
+    p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition-standard);
+        position: relative;
+        overflow: hidden;
+        border: none;
+        background: transparent;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: var(--glow-cyan);
+        box-shadow: 0 4px 20px rgba(0, 240, 255, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .btn-glow {
+        background: linear-gradient(45deg, var(--glow-purple), var(--glow-cyan));
+        z-index: 1;
+    }
+    .btn-glow::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(45deg, var(--glow-cyan), var(--glow-purple));
+        z-index: -1;
+        transition: opacity 0.4s ease;
+        opacity: 0;
+    }
+    .btn-glow:hover::before { opacity: 1; }
+    .btn-glow:hover {
+        box-shadow: 0 0 25px var(--glow-cyan);
+        transform: translateY(-3px) scale(1.02);
+    }
+
+    .fade-up {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* 1. Hero Section */
+    .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 80px;
+    }
+    .hero-content {
+        max-width: 900px;
+        padding: 60px;
+        border-radius: 40px;
+    }
+    .hero h1 {
+        font-size: 5rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 20px;
+    }
+    .hero p {
+        font-size: 1.3rem;
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+    }
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    /* Navbar */
+    nav {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 1200px;
+        z-index: 100;
+        padding: 15px 30px;
+        border-radius: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-weight: 900;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav-links {
+        display: flex;
+        gap: 30px;
+    }
+    .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+    .nav-links a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    /* 2. Client Ticker */
+    .ticker-section {
+        padding: 40px 0;
+        overflow: hidden;
+        border-top: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
+        background: rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+    }
+    .ticker-track {
+        display: flex;
+        width: max-content;
+        animation: ticker 40s linear infinite;
+    }
+    .ticker-item {
+        margin: 0 40px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.3);
+        transition: var(--transition-standard);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .ticker-item:hover {
+        color: #fff;
+        text-shadow: 0 0 15px var(--glow-cyan);
+        transform: scale(1.1);
+    }
+    @keyframes ticker {
+        100% { transform: translateX(-50%); }
+    }
+
+    /* 3. Bento Features */
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 250px;
+        gap: 20px;
+    }
+    .bento-card {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transition: transform 0.4s ease;
+    }
+    .bento-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255,255,255,0.2);
+    }
+    .bento-card i {
+        font-size: 2.5rem;
+        margin-bottom: auto;
+        color: var(--glow-purple);
+    }
+    .bento-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+    .bento-card p { font-size: 0.95rem; margin-bottom: 0; }
+    
+    .bento-large { grid-column: span 2; grid-row: span 2; }
+    .bento-wide { grid-column: span 2; }
+    .bento-tall { grid-row: span 2; }
+
+    /* 4. Metrics */
+    .metrics-wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+    .metric-item {
+        text-align: center;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .metric-number {
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--glow-cyan), #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .metric-label {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 10px;
+    }
+
+    /* 5. 3D Interactive Cards */
+    .cards-3d-container {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        perspective: 1000px;
+    }
+    .card-3d {
+        width: 350px;
+        height: 450px;
+        transform-style: preserve-3d;
+        transition: transform 0.1s ease;
+        cursor: crosshair;
+        background: rgba(20, 20, 25, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+        position: relative;
+    }
+    .card-3d-content {
+        transform: translateZ(50px);
+    }
+    .card-glare {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 50%);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        border-radius: 20px;
+    }
+    .card-3d:hover .card-glare { opacity: 1; }
+
+    /* 6. Media Player */
+    .media-player {
+        width: 100%;
+        border-radius: 30px;
+        aspect-ratio: 16/9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') center/cover;
+        position: relative;
+        overflow: hidden;
+    }
+    .media-player::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+    }
+    .play-btn {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .play-btn::before {
+        content: '';
+        border-style: solid;
+        border-width: 15px 0 15px 25px;
+        border-color: transparent transparent transparent #fff;
+        margin-left: 10px;
+    }
+    .play-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 40px var(--glow-magenta);
+    }
+    .ripple {
+        position: absolute;
+        width: 100px; height: 100px;
+        border-radius: 50%;
+        border: 2px solid var(--glow-cyan);
+        animation: rippleAnim 2s infinite ease-out;
+        z-index: 1;
+    }
+    @keyframes rippleAnim {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(3); opacity: 0; }
+    }
+
+    /* 7. Tech Tabs */
+    .tabs-wrapper {
+        display: flex;
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .tabs-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 300px;
+    }
+    .tab-btn {
+        text-align: left;
+        padding: 20px 30px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        color: var(--text-secondary);
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: inherit;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    .tab-btn.active {
+        background: rgba(255,255,255,0.1);
+        border-color: var(--glow-emerald);
+        color: #fff;
+        box-shadow: 0 0 20px rgba(80, 200, 120, 0.2);
+    }
+    .tab-content {
+        flex: 1;
+        padding: 40px;
+        display: none;
+        animation: fadeIn 0.5s;
+    }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* 8. Pricing */
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        align-items: center;
+    }
+    .pricing-card {
+        padding: 50px 40px;
+        text-align: center;
+        border-radius: 24px;
+        transition: transform 0.4s;
+    }
+    .pricing-card:hover { transform: translateY(-10px); }
+    .pricing-card.pro {
+        padding: 60px 40px;
+        transform: scale(1.05);
+        background: rgba(20, 20, 30, 0.6);
+        border: none;
+    }
+    .pricing-card.pro:hover { transform: scale(1.05) translateY(-10px); }
+    .price-value {
+        font-size: 4rem;
+        font-weight: 900;
+        margin: 20px 0;
+    }
+    .price-value span { font-size: 1.5rem; color: var(--text-secondary); font-weight: 500;}
+    .pricing-features {
+        list-style: none;
+        margin: 30px 0;
+        text-align: left;
+    }
+    .pricing-features li {
+        margin-bottom: 15px;
+        position: relative;
+        padding-left: 30px;
+    }
+    .pricing-features li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--glow-emerald);
+        font-weight: bold;
+    }
+
+    /* 9. Masonry Testimonials */
+    .masonry-grid {
+        column-count: 3;
+        column-gap: 25px;
+    }
+    .review-card {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 25px;
+        padding: 30px;
+        transition: 0.3s;
+    }
+    .review-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        z-index: 10;
+        border-color: rgba(255,255,255,0.2);
+    }
+    body:has(.review-card:hover) .review-card:not(:hover) {
+        opacity: 0.5;
+        filter: blur(2px);
+    }
+    .review-user {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #333;
+        border: 2px solid var(--glow-cyan);
+        box-shadow: 0 0 10px var(--glow-cyan);
+    }
+
+    /* 10. FAQ Accordion */
+    .faq-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .faq-item {
+        margin-bottom: 15px;
+        border-radius: 12px;
+        cursor: pointer;
+        padding: 0;
+    }
+    .faq-header {
+        padding: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .faq-icon {
+        width: 20px; height: 20px;
+        position: relative;
+        transition: transform 0.4s;
+    }
+    .faq-icon::before, .faq-icon::after {
+        content: ''; position: absolute; background: #fff;
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+    .faq-icon::before { width: 100%; height: 2px; }
+    .faq-icon::after { height: 100%; width: 2px; transition: 0.4s; }
+    .faq-item.active .faq-icon { transform: rotate(90deg); }
+    .faq-item.active .faq-icon::after { height: 0; }
+    
+    .faq-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+        padding: 0 25px;
+    }
+    .faq-item.active .faq-body {
+        max-height: 500px;
+        transition: max-height 0.8s ease-in-out;
+    }
+    .faq-body p { margin-bottom: 25px; margin-top: 10px; }
+
+    /* 11. Newsletter */
+    .newsletter-section {
+        text-align: center;
+        position: relative;
+        padding: 120px 0;
+    }
+    .newsletter-box {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 60px;
+        border-radius: 30px;
+        background: rgba(10,12,20, 0.7);
+        box-shadow: 0 0 50px rgba(0,240,255,0.1);
+    }
+    .input-grp {
+        margin-top: 30px;
+        display: flex;
+        gap: 10px;
+        position: relative;
+    }
+    .input-grp input {
+        flex: 1;
+        padding: 18px 25px;
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.3);
+        color: #fff;
+        font-family: inherit;
+        font-size: 1.1rem;
+        outline: none;
+        transition: 0.3s;
+    }
+    .input-grp input:focus {
+        border-color: var(--glow-cyan);
+        box-shadow: 0 0 15px rgba(0,240,255,0.2) inset;
+    }
+    .btn-submit {
+        padding: 18px 40px;
+        border-radius: 50px;
+        border: none;
+        background: #fff;
+        color: #000;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .btn-submit:hover {
+        background: var(--glow-cyan);
+        box-shadow: 0 0 25px var(--glow-cyan);
+    }
+
+    /* 12. Footer */
+    footer {
+        padding: 80px 0 40px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        position: relative;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(10px);
+    }
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+    }
+    .footer-col h4 { margin-bottom: 25px; font-size: 1.2rem; }
+    .footer-col a {
+        display: block;
+        color: var(--text-secondary);
+        text-decoration: none;
+        margin-bottom: 12px;
+        transition: 0.3s;
+    }
+    .footer-col a:hover { color: var(--glow-magenta); text-shadow: 0 0 10px var(--glow-magenta); }
+    .footer-bottom {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Global Mouse Glow */
+    .mouse-glow {
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+    }
+
+    /* Section Headers */
+    .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+    .section-header h2 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    @media(max-width: 1024px) {
+        .bento-grid { grid-template-columns: repeat(2, 1fr); }
+        .bento-large, .bento-wide { grid-column: span 2; }
+        .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+        .pricing-card.pro { transform: scale(1); }
+        .pricing-card.pro:hover { transform: translateY(-10px); }
+        .masonry-grid { column-count: 2; }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+        .tabs-wrapper { flex-direction: column; }
+        .tabs-nav { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+        .tab-btn { flex: 0 0 auto; white-space: nowrap; }
+    }
+    @media(max-width: 768px) {
+        .hero h1 { font-size: 3rem; }
+        .masonry-grid { column-count: 1; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .cards-3d-container { flex-direction: column; align-items: center; }
+        .nav-links { display: none; }
+        .input-grp { flex-direction: column; }
+    }
+</style>
 </head>
-
 <body>
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon">
-                <svg viewBox="0 0 24 24" stroke-width="2">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                </svg>
-            </div>
-            Sprint Dispatch
-        </a>
-        <ul class="nav-links">
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#sessions">Sessions</a></li>
-            <li><a href="#speakers">Speakers</a></li>
-            <li><a href="#agenda">Agenda</a></li>
-            <li><a href="#faq">FAQ</a></li>
-        </ul>
-        <a href="#register" class="nav-cta">Register Now</a>
+
+    <div class="mouse-glow" id="mouseGlow"></div>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="orb orb-5"></div>
+
+    <nav class="glass-panel">
+        <a href="#" class="logo">GLO<span class="text-glow-accent">UI</span></a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#demo">Integration</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <a href="#signup" class="btn btn-primary" style="padding: 10px 24px;">Get Access</a>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">March 24-26, 2026 • Virtual Summit</div>
-            <h1>Remote Design Sprints That <span>Actually Deliver</span></h1>
-            <p class="hero-subtitle">Join 2,000+ product leaders, designers, and strategists for three days of intensive
-                learning on facilitation, collaboration, and outcomes that matter.</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-number" data-count="3">0</div>
-                    <div class="hero-stat-label">Days</div>
+    <!-- 1. Immersive Hero -->
+    <section class="section hero">
+        <div class="container">
+            <div class="glass-panel hero-content fade-up">
+                <h1 class="text-gradient">The Future of Glass</h1>
+                <p>Seamless interfaces powered by volumetric light, dynamic blur layers, and organic motion. Elevate your digital presence to premium standards.</p>
+                <div class="hero-buttons">
+                    <a href="#demo" class="btn btn-glow">Initialize System</a>
+                    <a href="#docs" class="btn btn-primary">Read Documentation</a>
                 </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number" data-count="24">0</div>
-                    <div class="hero-stat-label">Sessions</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number" data-count="18">0</div>
-                    <div class="hero-stat-label">Speakers</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number" data-count="2000">0</div>
-                    <div class="hero-stat-label">Attendees</div>
-                </div>
-            </div>
-            <div class="hero-buttons">
-                <a href="#register" class="btn btn-primary">Secure Your Spot</a>
-                <a href="#overview" class="btn btn-secondary">View Agenda</a>
             </div>
         </div>
-        <div class="hero-visual">
-            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="Remote collaboration"
-                class="hero-image">
-            <div class="floating-card top">
-                <div class="floating-card-content">
-                    <div class="floating-card-icon">
-                        <svg viewBox="0 0 24 24" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <div class="floating-card-text">
-                        <h4>2,000+ Registered</h4>
-                        <p>From 45 countries</p>
-                    </div>
+    </section>
+
+    <!-- 2. Client/Partner Carousel -->
+    <div class="ticker-section fade-up">
+        <div class="ticker-track">
+            <!-- Double for seamless loop -->
+            <div class="ticker-item">✦ QUANTUM</div>
+            <div class="ticker-item">✦ NEURALNET</div>
+            <div class="ticker-item">✦ SYNERGY</div>
+            <div class="ticker-item">✦ VOID SYSTEMS</div>
+            <div class="ticker-item">✦ APEX NODE</div>
+            <div class="ticker-item">✦ LUMINARY</div>
+            <div class="ticker-item">✦ QUANTUM</div>
+            <div class="ticker-item">✦ NEURALNET</div>
+            <div class="ticker-item">✦ SYNERGY</div>
+            <div class="ticker-item">✦ VOID SYSTEMS</div>
+            <div class="ticker-item">✦ APEX NODE</div>
+            <div class="ticker-item">✦ LUMINARY</div>
+        </div>
+    </div>
+
+    <!-- 3. Bento Box Features -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2 class="text-glow-accent">Architectural Mastery</h2>
+                <p>Discover the elements that make GloUI fundamentally superior.</p>
+            </div>
+            <div class="bento-grid">
+                <div class="glass-panel bento-card bento-large fade-up">
+                    <i style="color: var(--glow-cyan);">❅</i>
+                    <h3>Matrix Computing</h3>
+                    <p>Harness the power of decentralized processing nodes to deliver instant feedback across complex graphical layers.</p>
+                </div>
+                <div class="glass-panel bento-card bento-tall fade-up" style="transition-delay: 0.1s;">
+                    <i style="color: var(--glow-emerald);">◈</i>
+                    <h3>Refractive Light</h3>
+                    <p>Real-time physical light scattering algorithms adapted for WebGL layers.</p>
+                </div>
+                <div class="glass-panel bento-card fade-up" style="transition-delay: 0.2s;">
+                    <i style="color: var(--glow-magenta);">❂</i>
+                    <h3>Sub-Zero Lag</h3>
+                    <p>Optimized render paths ensure 120fps UI transformations.</p>
+                </div>
+                <div class="glass-panel bento-card fade-up" style="transition-delay: 0.3s;">
+                    <i style="color: #ffaa00;">⎈</i>
+                    <h3>Haptic Sync</h3>
+                    <p>Sensory feedback APIs bridged directly into web interactions.</p>
+                </div>
+                <div class="glass-panel bento-card bento-wide fade-up" style="transition-delay: 0.4s;">
+                    <h3>Data Crystallization</h3>
+                    <p>Transform raw analytics into beautiful, understandable, crystalline visual formats within milliseconds.</p>
                 </div>
             </div>
-            <div class="floating-card bottom">
-                <div class="floating-card-content">
-                    <div class="floating-card-icon">
-                        <svg viewBox="0 0 24 24" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+        </div>
+    </section>
+
+    <!-- 4. Metrics & Counters -->
+    <section class="section">
+        <div class="container">
+            <div class="metrics-wrapper glass-panel fade-up" style="padding: 60px;">
+                <div class="metric-item glass-panel">
+                    <div class="metric-number" data-target="99.9">0</div>
+                    <div class="metric-label">% Uptime</div>
+                </div>
+                <div class="metric-item glass-panel" style="border-color: rgba(138,43,226,0.3);">
+                    <div class="metric-number" data-target="1500">0</div>
+                    <div class="metric-label">Nodes Global</div>
+                </div>
+                <div class="metric-item glass-panel" style="border-color: rgba(80,200,120,0.3);">
+                    <div class="metric-number" data-target="0.12">0</div>
+                    <div class="metric-label">ms Latency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Interactive 3D Elements -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Spatial Depth Mapping</h2>
+                <p>Interact with cards that accurately track coordinates for simulated depth.</p>
+            </div>
+            <div class="cards-3d-container fade-up">
+                <div class="card-3d">
+                    <div class="card-glare"></div>
+                    <div class="card-3d-content">
+                        <h3 class="text-gradient" style="font-size: 2rem;">Vector Alpha</h3>
+                        <p style="margin-top: 20px;">Precision-engineered structural arrays built for the next generation of spatial computing.</p>
+                        <div style="margin-top: 30px; font-size: 3rem; color: var(--glow-cyan);">⌬</div>
                     </div>
-                    <div class="floating-card-text">
-                        <h4>Early Bird Ends Soon</h4>
-                        <p>Save $200 until Feb 28</p>
+                </div>
+                <div class="card-3d">
+                    <div class="card-glare"></div>
+                    <div class="card-3d-content">
+                        <h3 class="text-gradient" style="font-size: 2rem;">Vector Beta</h3>
+                        <p style="margin-top: 20px;">Quantum state synchronization allows multithreaded logic execution seamlessly.</p>
+                        <div style="margin-top: 30px; font-size: 3rem; color: var(--glow-magenta);">⎄</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Overview -->
-    <section class="overview" id="overview">
-        <div class="section-header reveal">
-            <h2>Why Sprint Dispatch?</h2>
-            <p>Enterprise-grade training for teams who need remote design sprints to work at scale</p>
-        </div>
-        <div class="overview-grid">
-            <div class="overview-card reveal">
-                <div class="overview-icon">
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                    </svg>
+    <!-- 6. Video / Media Trailer -->
+    <section class="section" id="demo">
+        <div class="container">
+            <div class="glass-panel fade-up" style="padding: 20px;">
+                <div class="media-player">
+                    <div class="ripple"></div>
+                    <div class="play-btn"></div>
                 </div>
-                <h3>Proven Frameworks</h3>
-                <p>Learn battle-tested methodologies from facilitators who've run 100+ sprints for Fortune 500 companies
-                    and high-growth startups.</p>
-            </div>
-            <div class="overview-card reveal">
-                <div class="overview-icon">
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                    </svg>
-                </div>
-                <h3>Remote-First Tools</h3>
-                <p>Master the async and sync tooling stack that makes distributed collaboration feel seamless, from Miro
-                    to Loom to custom solutions.</p>
-            </div>
-            <div class="overview-card reveal">
-                <div class="overview-icon">
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <path
-                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                        </path>
-                    </svg>
-                </div>
-                <h3>Outcome-Focused</h3>
-                <p>Every session connects to real business outcomes. Leave with actionable strategies, not just
-                    inspiration and good intentions.</p>
             </div>
         </div>
     </section>
 
-    <!-- Featured Sessions -->
-    <section class="sessions" id="sessions">
-        <div class="section-header reveal">
-            <h2>Featured Sessions</h2>
-            <p>Deep dives into the challenges that matter most to enterprise teams</p>
-        </div>
-        <div class="sessions-grid">
-            <div class="session-card reveal">
-                <div class="session-image">
-                    <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=400&q=80"
-                        alt="Facilitation session">
-                </div>
-                <div class="session-content">
-                    <span class="session-tag">Workshop</span>
-                    <h3>Facilitating High-Stakes Decisions Across Time Zones</h3>
-                    <p>Learn how to run synchronous decision-making sessions when your team spans 12+ time zones,
-                        without burning anyone out.</p>
-                    <div class="session-meta">
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg> 90 min</span>
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                            </svg> Limited to 50</span>
-                    </div>
-                </div>
+    <!-- 7. Deep Dive Technical Details (Tabs) -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Entity Frameworks</h2>
+                <p>Examine the modular architecture beneath the aesthetic surface.</p>
             </div>
-            <div class="session-card reveal">
-                <div class="session-image">
-                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&q=80"
-                        alt="Async collaboration">
-                </div>
-                <div class="session-content">
-                    <span class="session-tag">Case Study</span>
-                    <h3>How Spotify Runs Async Design Sprints at Scale</h3>
-                    <p>An inside look at the systems, rituals, and tools that enable 30+ squads to run autonomous
-                        sprints with consistent quality.</p>
-                    <div class="session-meta">
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg> 60 min</span>
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                            </svg> Open to all</span>
+            <div class="glass-panel fade-up" style="padding: 40px;">
+                <div class="tabs-wrapper">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" data-tab="tab-core">Core Engine</button>
+                        <button class="tab-btn" data-tab="tab-sec">Security Mesh</button>
+                        <button class="tab-btn" data-tab="tab-api">API Gateways</button>
                     </div>
-                </div>
-            </div>
-            <div class="session-card reveal">
-                <div class="session-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80"
-                        alt="Stakeholder alignment">
-                </div>
-                <div class="session-content">
-                    <span class="session-tag">Masterclass</span>
-                    <h3>Executive Alignment Without the Theater</h3>
-                    <p>Practical techniques for getting C-suite buy-in before day one, and keeping stakeholders engaged
-                        without derailing the process.</p>
-                    <div class="session-meta">
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg> 120 min</span>
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                            </svg> Limited to 30</span>
-                    </div>
-                </div>
-            </div>
-            <div class="session-card reveal">
-                <div class="session-image">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&q=80"
-                        alt="Remote tools">
-                </div>
-                <div class="session-content">
-                    <span class="session-tag">Panel</span>
-                    <h3>The Remote Facilitator's Toolkit: 2026 Edition</h3>
-                    <p>A candid comparison of the latest collaboration tools, with real-world pros, cons, and
-                        integration strategies from practitioners.</p>
-                    <div class="session-meta">
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg> 75 min</span>
-                        <span><svg viewBox="0 0 24 24" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                            </svg> Open to all</span>
+                    <div class="glass-panel" style="flex: 1; background: rgba(0,0,0,0.2);">
+                        <div class="tab-content active" id="tab-core">
+                            <h3 class="text-glow-accent">The Core Engine</h3>
+                            <p>Our V8-optimized runtime guarantees synchronous execution of heavy DOM manipulations without dropping frames. It compiles down to raw WebAssembly for mathematical calculations.</p>
+                            <ul class="pricing-features">
+                                <li>Multi-threaded Web Worker pools</li>
+                                <li>Heuristic garbage collection</li>
+                                <li>Abstract Syntax Tree caching</li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" id="tab-sec">
+                            <h3 class="text-glow-accent">Security MeshLayer</h3>
+                            <p>End-to-end encryption at the UI level. Every keystroke is sanitized and mutated via SHA-3 before transmitting across web sockets.</p>
+                            <ul class="pricing-features">
+                                <li>Zero-knowledge architecture</li>
+                                <li>Automated threat neutralization</li>
+                                <li>Biometric token validation</li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" id="tab-api">
+                            <h3 class="text-glow-accent">GraphQL API Gateways</h3>
+                            <p>Query exactly the data you need. Our flexible endpoints allow deep graph transversals with custom resolvers built directly into the UI state management.</p>
+                            <ul class="pricing-features">
+                                <li>Real-time subscription feeds</li>
+                                <li>Schema auto-generation</li>
+                                <li>Predictive payload caching</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Speakers -->
-    <section class="speakers" id="speakers">
-        <div class="section-header reveal">
-            <h2>Speaker Insights</h2>
-            <p>Learn from practitioners who've led sprints at the world's most innovative companies</p>
-        </div>
-        <div class="speakers-grid">
-            <div class="speaker-card reveal">
-                <div class="speaker-avatar">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80" alt="Sarah Chen">
-                </div>
-                <h4>Sarah Chen</h4>
-                <div class="speaker-role">Head of Design Ops</div>
-                <div class="speaker-company">Spotify</div>
+    <!-- 8. Dynamic Pricing Tiers -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Acquisition Protocols</h2>
+                <p>Select the resource scaling tier that fits your operational needs.</p>
             </div>
-            <div class="speaker-card reveal">
-                <div class="speaker-avatar">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
-                        alt="Marcus Johnson">
+            <div class="pricing-grid fade-up">
+                <div class="glass-panel pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price-value">Free<span>/mo</span></div>
+                    <p>Essential components for sandbox environments.</p>
+                    <ul class="pricing-features">
+                        <li>1GB Bandwidth</li>
+                        <li>Standard Glass UI</li>
+                        <li>Community Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Initialize</a>
                 </div>
-                <h4>Marcus Johnson</h4>
-                <div class="speaker-role">Principal Designer</div>
-                <div class="speaker-company">Airbnb</div>
-            </div>
-            <div class="speaker-card reveal">
-                <div class="speaker-avatar">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80"
-                        alt="Elena Rodriguez">
+                
+                <div class="conic-border-wrapper pricing-card pro">
+                    <div class="conic-inner" style="padding: 60px 40px; text-align: center;">
+                        <h3 class="text-glow-accent">Pro</h3>
+                        <div class="price-value">$49<span>/mo</span></div>
+                        <p>Advanced metrics & unrestricted throughput.</p>
+                        <ul class="pricing-features">
+                            <li>Unlimited Bandwidth</li>
+                            <li>Advanced Conic Styles</li>
+                            <li>Priority WebSocket</li>
+                            <li>4K Texture Overlays</li>
+                        </ul>
+                        <a href="#" class="btn btn-glow" style="width: 100%; margin-top: 20px;">Deploy Pro</a>
+                    </div>
                 </div>
-                <h4>Elena Rodriguez</h4>
-                <div class="speaker-role">VP of Product</div>
-                <div class="speaker-company">Figma</div>
-            </div>
-            <div class="speaker-card reveal">
-                <div class="speaker-avatar">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="David Park">
+
+                <div class="glass-panel pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price-value">Custom</div>
+                    <p>Dedicated infrastructure and custom algorithms.</p>
+                    <ul class="pricing-features">
+                        <li>Dedicated Bare Metal</li>
+                        <li>Custom Shader Writing</li>
+                        <li>Zero-Day SLA</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">Contact Sales</a>
                 </div>
-                <h4>David Park</h4>
-                <div class="speaker-role">Design Sprint Master</div>
-                <div class="speaker-company">Google</div>
             </div>
         </div>
     </section>
 
-    <!-- Agenda -->
-    <section class="agenda" id="agenda">
-        <div class="section-header reveal">
-            <h2>Summit Agenda</h2>
-            <p>Three days of intensive learning, structured for maximum retention and application</p>
+    <!-- 9. User Testimonials (Masonry) -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Network Consensus</h2>
+                <p>Feedback from top operatives across the grid.</p>
+            </div>
+            <div class="masonry-grid fade-up">
+                <div class="glass-panel review-card">
+                    <div class="review-user">
+                        <div class="avatar" style="background: url('https://i.pravatar.cc/100?img=1') center/cover;"></div>
+                        <div>
+                            <h4>Elena Rostova</h4>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--glow-cyan);">Chief Architect @ Nexus</p>
+                        </div>
+                    </div>
+                    <p>"Integrating GloUI slashed our frontend bundle size by 40% while simultaneously increasing visual fidelity. The depth mechanics are astonishing."</p>
+                </div>
+                <div class="glass-panel review-card">
+                    <div class="review-user">
+                        <div class="avatar" style="background: url('https://i.pravatar.cc/100?img=2') center/cover;"></div>
+                        <div>
+                            <h4>Marcus Vance</h4>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--glow-purple);">Lead UI Designer</p>
+                        </div>
+                    </div>
+                    <p>"The ambient orbs and dynamic blurs gave our dashboard a living, breathing aesthetic. Clients think they're interacting with a sci-fi movie terminal."</p>
+                </div>
+                <div class="glass-panel review-card">
+                    <div class="review-user">
+                        <div class="avatar" style="background: url('https://i.pravatar.cc/100?img=3') center/cover;"></div>
+                        <div>
+                            <h4>Sarah Chen</h4>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--glow-emerald);">Full Stack Developer</p>
+                        </div>
+                    </div>
+                    <p>"Finally, a premium kit that doesn't rely heavily on external heavy libraries. Vanilla JS interactions paired with raw CSS3 power. Flawless execution."</p>
+                </div>
+                <div class="glass-panel review-card">
+                    <div class="review-user">
+                        <div class="avatar" style="background: url('https://i.pravatar.cc/100?img=4') center/cover;"></div>
+                        <div>
+                            <h4>James Taggart</h4>
+                            <p style="margin:0; font-size: 0.85rem; color: #ffaa00;">VP Engineering</p>
+                        </div>
+                    </div>
+                    <p>"We A/B tested our checkout process with the Glassmorphism upgrade and saw a 22% increase in conversion. People literally trust the interface more."</p>
+                </div>
+            </div>
         </div>
-        <div class="timeline">
-            <div class="timeline-item reveal">
-                <div class="timeline-time">Day 1</div>
-                <div class="timeline-content">
-                    <h4>Foundation & Framework</h4>
-                    <p>Core principles of remote facilitation, tool setup, and pre-sprint preparation that sets teams up
-                        for success.</p>
-                    <div class="timeline-speaker">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80"
-                            alt="Sarah Chen">
-                        <span>Keynote by Sarah Chen</span>
+    </section>
+
+    <!-- 10. Interactive FAQ -->
+    <section class="section" id="faq">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Query Resolution</h2>
+                <p>Answers to common deployment inquiries.</p>
+            </div>
+            <div class="faq-wrapper fade-up">
+                <div class="glass-panel faq-item">
+                    <div class="faq-header">
+                        Is GloUI compatible with React / Vue / Angular?
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-body">
+                        <p>Absolutely. While built on pure HTML/CSS/JS, the modular nature allows you to easily componentize these structures in your preferred framework. The CSS variables map perfectly to styled-components or Tailwind.</p>
+                    </div>
+                </div>
+                <div class="glass-panel faq-item">
+                    <div class="faq-header">
+                        How intensive are the blur filters on mobile devices?
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-body">
+                        <p>We utilize hardware-accelerated `-webkit-backdrop-filter` where available, and gracefully degrade complex layered blurs to semi-transparent solids on lower-end hardware to ensure optimal battery life and framerates.</p>
+                    </div>
+                </div>
+                <div class="glass-panel faq-item">
+                    <div class="faq-header">
+                        Can the color palette be adapted to light mode?
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-body">
+                        <p>Yes. By altering the root CSS variables (specifically `--bg-color`, `--glass-bg`, and `--glass-border`), the entire application themes smoothly into a frosted, clean light mode while retaining the vibrant ambient glows.</p>
                     </div>
                 </div>
             </div>
-            <div class="timeline-item reveal">
-                <div class="timeline-time">Day 2</div>
-                <div class="timeline-content">
-                    <h4>Execution & Facilitation</h4>
-                    <p>Deep dives into day-by-day facilitation techniques, managing energy remotely, and handling
-                        difficult dynamics.</p>
-                    <div class="timeline-speaker">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
-                            alt="Marcus Johnson">
-                        <span>Workshop by Marcus Johnson</span>
-                    </div>
-                </div>
-            </div>
-            <div class="timeline-item reveal">
-                <div class="timeline-time">Day 3</div>
-                <div class="timeline-content">
-                    <h4>Outcomes & Scale</h4>
-                    <p>Translating sprint outputs into roadmaps, measuring success, and building sprint culture across
-                        organizations.</p>
-                    <div class="timeline-speaker">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80"
-                            alt="Elena Rodriguez">
-                        <span>Panel with Elena Rodriguez</span>
+        </div>
+    </section>
+
+    <!-- 11. Newsletter -->
+    <section class="section">
+        <div class="container">
+            <div class="newsletter-section fade-up">
+                <div class="glass-panel newsletter-box">
+                    <h2 class="text-glow-accent" style="font-size: 2.5rem;">Join the Core Node</h2>
+                    <p>Receive low-frequency, high-value intelligence drops regarding matrix updates and aesthetic algorithms.</p>
+                    <div class="input-grp">
+                        <input type="email" placeholder="Enter your data-stream address...">
+                        <button class="btn-submit">Sync Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sponsors -->
-    <section class="sponsors">
-        <h3>Trusted by teams at</h3>
-        <div class="sponsors-grid">
-            <div class="sponsor-logo">Spotify</div>
-            <div class="sponsor-logo">Airbnb</div>
-            <div class="sponsor-logo">Stripe</div>
-            <div class="sponsor-logo">Notion</div>
-            <div class="sponsor-logo">Figma</div>
-            <div class="sponsor-logo">Linear</div>
-        </div>
-    </section>
-
-    <!-- Registration -->
-    <section class="registration" id="register">
-        <div class="reveal">
-            <h2>Secure Your Spot</h2>
-            <p>Join 2,000+ professionals transforming how their teams collaborate remotely. Early bird pricing ends
-                February 28.</p>
-        </div>
-        <div class="pricing-cards">
-            <div class="pricing-card reveal">
-                <h4>Individual</h4>
-                <div class="price">$299<span>/person</span></div>
-                <p>Full access for one attendee</p>
-                <ul>
-                    <li>All 24 live sessions</li>
-                    <li>30-day recording access</li>
-                    <li>Digital workbook</li>
-                    <li>Community Slack access</li>
-                </ul>
-                <a href="#" class="btn btn-secondary"
-                    style="background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Select</a>
-            </div>
-            <div class="pricing-card featured reveal">
-                <h4>Team (5+)</h4>
-                <div class="price">$249<span>/person</span></div>
-                <p>Built for team learning</p>
-                <ul>
-                    <li>Everything in Individual</li>
-                    <li>Private team channel</li>
-                    <li>1-hour team debrief session</li>
-                    <li>Custom toolkit templates</li>
-                </ul>
-                <a href="#" class="btn btn-primary">Select Team</a>
-            </div>
-            <div class="pricing-card reveal">
-                <h4>Enterprise</h4>
-                <div class="price">Custom</div>
-                <p>For org-wide transformation</p>
-                <ul>
-                    <li>Unlimited attendees</li>
-                    <li>1-year recording access</li>
-                    <li>Private workshops</li>
-                    <li>Dedicated success manager</li>
-                </ul>
-                <a href="#" class="btn btn-secondary"
-                    style="background: transparent; color: white; border-color: rgba(255,255,255,0.3);">Contact
-                    Sales</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="faq" id="faq">
-        <div class="section-header reveal">
-            <h2>Frequently Asked Questions</h2>
-            <p>Everything you need to know about the summit</p>
-        </div>
-        <div class="faq-grid">
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    What time zone will sessions be in?
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+    <!-- 12. Expansive Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 20px; display: inline-block;">GLO<span class="text-glow-accent">UI</span></a>
+                    <p style="font-size: 0.95rem; max-width: 300px;">Setting the standard for next-generation dimensional interfaces. Engineered for the future of the decentralized web.</p>
                 </div>
-                <div class="faq-answer">
-                    <p>All sessions are scheduled in Pacific Time (PT) with recordings available within 4 hours. We also
-                        provide timezone-optimized schedules for Europe and Asia-Pacific attendees.</p>
+                <div class="footer-col">
+                    <h4>Framework</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">Components</a>
+                    <a href="#">Themes</a>
+                    <a href="#">Changelog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="#">About Node</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Manifesto</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Protocol</a>
                 </div>
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    Can I get a refund if I can't attend?
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Full refunds available until March 1, 2026. After that, tickets can be transferred to another
-                        attendee or converted to recording-only access with a 50% credit.</p>
-                </div>
+            <div class="footer-bottom">
+                &copy; 2026 GloUI Systems Architecture. All rights reserved. Operating in Sector 4.
             </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    Will recordings be available?
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes, all sessions are recorded and available within 4 hours. Individual tickets include 30-day
-                        access; Team and Enterprise tickets include extended or unlimited access.</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    What's the difference between live and recording access?
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Live attendees can participate in Q&A, breakout discussions, and networking. Recording access
-                        includes all content but excludes interactive elements.</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    Do you offer group discounts?
-                    <svg viewBox="0 0 24 24" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes, teams of 5+ receive automatic 17% discount. Teams of 20+ should contact us for custom
-                        enterprise pricing and private workshop options.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>Sprint Dispatch</h3>
-                <p>The premier remote design sprint summit for enterprise teams who need facilitation that delivers real
-                    outcomes.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" stroke-width="2">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg></a>
-                    <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                            </path>
-                            <rect x="2" y="9" width="4" height="12"></rect>
-                            <circle cx="4" cy="4" r="2"></circle>
-                        </svg></a>
-                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h4>Summit</h4>
-                <ul>
-                    <li><a href="#overview">Overview</a></li>
-                    <li><a href="#sessions">Sessions</a></li>
-                    <li><a href="#speakers">Speakers</a></li>
-                    <li><a href="#agenda">Agenda</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#">Sprint Guide</a></li>
-                    <li><a href="#">Tool Stack</a></li>
-                    <li><a href="#">Case Studies</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Sprint Dispatch. All rights reserved.</p>
-            <p>Made for teams who ship</p>
         </div>
     </footer>
 
+    <!-- JavaScript Interactions -->
     <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Scroll Reveal
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Mouse Tracking Glow
+            const mouseGlow = document.getElementById('mouseGlow');
+            document.addEventListener('mousemove', (e) => {
+                mouseGlow.style.left = e.clientX + 'px';
+                mouseGlow.style.top = e.clientY + 'px';
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.addEventListener('mousedown', () => {
+                mouseGlow.style.width = '200px';
+                mouseGlow.style.height = '200px';
+                mouseGlow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%)';
+            });
+            document.addEventListener('mouseup', () => {
+                mouseGlow.style.width = '300px';
+                mouseGlow.style.height = '300px';
+                mouseGlow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%)';
+            });
 
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Counter Animation
-        const counters = document.querySelectorAll('[data-count]');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const target = parseInt(entry.target.dataset.count);
-                    const duration = 2000;
-                    const startTime = performance.now();
-
-                    function updateCounter(currentTime) {
-                        const elapsed = currentTime - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easeProgress = 1 - Math.pow(1 - progress, 3);
-                        const current = Math.floor(target * easeProgress);
-
-                        entry.target.textContent = current.toLocaleString();
-
-                        if (progress < 1) {
-                            requestAnimationFrame(updateCounter);
+            // 2. Intersection Observer for Fade Up Animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Trigger metric counters if visible
+                        if(entry.target.classList.contains('metrics-wrapper') && !entry.target.classList.contains('counted')) {
+                            entry.target.classList.add('counted');
+                            runCounters();
                         }
                     }
+                });
+            }, observerOptions);
 
-                    requestAnimationFrame(updateCounter);
-                    counterObserver.unobserve(entry.target);
-                }
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            // 3. 3D Tilt Effect on Cards
+            const cards3D = document.querySelectorAll('.card-3d');
+            cards3D.forEach(card => {
+                const glare = card.querySelector('.card-glare');
+                
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    const rotateX = -y / 15;
+                    const rotateY = x / 15;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                    
+                    // Move glare
+                    const px = (e.clientX - rect.left) / rect.width * 100;
+                    const py = (e.clientY - rect.top) / rect.height * 100;
+                    glare.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.2), transparent 50%)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    glare.style.background = `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 50%)`;
+                });
             });
-        }, { threshold: 0.5 });
 
-        counters.forEach(counter => counterObserver.observe(counter));
+            // 4. Tab Navigation
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => i.classList.remove('active'));
-                if (!isActive) {
-                    item.classList.add('active');
-                }
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    const targetId = btn.getAttribute('data-tab');
+                    document.getElementById(targetId).classList.add('active');
+                });
             });
+
+            // 5. FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('.faq-header');
+                header.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all
+                    faqItems.forEach(faq => faq.classList.remove('active'));
+                    
+                    // Open if it wasn't active
+                    if(!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // 6. Number Counters
+            function runCounters() {
+                const numbers = document.querySelectorAll('.metric-number');
+                numbers.forEach(num => {
+                    const target = parseFloat(num.getAttribute('data-target'));
+                    const duration = 2000; // 2s
+                    const stepTime = 20;
+                    const steps = duration / stepTime;
+                    const increment = target / steps;
+                    let current = 0;
+                    
+                    const isFloat = target % 1 !== 0;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if(current >= target) {
+                            num.innerText = isFloat ? target.toFixed(1) : target;
+                            num.innerHTML += isFloat ? '%' : '+';
+                            clearInterval(timer);
+                        } else {
+                            num.innerText = isFloat ? current.toFixed(1) : Math.floor(current);
+                        }
+                    }, stepTime);
+                });
+            }
         });
     </script>
 </body>
-
 </html>

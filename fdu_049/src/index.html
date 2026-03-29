@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f3eee5;--paper:#fbf7f1;--ink:#171513;--muted:#6d645d;--accent:#9f2b21;--accent-2:#c69b56;--line:rgba(23,21,19,.12);--glass:rgba(255,250,244,.62);--shadow:0 22px 60px rgba(30,19,10,.12);--radius:26px;--radius-sm:14px;--max:1180px;--ease:cubic-bezier(.2,.8,.2,1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:500 16px/1.6 "Manrope",sans-serif;color:var(--ink);background:
+      radial-gradient(circle at top left,rgba(198,155,86,.16),transparent 32%),
+      radial-gradient(circle at 85% 15%,rgba(159,43,33,.12),transparent 20%),
+      linear-gradient(180deg,#f8f2e8 0%,#f2ede5 38%,#ece4d6 100%)}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background:
+      linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,0)),
+      repeating-linear-gradient(90deg,transparent 0 48px,rgba(23,21,19,.025) 48px 49px)}
+    a{color:inherit;text-decoration:none}button,input{font:inherit}img{max-width:100%}
+    .shell{width:min(calc(100% - 32px),var(--max));margin:0 auto}
+    .eyebrow,.micro{letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;color:var(--muted)}
+    .headline,.quote h2{font-family:"Cormorant Garamond",serif;line-height:.92;letter-spacing:-.03em}
+    .headline{font-size:clamp(3.4rem,9vw,7.8rem);margin:.2rem 0 1rem}
+    .section{padding:34px 0 0}.panel{background:var(--glass);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.45);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .announce{border-bottom:1px solid var(--line);padding:12px 0;font-size:.85rem}.announce strong{color:var(--accent)}
+    .nav{position:sticky;top:0;z-index:20;padding:16px 0;transition:.3s var(--ease)}.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 18px}
+    .nav.scrolled .nav-inner{background:rgba(251,247,241,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5);box-shadow:0 10px 30px rgba(20,13,7,.08)}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800}.brand-mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--paper);background:conic-gradient(from 90deg,var(--accent),#d86a4a,var(--accent-2),var(--accent))}
+    .nav-links,.hero-actions,.metric-grid,.client-strip,.card-grid,.proof-grid,.price-grid,.footer-grid{display:flex;gap:14px;flex-wrap:wrap}.nav-links a,.ghost,.chip{padding:10px 14px;border-radius:999px;border:1px solid var(--line);transition:.22s var(--ease)}
+    .nav-links a:hover,.ghost:hover,.chip:hover{border-color:rgba(159,43,33,.28);background:rgba(255,255,255,.55)}.nav-links a:focus-visible,.btn:focus-visible,.ghost:focus-visible,.tab:focus-visible,.faq-q:focus-visible,.menu-btn:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    .btn,.menu-btn,.tab{border:0;cursor:pointer;transition:.22s var(--ease)}.btn{padding:14px 18px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:700;box-shadow:0 10px 24px rgba(23,21,19,.16)}
+    .btn:hover,.btn[aria-expanded="true"]{transform:translateY(-1px);background:#2b2521}.btn:active{transform:translateY(1px)}.ghost{background:transparent}.menu-btn{display:none;padding:12px 14px;border-radius:999px;background:rgba(255,255,255,.7)}
+    .hero{padding:28px 0 0}.hero-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end}.lead{font-size:1.06rem;max-width:43rem;color:#423a35}
+    .hero-card,.timeline,.tabs-shell,.quote,.pricing,.faq,.cta,.proof-card{padding:22px}.hero-card{position:relative;overflow:hidden;min-height:460px}
+    .hero-card::before{content:"";position:absolute;inset:18px;border-radius:calc(var(--radius) - 10px);border:1px solid rgba(198,155,86,.26)}
+    .signal{position:absolute;inset:auto 24px 26px;display:grid;gap:12px}.signal-line{height:6px;border-radius:99px;background:linear-gradient(90deg,rgba(159,43,33,.1),var(--accent),rgba(198,155,86,.7));transform-origin:left;animation:pulse 3.2s infinite}
+    .signal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.mini{padding:14px;border-radius:18px;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.48)}
+    .mini strong,.stat b{display:block;font-size:1.3rem}.client-strip{justify-content:space-between;padding:18px 0;color:var(--muted);text-transform:uppercase;font-size:.82rem;letter-spacing:.16em}
+    .metrics,.modes,.proof,.pricing-wrap{padding-top:18px}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat{padding:18px}.stat p,.card p,.proof-card p,.price p,.faq-a,.footer-grid p{margin:.3rem 0 0;color:var(--muted)}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}.step{padding:18px 16px;border-left:1px solid var(--line)}.step:first-child{border-left:0}
+    .card-grid,.proof-grid,.price-grid{display:grid;gap:16px}.card-grid{grid-template-columns:repeat(3,1fr)}.card,.price{padding:20px;position:relative;overflow:hidden}.card::after,.price::after{content:"";position:absolute;inset:auto -20px -20px auto;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(198,155,86,.17),transparent 70%)}
+    .tabs-shell{display:grid;gap:18px}.tab-row{display:flex;gap:10px;flex-wrap:wrap}.tab{padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid var(--line);font-weight:700}.tab:hover{background:#fff}.tab[aria-selected="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+    .tab-panel{display:none;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.tab-panel.active{display:grid}.list{margin:0;padding-left:18px;color:var(--muted)}
+    .proof-grid{grid-template-columns:1.2fr .8fr}.quote h2{font-size:clamp(2.4rem,5vw,4.2rem);margin:.2rem 0 1rem}.quote-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .pill{display:inline-flex;padding:7px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.82rem}.price-grid{grid-template-columns:repeat(3,1fr)}.price.featured{background:linear-gradient(180deg,rgba(159,43,33,.95),rgba(92,23,18,.96));color:var(--paper)}
+    .price.featured p,.price.featured .micro{color:rgba(255,247,240,.78)}.price strong{font-size:2rem;display:block;margin:.35rem 0}.faq-item{border-top:1px solid var(--line)}.faq-q{width:100%;padding:18px 0;display:flex;justify-content:space-between;align-items:center;background:none;border:0;text-align:left;font-weight:700}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .28s var(--ease),padding-bottom .28s var(--ease)}.faq-item.open .faq-a{max-height:160px;padding-bottom:18px}
+    .cta{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center;margin:22px 0 42px}.field-form{display:flex;gap:10px;flex-wrap:wrap}
+    input{flex:1;min-width:210px;padding:14px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.72)}
+    footer{padding:6px 0 34px}.footer-grid{justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+    body.modal-open{overflow:hidden}.modal,.toast{position:fixed;z-index:40;opacity:0;pointer-events:none;transition:.25s var(--ease)}.modal{inset:0;display:grid;place-items:center;background:rgba(18,15,12,.4)}
+    .modal.open,.toast.show{opacity:1;pointer-events:auto}.modal-card{width:min(calc(100% - 28px),540px);padding:24px}.modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+    .icon-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer}.toast{right:18px;bottom:18px;max-width:290px;padding:14px 16px;border-radius:18px;background:#171513;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+    .reveal{opacity:0;transform:translateY(28px);transition:.6s var(--ease)}.reveal.visible{opacity:1;transform:none}.stagger > *{opacity:0;transform:translateY(24px)}.stagger.visible > *{animation:rise .55s var(--ease) forwards}.stagger.visible > *:nth-child(2){animation-delay:.08s}.stagger.visible > *:nth-child(3){animation-delay:.16s}.stagger.visible > *:nth-child(4){animation-delay:.24s}
+    @keyframes rise{to{opacity:1;transform:none}}@keyframes pulse{50%{transform:scaleX(.76);opacity:.65}}
+    @media (max-width:1180px){.hero-wrap,.proof-grid,.cta{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,1fr)}.metric-grid,.price-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:920px){.nav-links{display:none;position:absolute;top:74px;left:0;right:0;padding:16px;background:rgba(251,247,241,.95);border-radius:24px}.nav-links.open{display:flex}.menu-btn{display:block}.card-grid,.quote-wall,.tab-panel{grid-template-columns:1fr 1fr}.client-strip{gap:18px;justify-content:flex-start}}
+    @media (max-width:720px){.headline{font-size:3.4rem}.metric-grid,.timeline,.card-grid,.quote-wall,.price-grid,.tab-panel{grid-template-columns:1fr}.hero-card{min-height:360px}.nav{padding-top:10px}}
+    @media (max-width:520px){.shell{width:min(calc(100% - 20px),var(--max))}.hero-actions,.field-form{flex-direction:column}.btn,.ghost,input{width:100%}.nav-inner,.hero-card,.timeline,.tabs-shell,.quote,.pricing,.faq,.cta,.proof-card{padding:18px}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.reveal,.stagger > *{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <div class="announce">
+    <div class="shell">Field note 04: <strong>Signal Room Atlas</strong> now maps launch pressure by neighborhood, venue, and crew load in one live board.</div>
+  </div>
+  <nav class="nav shell" aria-label="Primary">
+    <div class="nav-inner panel">
+      <a class="brand" href="#top"><span class="brand-mark">S</span><span>Signal Room</span></a>
+      <button class="menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#orchestration">Method</a><a href="#modes">Modes</a><a href="#results">Results</a><a href="#pricing">Engagement</a><a href="#faq">FAQ</a>
+      </div>
+      <button class="ghost" type="button" data-toast="Deck requested">Get the deck</button>
+    </div>
+  </nav>
+  <main id="top">
+    <section class="hero shell section">
+      <div class="hero-wrap">
+        <div class="reveal">
+          <p class="eyebrow">Luxury campaign operations, live from the floor</p>
+          <h1 class="headline">Run the room before the room runs you.</h1>
+          <p class="lead">Signal Room gives launch directors, venue teams, and cultural operators a single editorial cockpit for timelines, staffing pressure, guest movement, and recovery calls.</p>
+          <div class="hero-actions">
+            <button class="btn" type="button" id="openModal">Preview the room</button>
+            <a class="ghost" href="#pricing">See engagement models</a>
+          </div>
+          <div class="client-strip">
+            <span>Hotel Atelier</span><span>North Pier</span><span>Studio Meridian</span><span>Index Night</span>
+          </div>
+        </div>
+        <aside class="hero-card panel reveal" aria-label="Live operations snapshot">
+          <p class="micro">Tonight's live board</p>
+          <div class="signal-grid">
+            <div class="mini"><span class="micro">Crew sync</span><strong>12 min</strong><span>to next venue reset</span></div>
+            <div class="mini"><span class="micro">Guest pulse</span><strong>87%</strong><span>arrival confidence</span></div>
+            <div class="mini"><span class="micro">Asset route</span><strong>3 hops</strong><span>loading dock to floor</span></div>
+            <div class="mini"><span class="micro">Fallback</span><strong>Ready</strong><span>rain plan armed</span></div>
+          </div>
+          <div class="signal">
+            <div class="micro">Signal intensity across crew, venue, and guest flow</div>
+            <div class="signal-line"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section class="metrics shell metrics section reveal">
+      <div class="metric-grid">
+        <article class="stat panel"><span class="micro">Runway saved</span><b data-count="31">0</b><p>hours pulled back from fragmented coordination.</p></article>
+        <article class="stat panel"><span class="micro">Faster resets</span><b data-count="42">0</b><p>percent quicker venue turnover in active programs.</p></article>
+        <article class="stat panel"><span class="micro">Brief accuracy</span><b data-count="96">0</b><p>percent shared alignment across vendor teams.</p></article>
+        <article class="stat panel"><span class="micro">Issue response</span><b data-count="4">0</b><p>minute median from alert to field action.</p></article>
+      </div>
+    </section>
+    <section class="shell section" id="orchestration">
+      <div class="timeline panel reveal">
+        <div class="step"><p class="micro">01 Intake</p><strong>Map every handoff</strong><p>We align floor plans, crew roles, guest movement, and fallback logic.</p></div>
+        <div class="step"><p class="micro">02 Build</p><strong>Compose a live room</strong><p>Operations, comms, and hospitality share one editorial source of truth.</p></div>
+        <div class="step"><p class="micro">03 Run</p><strong>Trigger in real time</strong><p>Critical updates move through guided cues instead of chaotic chat threads.</p></div>
+        <div class="step"><p class="micro">04 Recover</p><strong>Close with evidence</strong><p>Every activation ends with notes, timings, and future-proofed field intelligence.</p></div>
+      </div>
+    </section>
+    <section class="shell section reveal">
+      <div class="card-grid stagger">
+        <article class="card panel"><p class="micro">Crew room</p><strong>Shift rhythm, comms discipline, and contingency timing.</strong><p>No more buried approvals or improvised rescue texts at showtime.</p></article>
+        <article class="card panel"><p class="micro">Guest room</p><strong>Arrival windows, VIP movement, and hospitality moments in one layer.</strong><p>Teams see pressure before guests ever feel it.</p></article>
+        <article class="card panel"><p class="micro">Venue room</p><strong>Dock access, floor readiness, and service turns with live status.</strong><p>Elegant enough for directors, precise enough for operators.</p></article>
+      </div>
+    </section>
+    <section class="shell modes section" id="modes">
+      <div class="tabs-shell panel reveal">
+        <div>
+          <p class="eyebrow">Operating modes</p>
+        </div>
+        <div class="tab-row" role="tablist" aria-label="Signal Room operating modes">
+          <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="tab-1" id="trigger-1">Launch night</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tab-2" id="trigger-2">Traveling pop-up</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tab-3" id="trigger-3">Brand residency</button>
+        </div>
+        <section class="tab-panel active" id="tab-1" role="tabpanel" aria-labelledby="trigger-1">
+          <div><strong>For dense schedules with very little forgiveness.</strong><p>Signal Room sequences arrivals, backstage flow, talent windows, and venue resets so directors can call the room from one place.</p></div>
+          <ul class="list"><li>Shared cue language for crew, comms, and hospitality</li><li>Escalation notes that surface only when timing slips</li><li>Post-event report already built while the event runs</li></ul>
+        </section>
+        <section class="tab-panel" id="tab-2" role="tabpanel" aria-labelledby="trigger-2">
+          <div><strong>For city-to-city setups that cannot afford drift.</strong><p>Use route-aware boards, repeatable field templates, and compact briefing packs that travel with the team instead of living in separate docs.</p></div>
+          <ul class="list"><li>Location-specific logistics panes</li><li>Vendor handoff checklists with timestamps</li><li>Fast onboard flow for rotating local crews</li></ul>
+        </section>
+        <section class="tab-panel" id="tab-3" role="tabpanel" aria-labelledby="trigger-3">
+          <div><strong>For long-running cultural spaces that need daily discipline.</strong><p>Balance hospitality, programming, retail, and recovery inside a board that evolves with the residency rather than resetting every week.</p></div>
+          <ul class="list"><li>Persistent intelligence across shifts</li><li>Audience pulse and staffing load in one glance</li><li>Refined wrap reporting for leadership teams</li></ul>
+        </section>
+      </div>
+    </section>
+    <section class="shell proof section" id="results">
+      <div class="proof-grid">
+        <article class="proof-card panel reveal">
+          <p class="eyebrow">Featured scenario</p>
+          <strong>Three-floor launch, rainfall threat, celebrity arrival window, and a 42-minute service turn.</strong>
+          <p>Signal Room rebuilt the sequence in under six minutes, redirected arrivals, and prevented a full front-of-house pause. The director called it "the first ops tool that reads like a beautifully edited run-of-show."</p>
+          <div class="hero-actions"><span class="pill">Rain plan armed</span><span class="pill">Crew rerouted</span><span class="pill">Service held</span></div>
+        </article>
+        <article class="quote panel reveal">
+          <p class="eyebrow">Operator verdict</p>
+          <h2>"It feels less like software and more like having a calm command editor in the room."</h2>
+          <p>Marin Voss, launch director at North Pier Sessions</p>
+        </article>
+      </div>
+    </section>
+    <section class="shell section reveal">
+      <div class="quote-wall stagger">
+        <article class="panel proof-card"><p class="micro">Hospitality lead</p><p>"We finally stopped translating between spreadsheets, walkie notes, and chat."</p></article>
+        <article class="panel proof-card"><p class="micro">Venue producer</p><p>"The reset timer alone paid for the program in the first month."</p></article>
+        <article class="panel proof-card"><p class="micro">Brand team</p><p>"The board looks premium enough to present upstairs and practical enough to run downstairs."</p></article>
+      </div>
+    </section>
+    <section class="shell pricing-wrap section" id="pricing">
+      <div class="pricing panel reveal">
+        <p class="eyebrow">Engagement models</p>
+        <div class="price-grid stagger">
+          <article class="price panel"><p class="micro">Sprint</p><strong>2 weeks</strong><p>Launch prep, room setup, and one decisive activation window.</p></article>
+          <article class="price panel featured"><p class="micro">Season</p><strong>6 weeks</strong><p>Best for multi-stop programs, luxury pop-ups, or dense campaign calendars.</p></article>
+          <article class="price panel"><p class="micro">Residency</p><strong>Quarterly</strong><p>Long-term operating system for culture spaces and flagship brand venues.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="shell section" id="faq">
+      <div class="faq panel reveal">
+        <p class="eyebrow">Questions from the floor</p>
+        <div class="faq-item open">
+          <button class="faq-q" type="button" aria-expanded="true" aria-controls="faq-a1" id="faq-q1">Is this software, service, or both?<span>+</span></button>
+          <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1">It is a service-led operating system: we configure the room, shape the workflows, and leave behind a board your team can actually keep using.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">Can Signal Room work with existing vendors?<span>+</span></button>
+          <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2">Yes. We are designed for mixed crews, outside production partners, and venue-side teams that need one shared timing language.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">What happens after the activation?<span>+</span></button>
+          <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3">You leave with a field report, annotated timings, issue log, and a reusable operating structure for the next program.</div>
+        </div>
+      </div>
+    </section>
+    <section class="shell section">
+      <div class="cta panel reveal">
+        <div>
+          <p class="eyebrow">Request a field brief</p>
+          <h2 class="quote">Bring editorial clarity to the busiest room you run all year.</h2>
+        </div>
+        <form class="field-form" id="briefForm">
+          <label class="micro" for="email">Work email</label>
+          <input id="email" name="email" type="email" placeholder="director@campaign.com" required>
+          <button class="btn" type="submit">Send me the field brief</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="shell">
+    <div class="footer-grid">
+      <p>Signal Room. Editorial operations for launches, venues, and city-scale cultural moments.</p>
+      <p>New York, Paris, Seoul, Shanghai</p>
+    </div>
+  </footer>
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-top">
+        <div>
+          <p class="eyebrow">Room preview</p>
+          <h2 id="modalTitle">What opens inside your first Signal Room</h2>
+        </div>
+        <button class="icon-btn" type="button" id="closeModal" aria-label="Close preview">X</button>
+      </div>
+      <p>You get a live timeline, crew notes, fallback calls, role-based brief cards, and a closing intelligence pack. Enough elegance for leadership review, enough precision for the floor.</p>
+      <div class="hero-actions">
+        <button class="btn" type="button" data-toast="Preview pack sent">Send preview pack</button>
+        <button class="ghost" type="button" id="dismissModal">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const nav = document.querySelector('.nav');
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.getElementById('navLinks');
+    const modal = document.getElementById('modal');
+    const openModal = document.getElementById('openModal');
+    const closeModal = document.getElementById('closeModal');
+    const dismissModal = document.getElementById('dismissModal');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    const showToast = message => {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+    };
+    const setModal = open => {
+      modal.classList.toggle('open', open);
+      modal.setAttribute('aria-hidden', String(!open));
+      document.body.classList.toggle('modal-open', open);
+      if (open) closeModal.focus(); else openModal.focus();
+    };
+    menuBtn?.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      navLinks.classList.toggle('open');
+    });
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 18), { passive: true });
+    openModal.addEventListener('click', () => setModal(true));
+    closeModal.addEventListener('click', () => setModal(false));
+    dismissModal.addEventListener('click', () => setModal(false));
+    modal.addEventListener('click', e => { if (e.target === modal) setModal(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) setModal(false); });
+    document.querySelectorAll('[data-toast]').forEach(btn => {
+      btn.addEventListener('click', () => showToast(btn.dataset.toast));
+    });
+    const tabs = [...document.querySelectorAll('.tab')];
+    const panels = [...document.querySelectorAll('.tab-panel')];
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      panels.forEach(panel => panel.classList.toggle('active', panel.id === tab.getAttribute('aria-controls')));
+    }));
+    tabs.forEach((tab, index) => tab.addEventListener('keydown', e => {
+      if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+      e.preventDefault();
+      const next = tabs[(index + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      next.focus();
+      next.click();
+    }));
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const open = item.classList.contains('open');
+        item.classList.toggle('open', !open);
+        btn.setAttribute('aria-expanded', String(!open));
+      });
+    });
+    modal.addEventListener('keydown', e => {
+      if (e.key !== 'Tab' || !modal.classList.contains('open')) return;
+      const focusables = [...modal.querySelectorAll('button')];
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    document.getElementById('briefForm').addEventListener('submit', e => {
+      e.preventDefault();
+      showToast('Field brief scheduled. Watch your inbox.');
+      e.target.reset();
+    });
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const counters = document.querySelectorAll('[data-count]');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        if (!reduced) {
+          entry.target.querySelectorAll('[data-count]').forEach(el => {
+            if (el.dataset.done) return;
+            el.dataset.done = '1';
+            const target = Number(el.dataset.count);
+            const start = performance.now();
+            const tick = now => {
+              const progress = Math.min((now - start) / 1200, 1);
+              el.textContent = Math.floor(target * progress);
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          });
+        } else {
+          counters.forEach(el => el.textContent = el.dataset.count);
+        }
+        io.unobserve(entry.target);
+      });
+    }, { threshold: .2 });
+    document.querySelectorAll('.reveal,.stagger').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->
+<!--Pad-->

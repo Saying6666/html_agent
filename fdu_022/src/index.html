@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pelorus Tide | Harbor Signal Board</title>
+  <meta name="description" content="Port operations and civic coastal coordination built as a live route board.">
+  <style>
+    :root {
+      --enamel: #f5f0e7;
+      --navy: #0f2230;
+      --steel: #c0c7ca;
+      --orange: #e86f2f;
+      --yellow: #e2bc39;
+      --teal: #3fa8a1;
+      --ink: #0f2230;
+      --muted: #58707d;
+      --line: rgba(15,34,48,.16);
+      --line-strong: rgba(15,34,48,.34);
+      --focus: #245ff0;
+      --shadow: 0 18px 48px rgba(13,26,35,.16);
+      --display: "Arial Narrow", "Aptos Narrow", sans-serif;
+      --body: "Segoe UI", Arial, sans-serif;
+      --mono: "Consolas", monospace;
+      --dur: 220ms;
+      --dur-slow: 520ms;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --max: 1320px;
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.55 var(--body);
+      background:
+        linear-gradient(180deg, #f8f4ec, var(--enamel));
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background:
+        radial-gradient(circle at 12px 12px, rgba(15,34,48,.12) 0 1px, transparent 2px);
+      background-size: 48px 48px;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { color: inherit; font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .shell { width: min(calc(100% - 1.5rem), var(--max)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: .75rem 0;
+      background: rgba(245,240,231,.85);
+      border-bottom: 1px solid transparent;
+      transition: padding var(--dur) var(--ease), border-color var(--dur) var(--ease);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+    .topbar.scrolled { padding: .5rem 0; border-color: var(--line); }
+    .bar, .hero-grid, .proof-grid, .protocol-grid, .footer-grid { display: grid; gap: 1rem; }
+    .bar { grid-template-columns: auto 1fr auto; align-items: center; }
+    .brand { display: flex; align-items: center; gap: .8rem; }
+    .mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fff, #e8e4dc);
+      border: 2px solid var(--navy);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.6);
+      display: grid;
+      place-items: center;
+      font: 900 1rem/1 var(--display);
+      color: var(--orange);
+    }
+    .brand b { display: block; font: 900 1rem/1 var(--display); letter-spacing: .08em; text-transform: uppercase; }
+    .brand span, .chip, nav a, .meta { font: .75rem/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    nav { display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+    nav a, .chip, .tab, .ghost, .cta, .filter {
+      padding: .8rem .95rem;
+      border-radius: 999px;
+      border: 2px solid var(--navy);
+      background: #fff;
+      transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease);
+    }
+    nav a:hover, nav a.active, .tab:hover, .filter:hover, .ghost:hover { transform: translateY(-2px); }
+    .cta { background: var(--orange); color: #fff; }
+    .hero-grid { padding: 1rem 0 2rem; grid-template-columns: 1fr; }
+    .hero-board, .panel, .proof, .faq-item, footer, .modal-card {
+      border: 3px solid var(--navy);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(247,241,233,.96));
+      box-shadow: var(--shadow);
+    }
+    .hero-board { padding: 1rem; }
+    .headline {
+      margin: .35rem 0 .8rem;
+      font: 900 clamp(2.8rem, 4.8vw, 5rem)/.94 var(--display);
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .row, .tab-row, .filter-row, .proof-grid, .protocol-grid, .footer-grid { display: grid; gap: 1rem; }
+    .row { grid-template-columns: 1fr .95fr; align-items: start; }
+    .tab-row, .filter-row { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .tab.active, .filter.active { background: var(--navy); color: #fff; }
+    svg { width: 100%; height: auto; display: block; }
+    .panel { padding: 1rem; }
+    .proof-grid, .protocol-grid, .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof { padding: 1rem; }
+    .proof strong { display: block; font: 900 2.2rem/1 var(--display); color: var(--orange); }
+    .protocol-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .9rem;
+      padding: .8rem 0;
+      border-top: 2px dashed var(--line);
+    }
+    .sign-index {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      font: 900 .95rem/1 var(--display);
+      color: var(--navy);
+    }
+    .faq button {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: 0;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-panel { display: none; padding: 0 1rem 1rem; color: #30424e; }
+    .faq button[aria-expanded="true"] + .faq-panel { display: block; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+    label { display: grid; gap: .35rem; font: .76rem/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    input, select, textarea {
+      width: 100%;
+      padding: .85rem .9rem;
+      border-radius: 14px;
+      border: 2px solid var(--navy);
+      background: #fff;
+    }
+    textarea { min-height: 110px; resize: vertical; grid-column: 1 / -1; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,34,48,.34);
+      display: none;
+      place-items: center;
+      padding: 1rem;
+      z-index: 30;
+    }
+    .modal.open { display: grid; }
+    .modal-card { width: min(760px, 100%); padding: 1rem; }
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      padding: .9rem 1rem;
+      border-radius: 18px;
+      background: var(--navy);
+      color: #fff;
+      transform: translateY(120%);
+      transition: transform var(--dur) var(--ease);
+      z-index: 40;
+    }
+    .toast.show { transform: translateY(0); }
+    @media (max-width: 1080px) {
+      .row, .proof-grid, .protocol-grid, .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .bar, .form-grid { grid-template-columns: 1fr; }
+      nav { justify-content: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="shell bar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">PT</div>
+        <div><b>Pelorus Tide</b><span>Harbor signal board</span></div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#route">Route board</a>
+        <a href="#command">Command board</a>
+        <a href="#protocol">Protocol</a>
+        <a href="#request">Briefing request</a>
+      </nav>
+      <div class="tab-row">
+        <span class="chip" aria-live="polite" id="statusChip">Watch / inbound tide +0.6m</span>
+        <button class="cta modal-open">Request a coastal briefing</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero-grid reveal" id="route">
+      <article class="hero-board">
+        <div class="meta">Harbor status / signal board 14B</div>
+        <h1 class="headline">Coordinate routes before the water decides for you.</h1>
+        <div class="row">
+          <div>
+            <p>Pelorus Tide turns live tide windows, asset routing, and mutual-aid staging into one operational corridor of sign panels. It is built for ports, insurers, and city operations teams that need one board everyone can read fast.</p>
+            <div class="tab-row">
+              <button class="cta modal-open">Request a coastal briefing</button>
+              <button class="ghost" id="saveBoard">Save playbook</button>
+            </div>
+          </div>
+          <div class="panel">
+            <svg viewBox="0 0 520 320" role="img" aria-label="Harbor route board">
+              <rect x="20" y="20" width="480" height="280" rx="28" fill="#fdf9f3" stroke="#0f2230" stroke-width="3"/>
+              <path d="M70 90L180 90L262 136L360 136L446 210" fill="none" stroke="#0f2230" stroke-width="14" stroke-linecap="round"/>
+              <path id="routeColor" d="M70 90L180 90L262 136L360 136L446 210" fill="none" stroke="#e86f2f" stroke-width="8" stroke-linecap="round"/>
+              <rect x="54" y="56" width="120" height="24" rx="12" fill="#e2bc39"/><text x="72" y="73" font-family="Consolas" font-size="12">SAFE WINDOW</text>
+              <rect x="228" y="214" width="148" height="26" rx="13" fill="#3fa8a1"/><text x="246" y="232" font-family="Consolas" font-size="12">RESOURCE PASS</text>
+              <circle cx="180" cy="90" r="18" fill="#e2bc39"/><circle cx="262" cy="136" r="18" fill="#e86f2f"/><circle cx="446" cy="210" r="20" fill="#0f2230"/>
+              <text x="52" y="280" font-family="Consolas" font-size="12" id="boardLabel">Tide 1.2m / Routes open / Resources staged</text>
+            </svg>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel reveal" id="command">
+      <div class="meta">Command board</div>
+      <div class="tab-row" role="tablist" aria-label="Board tabs">
+        <button class="tab active" role="tab" aria-selected="true" data-board="routes">Routes</button>
+        <button class="tab" role="tab" aria-selected="false" data-board="assets">Assets</button>
+        <button class="tab" role="tab" aria-selected="false" data-board="alerts">Alerts</button>
+        <button class="tab" role="tab" aria-selected="false" data-board="resources">Resources</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter active" data-filter="all">All segments</button>
+        <button class="filter" data-filter="cargo">Cargo</button>
+        <button class="filter" data-filter="passenger">Passenger</button>
+        <button class="filter" data-filter="city">City desk</button>
+      </div>
+      <label class="meta" for="tide">Tide-window scrubber</label>
+      <input id="tide" type="range" min="0" max="100" value="36" aria-label="Tide window scrubber">
+      <p id="tideText">Current safe band: 11:20-13:10. Inland route preserved. Dock crane window under watch.</p>
+    </section>
+
+    <section class="proof-grid reveal">
+      <div class="proof"><span class="meta">Time to route</span><strong data-count="7">0</strong><span>minutes to issue first corridor change</span></div>
+      <div class="proof"><span class="meta">Signal latency</span><strong data-count="3">0</strong><span>minutes from tide ingest to board update</span></div>
+    </section>
+
+    <section class="panel reveal" id="protocol">
+      <div class="meta">Response protocol</div>
+      <div class="protocol-grid">
+        <div>
+          <div class="protocol-row"><div class="sign-index">1</div><div><strong>Watch.</strong> Set tide band, port class filter, and live alert stamp.</div></div>
+          <div class="protocol-row"><div class="sign-index">2</div><div><strong>Route.</strong> Reassign corridors, mark gate conflicts, and update the board.</div></div>
+          <div class="protocol-row"><div class="sign-index">3</div><div><strong>Brief.</strong> Export one playbook for ops, insurers, and civic teams.</div></div>
+        </div>
+        <div class="faq">
+          <button aria-expanded="false" aria-controls="faq-1">How do filters affect the board?<span>+</span></button>
+          <div class="faq-panel" id="faq-1">Segment filters adjust route emphasis, resource notes, and case file relevance without duplicating the whole board.</div>
+          <button aria-expanded="false" aria-controls="faq-2">What does "Signal sent" confirm?<span>+</span></button>
+          <div class="faq-panel" id="faq-2">It confirms that a playbook save or briefing request has been logged to the live packet and announced via Toast.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel reveal" id="request">
+      <div class="meta">Briefing request</div>
+      <h2>Bring one harbor board into your operating room</h2>
+      <form class="form-grid" id="leadForm">
+        <label>Name<input required aria-label="Name"></label>
+        <label>Organization<input required aria-label="Organization"></label>
+        <label>Region<select aria-label="Region"><option>Port authority</option><option>Insurer</option><option>City operations</option></select></label>
+        <label>Email<input type="email" required aria-label="Email"></label>
+        <label>Notes<textarea aria-label="Notes"></textarea></label>
+      </form>
+      <div class="tab-row">
+        <button class="cta" id="leadSubmit">Send request</button>
+        <span class="chip">Accordion / Tabs / Count-up / Navbar scroll transition</span>
+      </div>
+    </section>
+
+    <footer class="panel reveal">
+      <div class="footer-grid">
+        <div><strong>Boards</strong><p>Route board / Command board / Protocol notes / Playbook request</p></div>
+        <div><strong>Language</strong><p class="meta">Thresholds / staging / mutual aid / audit trail</p></div>
+      </div>
+    </footer>
+  </main>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="meta">Modal / Request a coastal briefing</div>
+      <h2 id="modalTitle">Harbor intake panel</h2>
+      <form class="form-grid">
+        <label>Board focus<select aria-label="Board focus"><option>Routes</option><option>Assets</option><option>Resources</option></select></label>
+        <label>Operator type<select aria-label="Operator type"><option>Port ops</option><option>Insurer</option><option>City desk</option></select></label>
+        <label>Email<input type="email" aria-label="Modal email"></label>
+        <label>Notes<textarea aria-label="Modal notes"></textarea></label>
+      </form>
+      <div class="tab-row">
+        <button class="cta" id="modalSubmit">Signal sent</button>
+        <button class="ghost" id="closeModal">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite">Signal sent</div>
+
+  <script>
+    const q = (s, el = document) => el.querySelector(s);
+    const qa = (s, el = document) => [...el.querySelectorAll(s)];
+    const topbar = q('#topbar');
+    const modal = q('#modal');
+    const toast = q('#toast');
+    let lastTrigger = null;
+    let toastTimer = null;
+
+    window.addEventListener('scroll', () => topbar.classList.toggle('scrolled', window.scrollY > 36));
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        qa('[data-count]', entry.target).forEach(counter => {
+          if (counter.dataset.done) return;
+          counter.dataset.done = '1';
+          const target = Number(counter.dataset.count);
+          let value = 0;
+          const tick = () => {
+            value += Math.ceil((target - value) / 8);
+            counter.textContent = value;
+            if (value < target) requestAnimationFrame(tick);
+          };
+          tick();
+        });
+      });
+    }, { threshold: .2 });
+    qa('.reveal').forEach(el => revealObserver.observe(el));
+
+    const boardModes = {
+      routes: ['#e86f2f', 'Routes / safe windows emphasized / corridor chevrons active', 'Watch / inbound tide +0.6m'],
+      assets: ['#3fa8a1', 'Assets / berth equipment and dock dependencies highlighted', 'Assets / crane watch'],
+      alerts: ['#e2bc39', 'Alerts / warn lanes and gate closures prioritized', 'Warn / gate conflict'],
+      resources: ['#0f2230', 'Resources / staging, pilots, and mutual-aid passes mapped', 'Resources / pilot ready']
+    };
+    qa('.tab').forEach(tab => tab.addEventListener('click', () => {
+      qa('.tab').forEach(el => { el.classList.remove('active'); el.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const [color, label, chip] = boardModes[tab.dataset.board];
+      q('#routeColor').setAttribute('stroke', color);
+      q('#boardLabel').textContent = label;
+      q('#statusChip').textContent = chip;
+    }));
+
+    qa('.filter').forEach(filter => filter.addEventListener('click', () => {
+      qa('.filter').forEach(el => el.classList.remove('active'));
+      filter.classList.add('active');
+      q('#boardLabel').textContent = `Filter: ${filter.textContent} / tide band aligned / case file narrowed`;
+    }));
+
+    q('#tide').addEventListener('input', e => {
+      const value = Number(e.target.value);
+      const start = 9 + Math.floor(value / 12);
+      const end = start + 2;
+      q('#tideText').textContent = `Current safe band: ${String(start).padStart(2, '0')}:20-${String(end).padStart(2, '0')}:10. Inland route preserved. Dock crane window under watch.`;
+    });
+
+    qa('.faq button').forEach(btn => btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+    }));
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+    q('#saveBoard').addEventListener('click', () => showToast('Signal sent: playbook saved'));
+    q('#leadSubmit').addEventListener('click', e => { e.preventDefault(); q('#leadForm').reset(); showToast('Signal sent: briefing request logged'); });
+
+    function openModal(trigger) {
+      lastTrigger = trigger;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      q('select', modal).focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastTrigger) lastTrigger.focus();
+    }
+    qa('.modal-open').forEach(btn => btn.addEventListener('click', () => openModal(btn)));
+    q('#closeModal').addEventListener('click', closeModal);
+    q('#modalSubmit').addEventListener('click', () => { closeModal(); showToast('Signal sent: coastal briefing logged'); });
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  </script>
+</body>
+</html>

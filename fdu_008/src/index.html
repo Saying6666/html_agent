@@ -1,2165 +1,779 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRINT ASSEMBLY 2026 | Remote Design Sprint Summit</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --black: #0a0a0a;
-            --white: #fafafa;
-            --acid-yellow: #DFFF00;
-            --cobalt: #2E5BFF;
-            --tomato: #FF4D00;
-            --mint: #00FF94;
-            --border: 3px;
-            --shadow: 6px;
-            --radius: 0px;
-            --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--white);
-            color: var(--black);
-            font-family: 'Space Grotesk', sans-serif;
-            line-height: 1.5;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        .display {
-            font-family: 'Syne', sans-serif;
-            text-transform: uppercase;
-            line-height: .92;
-            letter-spacing: -1px;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        /* ---------- Utility ---------- */
-        .container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 2.5rem;
-        }
-
-        .neo {
-            background: var(--white);
-            border: var(--border) solid var(--black);
-            box-shadow: var(--shadow) var(--shadow) 0 var(--black);
-            transition: var(--transition);
-        }
-
-        .neo:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 9px 9px 0 var(--black);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: .45rem 1rem;
-            border: 2px solid var(--black);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: .75rem;
-            letter-spacing: .5px;
-            background: var(--white);
-        }
-
-        .badge-acid {
-            background: var(--acid-yellow);
-        }
-
-        .badge-mint {
-            background: var(--mint);
-        }
-
-        .badge-cobalt {
-            background: var(--cobalt);
-            color: var(--white);
-        }
-
-        .badge-tomato {
-            background: var(--tomato);
-            color: var(--white);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1.3rem 2.8rem;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.15rem;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            border: var(--border) solid var(--black);
-            box-shadow: 5px 5px 0 var(--black);
-            background: var(--acid-yellow);
-            color: var(--black);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .3), transparent);
-            transition: .5s;
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 8px 8px 0 var(--cobalt);
-        }
-
-        .btn:active {
-            transform: translate(0, 0);
-            box-shadow: 2px 2px 0 var(--black);
-        }
-
-        .btn:focus-visible {
-            outline: 3px solid var(--cobalt);
-            outline-offset: 3px;
-        }
-
-        .btn-dark {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        .btn-dark:hover {
-            background: var(--cobalt);
-        }
-
-        .btn-outline {
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        /* ---------- NAVIGATION ---------- */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: var(--white);
-            border-bottom: var(--border) solid var(--black);
-            padding: .8rem 0;
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.6rem;
-            letter-spacing: -1px;
-        }
-
-        .logo-dot {
-            color: var(--tomato);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: .85rem;
-            letter-spacing: .5px;
-            position: relative;
-            padding: .3rem 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--tomato);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            padding: .6rem 1.4rem !important;
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* ---------- HERO ---------- */
-        .hero {
-            padding: 7rem 0 5rem;
-            border-bottom: var(--border) solid var(--black);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: 'SPRINT';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Syne', sans-serif;
-            font-size: 28vw;
-            font-weight: 800;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(0, 0, 0, .04);
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        .hero-top-badges {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .hero h1 {
-            font-size: clamp(4rem, 11vw, 10rem);
-            letter-spacing: -5px;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .hero h1 .highlight {
-            color: var(--tomato);
-            display: inline-block;
-            animation: pulse-color 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse-color {
-
-            0%,
-            100% {
-                color: var(--tomato);
-            }
-
-            50% {
-                color: var(--cobalt);
-            }
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 4rem;
-            align-items: end;
-            margin-top: 2rem;
-        }
-
-        .hero-desc {
-            font-size: 1.55rem;
-            font-weight: 400;
-            max-width: 720px;
-            line-height: 1.6;
-        }
-
-        .hero-desc strong {
-            font-weight: 700;
-            border-bottom: 3px solid var(--acid-yellow);
-        }
-
-        .event-meta {
-            border-left: var(--border) solid var(--black);
-            padding-left: 2rem;
-        }
-
-        .meta-item {
-            margin-bottom: 1.8rem;
-        }
-
-        .meta-label {
-            display: block;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--tomato);
-            font-size: .8rem;
-            letter-spacing: 1px;
-        }
-
-        .meta-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            font-family: 'Syne', sans-serif;
-        }
-
-        .hero-cta {
-            margin-top: 3.5rem;
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .hero-urgency {
-            display: inline-flex;
-            align-items: center;
-            gap: .6rem;
-            padding: .8rem 1.5rem;
-            border: 2px solid var(--tomato);
-            background: rgba(255, 77, 0, .06);
-            font-weight: 600;
-            font-size: .9rem;
-            animation: urgency-blink 2s ease-in-out infinite;
-        }
-
-        @keyframes urgency-blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: .6;
-            }
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--tomato);
-            animation: dot-pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes dot-pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.6);
-                opacity: .4;
-            }
-        }
-
-        /* ---------- MARQUEE / SPONSOR STRIP ---------- */
-        .marquee {
-            border-top: var(--border) solid var(--black);
-            border-bottom: var(--border) solid var(--black);
-            padding: 1.5rem 0;
-            overflow: hidden;
-            background: var(--black);
-            color: var(--white);
-            white-space: nowrap;
-        }
-
-        .marquee-track {
-            display: inline-flex;
-            animation: marquee-scroll 25s linear infinite;
-        }
-
-        .marquee-item {
-            font-size: 2rem;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-right: 3rem;
-            display: inline-flex;
-            align-items: center;
-            gap: .8rem;
-        }
-
-        .marquee-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--acid-yellow);
-            border-radius: 50%;
-        }
-
-        @keyframes marquee-scroll {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* ---------- SECTIONS ---------- */
-        .section {
-            padding: 7rem 0;
-        }
-
-        .section-dark {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 7vw, 5.5rem);
-            margin-bottom: 1rem;
-            border-bottom: var(--border) solid currentColor;
-            padding-bottom: 1.5rem;
-        }
-
-        .section-subtitle {
-            font-size: 1.15rem;
-            max-width: 650px;
-            margin-bottom: 3.5rem;
-            opacity: .7;
-            line-height: 1.6;
-        }
-
-        /* ---------- KEYNOTE SPEAKERS ---------- */
-        .speaker-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .speaker-card {
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .speaker-visual {
-            width: 100%;
-            height: 380px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            position: relative;
-            overflow: hidden;
-            border-bottom: var(--border) solid var(--black);
-            transition: var(--transition);
-        }
-
-        .speaker-visual.bg-acid {
-            background: var(--acid-yellow);
-        }
-
-        .speaker-visual.bg-cobalt {
-            background: var(--cobalt);
-            color: var(--white);
-        }
-
-        .speaker-visual.bg-mint {
-            background: var(--mint);
-        }
-
-        .speaker-visual.bg-tomato {
-            background: var(--tomato);
-            color: var(--white);
-        }
-
-        .speaker-card:hover .speaker-visual {
-            transform: scale(1.02);
-        }
-
-        .speaker-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .speaker-card:hover .speaker-overlay {
-            opacity: 1;
-        }
-
-        .speaker-overlay span {
-            color: var(--white);
-            font-weight: 700;
-            font-size: .9rem;
-            text-transform: uppercase;
-        }
-
-        .speaker-body {
-            padding: 1.5rem;
-        }
-
-        .speaker-role {
-            color: var(--tomato);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: .75rem;
-            letter-spacing: 1px;
-        }
-
-        .speaker-name {
-            font-size: 1.7rem;
-            margin: .4rem 0 .6rem;
-        }
-
-        .speaker-bio {
-            font-size: .95rem;
-            opacity: .75;
-            line-height: 1.5;
-        }
-
-        .speaker-talk {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(0, 0, 0, .1);
-        }
-
-        .speaker-talk-label {
-            font-size: .7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--cobalt);
-            letter-spacing: 1px;
-        }
-
-        .speaker-talk-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-top: .3rem;
-        }
-
-        /* ---------- AGENDA TABS ---------- */
-        .tabs-wrap {
-            margin-top: 2rem;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 0;
-            flex-wrap: wrap;
-            margin-bottom: -3px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-btn {
-            padding: 1.2rem 2.5rem;
-            border: var(--border) solid var(--black);
-            background: var(--white);
-            color: var(--black);
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.05rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .tab-btn:hover {
-            background: var(--acid-yellow);
-        }
-
-        .tab-btn.active {
-            background: var(--black);
-            color: var(--white);
-            z-index: 3;
-        }
-
-        .tab-btn:focus-visible {
-            outline: 3px solid var(--cobalt);
-            outline-offset: 2px;
-        }
-
-        .tab-panel {
-            border: var(--border) solid var(--black);
-            background: var(--white);
-            display: none;
-            position: relative;
-            z-index: 1;
-        }
-
-        .tab-panel.active {
-            display: block;
-            animation: fadeSlide .4s var(--ease-out);
-        }
-
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .agenda-row {
-            display: grid;
-            grid-template-columns: 180px 1fr 220px;
-            padding: 1.8rem 2rem;
-            border-bottom: var(--border) solid var(--black);
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .agenda-row:last-child {
-            border-bottom: none;
-        }
-
-        .agenda-row:hover {
-            background: rgba(223, 255, 0, .08);
-        }
-
-        .agenda-time {
-            font-weight: 800;
-            font-size: 1.3rem;
-            font-family: 'Syne', sans-serif;
-        }
-
-        .agenda-topic h4 {
-            font-size: 1.5rem;
-            margin-bottom: .3rem;
-            letter-spacing: -.5px;
-        }
-
-        .agenda-topic p {
-            font-size: .9rem;
-            opacity: .6;
-        }
-
-        .agenda-speaker {
-            font-size: .85rem;
-            font-weight: 600;
-            color: var(--cobalt);
-        }
-
-        /* ---------- WORKSHOP TRACKS ---------- */
-        .track-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .track-card {
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 380px;
-        }
-
-        .track-card.bg-mint {
-            background: var(--mint);
-        }
-
-        .track-card.bg-acid {
-            background: var(--acid-yellow);
-        }
-
-        .track-card.bg-white {
-            background: var(--white);
-        }
-
-        .track-num {
-            font-size: 4.5rem;
-            font-weight: 800;
-            font-family: 'Syne', sans-serif;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            opacity: .3;
-        }
-
-        .track-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .track-desc {
-            font-size: .95rem;
-            line-height: 1.6;
-            opacity: .75;
-            flex-grow: 1;
-        }
-
-        .track-details {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 2px solid rgba(0, 0, 0, .15);
-        }
-
-        .track-meta {
-            font-size: .8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-        }
-
-        .track-sessions {
-            list-style: none;
-            margin-top: .8rem;
-        }
-
-        .track-sessions li {
-            padding: .5rem 0;
-            font-size: .9rem;
-            border-bottom: 1px solid rgba(0, 0, 0, .08);
-        }
-
-        .track-sessions li::before {
-            content: '-> ';
-            font-weight: 700;
-        }
-
-        /* ---------- FACILITATION PLAYBOOK ---------- */
-        .playbook-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .playbook-card {
-            padding: 2.5rem;
-        }
-
-        .playbook-card:nth-child(1) {
-            background: var(--cobalt);
-            color: var(--white);
-            border-color: var(--white);
-        }
-
-        .playbook-card:nth-child(2) {
-            background: var(--acid-yellow);
-        }
-
-        .playbook-card:nth-child(3) {
-            background: var(--mint);
-        }
-
-        .playbook-card:nth-child(4) {
-            background: var(--tomato);
-            color: var(--white);
-            border-color: var(--white);
-        }
-
-        .playbook-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .playbook-title {
-            font-size: 1.6rem;
-            margin-bottom: .8rem;
-        }
-
-        .playbook-desc {
-            font-size: .95rem;
-            line-height: 1.6;
-            opacity: .85;
-        }
-
-        /* ---------- SPONSOR STRIP ---------- */
-        .sponsors {
-            padding: 5rem 0;
-            border-top: var(--border) solid var(--black);
-            border-bottom: var(--border) solid var(--black);
-        }
-
-        .sponsors-label {
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: .8rem;
-            letter-spacing: 2px;
-            margin-bottom: 3rem;
-            opacity: .5;
-        }
-
-        .sponsor-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .sponsor-logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            opacity: .3;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .sponsor-logo:hover {
-            opacity: 1;
-        }
-
-        /* ---------- TICKET TIERS ---------- */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .price-card {
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .price-card-featured {
-            background: var(--cobalt);
-            color: var(--white);
-            border-color: var(--white);
-            transform: scale(1.03);
-        }
-
-        .price-card-featured:hover {
-            transform: scale(1.03) translate(-3px, -3px);
-        }
-
-        .price-card-featured .btn {
-            background: var(--white);
-            color: var(--cobalt);
-        }
-
-        .price-card-featured .btn:hover {
-            background: var(--acid-yellow);
-            color: var(--black);
-        }
-
-        .price-label {
-            font-size: .8rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .price-name {
-            font-size: 1.3rem;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-        }
-
-        .price-val {
-            font-size: 4.5rem;
-            font-weight: 800;
-            font-family: 'Syne', sans-serif;
-            margin: 1.5rem 0;
-            line-height: 1;
-        }
-
-        .price-period {
-            font-size: .85rem;
-            opacity: .5;
-            margin-top: .2rem;
-        }
-
-        .price-features {
-            list-style: none;
-            margin-bottom: 2.5rem;
-            flex-grow: 1;
-        }
-
-        .price-features li {
-            padding: .7rem 0;
-            border-bottom: 1px solid rgba(128, 128, 128, .15);
-            font-size: .9rem;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-        }
-
-        .price-features li::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: currentColor;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .price-card-featured .price-features li {
-            border-color: rgba(255, 255, 255, .15);
-        }
-
-        .price-popular {
-            position: absolute;
-            top: 1.5rem;
-            right: -2.5rem;
-            background: var(--acid-yellow);
-            color: var(--black);
-            padding: .3rem 3rem;
-            font-size: .7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            transform: rotate(45deg);
-        }
-
-        /* ---------- FAQ ACCORDION ---------- */
-        .faq-list {
-            max-width: 900px;
-        }
-
-        .faq-item {
-            border-bottom: var(--border) solid var(--black);
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 1.8rem 0;
-            background: none;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            text-align: left;
-            cursor: pointer;
-            gap: 1rem;
-            transition: color .2s;
-        }
-
-        .faq-question:hover {
-            color: var(--cobalt);
-        }
-
-        .faq-question:focus-visible {
-            outline: 3px solid var(--cobalt);
-            outline-offset: -3px;
-        }
-
-        .faq-icon {
-            width: 36px;
-            height: 36px;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            transition: transform .3s var(--ease-out), background .3s;
-        }
-
-        .faq-item.open .faq-icon {
-            transform: rotate(45deg);
-            background: var(--acid-yellow);
-            border-color: var(--black);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height .4s var(--ease-out);
-        }
-
-        .faq-answer-inner {
-            padding-bottom: 2rem;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            max-width: 750px;
-            opacity: .75;
-        }
-
-        /* ---------- FOOTER ---------- */
-        footer {
-            background: var(--black);
-            color: var(--white);
-            padding: 6rem 0 3rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .footer-logo-text {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-desc {
-            opacity: .5;
-            max-width: 350px;
-            line-height: 1.6;
-            font-size: .95rem;
-        }
-
-        .footer-heading {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-size: .9rem;
-            letter-spacing: 1px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: .8rem;
-        }
-
-        .footer-links a {
-            opacity: .5;
-            transition: var(--transition);
-            font-size: .9rem;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--acid-yellow);
-        }
-
-        .footer-bottom {
-            margin-top: 5rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, .1);
-            display: flex;
-            justify-content: space-between;
-            font-size: .85rem;
-            opacity: .4;
-        }
-
-        .footer-newsletter {
-            display: flex;
-            gap: 0;
-            margin-top: 1.5rem;
-            max-width: 320px;
-        }
-
-        .footer-newsletter-input {
-            flex: 1;
-            padding: .8rem 1rem;
-            background: rgba(255, 255, 255, .08);
-            border: 2px solid rgba(255, 255, 255, .2);
-            color: var(--white);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: .9rem;
-        }
-
-        .footer-newsletter-input:focus {
-            outline: none;
-            border-color: var(--acid-yellow);
-        }
-
-        .footer-newsletter-btn {
-            padding: .8rem 1.5rem;
-            background: var(--acid-yellow);
-            color: var(--black);
-            border: 2px solid var(--acid-yellow);
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: .8rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .footer-newsletter-btn:hover {
-            background: var(--white);
-            border-color: var(--white);
-        }
-
-        /* ---------- SCROLL REVEAL ---------- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 {
-            transition-delay: .1s;
-        }
-
-        .reveal-delay-2 {
-            transition-delay: .2s;
-        }
-
-        .reveal-delay-3 {
-            transition-delay: .3s;
-        }
-
-        /* ---------- COUNTER ANIMATION ---------- */
-        .counter {
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* ---------- STATS STRIP ---------- */
-        .stats-strip {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            border-bottom: var(--border) solid var(--black);
-        }
-
-        .stat-item {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-right: var(--border) solid var(--black);
-            transition: var(--transition);
-        }
-
-        .stat-item:last-child {
-            border-right: none;
-        }
-
-        .stat-item:hover {
-            background: var(--acid-yellow);
-        }
-
-        .stat-num {
-            font-size: 3.5rem;
-            font-weight: 800;
-            font-family: 'Syne', sans-serif;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: .8rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-top: .5rem;
-            opacity: .6;
-        }
-
-        /* ---------- RESPONSIVE ---------- */
-        @media(max-width:1024px) {
-
-            .hero-grid,
-            .track-grid,
-            .footer-grid,
-            .pricing-grid,
-            .playbook-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: clamp(3rem, 9vw, 6rem);
-            }
-
-            .stats-strip {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stat-item:nth-child(2) {
-                border-right: none;
-            }
-
-            .agenda-row {
-                grid-template-columns: 1fr;
-                gap: .8rem;
-            }
-
-            .pricing-grid {
-                gap: 1.5rem;
-            }
-
-            .price-card-featured {
-                transform: none;
-            }
-
-            .price-card-featured:hover {
-                transform: translate(-3px, -3px);
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-        }
-
-        @media(max-width:640px) {
-            .container {
-                padding: 0 1.2rem;
-            }
-
-            .section {
-                padding: 4rem 0;
-            }
-
-            .stats-strip {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-item {
-                border-right: none;
-                border-bottom: var(--border) solid var(--black);
-            }
-
-            .stat-item:last-child {
-                border-bottom: none;
-            }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab-btn {
-                width: 100%;
-                text-align: left;
-            }
-        }
-
-        /* ---------- SCROLLBAR ---------- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--white);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--black);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--cobalt);
-        }
-
-        /* ---------- SELECTION ---------- */
-        ::selection {
-            background: var(--acid-yellow);
-            color: var(--black);
-        }
-
-        @media (prefers-reduced-motion:reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harborline Atlas | Carbon-Aware Maritime Intelligence</title>
+  <meta name="description" content="Precision maritime operations for expedition fleets and luxury terminals.">
+  <style>
+    /* --- DESIGN TOKENS --- */
+    :root {
+      /* Palette: Deep Sea & Oxidized Metal */
+      --color-ink: #050a0f;
+      --color-surface: #0a1219;
+      --color-copper: #b47d58;
+      --color-copper-glow: rgba(180, 125, 88, 0.3);
+      --color-cyan: #4ecdc4;
+      --color-cyan-dim: rgba(78, 205, 196, 0.15);
+      --color-text-main: #e0e6ed;
+      --color-text-muted: #8ea0b1;
+      --color-border: rgba(142, 160, 177, 0.15);
+
+      /* Typography */
+      --font-serif: "Times New Roman", Times, serif;
+      /* Fallback for elegant display */
+      --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+      /* Motion */
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-main: 0.6s var(--ease-out-expo);
+
+      /* Layout */
+      --section-padding: 8rem 2rem;
+      --max-width: 1440px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* --- GLOBAL RESET --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline-offset: 4px;
+    }
+
+    body {
+      background-color: var(--color-ink);
+      color: var(--color-text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    .display-serif {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      background: var(--color-cyan);
+      color: var(--color-ink);
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* --- LAYOUT UTILITIES --- */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .glass-panel {
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      background: rgba(10, 18, 25, 0.7);
+      border: 1px solid var(--color-border);
+    }
+
+    /* --- NAVIGATION --- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      transition: var(--transition-main);
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      height: 64px;
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      background: rgba(5, 10, 15, 0.85);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: var(--color-text-main);
+      transition: var(--transition-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--color-cyan);
+    }
+
+    .cta-primary {
+      padding: 0.75rem 1.5rem;
+      background: var(--color-copper);
+      color: white;
+      border-radius: 2px;
+      font-weight: 500;
+      transition: var(--transition-main);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-primary:hover {
+      box-shadow: 0 0 20px var(--color-copper-glow);
+      transform: translateY(-2px);
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 70% 30%, var(--color-cyan-dim) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 0.95;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title span {
+      color: var(--color-copper);
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 1.25rem;
+      color: var(--color-text-muted);
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    /* Cursor Reactive Panel */
+    .instrument-panel {
+      position: relative;
+      height: 500px;
+      border-radius: 4px;
+      perspective: 1000px;
+    }
+
+    .map-card {
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--color-border);
+      position: relative;
+      transition: transform 0.1s ease-out;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0V0zm10 10h1v1h-1v-1zm10 10h1v1h-1v-1zm10 10h1v1h-1v-1z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    .pulse {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--color-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--color-cyan);
+      animation: pulse-ring 2s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* --- ANNOUNCEMENT RAIL --- */
+    .announcement-rail {
+      background: var(--color-copper);
+      color: white;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.5rem 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* --- METRICS / DATA STORY --- */
+    .metrics-band {
+      padding: 6rem 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .metric-item {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-family: var(--font-serif);
+      font-size: 4rem;
+      color: var(--color-cyan);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* --- INTELLIGENCE CONSOLE (TABS) --- */
+    .console-section {
+      padding: var(--section-padding);
+    }
+
+    .console-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .tab-list {
+      background: var(--color-surface);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-btn {
+      padding: 2rem;
+      text-align: left;
+      color: var(--color-text-muted);
+      border-bottom: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: var(--color-ink);
+      color: var(--color-cyan);
+      border-left: 4px solid var(--color-cyan);
+    }
+
+    .tab-content {
+      background: var(--color-surface);
+      padding: 4rem;
+      min-height: 400px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --- COMPLIANCE ACCORDION --- */
+    .accordion-item {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      font-size: 1.5rem;
+      color: var(--color-text-main);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .accordion-content p {
+      padding-bottom: 2rem;
+      color: var(--color-text-muted);
+    }
+
+    /* --- MODAL & TOAST --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 10, 15, 0.95);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-card {
+      max-width: 600px;
+      width: 100%;
+      padding: 3rem;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--color-cyan);
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-border);
+      padding: 1rem;
+      color: white;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 2rem;
+      background: var(--color-cyan);
+      color: var(--color-ink);
+      font-weight: bold;
+      transform: translateY(200%);
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 2000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    /* --- BREAKPOINTS --- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 4rem;
+      }
+
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .console-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-padding: 4rem 1.5rem;
+      }
+
+      .nav-actions {
+        display: none;
+      }
+
+      /* Simplified for demo mobile */
+      .hero-title {
+        font-size: 3rem;
+      }
+
+      .tab-content {
+        padding: 2rem;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- ========== NAVIGATION ========== -->
-    <nav role="navigation" aria-label="Main navigation">
-        <div class="container nav-inner">
-            <a href="#" class="logo">SPRINT ASSEMBLY<span class="logo-dot">.</span></a>
-            <div class="nav-links" id="navLinks">
-                <a href="#speakers">Speakers</a>
-                <a href="#agenda">Agenda</a>
-                <a href="#tracks">Tracks</a>
-                <a href="#playbook">Playbook</a>
-                <a href="#tickets">Tickets</a>
-                <a href="#faq">FAQ</a>
-                <a href="#tickets" class="badge badge-acid nav-cta">Get Tickets</a>
-            </div>
-            <button type="button" class="mobile-toggle" aria-label="Toggle navigation menu" id="mobileToggle">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                    <rect y="5" width="28" height="3" fill="currentColor" />
-                    <rect y="13" width="28" height="3" fill="currentColor" />
-                    <rect y="21" width="28" height="3" fill="currentColor" />
-                </svg>
-            </button>
-        </div>
-    </nav>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- ========== HERO ========== -->
-    <header class="hero">
-        <div class="container">
-            <div class="hero-top-badges">
-                <span class="badge badge-tomato">September 14-16, 2026</span>
-                <span class="badge badge-cobalt">100% Remote</span>
-                <span class="badge">3-Day Summit</span>
-            </div>
-            <h1 class="reveal">BREAK<br>THE <span class="highlight">PROCESS</span><span class="logo-dot">.</span></h1>
-            <div class="hero-grid">
-                <div class="hero-desc reveal reveal-delay-1">
-                    A high-octane remote summit for <strong>facilitators</strong>, <strong>design leads</strong>, and
-                    <strong>strategists</strong> who are tired of stale digital whiteboards, dead-end workshops, and
-                    process theater. Three days of real sprint rituals, live whiteboarding sessions, and facilitation
-                    frameworks you can deploy on Monday.
-                </div>
-                <div class="event-meta reveal reveal-delay-2">
-                    <div class="meta-item">
-                        <span class="meta-label">Format</span>
-                        <span class="meta-value">100% Remote</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Capacity</span>
-                        <span class="meta-value">500 Seats</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Tracks</span>
-                        <span class="meta-value">3 Parallel</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-cta reveal reveal-delay-3">
-                <a href="#tickets" class="btn">Secure Your Access</a>
-                <a href="#agenda" class="btn btn-outline">View Agenda</a>
-                <div class="hero-urgency">
-                    <span class="pulse-dot"></span>
-                    Early Bird ends Aug 1 — 127 seats left
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- ========== STATS STRIP ========== -->
-    <div class="stats-strip">
-        <div class="stat-item reveal">
-            <div class="stat-num counter" data-target="24">0</div>
-            <div class="stat-label">World-Class Speakers</div>
-        </div>
-        <div class="stat-item reveal reveal-delay-1">
-            <div class="stat-num counter" data-target="48">0</div>
-            <div class="stat-label">Hours of Content</div>
-        </div>
-        <div class="stat-item reveal reveal-delay-2">
-            <div class="stat-num counter" data-target="12">0</div>
-            <div class="stat-label">Hands-On Workshops</div>
-        </div>
-        <div class="stat-item reveal reveal-delay-3">
-            <div class="stat-num counter" data-target="500">0</div>
-            <div class="stat-label">Global Attendees</div>
-        </div>
+  <header class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo" aria-label="Harborline Atlas Home">HARBORLINE <span
+          class="display-serif">Atlas</span></a>
+      <nav class="nav-actions" aria-label="Main Navigation">
+        <a href="#console" class="nav-link">Intelligence</a>
+        <a href="#compliance" class="nav-link">Compliance</a>
+        <button type="button" class="cta-primary" id="open-briefing" aria-haspopup="dialog">Book Briefing</button>
+        <button type="button" class="nav-link" aria-label="Search Atlas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </button>
+      </nav>
     </div>
+  </header>
 
-    <!-- ========== SPONSOR MARQUEE ========== -->
-    <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-            <span class="marquee-item"><span class="marquee-dot"></span>Figma</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Miro</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Notion</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Linear</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Slack</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Loom</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Pitch</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Whimsical</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Figma</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Miro</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Notion</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Linear</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Slack</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Loom</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Pitch</span>
-            <span class="marquee-item"><span class="marquee-dot"></span>Whimsical</span>
-        </div>
+  <div class="announcement-rail">
+    <div class="marquee-track">
+      LIVE: NORTH SEA CORRIDOR OPTIMIZED (+14%) • SINGAPORE TERMINAL 4 EMISSIONS OFFSET ACTIVE • ARCTIC EXPEDITION
+      ROUTES UPDATED • LIVE: NORTH SEA CORRIDOR OPTIMIZED (+14%) • SINGAPORE TERMINAL 4 EMISSIONS OFFSET ACTIVE •
     </div>
+  </div>
 
-    <!-- ========== KEYNOTE SPEAKERS ========== -->
-    <section id="speakers" class="section container">
-        <h2 class="section-title reveal">The Architects</h2>
-        <p class="section-subtitle reveal">Six industry leaders redefining how teams think, prototype, and ship in a
-            distributed world.</p>
-        <div class="speaker-grid">
-            <div class="neo speaker-card reveal">
-                <div class="speaker-visual bg-acid">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <polygon points="40,5 75,65 5,65" stroke="currentColor" stroke-width="3" fill="none" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">Design Director @ Stripe</span>
-                    <h3 class="speaker-name">Aris Thorne</h3>
-                    <p class="speaker-bio">Specializing in rapid prototyping for high-stakes fintech infrastructure. Led
-                        the redesign of Stripe's developer experience used by 2M+ businesses.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Keynote Talk</span>
-                        <div class="speaker-talk-title">Prototyping Under Pressure: How to Ship Design at Scale</div>
-                    </div>
-                </div>
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-text-block">
+            <h1 class="hero-title">Carbon-Aware <span>Maritime Operations.</span></h1>
+            <p class="hero-desc">Atlas provides high-fidelity logistical intelligence for the world's most demanding
+              expedition fleets and luxury passenger terminals.</p>
+            <div class="hero-cta-group">
+              <button type="button" class="cta-primary"
+                onclick="document.getElementById('open-briefing').click()">Explore The Platform</button>
             </div>
-            <div class="neo speaker-card reveal reveal-delay-1">
-                <div class="speaker-visual bg-cobalt">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <circle cx="40" cy="40" r="32" stroke="currentColor" stroke-width="3" fill="none" />
-                        <circle cx="40" cy="40" r="12" stroke="currentColor" stroke-width="3" fill="none" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">Head of Remote @ Airbnb</span>
-                    <h3 class="speaker-name">Lena Volkov</h3>
-                    <p class="speaker-bio">Master of asynchronous facilitation and distributed team rituals. Built
-                        Airbnb's remote culture framework adopted by 50+ teams globally.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Keynote Talk</span>
-                        <div class="speaker-talk-title">The Async Playbook: Rituals That Actually Scale</div>
-                    </div>
-                </div>
+          </div>
+          <div class="instrument-panel" id="parallax-container">
+            <div class="map-card glass-panel" id="map-card">
+              <div class="pulse" style="top:30%; left:40%;"></div>
+              <div class="pulse" style="top:60%; left:70%;"></div>
+              <div class="pulse" style="top:20%; left:80%;"></div>
             </div>
-            <div class="neo speaker-card reveal reveal-delay-2">
-                <div class="speaker-visual bg-mint">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <rect x="12" y="12" width="56" height="56" stroke="currentColor" stroke-width="3" fill="none"
-                            transform="rotate(15 40 40)" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">Author of "Kill the Meeting"</span>
-                    <h3 class="speaker-name">Marcus Chen</h3>
-                    <p class="speaker-bio">Strategy lead focused on extreme efficiency in cross-functional sprints. His
-                        framework has eliminated 10,000+ hours of wasted meeting time.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Keynote Talk</span>
-                        <div class="speaker-talk-title">From Meetings to Movements: Rewriting the Collaboration OS</div>
-                    </div>
-                </div>
-            </div>
-            <div class="neo speaker-card reveal">
-                <div class="speaker-visual bg-tomato">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <path d="M40 8L72 40L40 72L8 40Z" stroke="currentColor" stroke-width="3" fill="none" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">VP Product @ Miro</span>
-                    <h3 class="speaker-name">Zara Okonkwo</h3>
-                    <p class="speaker-bio">Pioneering real-time collaboration tools used by 60M+ users. Former Google
-                        Design Sprint facilitator with 300+ sprints under her belt.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Workshop Lead</span>
-                        <div class="speaker-talk-title">Board-First Thinking: Visual Facilitation at Enterprise Scale
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="neo speaker-card reveal reveal-delay-1">
-                <div class="speaker-visual bg-acid">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width="3" />
-                        <line x1="40" y1="10" x2="40" y2="70" stroke="currentColor" stroke-width="3" />
-                        <circle cx="40" cy="40" r="25" stroke="currentColor" stroke-width="3" fill="none" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">Principal Design @ Vercel</span>
-                    <h3 class="speaker-name">Kai Hartwell</h3>
-                    <p class="speaker-bio">Design-systems architect bridging design and engineering. Built Vercel's
-                        component library serving 100K+ deployments daily.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Deep Dive</span>
-                        <div class="speaker-talk-title">Systems Thinking for Sprint Kits: Reusable Design Infra</div>
-                    </div>
-                </div>
-            </div>
-            <div class="neo speaker-card reveal reveal-delay-2">
-                <div class="speaker-visual bg-cobalt">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                        <path d="M20 20 Q40 5 60 20 Q75 40 60 60 Q40 75 20 60 Q5 40 20 20Z" stroke="currentColor"
-                            stroke-width="3" fill="none" />
-                    </svg>
-                    <div class="speaker-overlay"><span>View Talk Details</span></div>
-                </div>
-                <div class="speaker-body">
-                    <span class="speaker-role">Head of Research @ Figma</span>
-                    <h3 class="speaker-name">Priya Nair</h3>
-                    <p class="speaker-bio">Leading AI-augmented design research at Figma. Former neuroscientist turned
-                        UX researcher, specializing in decision-making under uncertainty.</p>
-                    <div class="speaker-talk">
-                        <span class="speaker-talk-label">Fireside Chat</span>
-                        <div class="speaker-talk-title">AI as Co-Facilitator: The Next Wave of Sprint Intelligence</div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- ========== AGENDA ========== -->
-    <section id="agenda" class="section container">
-        <h2 class="section-title reveal">The Log</h2>
-        <p class="section-subtitle reveal">Three days, three themes. Every session designed for hands-on participation,
-            not passive viewing.</p>
-
-        <div class="tabs-wrap reveal">
-            <div class="tabs" role="tablist" aria-label="Conference schedule by day">
-                <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-day1"
-                    id="tab-day1">Day 01: Strategy</button>
-                <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-day2"
-                    id="tab-day2">Day 02: Execution</button>
-                <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-day3"
-                    id="tab-day3">Day 03: Scale</button>
-            </div>
-
-            <div id="panel-day1" class="tab-panel active" role="tabpanel" aria-labelledby="tab-day1">
-                <div class="agenda-row">
-                    <div class="agenda-time">09:00</div>
-                    <div class="agenda-topic">
-                        <h4>Opening: The State of Design 2026</h4>
-                        <p>Defining the new standard for remote collaboration and what the next generation of design
-                            sprints looks like.</p>
-                    </div>
-                    <div><span class="badge badge-tomato">Keynote</span><br><span class="agenda-speaker">Aris
-                            Thorne</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">10:30</div>
-                    <div class="agenda-topic">
-                        <h4>Problem Framing at Speed</h4>
-                        <p>Techniques for aligning 12 stakeholders in 60 minutes using structured diverge-converge
-                            cycles on Miro.</p>
-                    </div>
-                    <div><span class="badge badge-mint">Workshop</span><br><span class="agenda-speaker">Zara
-                            Okonkwo</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">13:00</div>
-                    <div class="agenda-topic">
-                        <h4>Sprint Rituals That Stick</h4>
-                        <p>How to design team rituals that survive the first month. Real case studies from Airbnb,
-                            Notion, and Linear.</p>
-                    </div>
-                    <div><span class="badge badge-cobalt">Deep Dive</span><br><span class="agenda-speaker">Lena
-                            Volkov</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">15:00</div>
-                    <div class="agenda-topic">
-                        <h4>The Psychology of Video Fatigue</h4>
-                        <p>Keeping energy high during 6-hour sprint sessions. Cognitive load management for remote
-                            facilitators.</p>
-                    </div>
-                    <div><span class="badge">Fireside</span><br><span class="agenda-speaker">Marcus Chen</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">17:00</div>
-                    <div class="agenda-topic">
-                        <h4>Lightning Demos: 5 Tools in 25 Minutes</h4>
-                        <p>Rapid-fire showcase of the most promising facilitation tools launching in 2026.</p>
-                    </div>
-                    <div><span class="badge badge-acid">Lightning</span></div>
-                </div>
-            </div>
-
-            <div id="panel-day2" class="tab-panel" role="tabpanel" aria-labelledby="tab-day2">
-                <div class="agenda-row">
-                    <div class="agenda-time">09:30</div>
-                    <div class="agenda-topic">
-                        <h4>Figma-First Sprints</h4>
-                        <p>Bypassing documentation for direct-to-code prototyping. Live demo building a functional
-                            prototype in 45 minutes.</p>
-                    </div>
-                    <div><span class="badge badge-mint">Workshop</span><br><span class="agenda-speaker">Kai
-                            Hartwell</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">11:00</div>
-                    <div class="agenda-topic">
-                        <h4>Facilitating with AI</h4>
-                        <p>Using LLMs to synthesize user feedback in real-time. Hands-on session with GPT-4o and Claude
-                            for research synthesis.</p>
-                    </div>
-                    <div><span class="badge badge-cobalt">Deep Dive</span><br><span class="agenda-speaker">Priya
-                            Nair</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">14:00</div>
-                    <div class="agenda-topic">
-                        <h4>Breakout: Remote Whiteboarding Olympics</h4>
-                        <p>Teams of 5 compete to solve a real design challenge using only Miro and a 90-minute timebox.
-                            Judged by our speakers.</p>
-                    </div>
-                    <div><span class="badge badge-tomato">Interactive</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">16:30</div>
-                    <div class="agenda-topic">
-                        <h4>Decision Frameworks for Sprint Leads</h4>
-                        <p>RICE, ICE, MoSCoW, and custom scoring models. When to use each and how to avoid analysis
-                            paralysis.</p>
-                    </div>
-                    <div><span class="badge">Strategy</span><br><span class="agenda-speaker">Marcus Chen</span></div>
-                </div>
-            </div>
-
-            <div id="panel-day3" class="tab-panel" role="tabpanel" aria-labelledby="tab-day3">
-                <div class="agenda-row">
-                    <div class="agenda-time">10:00</div>
-                    <div class="agenda-topic">
-                        <h4>Building an Internal Sprint Lab</h4>
-                        <p>How to make rapid experimentation a company-wide habit. Org design for innovation teams at
-                            scale.</p>
-                    </div>
-                    <div><span class="badge">Strategy</span><br><span class="agenda-speaker">Aris Thorne</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">11:30</div>
-                    <div class="agenda-topic">
-                        <h4>Measuring Sprint ROI</h4>
-                        <p>Connecting design sprint outcomes to business KPIs. The metrics framework that convinced CFOs
-                            to fund more sprints.</p>
-                    </div>
-                    <div><span class="badge badge-cobalt">Deep Dive</span><br><span class="agenda-speaker">Zara
-                            Okonkwo</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">14:00</div>
-                    <div class="agenda-topic">
-                        <h4>Cross-Functional Sprint Templates</h4>
-                        <p>Pre-built Miro and Figma templates for product, marketing, and engineering sprints. Download
-                            and deploy immediately.</p>
-                    </div>
-                    <div><span class="badge badge-mint">Workshop</span><br><span class="agenda-speaker">Kai
-                            Hartwell</span></div>
-                </div>
-                <div class="agenda-row">
-                    <div class="agenda-time">16:00</div>
-                    <div class="agenda-topic">
-                        <h4>Closing Keynote: The Future is Facilitated</h4>
-                        <p>A vision for where design leadership, AI, and distributed collaboration converge in the next
-                            decade.</p>
-                    </div>
-                    <div><span class="badge badge-tomato">Keynote</span><br><span class="agenda-speaker">Lena Volkov
-                            &amp; Priya Nair</span></div>
-                </div>
-            </div>
+    <section class="metrics-band">
+      <div class="container">
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-value" data-target="420">0</span>
+            <span class="metric-label">Vessels Tracked</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" data-target="18">0</span>
+            <span class="metric-label">Net Zero Ports</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" data-target="99">0</span>
+            <span class="metric-label">% Schedule Integrity</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" data-target="12">0</span>
+            <span class="metric-label">ms Latency</span>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- ========== WORKSHOP TRACKS ========== -->
-    <section id="tracks" class="section container">
-        <h2 class="section-title reveal">The Tracks</h2>
-        <p class="section-subtitle reveal">Three parallel tracks running across all three days. Pick your path or mix
-            and match.</p>
-        <div class="track-grid">
-            <div class="neo track-card bg-mint reveal">
-                <span class="track-num">01</span>
-                <h3 class="track-title">Facilitation Mastery</h3>
-                <p class="track-desc">Advanced techniques for managing difficult personalities, silent groups,
-                    time-boxing, and energy management in virtual settings. For facilitators who want to go from good to
-                    legendary.</p>
-                <div class="track-details">
-                    <div class="track-meta">4 Sessions / 8 Hours / Certificate</div>
-                    <ul class="track-sessions">
-                        <li>Reading the Virtual Room: Body Language on Zoom</li>
-                        <li>Conflict Resolution in Real-Time Collaboration</li>
-                        <li>Energy Mapping: When to Push, When to Pause</li>
-                        <li>The 60-Minute Sprint: Maximum Output, Minimum Time</li>
-                    </ul>
-                </div>
+    <section id="console" class="console-section">
+      <div class="container">
+        <h2 class="display-serif" style="font-size: 3rem; margin-bottom: 3rem;">Operational Intelligence</h2>
+        <div class="console-container">
+          <div class="tab-list" role="tablist" aria-label="Intelligence Modules">
+            <button type="button" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1"
+              class="tab-btn">Berth Optimization</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2"
+              class="tab-btn">Emission Visibility</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3"
+              class="tab-btn">Route Resiliency</button>
+          </div>
+          <div class="tab-content">
+            <div id="panel-1" role="tabpanel" aria-labelledby="tab-1" class="tab-panel active">
+              <h3>Dynamic Docking Logic</h3>
+              <p>Utilize real-time hydrodynamic data to optimize turn-around times for passenger vessels. Reduce idle
+                time by 22% through predictive queuing.</p>
             </div>
-            <div class="neo track-card bg-acid reveal reveal-delay-1">
-                <span class="track-num">02</span>
-                <h3 class="track-title">System Design</h3>
-                <p class="track-desc">Building reusable sprint kits that allow you to spin up a new session in under 5
-                    minutes. Component systems, template libraries, and automation workflows.</p>
-                <div class="track-details">
-                    <div class="track-meta">4 Sessions / 8 Hours / Toolkit Access</div>
-                    <ul class="track-sessions">
-                        <li>Sprint Kit Architecture: Components that Compose</li>
-                        <li>Miro Template Mastery: Beyond Sticky Notes</li>
-                        <li>Automating Sprint Setup with Zapier + Notion</li>
-                        <li>Design System Thinking for Facilitators</li>
-                    </ul>
-                </div>
+            <div id="panel-2" role="tabpanel" aria-labelledby="tab-2" class="tab-panel">
+              <h3>Scope 3 Compliance</h3>
+              <p>Automated carbon reporting for coastal logistics. Atlas tracks every nautical mile and calculates
+                real-time emissions based on engine load and fuel grade.</p>
             </div>
-            <div class="neo track-card bg-white reveal reveal-delay-2">
-                <span class="track-num">03</span>
-                <h3 class="track-title">Product Strategy</h3>
-                <p class="track-desc">Ensuring your sprint outcomes actually map to business KPIs and engineering
-                    roadmaps. Strategy for design leaders who need executive buy-in.</p>
-                <div class="track-details">
-                    <div class="track-meta">4 Sessions / 8 Hours / Framework Pack</div>
-                    <ul class="track-sessions">
-                        <li>From Sprint Output to Product Roadmap</li>
-                        <li>Stakeholder Alignment: The Pre-Sprint Playbook</li>
-                        <li>Selling Sprint Culture to Your C-Suite</li>
-                        <li>Measuring What Matters: Sprint Analytics</li>
-                    </ul>
-                </div>
+            <div id="panel-3" role="tabpanel" aria-labelledby="tab-3" class="tab-panel">
+              <h3>Climate Adaptation</h3>
+              <p>Mitigate weather-related delays with our proprietary Arctic-mesh weather modeling. Route adjustment
+                recommendations updated every 15 minutes.</p>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- ========== FACILITATION PLAYBOOK ========== -->
-    <section id="playbook" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title reveal">Playbook Highlights</h2>
-            <p class="section-subtitle reveal">Every attendee receives the Sprint Assembly Playbook 2026: 120 pages of
-                frameworks, templates, and real-world case studies.</p>
-            <div class="playbook-grid">
-                <div class="neo playbook-card reveal">
-                    <div class="playbook-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <rect x="4" y="4" width="40" height="40" rx="4" stroke="currentColor" stroke-width="2.5"
-                                fill="none" />
-                            <line x1="4" y1="16" x2="44" y2="16" stroke="currentColor" stroke-width="2.5" />
-                            <line x1="16" y1="16" x2="16" y2="44" stroke="currentColor" stroke-width="2.5" />
-                        </svg>
-                    </div>
-                    <h3 class="playbook-title">Sprint Canvas 3.0</h3>
-                    <p class="playbook-desc">A refined 6-panel canvas for structuring any design sprint from kickoff to
-                        decision. Pre-loaded with prompts, timers, and voting systems. Used by 1,200+ teams in 2025.</p>
-                </div>
-                <div class="neo playbook-card reveal reveal-delay-1">
-                    <div class="playbook-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5" fill="none" />
-                            <path d="M24 12V24L32 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <h3 class="playbook-title">Timebox Templates</h3>
-                    <p class="playbook-desc">Pre-built timing frameworks for 30, 60, 90, and 180-minute sessions. Each
-                        includes warm-up activities, core exercises, and cool-down protocols.</p>
-                </div>
-                <div class="neo playbook-card reveal reveal-delay-2">
-                    <div class="playbook-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <path d="M8 40L24 8L40 40Z" stroke="currentColor" stroke-width="2.5" fill="none"
-                                stroke-linejoin="round" />
-                            <line x1="16" y1="28" x2="32" y2="28" stroke="currentColor" stroke-width="2.5" />
-                        </svg>
-                    </div>
-                    <h3 class="playbook-title">Breakout Blueprints</h3>
-                    <p class="playbook-desc">Twelve tested breakout room formats for groups of 3-8 people. Includes role
-                        cards, debrief scripts, and synthesis templates for bringing insights back to the main room.</p>
-                </div>
-                <div class="neo playbook-card reveal reveal-delay-3">
-                    <div class="playbook-icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <rect x="6" y="6" width="14" height="14" stroke="currentColor" stroke-width="2.5"
-                                fill="none" />
-                            <rect x="28" y="6" width="14" height="14" stroke="currentColor" stroke-width="2.5"
-                                fill="none" />
-                            <rect x="6" y="28" width="14" height="14" stroke="currentColor" stroke-width="2.5"
-                                fill="none" />
-                            <rect x="28" y="28" width="14" height="14" stroke="currentColor" stroke-width="2.5"
-                                fill="none" />
-                        </svg>
-                    </div>
-                    <h3 class="playbook-title">Decision Matrices</h3>
-                    <p class="playbook-desc">Four ready-to-deploy decision frameworks: dot voting, effort/impact matrix,
-                        RICE scoring, and the Sprint Assembly Confidence Grid. No more endless debates.</p>
-                </div>
-            </div>
+    <section id="compliance" class="container" style="padding: var(--section-padding);">
+      <h2 class="display-serif" style="font-size: 2.5rem; margin-bottom: 2rem;">Service Standards</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+            IMO 2026 Ready
+            <span>+</span>
+          </button>
+          <div class="accordion-content">
+            <p>All Atlas reports are pre-certified for the upcoming International Maritime Organization carbon intensity
+              indicators. Download ready-to-submit audits in seconds.</p>
+          </div>
         </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+            Global Resilience SLA
+            <span>+</span>
+          </button>
+          <div class="accordion-content">
+            <p>We guarantee 99.99% uptime for our satellite-linked terminal nodes. Your operations never go dark, even
+              in the most remote coastal regions.</p>
+          </div>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <!-- ========== SPONSORS ========== -->
-    <section class="sponsors reveal">
-        <div class="container">
-            <div class="sponsors-label">Trusted by the tools you already use</div>
-            <div class="sponsor-logos">
-                <span class="sponsor-logo">Figma</span>
-                <span class="sponsor-logo">Miro</span>
-                <span class="sponsor-logo">Notion</span>
-                <span class="sponsor-logo">Linear</span>
-                <span class="sponsor-logo">Slack</span>
-                <span class="sponsor-logo">Loom</span>
-                <span class="sponsor-logo">Vercel</span>
-                <span class="sponsor-logo">Pitch</span>
-            </div>
+  <div class="modal-overlay" id="briefing-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card glass-panel">
+      <button type="button" class="close-modal" aria-label="Close modal" id="close-modal">✕</button>
+      <h2 id="modal-title" class="display-serif" style="margin-bottom: 1.5rem;">Request a Briefing</h2>
+      <form id="briefing-form">
+        <div class="form-group">
+          <label for="name" class="form-label">Fleet Officer Name</label>
+          <input type="text" id="name" class="form-input" required aria-required="true">
         </div>
-    </section>
-
-    <!-- ========== TICKET TIERS ========== -->
-    <section id="tickets" class="section container">
-        <h2 class="section-title reveal">Choose Access</h2>
-        <p class="section-subtitle reveal">All tiers include 3 days of main stage talks and lifetime Slack community
-            access. Upgrade for workshops, certification, and templates.</p>
-        <div class="pricing-grid">
-            <div class="neo price-card reveal">
-                <div class="price-label">Individual</div>
-                <div class="price-name">Explorer</div>
-                <div class="price-val">$299</div>
-                <div class="price-period">Early Bird (reg. $499)</div>
-                <ul class="price-features">
-                    <li>3 Days of Main Stage Talks</li>
-                    <li>Lifetime Slack Community Access</li>
-                    <li>Session Recordings (30 Days)</li>
-                    <li>Digital Playbook 2026 (PDF)</li>
-                    <li>Event Swag Box Shipped to You</li>
-                </ul>
-                <a href="#" class="btn">Get Explorer</a>
-            </div>
-            <div class="neo price-card price-card-featured reveal reveal-delay-1">
-                <div class="price-popular">Popular</div>
-                <div class="price-label">Professional</div>
-                <div class="price-name">Practitioner</div>
-                <div class="price-val">$599</div>
-                <div class="price-period">Early Bird (reg. $899)</div>
-                <ul class="price-features">
-                    <li>Everything in Explorer</li>
-                    <li>All 3 Workshop Track Access</li>
-                    <li>Facilitation Certification</li>
-                    <li>Miro + Figma Template Bundle</li>
-                    <li>Lifetime Recording Access</li>
-                    <li>1-on-1 Speaker Office Hours</li>
-                    <li>Priority Breakout Room Matching</li>
-                </ul>
-                <a href="#" class="btn">Go Practitioner</a>
-            </div>
-            <div class="neo price-card reveal reveal-delay-2">
-                <div class="price-label">Team</div>
-                <div class="price-name">Enterprise</div>
-                <div class="price-val">$1,899</div>
-                <div class="price-period">Up to 5 seats (reg. $3,499)</div>
-                <ul class="price-features">
-                    <li>Everything in Practitioner (x5)</li>
-                    <li>Private Team Breakout Rooms</li>
-                    <li>Custom Sprint Lab Setup Call</li>
-                    <li>Executive Summary Report</li>
-                    <li>Dedicated Account Manager</li>
-                    <li>Invoice + PO Payment</li>
-                </ul>
-                <a href="#" class="btn btn-dark">Contact Sales</a>
-            </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Professional Email</label>
+          <input type="email" id="email" class="form-input" required aria-required="true">
         </div>
-    </section>
+        <button type="submit" class="cta-primary" style="width: 100%;">Submit Secure Request</button>
+      </form>
+    </div>
+  </div>
 
-    <!-- ========== FAQ ========== -->
-    <section id="faq" class="section container">
-        <h2 class="section-title reveal">FAQ</h2>
-        <div class="faq-list reveal">
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    Is this just another webinar?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">Absolutely not. Sprint Assembly is built on active participation. You
-                        will be in boards, building prototypes, and collaborating with peers in real-time. Every session
-                        has a maximum 20% lecture, 80% hands-on ratio. If you want to sit back and watch, this is not
-                        your event.</div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    What tools do I need?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">We primarily use Figma, Miro, and Slack. Familiarity is helpful but
-                        not required. One week before the event, all attendees receive tooling primers with setup guides
-                        and practice boards. Workshop leads also run optional 30-minute tool orientation sessions on Day
-                        0.</div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    What are the time zones for live sessions?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">All main stage sessions run 9:00 AM - 6:00 PM ET (UTC-4). Workshop
-                        tracks have morning and afternoon slots to accommodate European and Asia-Pacific attendees.
-                        Every session is recorded and available within 2 hours for async viewing.</div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    Can I get a refund?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">Full refunds are available up to 14 days before the event (August 31,
-                        2026). After that, you will receive a full credit for next year's summit or can transfer your
-                        ticket to a colleague at no extra cost. No questions asked.</div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    How does the certification work?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">Practitioner and Enterprise ticket holders who complete all sessions
-                        in at least one workshop track receive the Sprint Assembly Facilitation Certification. This
-                        includes a portfolio review, a 15-minute live facilitation assessment, and a digital badge
-                        recognized by 200+ design organizations.</div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    Is there a code of conduct?
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                </button>
-                <div class="faq-answer" role="region">
-                    <div class="faq-answer-inner">Yes. Sprint Assembly enforces a strict code of conduct focused on
-                        respect, inclusion, and constructive participation. All attendees, speakers, and sponsors must
-                        agree to our CoC before joining any session. We have a dedicated safety team monitoring all
-                        interactions throughout the event.</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div id="toast" class="toast" role="status">Request transmitted to Atlas Core.</div>
 
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo-text">SA_2026</div>
-                    <p class="footer-desc">Pushing the boundaries of how we think, build, and collaborate in a
-                        distributed world. Three days that will rewire your process.</p>
-                    <form class="footer-newsletter" aria-label="Newsletter signup">
-                        <label for="newsletter-email" class="visually-hidden" hidden>Email address</label>
-                        <input type="email" id="newsletter-email" class="footer-newsletter-input"
-                            placeholder="your@email.com" aria-label="Email address for newsletter">
-                        <button type="button" class="footer-newsletter-btn">Join</button>
-                    </form>
-                </div>
-                <div>
-                    <h4 class="footer-heading">Navigate</h4>
-                    <div class="footer-links">
-                        <a href="#speakers">Speakers</a>
-                        <a href="#agenda">Agenda</a>
-                        <a href="#tracks">Tracks</a>
-                        <a href="#tickets">Tickets</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="footer-heading">Resources</h4>
-                    <div class="footer-links">
-                        <a href="#">Code of Conduct</a>
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Press Kit</a>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="footer-heading">Connect</h4>
-                    <div class="footer-links">
-                        <a href="#">Twitter / X</a>
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Instagram</a>
-                        <a href="#">YouTube</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <span>&copy; 2026 Sprint Assembly. All rights reserved.</span>
-                <span>Designed with discipline and disobedience.</span>
-            </div>
-        </div>
-    </footer>
+  <script>
+    /* --- NAVBAR SCROLL --- */
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
 
-    <script>
-        /* ===== TAB SWITCHING ===== */
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tablist = btn.closest('.tabs-wrap');
-                tablist.querySelectorAll('.tab-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                tablist.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-                const panelId = btn.getAttribute('aria-controls');
-                document.getElementById(panelId).classList.add('active');
-            });
+    /* --- PARALLAX HERO --- */
+    const container = document.getElementById('parallax-container');
+    const card = document.getElementById('map-card');
+    if (container) {
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateX(${x * 20}px)`;
+      });
+      container.addEventListener('mouseleave', () => {
+        card.style.transform = `rotateY(0) rotateX(0) translateX(0)`;
+      });
+    }
+
+    /* --- TABS LOGIC --- */
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('aria-controls');
+
+        tabBtns.forEach(b => b.setAttribute('aria-selected', 'false'));
+        btn.setAttribute('aria-selected', 'true');
+
+        tabPanels.forEach(p => {
+          p.classList.remove('active');
+          if (p.id === target) p.classList.add('active');
         });
+      });
+    });
 
-        /* ===== KEYBOARD NAV FOR TABS ===== */
-        document.querySelectorAll('[role="tablist"]').forEach(tablist => {
-            const tabs = tablist.querySelectorAll('[role="tab"]');
-            tablist.addEventListener('keydown', e => {
-                let idx = Array.from(tabs).indexOf(document.activeElement);
-                if (e.key === 'ArrowRight') { idx = (idx + 1) % tabs.length; }
-                else if (e.key === 'ArrowLeft') { idx = (idx - 1 + tabs.length) % tabs.length; }
-                else return;
-                tabs[idx].focus();
-                tabs[idx].click();
-            });
-        });
+    /* --- ACCORDION LOGIC --- */
+    function toggleAccordion(btn) {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const content = btn.nextElementSibling;
 
-        /* ===== FAQ ACCORDION ===== */
-        document.querySelectorAll('.faq-question').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const item = btn.parentElement;
-                const answer = item.querySelector('.faq-answer');
-                const isOpen = item.classList.contains('open');
+      btn.setAttribute('aria-expanded', !expanded);
+      content.style.maxHeight = expanded ? '0' : content.scrollHeight + 'px';
+      btn.querySelector('span').textContent = expanded ? '+' : '−';
+    }
 
-                // Close all others
-                document.querySelectorAll('.faq-item.open').forEach(openItem => {
-                    if (openItem !== item) {
-                        openItem.classList.remove('open');
-                        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                        openItem.querySelector('.faq-answer').style.maxHeight = '0';
-                    }
-                });
+    /* --- MODAL LOGIC --- */
+    const openModal = document.getElementById('open-briefing');
+    const closeModal = document.getElementById('close-modal');
+    const modal = document.getElementById('briefing-modal');
 
-                if (isOpen) {
-                    item.classList.remove('open');
-                    btn.setAttribute('aria-expanded', 'false');
-                    answer.style.maxHeight = '0';
-                } else {
-                    item.classList.add('open');
-                    btn.setAttribute('aria-expanded', 'true');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-            });
-        });
+    openModal.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      document.getElementById('name').focus();
+    });
 
-        /* ===== SCROLL REVEAL ===== */
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
 
-        /* ===== COUNTER ANIMATION ===== */
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const target = parseInt(el.dataset.target, 10);
-                    const duration = 1800;
-                    const start = performance.now();
-                    const animate = (now) => {
-                        const progress = Math.min((now - start) / duration, 1);
-                        const eased = 1 - Math.pow(1 - progress, 3);
-                        el.textContent = Math.round(target * eased);
-                        if (progress < 1) requestAnimationFrame(animate);
-                        else el.textContent = target + '+';
-                    };
-                    requestAnimationFrame(animate);
-                    counterObserver.unobserve(el);
-                }
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+    /* --- FORM & TOAST --- */
+    document.getElementById('briefing-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      modal.style.display = 'none';
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    });
 
-        /* ===== SMOOTH SCROLL ===== */
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href === '#') return;
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    const navH = document.querySelector('nav').offsetHeight;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - navH - 20;
-                    window.scrollTo({ top, behavior: 'smooth' });
-                }
-            });
-        });
-
-        /* ===== MOBILE TOGGLE ===== */
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navLinks = document.getElementById('navLinks');
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', () => {
-                const isVisible = navLinks.style.display === 'flex';
-                navLinks.style.display = isVisible ? 'none' : 'flex';
-                navLinks.style.flexDirection = isVisible ? '' : 'column';
-                navLinks.style.position = isVisible ? '' : 'absolute';
-                navLinks.style.top = isVisible ? '' : '100%';
-                navLinks.style.left = isVisible ? '' : '0';
-                navLinks.style.right = isVisible ? '' : '0';
-                navLinks.style.background = isVisible ? '' : 'var(--white)';
-                navLinks.style.padding = isVisible ? '' : '1.5rem';
-                navLinks.style.borderBottom = isVisible ? '' : 'var(--border) solid var(--black)';
-                navLinks.style.zIndex = isVisible ? '' : '999';
-            });
-        }
-
-        /* ===== NAV SCROLL SHADOW ===== */
-        const nav = document.querySelector('nav');
-        let lastScrollY = 0;
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY;
-            if (y > 100) {
-                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,.08)';
+    /* --- COUNT UP ANIMATION --- */
+    const observerOptions = { threshold: 0.5 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.getAttribute('data-target'));
+          let current = 0;
+          const increment = target / 50;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              entry.target.textContent = target;
+              clearInterval(timer);
             } else {
-                nav.style.boxShadow = 'none';
+              entry.target.textContent = Math.ceil(current);
             }
-            lastScrollY = y;
-        }, { passive: true });
-    </script>
+          }, 30);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
 
+    document.querySelectorAll('.metric-value').forEach(el => observer.observe(el));
+  </script>
 </body>
 
 </html>

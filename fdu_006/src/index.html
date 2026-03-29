@@ -1,2134 +1,1699 @@
-Request timed out
-tml lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LetterMoss | The Calm OS for Premium Newsletters</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            /* Color Palette: Oat, Sand, Clay, Espresso, Muted Sage, Warm Amber */
-            --bg-oat: #F9F7F3;
-            --bg-sand: #EFEBE4;
-            --surface: #FFFFFF;
-            --surface-hover: #FCFAF8;
-            --text-espresso: #2C2825;
-            --text-muted: #6B655F;
-            --accent-clay: #C2765A;
-            --accent-amber: #D98C4A;
-            --accent-sage: #8A9A86;
-            --border-soft: #E5E0D8;
-            --border-dark: #D1C9BE;
-            --font-display: 'Instrument Serif', serif;
-            --font-ui: 'DM Sans', sans-serif;
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-full: 999px;
-            --shadow-sm: 0 2px 8px rgba(44, 40, 37, 0.04);
-            --shadow-md: 0 8px 24px rgba(44, 40, 37, 0.06);
-            --shadow-lg: 0 20px 40px rgba(44, 40, 37, 0.08);
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-fast: all 0.2s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-ui);
-            background-color: var(--bg-oat);
-            color: var(--text-espresso);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Sticky Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 16px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(249, 247, 243, 0.85);
-            -webkit-backdrop-filter: blur(20px);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-soft);
-            transition: var(--transition-smooth);
-        }
-
-        .navbar.scrolled {
-            padding: 12px 40px;
-            background: rgba(249, 247, 243, 0.95);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--font-display);
-            font-size: 24px;
-            font-weight: 400;
-            color: var(--text-espresso);
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
-
-        .nav-logo:hover {
-            color: var(--accent-clay);
-        }
-
-        .nav-logo svg {
-            width: 32px;
-            height: 32px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-link {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition-fast);
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-clay);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--text-espresso);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            padding: 10px 20px;
-            background: var(--text-espresso);
-            color: var(--surface);
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-clay);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-cta:active {
-            transform: translateY(0);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            padding: 140px 40px 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: linear-gradient(180deg, var(--bg-oat) 0%, var(--bg-sand) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(194, 118, 90, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-family: var(--font-display);
-            font-size: 64px;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--text-espresso);
-        }
-
-        .hero-text h1 em {
-            font-style: italic;
-            color: var(--accent-clay);
-        }
-
-        .hero-text p {
-            font-size: 20px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 480px;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            padding: 16px 32px;
-            background: var(--text-espresso);
-            color: var(--surface);
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-clay);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            padding: 16px 32px;
-            background: transparent;
-            color: var(--text-espresso);
-            border: 2px solid var(--border-dark);
-            border-radius: var(--radius-full);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-clay);
-            color: var(--accent-clay);
-            background: rgba(194, 118, 90, 0.05);
-        }
-
-        .hero-visual {
-            position: relative;
-        }
-
-        .dashboard-preview {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: 24px;
-            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
-            transition: var(--transition-smooth);
-            border: 1px solid var(--border-soft);
-        }
-
-        .dashboard-preview:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .preview-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .preview-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .preview-dot.red {
-            background: #E74C3C;
-        }
-
-        .preview-dot.yellow {
-            background: #F1C40F;
-        }
-
-        .preview-dot.green {
-            background: #2ECC71;
-        }
-
-        .preview-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .preview-stat {
-            padding: 16px;
-            background: var(--bg-oat);
-            border-radius: var(--radius-md);
-            text-align: center;
-        }
-
-        .preview-stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-espresso);
-        }
-
-        .preview-stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* KPI Strip */
-        .kpi-strip {
-            padding: 60px 40px;
-            background: var(--surface);
-            border-top: 1px solid var(--border-soft);
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .kpi-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-        }
-
-        .kpi-item {
-            text-align: center;
-            padding: 24px;
-            border-radius: var(--radius-md);
-            transition: var(--transition-smooth);
-        }
-
-        .kpi-item:hover {
-            background: var(--bg-oat);
-            transform: translateY(-4px);
-        }
-
-        .kpi-value {
-            font-family: var(--font-display);
-            font-size: 48px;
-            color: var(--text-espresso);
-            margin-bottom: 8px;
-        }
-
-        .kpi-value span {
-            color: var(--accent-clay);
-        }
-
-        .kpi-label {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .kpi-change {
-            font-size: 13px;
-            color: var(--accent-sage);
-            margin-top: 4px;
-            font-weight: 600;
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 100px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 8px 16px;
-            background: rgba(194, 118, 90, 0.1);
-            color: var(--accent-clay);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: var(--radius-full);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 48px;
-            margin-bottom: 16px;
-            color: var(--text-espresso);
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Subscriber Health Dashboard */
-        .health-dashboard {
-            background: var(--bg-sand);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            margin-bottom: 40px;
-        }
-
-        .health-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .health-card {
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-smooth);
-            border: 1px solid var(--border-soft);
-        }
-
-        .health-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .health-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .health-card-title {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .health-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .health-card-icon.subscribers {
-            background: rgba(138, 154, 134, 0.15);
-            color: var(--accent-sage);
-        }
-
-        .health-card-icon.openrate {
-            background: rgba(194, 118, 90, 0.15);
-            color: var(--accent-clay);
-        }
-
-        .health-card-icon.churn {
-            background: rgba(217, 140, 74, 0.15);
-            color: var(--accent-amber);
-        }
-
-        .health-card-value {
-            font-family: var(--font-display);
-            font-size: 36px;
-            color: var(--text-espresso);
-            margin-bottom: 8px;
-        }
-
-        .health-card-trend {
-            font-size: 13px;
-            color: var(--accent-sage);
-            font-weight: 600;
-        }
-
-        .health-card-trend.down {
-            color: #E74C3C;
-        }
-
-        /* Chart Area */
-        .chart-container {
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 32px;
-            border: 1px solid var(--border-soft);
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .chart-filters {
-            display: flex;
-            gap: 8px;
-        }
-
-        .chart-filter {
-            padding: 8px 16px;
-            border: 1px solid var(--border-soft);
-            background: var(--surface);
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .chart-filter:hover,
-        .chart-filter.active {
-            background: var(--text-espresso);
-            color: var(--surface);
-            border-color: var(--text-espresso);
-        }
-
-        .chart-area {
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 20px 0;
-        }
-
-        .chart-bar {
-            flex: 1;
-            background: linear-gradient(180deg, var(--accent-clay) 0%, var(--accent-amber) 100%);
-            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-            min-height: 40px;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .chart-bar:hover {
-            opacity: 0.8;
-            transform: scaleY(1.05);
-        }
-
-        .chart-bar-label {
-            position: absolute;
-            bottom: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        /* Sponsorship Pipeline */
-        .pipeline-section {
-            background: var(--surface);
-        }
-
-        .pipeline-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .pipeline-column {
-            background: var(--bg-oat);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            min-height: 400px;
-        }
-
-        .pipeline-column-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border-soft);
-        }
-
-        .pipeline-column-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-espresso);
-        }
-
-        .pipeline-count {
-            width: 28px;
-            height: 28px;
-            background: var(--surface);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .pipeline-card {
-            background: var(--surface);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-soft);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-        }
-
-        .pipeline-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--accent-clay);
-        }
-
-        .pipeline-card-brand {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .pipeline-card-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent-clay);
-            margin-bottom: 8px;
-        }
-
-        .pipeline-card-meta {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .pipeline-card-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: var(--radius-full);
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        .status-warm {
-            background: rgba(217, 140, 74, 0.15);
-            color: var(--accent-amber);
-        }
-
-        .status-hot {
-            background: rgba(194, 118, 90, 0.15);
-            color: var(--accent-clay);
-        }
-
-        /* Editorial Calendar */
-        .calendar-section {
-            background: var(--bg-sand);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 32px;
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .calendar-sidebar {
-            border-right: 1px solid var(--border-soft);
-            padding-right: 24px;
-        }
-
-        .calendar-month {
-            font-family: var(--font-display);
-            font-size: 28px;
-            margin-bottom: 24px;
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .calendar-nav-btn {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--border-soft);
-            background: var(--surface);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-fast);
-        }
-
-        .calendar-nav-btn:hover {
-            background: var(--bg-oat);
-            border-color: var(--accent-clay);
-        }
-
-        .calendar-upcoming {
-            margin-top: 32px;
-        }
-
-        .calendar-upcoming-title {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .upcoming-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
-            cursor: pointer;
-        }
-
-        .upcoming-item:hover {
-            background: var(--bg-oat);
-        }
-
-        .upcoming-date {
-            width: 48px;
-            height: 48px;
-            background: var(--accent-clay);
-            color: var(--surface);
-            border-radius: var(--radius-sm);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .upcoming-date span {
-            font-size: 18px;
-        }
-
-        .upcoming-info h4 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .upcoming-info p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .calendar-main {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            padding: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-sm);
-            padding: 8px;
-            position: relative;
-            transition: var(--transition-fast);
-            cursor: pointer;
-        }
-
-        .calendar-day:hover {
-            border-color: var(--accent-clay);
-            background: var(--bg-oat);
-        }
-
-        .calendar-day-number {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .calendar-day.other-month {
-            color: var(--border-dark);
-        }
-
-        .calendar-day.has-event::after {
-            content: '';
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            height: 4px;
-            background: var(--accent-clay);
-            border-radius: 2px;
-        }
-
-        .calendar-day.has-multiple::after {
-            background: linear-gradient(90deg, var(--accent-clay) 0%, var(--accent-sage) 100%);
-        }
-
-        /* Audience Segments */
-        .audience-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .audience-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-soft);
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .audience-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-clay), var(--accent-amber));
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .audience-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .audience-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .audience-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .audience-card:nth-child(1) .audience-icon {
-            background: rgba(194, 118, 90, 0.15);
-        }
-
-        .audience-card:nth-child(2) .audience-icon {
-            background: rgba(138, 154, 134, 0.15);
-        }
-
-        .audience-card:nth-child(3) .audience-icon {
-            background: rgba(217, 140, 74, 0.15);
-        }
-
-        .audience-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .audience-size {
-            font-family: var(--font-display);
-            font-size: 32px;
-            color: var(--accent-clay);
-            margin-bottom: 16px;
-        }
-
-        .audience-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .audience-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .audience-tag {
-            padding: 6px 12px;
-            background: var(--bg-oat);
-            border-radius: var(--radius-full);
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            background: var(--bg-sand);
-        }
-
-        .pricing-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .pricing-toggle-btn {
-            padding: 12px 24px;
-            border: 2px solid var(--border-soft);
-            background: var(--surface);
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .pricing-toggle-btn.active {
-            background: var(--text-espresso);
-            color: var(--surface);
-            border-color: var(--text-espresso);
-        }
-
-        .pricing-toggle-btn:hover:not(.active) {
-            border-color: var(--accent-clay);
-            color: var(--accent-clay);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .pricing-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 40px 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-soft);
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .pricing-card.featured {
-            border: 2px solid var(--accent-clay);
-            transform: scale(1.05);
-        }
-
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-8px);
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 6px 16px;
-            background: var(--accent-clay);
-            color: var(--surface);
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: var(--radius-full);
-        }
-
-        .pricing-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .pricing-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-        }
-
-        .pricing-price {
-            font-family: var(--font-display);
-            font-size: 48px;
-            margin-bottom: 8px;
-        }
-
-        .pricing-price span {
-            font-size: 16px;
-            color: var(--text-muted);
-        }
-
-        .pricing-period {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            width: 20px;
-            height: 20px;
-            background: var(--accent-sage);
-            color: var(--surface);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-
-        .pricing-cta {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid var(--text-espresso);
-            background: transparent;
-            color: var(--text-espresso);
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .pricing-card.featured .pricing-cta {
-            background: var(--text-espresso);
-            color: var(--surface);
-        }
-
-        .pricing-cta:hover {
-            background: var(--text-espresso);
-            color: var(--surface);
-            transform: translateY(-2px);
-        }
-
-        .pricing-card.featured .pricing-cta:hover {
-            background: var(--accent-clay);
-            border-color: var(--accent-clay);
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            background: var(--surface);
-        }
-
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border-soft);
-            overflow: hidden;
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 24px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: none;
-            border: none;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-            color: var(--text-espresso);
-            transition: var(--transition-fast);
-        }
-
-        .faq-question:hover {
-            color: var(--accent-clay);
-        }
-
-        .faq-icon {
-            width: 24px;
-            height: 24px;
-            position: relative;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-icon::before,
-        .faq-icon::after {
-            content: '';
-            position: absolute;
-            background: var(--text-espresso);
-            transition: var(--transition-fast);
-        }
-
-        .faq-icon::before {
-            width: 12px;
-            height: 2px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .faq-icon::after {
-            width: 2px;
-            height: 12px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-item.active .faq-icon::before,
-        .faq-item.active .faq-icon::after {
-            background: var(--accent-clay);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding-bottom: 24px;
-        }
-
-        .faq-answer p {
-            font-size: 16px;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--text-espresso);
-            color: var(--bg-oat);
-            padding: 80px 40px 40px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--font-display);
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo svg {
-            width: 36px;
-            height: 36px;
-        }
-
-        .footer-desc {
-            font-size: 15px;
-            color: rgba(249, 247, 243, 0.7);
-            line-height: 1.7;
-        }
-
-        .footer-column h4 {
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            color: var(--surface);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(249, 247, 243, 0.7);
-            text-decoration: none;
-            font-size: 14px;
-            transition: var(--transition-fast);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-clay);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 40px;
-            border-top: 1px solid rgba(249, 247, 243, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-copyright {
-            font-size: 14px;
-            color: rgba(249, 247, 243, 0.5);
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 16px;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(249, 247, 243, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(249, 247, 243, 0.7);
-            text-decoration: none;
-            transition: var(--transition-smooth);
-        }
-
-        .footer-social a:hover {
-            background: var(--accent-clay);
-            border-color: var(--accent-clay);
-            color: var(--surface);
-            transform: translateY(-3px);
-        }
-
-        /* Counter Animation */
-        .counter {
-            display: inline-block;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text p {
-                margin: 0 auto 40px;
-            }
-
-            .hero-ctas {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .kpi-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .health-grid,
-            .audience-grid,
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pipeline-board {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .calendar-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .calendar-sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--border-soft);
-                padding-right: 0;
-                padding-bottom: 24px;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 12px 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding: 120px 20px 60px;
-            }
-
-            .hero-text h1 {
-                font-size: 40px;
-            }
-
-            .section {
-                padding: 60px 20px;
-            }
-
-            .section-title {
-                font-size: 32px;
-            }
-
-            .kpi-container {
-                grid-template-columns: 1fr;
-            }
-
-            .pipeline-board {
-                grid-template-columns: 1fr;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
-            .pricing-card.featured:hover {
-                transform: translateY(-8px);
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-        }
-
-        /* Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-
-            html {
-                scroll-behavior: auto;
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sable Current | Ocean-Climate Operations</title>
+  <style>
+    :root {
+      /* Backgrounds */
+      --bg-deep: #010409;
+      --bg-fog: rgba(6, 15, 25, 0.6);
+      --bg-glow-blue: rgba(14, 60, 100, 0.4);
+      --bg-glow-teal: rgba(19, 100, 100, 0.3);
+      /* Surfaces */
+      --surface-glass: rgba(15, 25, 40, 0.4);
+      --surface-glass-hover: rgba(25, 40, 60, 0.5);
+      --surface-border: rgba(255, 255, 255, 0.1);
+      --surface-blur: blur(24px);
+      /* Rules */
+      --rule-light: rgba(255, 255, 255, 0.08);
+      --rule-accent: rgba(0, 225, 255, 0.5);
+      --rule-dashed: repeating-linear-gradient(90deg, var(--rule-light), var(--rule-light) 4px, transparent 4px, transparent 8px);
+      /* Text */
+      --text-primary: #FFFFFF;
+      --text-muted: #8B949E;
+      --text-cyan: #58D1EB;
+      /* Accents */
+      --accent-sea-glass: #29B6F6;
+      --accent-amber: #FFC107;
+      --accent-green: #00E676;
+      --accent-rust: #FF7043;
+      /* Semantic */
+      --danger: #FF5252;
+      --warning: #FFD740;
+      --success: #69F0AE;
+      --focus-ring: 0 0 0 2px rgba(88, 209, 235, 0.6);
+      /* Typography */
+      --font-sans: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, "Segoe UI", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+      /* Spacing */
+      --space-2: 0.5rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-24: 6rem;
+      --space-32: 8rem;
+      /* Layout */
+      --content-width: 1200px;
+      /* Motion */
+      --motion-rapid: 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      --motion-smooth: 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      --motion-cinematic: 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Orbs */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: var(--bg-glow-blue);
+      top: -200px;
+      left: -100px;
+      animation: float-1 20s infinite alternate ease-in-out;
+    }
+
+    .orb-2 {
+      width: 800px;
+      height: 800px;
+      background: var(--bg-glow-teal);
+      bottom: -300px;
+      right: -200px;
+      animation: float-2 25s infinite alternate ease-in-out;
+    }
+
+    @keyframes float-1 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(100px, 50px);
+      }
+    }
+
+    @keyframes float-2 {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(-100px, -80px);
+      }
+    }
+
+    .container {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Layout Utilities */
+    .flex {
+      display: flex;
+    }
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .gap-2 {
+      gap: var(--space-2);
+    }
+
+    .gap-4 {
+      gap: var(--space-4);
+    }
+
+    .gap-6 {
+      gap: var(--space-6);
+    }
+
+    .gap-8 {
+      gap: var(--space-8);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      letter-spacing: -0.02em;
+      font-size: 0.875rem;
+    }
+
+    .text-muted {
+      color: var(--text-muted);
+    }
+
+    .text-cyan {
+      color: var(--text-cyan);
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Surface/Glass Mixins */
+    .glass-panel {
+      background: var(--surface-glass);
+      backdrop-filter: var(--surface-blur);
+      -webkit-backdrop-filter: var(--surface-blur);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: var(--space-4);
+      background: var(--surface-glass);
+      border: 1px solid var(--accent-sea-glass);
+      color: var(--text-primary);
+      z-index: 1000;
+      backdrop-filter: var(--surface-blur);
+      transition: var(--motion-smooth);
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .skip-link:focus {
+      top: var(--space-6);
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      z-index: 100;
+      transition: var(--motion-smooth);
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background: var(--bg-fog);
+      backdrop-filter: var(--surface-blur);
+      -webkit-backdrop-filter: var(--surface-blur);
+      border-bottom: 1px solid var(--rule-light);
+      height: 60px;
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 24px;
+      height: 24px;
+      background: conic-gradient(from 180deg, var(--accent-sea-glass), transparent, var(--accent-sea-glass));
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .tide-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      background: rgba(41, 182, 246, 0.1);
+      border: 1px solid rgba(41, 182, 246, 0.3);
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .tide-chip::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-sea-glass);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-sea-glass);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0% {
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.4;
+      }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--motion-rapid);
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn:focus-visible {
+      outline: var(--focus-ring);
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--rule-light);
+      color: var(--text-primary);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: var(--space-24);
+      position: relative;
+    }
+
+    .hero-kicker {
+      color: var(--accent-amber);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: var(--space-4);
+      display: inline-block;
+      padding: 4px 8px;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 4px;
+      background: rgba(255, 193, 7, 0.05);
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      letter-spacing: -1px;
+    }
+
+    .hero-deck {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+
+    /* Mock Instrument Stack */
+    .instrument-stack {
+      position: relative;
+      height: 400px;
+      perspective: 1000px;
+    }
+
+    .instrument-card {
+      position: absolute;
+      width: 100%;
+      height: auto;
+      min-height: 120px;
+      padding: var(--space-6);
+      border-radius: 12px;
+      background: var(--surface-glass);
+      border: 1px solid var(--rule-light);
+      backdrop-filter: var(--surface-blur);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      transition: var(--motion-smooth);
+    }
+
+    .instrument-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: conic-gradient(from var(--a, 0deg), transparent 70%, var(--accent-sea-glass) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: spin 6s linear infinite;
+    }
+
+    @property --a {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes spin {
+      100% {
+        --a: 360deg;
+      }
+    }
+
+    .instrument-card:nth-child(1) {
+      top: 0;
+      transform: translateZ(0) scale(1);
+      z-index: 3;
+    }
+
+    .instrument-card:nth-child(2) {
+      top: 60px;
+      transform: translateZ(-50px) scale(0.95);
+      opacity: 0.8;
+      z-index: 2;
+    }
+
+    .instrument-card:nth-child(3) {
+      top: 120px;
+      transform: translateZ(-100px) scale(0.9);
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    .instrument-stack:hover .instrument-card:nth-child(2) {
+      transform: translateY(20px) translateZ(-50px) scale(0.95);
+    }
+
+    .instrument-stack:hover .instrument-card:nth-child(3) {
+      transform: translateY(40px) translateZ(-100px) scale(0.9);
+    }
+
+    /* Proof Band */
+    .proof-band {
+      padding: var(--space-8) 0;
+      border-top: 1px solid var(--rule-light);
+      border-bottom: 1px solid var(--rule-light);
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+
+    .proof-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .proof-value {
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text-cyan);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .proof-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Tideboard Chapter */
+    .section-header {
+      margin-bottom: var(--space-12);
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: var(--space-2);
+      display: block;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 400;
+    }
+
+    .tide-chart-plate {
+      height: 400px;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-6);
+      background: radial-gradient(circle at 50% 0%, rgba(41, 182, 246, 0.1) 0%, transparent 70%);
+      border-top: 1px solid var(--rule-accent);
+    }
+
+    .tide-line-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      border-left: 1px solid var(--rule-light);
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .tide-tick {
+      position: absolute;
+      left: -5px;
+      height: 1px;
+      width: 5px;
+      background: var(--text-muted);
+    }
+
+    .tide-label {
+      position: absolute;
+      left: -40px;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .tide-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .tide-path {
+      fill: none;
+      stroke: var(--accent-sea-glass);
+      stroke-width: 2;
+      filter: drop-shadow(0 0 8px rgba(41, 182, 246, 0.4));
+    }
+
+    .tide-threshold {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: dashed rgba(255, 82, 82, 0.5);
+      background-image: repeating-linear-gradient(90deg, rgba(255, 82, 82, 0.5), rgba(255, 82, 82, 0.5) 4px, transparent 4px, transparent 8px);
+    }
+
+    .threshold-label {
+      position: absolute;
+      right: 12px;
+      top: -24px;
+      color: var(--danger);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      background: rgba(255, 82, 82, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Mission Console (Tabs) */
+    .console-container {
+      margin-top: var(--space-24);
+    }
+
+    .tab-list {
+      display: flex;
+      gap: var(--space-2);
+      border-bottom: 1px solid var(--rule-light);
+      margin-bottom: var(--space-6);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: var(--space-2) var(--space-4);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: var(--motion-rapid);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      color: var(--text-cyan);
+      border-bottom-color: var(--accent-sea-glass);
+      text-shadow: 0 0 10px rgba(41, 182, 246, 0.4);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .watch-note-strip {
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 2px solid var(--warning);
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Storm Readiness Route */
+    .route-container {
+      padding: var(--space-12) 0;
+      position: relative;
+    }
+
+    .route-line {
+      position: absolute;
+      left: 20px;
+      top: var(--space-12);
+      bottom: var(--space-12);
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--accent-sea-glass) 10%, var(--accent-sea-glass) 90%, transparent);
+      opacity: 0.5;
+    }
+
+    .route-checkpoint {
+      position: relative;
+      padding-left: 64px;
+      margin-bottom: var(--space-8);
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .route-checkpoint.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .checkpoint-dot {
+      position: absolute;
+      left: 14px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg-deep);
+      border: 2px solid var(--accent-sea-glass);
+      box-shadow: 0 0 10px var(--accent-sea-glass);
+    }
+
+    .checkpoint-time {
+      font-family: var(--font-mono);
+      color: var(--text-cyan);
+      font-size: 0.875rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    /* Comparison Section */
+    .comparison-wrapper {
+      margin: var(--space-24) 0;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .comparison-col {
+      padding: var(--space-8);
+      border-radius: 16px;
+      border: 1px solid var(--rule-light);
+      background: rgba(255, 255, 255, 0.02);
+      transition: var(--motion-smooth);
+    }
+
+    .comparison-col.is-unified {
+      background: var(--surface-glass);
+      border-color: rgba(88, 209, 235, 0.3);
+      box-shadow: 0 0 40px rgba(88, 209, 235, 0.05);
+    }
+
+    .col-header {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .comp-item {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--rule-light);
+      color: var(--text-muted);
+    }
+
+    .comp-item:last-child {
+      border-bottom: none;
+    }
+
+    .is-unified .comp-item {
+      color: var(--text-primary);
+    }
+
+    .is-unified .comp-item::before {
+      content: '→';
+      color: var(--accent-sea-glass);
+      margin-right: 8px;
+      font-family: var(--font-mono);
+    }
+
+    /* Dispatch Log */
+    .dispatch-ctrl {
+      display: flex;
+      gap: 8px;
+      margin-bottom: var(--space-6);
+    }
+
+    .filter-chip {
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--rule-light);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      transition: var(--motion-rapid);
+    }
+
+    .filter-chip:hover {
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .filter-chip.active {
+      background: var(--text-primary);
+      color: var(--bg-deep);
+      border-color: var(--text-primary);
+    }
+
+    .dispatch-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .log-entry {
+      display: flex;
+      align-items: center;
+      padding: var(--space-4);
+      gap: var(--space-4);
+      cursor: pointer;
+      transition: var(--motion-rapid);
+    }
+
+    .log-entry:hover {
+      background: var(--surface-glass-hover);
+    }
+
+    .log-time {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .log-level {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .level-info {
+      background: var(--text-cyan);
+      box-shadow: 0 0 8px var(--text-cyan);
+    }
+
+    .level-warn {
+      background: var(--warning);
+      box-shadow: 0 0 8px var(--warning);
+    }
+
+    .level-crit {
+      background: var(--danger);
+      box-shadow: 0 0 8px var(--danger);
+    }
+
+    .log-loc {
+      font-weight: 500;
+      width: 140px;
+      flex-shrink: 0;
+    }
+
+    .log-desc {
+      color: var(--text-muted);
+      flex-grow: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Vignette */
+    .vignette {
+      margin: var(--space-24) 0;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--space-8);
+    }
+
+    .vignette-main {
+      padding: var(--space-8);
+    }
+
+    .vignette-kicker {
+      color: var(--accent-sea-glass);
+      margin-bottom: var(--space-4);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    /* Accordion */
+    .accordion-item {
+      border-bottom: 1px solid var(--rule-light);
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: var(--space-6) 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-primary);
+      font-size: 1.125rem;
+      cursor: pointer;
+      transition: var(--motion-rapid);
+      text-align: left;
+    }
+
+    .accordion-trigger:hover {
+      color: var(--text-cyan);
+    }
+
+    .accordion-icon {
+      transition: transform 0.3s ease;
+      font-family: var(--font-mono);
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.3s ease;
+    }
+
+    .accordion-inner {
+      padding-bottom: var(--space-6);
+      color: var(--text-muted);
+    }
+
+    .accordion-item.active {
+      border-bottom-color: var(--accent-sea-glass);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--motion-smooth);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 600px;
+      transform: scale(0.95) translateY(20px);
+      transition: var(--motion-smooth);
+      padding: var(--space-8);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-6);
+      border-bottom: 1px solid var(--rule-light);
+      padding-bottom: var(--space-4);
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-4);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--rule-light);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      outline: none;
+      transition: var(--motion-rapid);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-sea-glass);
+      box-shadow: 0 0 0 2px rgba(41, 182, 246, 0.2);
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      background: var(--surface-glass);
+      border-left: 3px solid var(--accent-green);
+      padding: var(--space-4) var(--space-6);
+      border-radius: 8px;
+      backdrop-filter: var(--surface-blur);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      transform: translateX(120%);
+      opacity: 0;
+      transition: var(--motion-smooth);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: var(--space-32);
+      padding: var(--space-12) 0;
+      border-top: 1px solid var(--rule-light);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <a href="#" class="nav-logo">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="32" rx="8" fill="#C2765A" />
-                <path d="M8 10h16M8 16h12M8 22h8" stroke="white" stroke-width="2" stroke-linecap="round" />
-            </svg>
-            LetterMoss
-        </a>
-        <div class="nav-links">
-            <a href="#dashboard" class="nav-link">Dashboard</a>
-            <a href="#pipeline" class="nav-link">Sponsors</a>
-            <a href="#calendar" class="nav-link">Editorial</a>
-            <a href="#audience" class="nav-link">Audience</a>
-            <a href="#pricing" class="nav-link">Pricing</a>
-            <button type="button" class="nav-cta" aria-label="Start free trial">Start Free</button>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text reveal">
-                <h1>The calm OS for <em>premium newsletters</em></h1>
-                <p>Audience growth, sponsorship health, editorial planning, and community retention in one
-                    human-centered operating system for design-conscious founders.</p>
-                <div class="hero-ctas">
-                    <button type="button" class="btn-primary" aria-label="Start your free trial">
-                        Start Free Trial
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    <button type="button" class="btn-secondary" aria-label="Watch product demo">Watch Demo</button>
-                </div>
-            </div>
-            <div class="hero-visual reveal">
-                <div class="dashboard-preview">
-                    <div class="preview-header">
-                        <div class="preview-dots">
-                            <div class="preview-dot red"></div>
-                            <div class="preview-dot yellow"></div>
-                            <div class="preview-dot green"></div>
-                        </div>
-                        <span style="font-size: 12px; color: var(--text-muted);">Live Dashboard</span>
-                    </div>
-                    <div class="preview-stats">
-                        <div class="preview-stat">
-                            <div class="preview-stat-value">24.8K</div>
-                            <div class="preview-stat-label">Subscribers</div>
-                        </div>
-                        <div class="preview-stat">
-                            <div class="preview-stat-value">68%</div>
-                            <div class="preview-stat-label">Open Rate</div>
-                        </div>
-                        <div class="preview-stat">
-                            <div class="preview-stat-value">$12.4K</div>
-                            <div class="preview-stat-label">MRR</div>
-                        </div>
-                        <div class="preview-stat">
-                            <div class="preview-stat-value">4.2%</div>
-                            <div class="preview-stat-label">Churn</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Ambient Background Elements -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-icon"></span>
+        Sable Current
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="tide-chip">
+          <span>Tide +0.7m</span>
+          <span class="text-muted">|</span>
+          <span>Surge Watch</span>
         </div>
+        <button class="btn btn-glass" onclick="openModal('briefing')">Req. Harbor Briefing</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero: Briefing Cover -->
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="reveal-item">
+          <span class="hero-kicker">Classification: Operational Intelligence</span>
+          <h1 class="hero-title grad-text">Monitor tidal risk & shoreline resilience in one command layer.</h1>
+          <p class="hero-deck">Sable Current equips ports, coastal cities, and marine infrastructure teams with
+            real-time operational readiness pipelines. Stop guessing the surge window.</p>
+          <div class="flex gap-4">
+            <button class="btn btn-primary" onclick="openModal('pilot')">Request Pilot</button>
+            <a href="#tideboard" class="btn btn-glass">View Live Instrumentation</a>
+          </div>
+        </div>
+        <div class="instrument-stack reveal-item" style="transition-delay: 100ms;">
+          <div class="instrument-card glass-panel">
+            <div class="mono text-muted mb-2">TIDAL.TELEMETRY.01</div>
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-cyan text-xl">2.4m</span>
+              <span class="mono text-muted">Rising</span>
+            </div>
+          </div>
+          <div class="instrument-card glass-panel">
+            <div class="mono text-muted mb-2">STORM.WINDOW.A</div>
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-warning text-xl">14:00Z</span>
+              <span class="mono text-muted">Impact expected</span>
+            </div>
+          </div>
+          <div class="instrument-card glass-panel">
+            <div class="mono text-muted mb-2">ASSET.EXPOSURE.INDEX</div>
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-primary text-xl">Pier 4</span>
+              <span class="mono danger">Vulnerable</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- KPI Strip -->
-    <section class="kpi-strip">
-        <div class="kpi-container">
-            <div class="kpi-item reveal">
-                <div class="kpi-value"><span class="counter" data-target="24800">0</span>+</div>
-                <div class="kpi-label">Active Creators</div>
-                <div class="kpi-change">+23% this quarter</div>
-            </div>
-            <div class="kpi-item reveal">
-                <div class="kpi-value">$<span class="counter" data-target="4.2">0</span>M</div>
-                <div class="kpi-label">Creator Revenue</div>
-                <div class="kpi-change">+156% YoY</div>
-            </div>
-            <div class="kpi-item reveal">
-                <div class="kpi-value"><span class="counter" data-target="89">0</span>%</div>
-                <div class="kpi-label">Retention Rate</div>
-                <div class="kpi-change">Industry leading</div>
-            </div>
-            <div class="kpi-item reveal">
-                <div class="kpi-value"><span class="counter" data-target="12">0</span>h</div>
-                <div class="kpi-label">Weekly Time Saved</div>
-                <div class="kpi-change">Per creator avg</div>
-            </div>
+    <!-- Proof Band -->
+    <section class="proof-band reveal-item">
+      <div class="container proof-grid">
+        <div class="proof-item glass-panel p-4">
+          <span class="proof-value count-up" data-target="98">0</span><span class="text-cyan">%</span>
+          <span class="proof-label">Uptime on sensor grids across extreme weather events</span>
         </div>
+        <div class="proof-item glass-panel p-4">
+          <span class="proof-value count-up" data-target="15">0</span><span class="text-cyan">min</span>
+          <span class="proof-label">Advance notice threshold vs 4hr legacy latency</span>
+        </div>
+        <div class="proof-item glass-panel p-4">
+          <span class="text-cyan proof-value">Tier 1</span>
+          <span class="proof-label">Maritime operations compliance standard</span>
+        </div>
+        <div class="proof-item glass-panel p-4">
+          <span class="proof-value count-up" data-target="42">0</span><span class="text-cyan">+</span>
+          <span class="proof-label">Partner ports & coastal command centers active</span>
+        </div>
+      </div>
     </section>
 
-    <!-- Subscriber Health Dashboard -->
-    <section class="section" id="dashboard">
-        <div class="section-header reveal">
-            <span class="section-tag">Analytics</span>
-            <h2 class="section-title">Subscriber Health Dashboard</h2>
-            <p class="section-subtitle">Real-time insights into your audience growth, engagement patterns, and retention
-                metrics.</p>
+    <!-- Tideboard Chapter -->
+    <section id="tideboard" class="container" style="margin-top: var(--space-24);">
+      <div class="section-header reveal-item">
+        <span class="section-tag">Module: Tideboard</span>
+        <h2 class="section-title">Harmonic situational awareness.</h2>
+        <p class="text-muted mt-4 max-w-2xl">A real-time instrument panel projecting wave behavior, residual surge, and
+          actionable thresholds. Precise measurements replacing generalized forecasts.</p>
+      </div>
+
+      <div class="glass-panel tide-chart-plate reveal-item">
+        <div class="tide-line-container">
+          <!-- Ticks -->
+          <div class="tide-tick" style="bottom: 20%;"><span class="tide-label">0.0m</span></div>
+          <div class="tide-tick" style="bottom: 50%;"><span class="tide-label">1.5m</span></div>
+          <div class="tide-tick" style="bottom: 80%;"><span class="tide-label">3.0m</span></div>
+
+          <div class="tide-threshold" style="bottom: 65%;">
+            <span class="threshold-label">Pier Inundation Risk</span>
+          </div>
+
+          <!-- Chart Line -->
+          <svg class="tide-svg" preserveAspectRatio="none" viewBox="0 0 1000 100">
+            <path class="tide-path" d="M0,80 Q100,20 200,50 T400,60 T600,40 T800,70 T1000,30" />
+            <!-- Current time marker -->
+            <line x1="600" y1="0" x2="600" y2="100" stroke="var(--text-primary)" stroke-width="1"
+              stroke-dasharray="4" />
+            <circle cx="600" cy="40" r="4" fill="var(--accent-sea-glass)" />
+          </svg>
         </div>
-        <div class="health-dashboard reveal">
-            <div class="health-grid">
-                <div class="health-card">
-                    <div class="health-card-header">
-                        <span class="health-card-title">Total Subscribers</span>
-                        <div class="health-card-icon subscribers">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="health-card-value">24,832</div>
-                    <div class="health-card-trend">+1,247 this month</div>
-                </div>
-                <div class="health-card">
-                    <div class="health-card-header">
-                        <span class="health-card-title">Avg. Open Rate</span>
-                        <div class="health-card-icon openrate">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path fill-rule="evenodd"
-                                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="health-card-value">68.4%</div>
-                    <div class="health-card-trend">+2.3% vs last month</div>
-                </div>
-                <div class="health-card">
-                    <div class="health-card-header">
-                        <span class="health-card-title">Churn Rate</span>
-                        <div class="health-card-icon churn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 10-2 0v2a1 1 0 102 0V9z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="health-card-value">2.1%</div>
-                    <div class="health-card-trend down">-0.4% improvement</div>
-                </div>
-            </div>
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3 class="chart-title">Subscriber Growth Trend</h3>
-                    <div class="chart-filters">
-                        <button type="button" class="chart-filter active" aria-label="View last 7 days">7D</button>
-                        <button type="button" class="chart-filter" aria-label="View last 30 days">30D</button>
-                        <button type="button" class="chart-filter" aria-label="View last 90 days">90D</button>
-                    </div>
-                </div>
-                <div class="chart-area">
-                    <div class="chart-bar" style="height: 45%;"><span class="chart-bar-label">Mon</span></div>
-                    <div class="chart-bar" style="height: 62%;"><span class="chart-bar-label">Tue</span></div>
-                    <div class="chart-bar" style="height: 55%;"><span class="chart-bar-label">Wed</span></div>
-                    <div class="chart-bar" style="height: 78%;"><span class="chart-bar-label">Thu</span></div>
-                    <div class="chart-bar" style="height: 85%;"><span class="chart-bar-label">Fri</span></div>
-                    <div class="chart-bar" style="height: 92%;"><span class="chart-bar-label">Sat</span></div>
-                    <div class="chart-bar" style="height: 100%;"><span class="chart-bar-label">Sun</span></div>
-                </div>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- Sponsorship Pipeline -->
-    <section class="section pipeline-section" id="pipeline">
-        <div class="section-header reveal">
-            <span class="section-tag">Revenue</span>
-            <h2 class="section-title">Sponsorship Pipeline</h2>
-            <p class="section-subtitle">Track sponsor opportunities from first contact to signed contract. Forecast
-                revenue and manage relationships.</p>
+    <!-- Mission Console (Tabs) -->
+    <section class="container console-container reveal-item">
+      <span class="section-tag">Module: Command Console</span>
+      <div class="glass-panel p-6">
+        <div class="tab-list">
+          <button class="tab-btn active" data-tab="tide">Tide Models</button>
+          <button class="tab-btn" data-tab="storm">Storm Vectors</button>
+          <button class="tab-btn" data-tab="shoreline">Shoreline Erosion</button>
+          <button class="tab-btn" data-tab="assets">Asset Matrix</button>
         </div>
-        <div class="pipeline-board reveal">
-            <div class="pipeline-column">
-                <div class="pipeline-column-header">
-                    <span class="pipeline-column-title">Prospects</span>
-                    <span class="pipeline-count">4</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Notion</div>
-                    <div class="pipeline-card-value">$8,000</div>
-                    <div class="pipeline-card-meta">Productivity tools</div>
-                    <span class="pipeline-card-status status-warm">Warm lead</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Figma</div>
-                    <div class="pipeline-card-value">$12,000</div>
-                    <div class="pipeline-card-meta">Design platform</div>
-                    <span class="pipeline-card-status status-hot">Hot lead</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Linear</div>
-                    <div class="pipeline-card-value">$6,500</div>
-                    <div class="pipeline-card-meta">Issue tracking</div>
-                    <span class="pipeline-card-status status-warm">Warm lead</span>
-                </div>
+
+        <div class="tab-content-wrapper">
+          <div id="tab-tide" class="tab-panel active">
+            <div class="flex gap-8">
+              <div style="flex:1">
+                <h3 class="text-xl mb-4">Astronomic vs. Observed</h3>
+                <p class="text-muted">Correlating standard harmonic predictions against live telemetry to calculate
+                  residual surge volumes in real-time. High fidelity readouts update at 1Hz from shoreline sensor
+                  relays.</p>
+              </div>
+              <div class="glass-panel p-4" style="width: 300px">
+                <span class="mono text-cyan mb-2 block">DELTA DETECTED</span>
+                <div class="text-2xl">+0.4m</div>
+                <span class="text-muted text-sm">Above harmonic baseline</span>
+              </div>
             </div>
-            <div class="pipeline-column">
-                <div class="pipeline-column-header">
-                    <span class="pipeline-column-title">Negotiating</span>
-                    <span class="pipeline-count">2</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Vercel</div>
-                    <div class="pipeline-card-value">$15,000</div>
-                    <div class="pipeline-card-meta">Deployment platform</div>
-                    <span class="pipeline-card-status status-hot">Final review</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Stripe</div>
-                    <div class="pipeline-card-value">$20,000</div>
-                    <div class="pipeline-card-meta">Payment infrastructure</div>
-                    <span class="pipeline-card-status status-warm">Terms discussion</span>
-                </div>
+            <div class="watch-note-strip">
+              <div><strong class="text-warning">WATCH DESK:</strong> Anomalous rise rate detected in northern quadrant.
+              </div>
+              <button class="btn btn-glass" onclick="showToast('Log copied to clipboard', 'success')"
+                style="padding: 4px 12px; font-size: 0.75rem;">Copy Log</button>
             </div>
-            <div class="pipeline-column">
-                <div class="pipeline-column-header">
-                    <span class="pipeline-column-title">Contracting</span>
-                    <span class="pipeline-count">1</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Supabase</div>
-                    <div class="pipeline-card-value">$10,000</div>
-                    <div class="pipeline-card-meta">Database platform</div>
-                    <span class="pipeline-card-status status-hot">Docs sent</span>
-                </div>
+          </div>
+
+          <div id="tab-storm" class="tab-panel">
+            <div class="flex gap-8">
+              <div style="flex:1">
+                <h3 class="text-xl mb-4">Approaching Low Pressure Systems</h3>
+                <p class="text-muted">Overlaying atmospheric pressure drop zones over the port operational boundaries.
+                  Automatically generates halt-work windows for crane and vessel operations based on sustained wind
+                  predictions.</p>
+              </div>
+              <div class="glass-panel p-4" style="width: 300px">
+                <span class="mono text-warning mb-2 block">PRESSURE GAUGE</span>
+                <div class="text-2xl">984 hPa</div>
+                <span class="text-muted text-sm">Dropping at 2hPa/hr</span>
+              </div>
             </div>
-            <div class="pipeline-column">
-                <div class="pipeline-column-header">
-                    <span class="pipeline-column-title">Closed Won</span>
-                    <span class="pipeline-count">3</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Raycast</div>
-                    <div class="pipeline-card-value">$7,500</div>
-                    <div class="pipeline-card-meta">Mac launcher</div>
-                    <span class="pipeline-card-status status-hot">Paid</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Arc Browser</div>
-                    <div class="pipeline-card-value">$9,000</div>
-                    <div class="pipeline-card-meta">Web browser</div>
-                    <span class="pipeline-card-status status-hot">Paid</span>
-                </div>
-                <div class="pipeline-card">
-                    <div class="pipeline-card-brand">Cron</div>
-                    <div class="pipeline-card-value">$5,500</div>
-                    <div class="pipeline-card-meta">Calendar app</div>
-                    <span class="pipeline-card-status status-hot">Paid</span>
-                </div>
+            <div class="watch-note-strip" style="border-left-color: var(--danger); background: rgba(255,82,82,0.1);">
+              <div><strong class="text-danger">HAZARD:</strong> Sustained winds exceeding operational limits for
+                Ship-to-Shore cranes within 4 hours.</div>
+              <button class="btn btn-glass" onclick="showToast('Alert escalated', 'success')"
+                style="padding: 4px 12px; font-size: 0.75rem;">Escalate</button>
             </div>
+          </div>
+
+          <div id="tab-shoreline" class="tab-panel">
+            <h3 class="text-xl mb-4">Morphodynamic Feedback</h3>
+            <p class="text-muted">Tracking sediment transit and sea wall integrity post-event. Identifying scour points
+              near active berths before they challenge foundational stablity.</p>
+            <div class="watch-note-strip"
+              style="border-left-color: var(--text-cyan); background: rgba(88,209,235,0.1);">
+              <div><strong class="text-cyan">STATUS:</strong> Nominal erosion profile on main breakwater.</div>
+            </div>
+          </div>
+
+          <div id="tab-assets" class="tab-panel">
+            <h3 class="text-xl mb-4">Vulnerability Matrix</h3>
+            <p class="text-muted">Map physical terminal topography to expected surge heights to dynamically rank asset
+              exposure levels. Automatically flags vulnerable equipment for relocation.</p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Editorial Calendar -->
-    <section class="section calendar-section" id="calendar">
-        <div class="section-header reveal">
-            <span class="section-tag">Planning</span>
-            <h2 class="section-title">Editorial Calendar</h2>
-            <p class="section-subtitle">Plan, schedule, and coordinate your newsletter issues with integrated sponsor
-                slots and content workflows.</p>
+    <!-- Storm Readiness Route -->
+    <section class="container route-container">
+      <span class="section-tag reveal-item">Module: Readiness Timeline</span>
+      <h2 class="section-title reveal-item mb-8">Procedural Event Routing.</h2>
+
+      <div class="route-line"></div>
+
+      <div class="route-checkpoint scroll-trigger">
+        <div class="checkpoint-dot"></div>
+        <span class="checkpoint-time">T-Minus 48H</span>
+        <div class="glass-panel p-6" style="max-width: 600px;">
+          <h4 class="text-lg">Threshold Watch Initiated</h4>
+          <p class="text-muted mt-2">Atmospheric pressure drops registered. System models potential surge impact
+            combinations. Coast guard liaison channel opened securely.</p>
         </div>
-        <div class="calendar-grid reveal">
-            <div class="calendar-sidebar">
-                <h3 class="calendar-month">March 2026</h3>
-                <div class="calendar-nav">
-                    <button type="button" class="calendar-nav-btn" aria-label="Previous month">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M10 12l-4-4 4-4" />
-                        </svg>
-                    </button>
-                    <button type="button" class="calendar-nav-btn" aria-label="Next month">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M6 4l4 4-4 4" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="calendar-upcoming">
-                    <h4 class="calendar-upcoming-title">Upcoming Issues</h4>
-                    <div class="upcoming-item">
-                        <div class="upcoming-date">18<span>Mar</span></div>
-                        <div class="upcoming-info">
-                            <h4>The Creator Economy Report</h4>
-                            <p>Sponsored by Notion</p>
-                        </div>
-                    </div>
-                    <div class="upcoming-item">
-                        <div class="upcoming-date">25<span>Mar</span></div>
-                        <div class="upcoming-info">
-                            <h4>Design Systems Deep Dive</h4>
-                            <p>Sponsored by Figma</p>
-                        </div>
-                    </div>
-                    <div class="upcoming-item">
-                        <div class="upcoming-date">01<span>Apr</span></div>
-                        <div class="upcoming-info">
-                            <h4>Q1 Retrospective</h4>
-                            <p>Community special</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="calendar-main">
-                <div class="calendar-day-header">Sun</div>
-                <div class="calendar-day-header">Mon</div>
-                <div class="calendar-day-header">Tue</div>
-                <div class="calendar-day-header">Wed</div>
-                <div class="calendar-day-header">Thu</div>
-                <div class="calendar-day-header">Fri</div>
-                <div class="calendar-day-header">Sat</div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">23</span></div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">24</span></div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">25</span></div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">26</span></div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">27</span></div>
-                <div class="calendar-day other-month"><span class="calendar-day-number">28</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">1</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">2</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">3</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">4</span></div>
-                <div class="calendar-day has-event"><span class="calendar-day-number">5</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">6</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">7</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">8</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">9</span></div>
-                <div class="calendar-day has-event"><span class="calendar-day-number">10</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">11</span></div>
-                <div class="calendar-day has-multiple"><span class="calendar-day-number">12</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">13</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">14</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">15</span></div>
-                <div class="calendar-day has-event"><span class="calendar-day-number">16</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">17</span></div>
-                <div class="calendar-day has-event"><span class="calendar-day-number">18</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">19</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">20</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">21</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">22</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">23</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">24</span></div>
-                <div class="calendar-day has-event"><span class="calendar-day-number">25</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">26</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">27</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">28</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">29</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">30</span></div>
-                <div class="calendar-day"><span class="calendar-day-number">31</span></div>
-            </div>
+      </div>
+
+      <div class="route-checkpoint scroll-trigger">
+        <div class="checkpoint-dot"></div>
+        <span class="checkpoint-time">T-Minus 12H</span>
+        <div class="glass-panel p-6" style="max-width: 600px; border-color: rgba(255,193,7,0.3);">
+          <h4 class="text-lg text-warning">Asset Quarantine Sequence</h4>
+          <p class="text-muted mt-2">Predicted water levels cross operational thresholds for Breakbulk docks. Automated
+            protocols advise moving mobile equipment inland by 500 meters.</p>
         </div>
+      </div>
+
+      <div class="route-checkpoint scroll-trigger">
+        <div class="checkpoint-dot"></div>
+        <span class="checkpoint-time">T-Zero Impact</span>
+        <div class="glass-panel p-6" style="max-width: 600px; border-color: rgba(255,82,82,0.3);">
+          <h4 class="text-lg text-danger">Event Zenith Management</h4>
+          <p class="text-muted mt-2">Live streaming of inundation extent. Cross-verify sensory data against physical
+            cameras. Continuous live feed routed to civic emergency services.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Audience Segments -->
-    <section class="section" id="audience">
-        <div class="section-header reveal">
-            <span class="section-tag">Segments</span>
-            <h2 class="section-title">Audience Intelligence</h2>
-            <p class="section-subtitle">Understand your readers with AI-powered segmentation. Deliver personalized
-                content that resonates.</p>
+    <!-- Comparison -->
+    <section class="container comparison-wrapper reveal-item">
+      <span class="section-tag">Architecture Assessment</span>
+      <div class="flex justify-between items-end mb-8">
+        <h2 class="section-title">The cost of fragmentation.</h2>
+        <button class="btn btn-glass" id="toggleCompBtn">View Unified Mode</button>
+      </div>
+
+      <div class="comparison-grid" id="compGrid">
+        <div class="comparison-col">
+          <h3 class="col-header">Fragmented Workflow</h3>
+          <div class="comp-item">Multiple maritime websites for weather, tide, and surge.</div>
+          <div class="comp-item">Manual data entry into operational spreadsheets.</div>
+          <div class="comp-item">Static PDF maps lacking real-time overlays.</div>
+          <div class="comp-item">Reactive post-event damage assessments.</div>
         </div>
-        <div class="audience-grid reveal">
-            <div class="audience-card">
-                <div class="audience-icon">🎯</div>
-                <h3 class="audience-name">Power Readers</h3>
-                <div class="audience-size">8,420</div>
-                <p class="audience-desc">Your most engaged subscribers. Open every email, click multiple links, high
-                    lifetime value.</p>
-                <div class="audience-tags">
-                    <span class="audience-tag">94% open rate</span>
-                    <span class="audience-tag">Premium tier</span>
-                </div>
-            </div>
-            <div class="audience-card">
-                <div class="audience-icon">💼</div>
-                <h3 class="audience-name">Founders & Operators</h3>
-                <div class="audience-size">12,180</div>
-                <p class="audience-desc">Startup builders and product leaders. High sponsor value, interested in tools
-                    and workflows.</p>
-                <div class="audience-tags">
-                    <span class="audience-tag">$150k+ income</span>
-                    <span class="audience-tag">B2B buyers</span>
-                </div>
-            </div>
-            <div class="audience-card">
-                <div class="audience-icon">🌱</div>
-                <h3 class="audience-name">Emerging Creators</h3>
-                <div class="audience-size">4,232</div>
-                <p class="audience-desc">Growing their audience, learning the craft. High engagement with educational
-                    content.</p>
-                <div class="audience-tags">
-                    <span class="audience-tag">High growth</span>
-                    <span class="audience-tag">Community active</span>
-                </div>
-            </div>
+        <div class="comparison-col is-unified">
+          <h3 class="col-header"><span class="brand-icon" style="width: 16px; height: 16px;"></span> Sable Current</h3>
+          <div class="comp-item">Unified harmonic, meteorological, and telemetry inputs.</div>
+          <div class="comp-item">Automated algorithmic matrix computing live readiness states.</div>
+          <div class="comp-item">Dynamic mapping with 1Hz sensor relay updates.</div>
+          <div class="comp-item">Predictive vulnerability forecasting.</div>
         </div>
+      </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="section pricing-section" id="pricing">
-        <div class="section-header reveal">
-            <span class="section-tag">Pricing</span>
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-subtitle">Start free, scale as you grow. No hidden fees, no surprises.</p>
+    <!-- Dispatch Log -->
+    <section class="container reveal-item" style="margin-top: var(--space-24);">
+      <div class="section-header">
+        <span class="section-tag">Module: Field Dispatch</span>
+        <h2 class="section-title">Immutable Operations Log.</h2>
+      </div>
+
+      <div class="glass-panel p-6">
+        <div class="dispatch-ctrl">
+          <button class="filter-chip active" data-filter="all">ALL ENTRIES</button>
+          <button class="filter-chip" data-filter="info">INFO</button>
+          <button class="filter-chip" data-filter="warn">WARNING</button>
+          <button class="filter-chip" data-filter="crit">CRITICAL</button>
         </div>
-        <div class="pricing-toggle reveal">
-            <button type="button" class="pricing-toggle-btn active" aria-label="Monthly billing">Monthly</button>
-            <button type="button" class="pricing-toggle-btn" aria-label="Annual billing with discount">Annual (Save
-                20%)</button>
+
+        <div class="dispatch-grid">
+          <div class="log-entry glass-panel" data-type="info" onclick="openLogDetail('L-001')">
+            <span class="log-time">08:14Z</span>
+            <div class="log-level level-info"></div>
+            <span class="log-loc">Sensor Array Alpha</span>
+            <span class="log-desc">Routine baseline calibration completed successfully. Telemetry stable.</span>
+          </div>
+          <div class="log-entry glass-panel" data-type="warn" onclick="openLogDetail('L-002')">
+            <span class="log-time">09:30Z</span>
+            <div class="log-level level-warn"></div>
+            <span class="log-loc">South Breakwater</span>
+            <span class="log-desc">Wave overtopping detected. Minor splashing over physical barriers recorded on
+              perimeter cameras.</span>
+          </div>
+          <div class="log-entry glass-panel" data-type="crit" onclick="openLogDetail('L-003')">
+            <span class="log-time">10:45Z</span>
+            <div class="log-level level-crit"></div>
+            <span class="log-loc">Terminal 3 Ro-Ro</span>
+            <span class="log-desc">Meters breached. Automatic halt work order transmitted to straddle carrier
+              operators.</span>
+          </div>
+          <div class="log-entry glass-panel" data-type="info" onclick="openLogDetail('L-004')">
+            <span class="log-time">11:15Z</span>
+            <div class="log-level level-info"></div>
+            <span class="log-loc">Harbor Master HQ</span>
+            <span class="log-desc">Dossier PDF compiled and distributed to municipal incident response team.</span>
+          </div>
         </div>
-        <div class="pricing-grid reveal">
-            <div class="pricing-card">
-                <h3 class="pricing-name">Starter</h3>
-                <p class="pricing-desc">Perfect for new creators</p>
-                <div class="pricing-price">$0<span>/mo</span></div>
-                <p class="pricing-period">Free forever</p>
-                <ul class="pricing-features">
-                    <li>Up to 1,000 subscribers</li>
-                    <li>Basic analytics</li>
-                    <li>3 sponsor slots</li>
-                    <li>Email support</li>
-                </ul>
-                <button type="button" class="pricing-cta" aria-label="Get started with Starter plan">Get
-                    Started</button>
-            </div>
-            <div class="pricing-card featured">
-                <span class="pricing-badge">Most Popular</span>
-                <h3 class="pricing-name">Professional</h3>
-                <p class="pricing-desc">For growing newsletters</p>
-                <div class="pricing-price">$49<span>/mo</span></div>
-                <p class="pricing-period">Billed monthly</p>
-                <ul class="pricing-features">
-                    <li>Unlimited subscribers</li>
-                    <li>Advanced analytics</li>
-                    <li>Unlimited sponsors</li>
-                    <li>Audience segmentation</li>
-                    <li>Priority support</li>
-                </ul>
-                <button type="button" class="pricing-cta" aria-label="Start Professional plan trial">Start Free
-                    Trial</button>
-            </div>
-            <div class="pricing-card">
-                <h3 class="pricing-name">Enterprise</h3>
-                <p class="pricing-desc">For media companies</p>
-                <div class="pricing-price">$199<span>/mo</span></div>
-                <p class="pricing-period">Billed monthly</p>
-                <ul class="pricing-features">
-                    <li>Everything in Pro</li>
-                    <li>Multiple newsletters</li>
-                    <li>Team collaboration</li>
-                    <li>Custom integrations</li>
-                    <li>Dedicated account manager</li>
-                </ul>
-                <button type="button" class="pricing-cta" aria-label="Contact sales for Enterprise">Contact
-                    Sales</button>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="section faq-section">
-        <div class="section-header reveal">
-            <span class="section-tag">FAQ</span>
-            <h2 class="section-title">Questions & Answers</h2>
-            <p class="section-subtitle">Everything you need to know about LetterMoss.</p>
+    <!-- Case Vignette -->
+    <section class="container reveal-item">
+      <div class="glass-panel vignette">
+        <div class="vignette-main">
+          <div class="vignette-kicker">Event Replay // Cyclone Xaver</div>
+          <h3 class="text-3xl mb-4">Averted loss during unprecedented tidal stacking.</h3>
+          <p class="text-muted mb-4">During the equinox tides, a category 3 storm shifted into the basin 12 hours
+            earlier than initial meteorological forecasts predicted. Legacy models provided 4 hours of response time.
+          </p>
+          <p class="text-muted">Sable Current's live sensor array detected the true surge delta forming offshore, giving
+            terminal directors an extended 18-hour window to secure container stacks, saving an estimated $42M in
+            submerged asset costs.</p>
         </div>
-        <div class="faq-list reveal">
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    How does the free trial work?
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <p>Start with a 14-day free trial of our Professional plan. No credit card required. You'll get full
-                        access to all features including advanced analytics, unlimited sponsors, and audience
-                        segmentation. At the end of your trial, choose the plan that fits your needs or continue with
-                        our free Starter plan.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    Can I import my existing subscribers?
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <p>Yes! We support one-click imports from Substack, Beehiiv, ConvertKit, Mailchimp, and most major
-                        platforms. Your subscriber data, including tags and segments, will be preserved. Our migration
-                        team can also help with custom imports for larger lists.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    How does sponsorship management work?
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <p>LetterMoss provides a complete CRM for newsletter sponsorships. Track prospects through your
-                        pipeline, manage contracts, schedule sponsor slots in your editorial calendar, and generate
-                        revenue reports. Our AI can even suggest optimal pricing based on your audience metrics.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    Is my data secure?
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <p>Absolutely. We're SOC 2 Type II certified and GDPR compliant. All data is encrypted at rest and
-                        in transit. We never share or sell your subscriber data. You own your audience, always.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button type="button" class="faq-question" aria-expanded="false">
-                    What kind of support do you offer?
-                    <span class="faq-icon"></span>
-                </button>
-                <div class="faq-answer">
-                    <p>Starter plans get email support with 24-hour response times. Professional plans include priority
-                        support with 4-hour response times. Enterprise customers get a dedicated account manager and
-                        Slack support. We also have extensive documentation and video tutorials.</p>
-                </div>
-            </div>
+        <div class="p-8 border-l border-rule-light bg-fog flex-col justify-center">
+          <span class="mono text-cyan block mb-2">METRICS VALIDATED</span>
+          <div class="text-4xl mb-1 count-up" data-target="18">0</div>
+          <span class="text-sm text-muted block mb-6">Hours advance warning secured</span>
+
+          <div class="text-4xl mb-1 count-up" data-target="42">0</div>
+          <span class="text-sm text-muted">Million USD preserved</span>
         </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="32" height="32" rx="8" fill="#C2765A" />
-                        <path d="M8 10h16M8 16h12M8 22h8" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    LetterMoss
-                </div>
-                <p class="footer-desc">The calm operating system for premium newsletters. Built for design-conscious
-                    founders who care about sustainable publishing.</p>
-            </div>
-            <div class="footer-column">
-                <h4>Product</h4>
-                <ul class="footer-links">
-                    <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#pipeline">Sponsors</a></li>
-                    <li><a href="#calendar">Editorial</a></li>
-                    <li><a href="#audience">Audience</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul class="footer-links">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Security</a></li>
-                    <li><a href="#">Cookies</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="footer-copyright">© 2026 LetterMoss. All rights reserved.</p>
-            <div class="footer-social">
-                <a href="#" aria-label="Twitter">𝕏</a>
-                <a href="#" aria-label="LinkedIn">in</a>
-                <a href="#" aria-label="Instagram">📷</a>
-            </div>
-        </div>
-    </footer>
+    <!-- Governance & FAQ (Accordion) -->
+    <section class="container reveal-item" style="margin-top: var(--space-24); max-width: 800px;">
+      <div class="section-header text-center">
+        <span class="section-tag">Governance & Integration</span>
+        <h2 class="section-title">Institutional grade infrastructure.</h2>
+      </div>
 
-    <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+      <div class="glass-panel p-8">
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Data Sourcing & Aggregation</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              We ingest from global meteorological models (NOAA, ECMWF), local harmonic baselines, and physical
+              shoreline sensor relays. The stream processing reconciles conflicting models into a single truth layer
+              using our proprietary weighting algorithm.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Security & Audit Trails</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              Every alert, threshold breach, and model update is immutably logged with cryptographic timestamping. We
+              provide complete audit trails required by insurance adjusters and civic compliance bodies. ISO 27001
+              certified.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Installation & Procurement</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              Sable Current is a software overlay that integrates with your existing physical sensors or allows for
+              rapid deployment of our hardware kits. Implementation takes days, not months. We support standard state
+              and municipal procurement workflows.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Form block -->
+    <section class="container reveal-item" style="margin-top: var(--space-32); margin-bottom: var(--space-16);">
+      <div class="glass-panel p-12 text-center"
+        style="max-width: 600px; margin: 0 auto; background: radial-gradient(circle at 50% 50%, rgba(41, 182, 246, 0.1), var(--surface-glass)); border-color: var(--accent-sea-glass);">
+        <span class="brand-icon mb-6" style="width: 48px; height: 48px;"></span>
+        <h2 class="text-3xl mb-4">Establish command.</h2>
+        <p class="text-muted mb-8">Deploy the Sable Current platform to your harbor environment. Begin receiving
+          validated operational data within 72 hours.</p>
+        <form id="inlinePilotForm"
+          onsubmit="event.preventDefault(); showToast('Pilot request dispatched', 'success'); this.reset();">
+          <div class="flex gap-4 mb-4">
+            <input type="text" class="form-input" placeholder="Organization name" required>
+            <input type="email" class="form-input" placeholder="Official email" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px;">Initiate Pilot
+            Program</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer container">
+    <div class="footer-links">
+      <a href="#">System Integrity</a>
+      <a href="#">Compliance</a>
+      <a href="#">API Docs</a>
+      <a href="#">Command Support</a>
+    </div>
+    <div class="mono text-muted text-sm" style="opacity: 0.5;">
+      &copy; 2026 Sable Current Operations Intelligence. All rights reserved.<br>
+      SENSORY RELAY NETWORK: ONLINE.
+    </div>
+  </footer>
+
+  <!-- Modal Dossier -->
+  <div class="modal-overlay" id="briefingModal" aria-hidden="true">
+    <div class="glass-panel modal-content" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div class="flex items-center gap-4">
+          <span class="brand-icon"></span>
+          <h3 class="text-xl">Dossier Request</h3>
+        </div>
+        <button class="modal-close" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="modalForm">
+        <div class="form-group">
+          <label class="form-label">Classification / Role</label>
+          <select class="form-input">
+            <option>Port Authority</option>
+            <option>Municipal Emergency Responder</option>
+            <option>Terminal Operator</option>
+            <option>Infrastructure Engineer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Geographic Region</label>
+          <input type="text" class="form-input" placeholder="e.g. Gulf Coast, North Sea">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primary Asset Concern</label>
+          <input type="text" class="form-input" placeholder="e.g. Ro-Ro docks, Access roads">
+        </div>
+        <div class="flex justify-end gap-4 mt-8">
+          <button type="button" class="btn btn-glass" onclick="closeModal('briefingModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Transmit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Live Region for Toasts -->
+  <div aria-live="polite" aria-atomic="true" class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // Navbar Scroll Transition
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('scrolled'); // Always keep backdrop on but styling changes can be extended
+        navbar.style.borderBottomColor = window.scrollY > 50 ? 'var(--rule-light)' : 'transparent';
+        navbar.style.height = window.scrollY > 50 ? '60px' : '72px';
+      }
+    });
+
+    // Tabs Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    // Accordion Logic
+    const accordions = document.querySelectorAll('.accordion-item');
+    accordions.forEach(acc => {
+      const trigger = acc.querySelector('.accordion-trigger');
+      const content = acc.querySelector('.accordion-content');
+      trigger.addEventListener('click', () => {
+        const isActive = acc.classList.contains('active');
+        // close all
+        accordions.forEach(a => {
+          a.classList.remove('active');
+          a.querySelector('.accordion-content').style.height = '0px';
         });
+        if (!isActive) {
+          acc.classList.add('active');
+          content.style.height = content.querySelector('.accordion-inner').getBoundingClientRect().height + 'px';
+        }
+      });
+    });
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+    // Comparison Toggle
+    const toggleBtn = document.getElementById('toggleCompBtn');
+    const compGrid = document.getElementById('compGrid');
+    toggleBtn.addEventListener('click', () => {
+      const cols = compGrid.querySelectorAll('.comparison-col');
+      cols.forEach(col => col.classList.toggle('is-unified'));
+      toggleBtn.textContent = cols[0].classList.contains('is-unified') ? 'Reset View' : 'View Unified Mode';
+    });
 
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Counter animation
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseFloat(counter.getAttribute('data-target'));
-                    const isDecimal = target % 1 !== 0;
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
-
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            counter.textContent = isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString();
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = isDecimal ? target.toFixed(1) : target.toLocaleString();
-                        }
-                    };
-
-                    updateCounter();
-                    counterObserver.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => {
-                    i.classList.remove('active');
-                    i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                });
-                if (!isActive) {
-                    item.classList.add('active');
-                    question.setAttribute('aria-expanded', 'true');
-                }
-            });
+    // Dispatch Filter
+    const filterBtns = document.querySelectorAll('.filter-chip');
+    const entries = document.querySelectorAll('.log-entry');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        entries.forEach(entry => {
+          if (filter === 'all' || entry.dataset.type === filter) {
+            entry.style.display = 'flex';
+          } else {
+            entry.style.display = 'none';
+          }
         });
+      });
+    });
 
-        // Chart filter buttons
-        const chartFilters = document.querySelectorAll('.chart-filter');
-        chartFilters.forEach(filter => {
-            filter.addEventListener('click', () => {
-                chartFilters.forEach(f => f.classList.remove('active'));
-                filter.classList.add('active');
-            });
-        });
+    // Modal Logic
+    const modal = document.getElementById('briefingModal');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const form = document.getElementById('modalForm');
+    let previouslyFocusedElement = null;
 
-        // Pricing toggle
-        const pricingToggleBtns = document.querySelectorAll('.pricing-toggle-btn');
-        pricingToggleBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                pricingToggleBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
+    window.openModal = function (type) {
+      previouslyFocusedElement = document.activeElement;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.querySelector('select').focus();
+    };
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-    </script>
+    window.closeModal = function (id) {
+      const m = document.getElementById(id || 'briefingModal');
+      m.classList.remove('active');
+      m.setAttribute('aria-hidden', 'true');
+      if (previouslyFocusedElement) previouslyFocusedElement.focus();
+    };
+
+    window.openLogDetail = function (logId) {
+      // Reusing the modal framework for a quick dispatch detail simulation
+      openModal('log');
+      showToast(`Loaded payload for ${logId}`, 'info');
+    };
+
+    closeBtn.addEventListener('click', () => closeModal());
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      closeModal();
+      showToast('Request transmitted successfully via secure relay.', 'success');
+    });
+
+    // Toast Logic
+    window.showToast = function (msg, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast show';
+      if (type === 'danger') toast.style.borderLeftColor = 'var(--danger)';
+      if (type === 'warning') toast.style.borderLeftColor = 'var(--warning)';
+      toast.textContent = msg;
+      container.appendChild(toast);
+
+      // force reflow
+      void toast.offsetWidth;
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    };
+
+    // Scroll Interactions
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+
+          // Trigger Count up if it contains one
+          const counters = entry.target.querySelectorAll('.count-up');
+          counters.forEach(counter => {
+            if (counter.dataset.run) return;
+            counter.dataset.run = "true";
+            const target = +counter.dataset.target;
+            const duration = 2000;
+            const steps = 60;
+            const stepTime = Math.abs(Math.floor(duration / steps));
+            let current = 0;
+            const increment = target / steps;
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+              } else {
+                counter.textContent = Math.floor(current);
+              }
+            }, stepTime);
+          });
+
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-item').forEach(el => revealObserver.observe(el));
+
+    // Route timeline trigger
+    const routeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('is-visible');
+          }, idx * 200); // stagger
+          routeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.scroll-trigger').forEach(el => routeObserver.observe(el));
+
+    // Trigger initial reveal immediately for visible items
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-item').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.classList.add('revealed');
+        }
+      });
+    }, 100);
+
+  </script>
 </body>
 
 </html>

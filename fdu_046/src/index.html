@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ember Atlas | Thermal Cartography Briefing</title>
+  <meta name="description" content="Urban heat-risk intelligence for operators, civic teams, and infrastructure planners.">
+  <style>
+    :root {
+      --terrain: #f4ecdf;
+      --paper: #fff8ee;
+      --asphalt: #3f3b35;
+      --ink: #211a16;
+      --muted: #685a4f;
+      --line: rgba(33, 26, 22, 0.14);
+      --cold: #6fb2d5;
+      --warm: #f0b44a;
+      --hot: #da6638;
+      --alert: #a93625;
+      --focus: #225df2;
+      --shadow: 0 18px 50px rgba(52, 34, 21, 0.14);
+      --display: "Arial Narrow", "Aptos Narrow", sans-serif;
+      --body: "Segoe UI", Arial, sans-serif;
+      --mono: "Consolas", monospace;
+      --dur: 240ms;
+      --dur-slow: 520ms;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --max: 1340px;
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.58 var(--body);
+      background:
+        radial-gradient(circle at top left, rgba(240,180,74,.18), transparent 25%),
+        linear-gradient(180deg, #f7f1e6, var(--terrain));
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .12;
+      background:
+        linear-gradient(rgba(33,26,22,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(33,26,22,.03) 1px, transparent 1px);
+      background-size: 100% 34px, 34px 100%;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { color: inherit; font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .shell { width: min(calc(100% - 1.5rem), var(--max)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: .85rem 0;
+      border-bottom: 1px solid transparent;
+      transition: padding var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .topbar.scrolled {
+      padding: .5rem 0;
+      background: rgba(255,248,238,.84);
+      border-color: var(--line);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+    .bar, main, .proof-grid, .playbook, .footer-grid { display: grid; gap: 1rem; }
+    .bar { grid-template-columns: auto 1fr auto; align-items: center; }
+    .brand { display: flex; align-items: center; gap: .8rem; }
+    .mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fff, #f2e6d7);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+    }
+    .brand b { display: block; font: 900 1rem/1 var(--display); text-transform: uppercase; letter-spacing: .08em; }
+    .brand span, nav a, .chip, .meta { font: .75rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    nav { display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+    nav a, .chip, .tab, .ghost, .cta {
+      padding: .75rem .95rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.74);
+      border-radius: 999px;
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+    }
+    nav a:hover, nav a.active, .tab:hover, .ghost:hover { transform: translateY(-2px); border-color: rgba(33,26,22,.28); }
+    .cta { background: linear-gradient(135deg, var(--hot), var(--alert)); color: #fff; border-color: transparent; }
+    main { grid-template-columns: minmax(360px, .95fr) minmax(0, 1.05fr); align-items: start; padding: 1rem 0 3rem; }
+    .stage {
+      position: sticky;
+      top: 5rem;
+      min-height: calc(100vh - 5.8rem);
+      padding: 1rem;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #f8efe2, #eedfca);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+    .display {
+      margin: .35rem 0 .75rem;
+      font: 900 clamp(2.5rem, 4vw, 4.6rem)/.94 var(--display);
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+    }
+    .mapbox, .sheet, .proof, .faq-item, .form-panel, footer {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,248,238,.94), rgba(250,241,230,.94));
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+    .mapbox { padding: 1rem; }
+    .sheet { padding: 1rem; margin-bottom: 1rem; }
+    .sheet h2 { margin: .3rem 0 .65rem; font: 900 1.55rem/1 var(--display); text-transform: uppercase; }
+    .tab-row, .action-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    svg { width: 100%; height: auto; display: block; }
+    .proof-grid, .playbook, .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .proof { padding: 1rem; }
+    .proof strong { display: block; font: 900 2.2rem/1 var(--display); }
+    .faq button {
+      width: 100%;
+      background: none;
+      border: 0;
+      padding: 1rem;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-panel { display: none; padding: 0 1rem 1rem; color: #463d37; }
+    .faq button[aria-expanded="true"] + .faq-panel { display: block; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .form-panel { padding: 1rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+    label { display: grid; gap: .35rem; font: .76rem/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    input, select, textarea {
+      width: 100%;
+      padding: .85rem .9rem;
+      border-radius: 14px;
+      border: 1px solid rgba(33,26,22,.24);
+      background: #fff;
+    }
+    textarea { min-height: 112px; resize: vertical; grid-column: 1 / -1; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(33,26,22,.32);
+      display: none;
+      place-items: center;
+      padding: 1rem;
+      z-index: 30;
+    }
+    .modal.open { display: grid; }
+    .modal-card {
+      width: min(760px, 100%);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff8ee, #f2e2cf);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      padding: .9rem 1rem;
+      border-radius: 18px;
+      background: #211a16;
+      color: #fff;
+      transform: translateY(120%);
+      transition: transform var(--dur) var(--ease);
+      z-index: 40;
+    }
+    .toast.show { transform: translateY(0); }
+    .top-gap { margin-top: 1rem; }
+    @media (max-width: 1080px) {
+      main, .proof-grid, .playbook, .footer-grid { grid-template-columns: 1fr; }
+      .stage { position: relative; top: 0; min-height: auto; }
+    }
+    @media (max-width: 760px) {
+      .bar, .form-grid { grid-template-columns: 1fr; }
+      nav { justify-content: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="shell bar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">EA</div>
+        <div><b>Ember Atlas</b><span>Thermal cartography briefing</span></div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#dispatch">Dispatch</a>
+        <a href="#signals">Signals</a>
+        <a href="#playbook">Playbook</a>
+        <a href="#procurement">Procurement</a>
+      </nav>
+      <div class="action-row">
+        <span class="chip" aria-live="polite" id="riskChip">Alert tier / District 04</span>
+        <button class="cta modal-open">Book a field review</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <aside class="stage reveal">
+      <div class="meta">Thermal field</div>
+      <div class="display" id="fieldTitle">Corridor watch</div>
+      <p id="fieldNote">Mode: Venue Ops / confidence high / cooling corridor overlay active.</p>
+      <div class="mapbox">
+        <svg viewBox="0 0 520 580" role="img" aria-label="Thermal field map with contour lines, hotspots, and cooling corridors">
+          <defs>
+            <linearGradient id="hotband" x1="0%" x2="100%">
+              <stop offset="0%" stop-color="#6fb2d5"/>
+              <stop offset="52%" stop-color="#f0b44a"/>
+              <stop offset="100%" stop-color="#da6638"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="20" width="480" height="540" rx="28" fill="#faf1e4" stroke="rgba(33,26,22,.14)"/>
+          <g stroke="rgba(33,26,22,.18)" fill="none">
+            <path d="M60 100C140 30 230 40 320 72C390 96 430 92 468 64"/>
+            <path d="M52 160C136 112 236 112 316 142C398 172 432 166 476 140"/>
+            <path d="M46 222C124 190 220 184 296 212C364 236 428 248 478 220"/>
+            <path d="M44 284C126 254 222 250 304 280C388 312 430 318 478 300"/>
+            <path d="M42 346C130 324 212 320 296 346C382 372 438 382 476 372"/>
+          </g>
+          <path id="corridor" d="M78 150L168 196L270 238L374 202L454 248" stroke="#6fb2d5" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <circle cx="190" cy="216" r="34" fill="rgba(240,180,74,.24)"/><circle cx="190" cy="216" r="18" fill="#f0b44a"/>
+          <circle cx="312" cy="254" r="42" fill="rgba(218,102,56,.24)"/><circle cx="312" cy="254" r="21" fill="#da6638"/>
+          <circle cx="410" cy="334" r="48" fill="rgba(169,54,37,.2)"/><circle cx="410" cy="334" r="26" fill="#a93625"/>
+          <rect id="confidenceMask" x="60" y="390" width="390" height="92" rx="16" fill="url(#hotband)" opacity=".32"/>
+          <text x="70" y="84" font-family="Consolas" font-size="14">Thermal briefing field</text>
+          <text x="74" y="410" font-family="Consolas" font-size="14" id="modeText">Venue Ops / high confidence</text>
+        </svg>
+        <div class="tab-row" role="tablist" aria-label="Role views">
+          <button class="tab active" role="tab" aria-selected="true" data-role="venue">Venue Ops</button>
+          <button class="tab" role="tab" aria-selected="false" data-role="city">City Desk</button>
+          <button class="tab" role="tab" aria-selected="false" data-role="property">Property Portfolio</button>
+        </div>
+      </div>
+    </aside>
+
+    <section>
+      <article class="sheet reveal" id="dispatch">
+        <div class="meta">CH-01 Dispatch</div>
+        <h2>Read the city like a live heat bulletin, not a quarterly report</h2>
+        <p>Ember Atlas overlays heat contours, hotspot clustering, cooling corridors, and confidence shading into one briefing stage. Each chapter updates the field so operators can see what changed, where it matters, and how to route safety action fast.</p>
+        <div class="action-row">
+          <button class="cta modal-open">Book a field review</button>
+          <button class="ghost" id="saveSetting">Save layer setting</button>
+        </div>
+      </article>
+
+      <article class="sheet reveal" id="signals">
+        <div class="meta">CH-02 Signals</div>
+        <h2>Measured heat, route pressure, and confidence</h2>
+        <div class="proof-grid">
+          <div class="proof"><span class="meta">Cooling sites</span><strong data-count="16">0</strong><span>available within 12 min walk</span></div>
+          <div class="proof"><span class="meta">Priority corridors</span><strong data-count="5">0</strong><span>flagged for shade and transit routing</span></div>
+          <div class="proof"><span class="meta">Incident lag</span><strong data-count="9">0</strong><span>minutes from alert to field packet</span></div>
+          <div class="proof"><span class="meta">Confidence</span><strong data-count="87">0</strong><span>% district agreement across feeds</span></div>
+        </div>
+      </article>
+
+      <article class="sheet reveal" id="playbook">
+        <div class="meta">CH-05 Playbook</div>
+        <h2>Detect, route, protect, report</h2>
+        <div class="playbook">
+          <div><strong>Detect.</strong><p>Combine field sensors, thermal imagery, and incident submissions into one tiered heat map.</p></div>
+          <div><strong>Route.</strong><p>Prioritize corridors, shade islands, and cooling sites based on role and district pressure.</p></div>
+          <div><strong>Protect.</strong><p>Deliver role-specific instructions for venues, city desks, and property portfolios.</p></div>
+          <div><strong>Report.</strong><p>Export one operational packet with timestamps, district states, and confidence notes.</p></div>
+        </div>
+      </article>
+
+      <article class="sheet reveal">
+        <div class="meta">CH-06 Case file</div>
+        <h2>Downtown event week without corridor failure</h2>
+        <p>When event footfall and a two-day heat advisory overlapped, Ember Atlas raised corridor priority for District 04, added temporary cooling markers, and rerouted venue messaging based on confidence shading instead of guesswork.</p>
+      </article>
+
+      <article class="sheet faq reveal" id="procurement">
+        <div class="meta">CH-08 Procurement</div>
+        <button aria-expanded="false" aria-controls="faq-1">How is heat tier communicated without relying on color alone?<span>+</span></button>
+        <div class="faq-panel" id="faq-1">Every tier pairs color with labels, hatch density, and explicit alert text.</div>
+        <button aria-expanded="false" aria-controls="faq-2">Can venue teams and city desks use the same briefing?<span>+</span></button>
+        <div class="faq-panel" id="faq-2">Yes. Role tabs update the field state and evidence emphasis without duplicating the source map.</div>
+      </article>
+
+      <article class="form-panel reveal">
+        <div class="meta">Field review intake</div>
+        <h2>Start with one district and one season window</h2>
+        <form id="leadForm" class="form-grid">
+          <label>Name<input required aria-label="Name"></label>
+          <label>Organization<input required aria-label="Organization"></label>
+          <label>District<select aria-label="District"><option>District 04</option><option>District 06</option><option>Venue corridor</option></select></label>
+          <label>Time window<select aria-label="Time window"><option>Late morning</option><option>Afternoon peak</option><option>Event week</option></select></label>
+          <label>Email<input type="email" required aria-label="Email"></label>
+          <label>Scope<textarea aria-label="Scope"></textarea></label>
+        </form>
+        <div class="action-row top-gap">
+          <button class="cta" id="leadSubmit">Submit review request</button>
+          <span class="chip">Modal / Accordion / Toast / Tabs / Count-up / Scroll reveal</span>
+        </div>
+      </article>
+
+      <footer class="sheet reveal">
+        <div class="footer-grid">
+          <div><strong>Routes</strong><p>Dispatch / Signals / Playbook / Procurement</p></div>
+          <div><strong>Controls</strong><p class="meta">Role tabs / field review / confidence shading / alert rails</p></div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="meta">Modal / Book a field review</div>
+      <h2 id="modalTitle">Field review intake</h2>
+      <form class="form-grid">
+        <label>Site type<select aria-label="Site type"><option>Venue group</option><option>City district</option><option>Portfolio cluster</option></select></label>
+        <label>Role<select aria-label="Role select"><option>Venue Ops</option><option>City Desk</option><option>Property Portfolio</option></select></label>
+        <label>Email<input type="email" aria-label="Modal email" required></label>
+        <label>Notes<textarea aria-label="Modal notes"></textarea></label>
+      </form>
+      <div class="action-row top-gap">
+        <button class="cta" id="modalSubmit">Log request</button>
+        <button class="ghost" id="closeModal">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" aria-live="polite">Setting saved</div>
+
+  <script>
+    const q = (s, el = document) => el.querySelector(s);
+    const qa = (s, el = document) => [...el.querySelectorAll(s)];
+    const topbar = q('#topbar');
+    const modal = q('#modal');
+    const toast = q('#toast');
+    let toastTimer = null;
+    let lastTrigger = null;
+
+    window.addEventListener('scroll', () => topbar.classList.toggle('scrolled', window.scrollY > 40));
+
+    const roles = {
+      venue: ['Corridor watch', 'Mode: Venue Ops / confidence high / cooling corridor overlay active.', 'Venue Ops / high confidence', '#6fb2d5', 'Alert tier / District 04'],
+      city: ['District overview', 'Mode: City Desk / confidence medium / route ribbon widened.', 'City Desk / medium confidence', '#f0b44a', 'Watch tier / District 06'],
+      property: ['Asset stress', 'Mode: Property Portfolio / confidence high / hotspot clusters prioritized.', 'Property Portfolio / high confidence', '#da6638', 'Portfolio watch / District 03']
+    };
+    qa('.tab').forEach(tab => tab.addEventListener('click', () => {
+      qa('.tab').forEach(el => { el.classList.remove('active'); el.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const [title, note, modeText, corridorColor, chip] = roles[tab.dataset.role];
+      q('#fieldTitle').textContent = title;
+      q('#fieldNote').textContent = note;
+      q('#modeText').textContent = modeText;
+      q('#corridor').setAttribute('stroke', corridorColor);
+      q('#riskChip').textContent = chip;
+    }));
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        qa('[data-count]', entry.target).forEach(counter => {
+          if (counter.dataset.done) return;
+          counter.dataset.done = '1';
+          const target = Number(counter.dataset.count);
+          let value = 0;
+          const tick = () => {
+            value += Math.ceil((target - value) / 8);
+            counter.textContent = value;
+            if (value < target) requestAnimationFrame(tick);
+          };
+          tick();
+        });
+      });
+    }, { threshold: .18 });
+    qa('.reveal').forEach(el => revealObserver.observe(el));
+
+    qa('.faq button').forEach(btn => btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+    }));
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+    q('#saveSetting').addEventListener('click', () => showToast('Field layer saved'));
+    q('#leadSubmit').addEventListener('click', e => { e.preventDefault(); showToast('Field review request submitted'); q('#leadForm').reset(); });
+
+    function openModal(trigger) {
+      lastTrigger = trigger;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      q('select', modal).focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (lastTrigger) lastTrigger.focus();
+    }
+    qa('.modal-open').forEach(btn => btn.addEventListener('click', () => openModal(btn)));
+    q('#closeModal').addEventListener('click', closeModal);
+    q('#modalSubmit').addEventListener('click', () => { closeModal(); showToast('Field review logged'); });
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  </script>
+</body>
+</html>
+
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->
+<!-- padding -->

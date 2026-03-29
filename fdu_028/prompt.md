@@ -1,47 +1,270 @@
-# fdu_028
+# Modern Premium Glassmorphism & Glo UI Design Specification
 
-## Round 1
-Create a premium long-scroll single-file `src/index.html` for a **Artisan Coffee Roastery & Subscription Service** called **Terroir Coffee Co**.
-Concept: A direct-trade coffee roastery connecting coffee lovers with single-origin beans from specific farms, with full transparency on sourcing, roasting profiles, and brewing guides.
-Audience: Coffee enthusiasts, specialty cafe owners, home brewing aficionados, and ethically-conscious consumers willing to pay premium for traceability.
-Style direction: **Warm Artisanal** with references to **Blue Bottle Coffee** and **Intelligentsia** brand aesthetics with editorial photography feel.
-Component language: Coffee bean illustrations, roast level indicators, origin map elements, brewing equipment diagrams, and tactile paper textures.
-Color direction: Warm espresso brown, cream, burnt orange, copper accents, deep forest green; cozy, authentic, handcrafted.
-Typography direction: Warm serif headings with vintage personality, clean sans-serif for product details; craft coffee magazine quality.
-Motion direction: Steam rising animations, pour-over drip effects, smooth bean transitions, gentle parallax on origin imagery.
-Build a complete content-rich page with these sections: sticky navbar, hero with atmospheric coffee imagery, origin story/ethos, current offerings with roast profiles, subscription plans, brewing guides, farm partner profiles, tasting notes education, equipment shop, customer reviews, sustainability commitment, wholesale inquiry, footer.
-Required interactions: Roast level visualizer, origin map exploration, brewing timer tool, subscription plan toggle, product card hover effects, smooth scroll navigation.
-The page must feel like a real 2025–2026 premium coffee brand, not a generic e-commerce template.
+## Overview
+This document specifies the requirements for a high-end web application featuring Modern Premium Glassmorphism and Glo UI. The design should evoke a futuristic, ethereal, yet professional look, with overlapping translucent elements, glowing orbs, and rich interactive components.
 
-## Round 2
-Deepen the layout and content density.
-Make the hero include rich coffee imagery with headline about direct trade transparency, rotating origin highlight, and floating product cards showing current seasonal offerings.
-Add detailed coffee offerings with specific farm names (like "Finca El Paraiso, Colombia"), altitude, processing method, tasting notes (with flavor wheel visualization), and roast date transparency.
-Subscription section should show tiered plans (Explorer, Enthusiast, Professional) with clear value propositions and customization options.
-Brewing guides should cover V60, Chemex, AeroPress, French Press with step-by-step animations and ratio calculators.
-Farm partner profiles should include farmer names, cooperative details, elevation, varietals grown, and fair trade premiums paid.
-Tasting notes education should explain acidity, body, sweetness, and aftertaste with visual guides.
-Include equipment recommendations with affiliate-style reviews.
-Keep enough vertical depth for a long full-page screenshot.
+## Core Aesthetic
+- **Color Palette:** Deep, rich backgrounds (#0f172a, #0b0f19) contrasting with vibrant glowing orbs (teal, magenta, cyan, violet).
+- **Typography:** Sleek, modern sans-serif fonts (e.g., Inter, Space Grotesk). Large headings with bold weights, readable body text with high contrast against the dark background.
+- **Glassmorphism:** Widespread use of backdrop-filter: blur(16px), semi-transparent panels (rgba(255, 255, 255, 0.05)), and delicate 1px solid white borders with very low opacity (rgba(255, 255, 255, 0.1)).
+- **Borders & Shapes:** Copious use of conic-gradient and linear-gradient borders to simulate highlights on glass edges. Substantial border-radius (16px - 24px) for cards.
+- **Lighting:** Ambient blurred orbs (large circular divs with filter: blur(100px)) floating behind the main content layer.
 
-## Round 3
-Polish all states and interaction details.
-Make hover, active, and focus states clearly visible across navigation, product cards, brewing guide steps, and CTAs.
-Use scroll-triggered reveals for major content blocks with staggered timing.
-Implement an interactive brewing timer with start/pause/reset and step notifications.
-Add animated steam effects on hero imagery.
-The sticky navbar should transition from transparent to cream background on scroll.
-Include a roast level slider that updates coffee bean color visualization.
-Ensure the layout is responsive for desktop and tablet widths.
-Keep all CSS and JS inline inside `index.html`.
-Do not use React, Vue, Svelte, jQuery, or any build step.
-Do not reference local images, local fonts, local CSS, or local JS.
-Use remote imagery only if needed and inline SVG icons.
-Return only the final `src/index.html` content with no explanation.
+## Layout & Structure (12+ Sections)
 
-## Round 4
-Final quality pass.
-Make sure the page feels polished, authentically artisanal, transparently sourced, and coffee-culture credible.
-Avoid placeholder copy, empty sections, weak cards, and generic gradients.
-Ensure the final page is long enough for a full-page screenshot and visibly includes the required interaction patterns.
-Return one complete self-contained `index.html` that opens directly in a browser.
+### 1. Navigation / Header
+- Sticky, glassmorphic header.
+- Logo with a glowing text effect.
+- Navigation links with underline-on-hover micro-interactions.
+- A prominent Get Started button with a glowing border and hover states.
+
+### 2. Hero Section
+- Immersive hero area with large typography.
+- Background featuring animated, slow-moving colored orbs.
+- Two calls to action: Primary (solid glow) and Secondary (glass outlined).
+- Subtitle detailing the core value proposition.
+
+### 3. Features Grid
+- Grid of glassmorphic cards (3-column layout).
+- Each card describes a unique feature with an accompanying premium icon (SVG or high-res).
+- Hover effect: card lifts slightly, border glow intensifies.
+
+### 4. About Us / Mission
+- Split layout: Text on one side, a glowing abstract visual on the other.
+- Content focusing on the futuristic vision of the company.
+
+### 5. Services Pipeline
+- A vertical timeline or step-by-step visual.
+- Connecting lines with glowing effects depicting flow.
+
+### 6. Interactive Dashboard Preview
+- A mock dashboard UI embedded within a large glass panel.
+- Interactive charts or toggles demonstrating the platform capability.
+- Real JavaScript interactions for swapping views.
+
+### 7. Testimonials / Social Proof
+- Horizontal scrolling or grid of user review cards.
+- Avatar images, star ratings, and detailed user feedback.
+- Glass panels with varying levels of opacity depending on focus.
+
+### 8. Pricing Tiers
+- Three-tier pricing table.
+- Center Pro tier highlighted with a brighter gradient border and a persistent subtle aura.
+- Animated toggle switch for Monthly / Yearly billing (functional via JS).
+
+### 9. FAQ Accordion
+- List of frequently asked questions.
+- Click to expand/collapse with smooth height transitions.
+- Chevron icons that rotate upon opening.
+- Real text answers regarding platform capabilities.
+
+### 10. Team Section
+- Profile cards for key team members.
+- High-quality portrait placeholders or CSS patterns.
+- Social links appearing on hover via glassmorphic overlays.
+
+### 11. Newsletter / CTA Banner
+- A full-width horizontal banner with a heavy blur and massive glowing background behind it.
+- Email input field with a sleek glass styling.
+- Submit button with a loading state interaction.
+
+### 12. Footer
+- Multi-column footer inside a glass panel.
+- Links categorized (Product, Resources, Company, Legal).
+- Copyright info and social media icons.
+- Back-to-top button.
+
+## Interaction & Animation Requirements
+- **Scroll Reveals:** Sections and elements fade in and translate slightly upward softly as they enter the viewport using IntersectionObserver.
+- **Parallax Orbs:** Background glowing orbs shift position based on scroll or mouse movement.
+- **Button Micro-interactions:** Magnetic hover effects on primary buttons where the text/icon slightly tracks the mouse cursor.
+- **Smooth Transitions:** All state changes (hover, focus, active) must have CSS transitions (0.3s - 0.5s ease-out).
+
+## Technical Implementation Notes
+- Entire application to be contained in one index.html file.
+- Total HTML lines must exceed 600.
+- Inline CSS and JS are required to achieve the single-file constraint.
+- Strictly no placeholder text. Use realistic, thematic copy throughout.
+- Ensure performant rendering of blurs by avoiding excessive layering of heavy filters where unnecessary.
+
+
+# Modern Premium Glassmorphism & Glo UI Design Specification
+
+## Overview
+This document specifies the requirements for a high-end web application featuring Modern Premium Glassmorphism and Glo UI. The design should evoke a futuristic, ethereal, yet professional look, with overlapping translucent elements, glowing orbs, and rich interactive components.
+
+## Core Aesthetic
+- **Color Palette:** Deep, rich backgrounds (#0f172a, #0b0f19) contrasting with vibrant glowing orbs (teal, magenta, cyan, violet).
+- **Typography:** Sleek, modern sans-serif fonts (e.g., Inter, Space Grotesk). Large headings with bold weights, readable body text with high contrast against the dark background.
+- **Glassmorphism:** Widespread use of backdrop-filter: blur(16px), semi-transparent panels (rgba(255, 255, 255, 0.05)), and delicate 1px solid white borders with very low opacity (rgba(255, 255, 255, 0.1)).
+- **Borders & Shapes:** Copious use of conic-gradient and linear-gradient borders to simulate highlights on glass edges. Substantial border-radius (16px - 24px) for cards.
+- **Lighting:** Ambient blurred orbs (large circular divs with filter: blur(100px)) floating behind the main content layer.
+
+## Layout & Structure (12+ Sections)
+
+### 1. Navigation / Header
+- Sticky, glassmorphic header.
+- Logo with a glowing text effect.
+- Navigation links with underline-on-hover micro-interactions.
+- A prominent Get Started button with a glowing border and hover states.
+
+### 2. Hero Section
+- Immersive hero area with large typography.
+- Background featuring animated, slow-moving colored orbs.
+- Two calls to action: Primary (solid glow) and Secondary (glass outlined).
+- Subtitle detailing the core value proposition.
+
+### 3. Features Grid
+- Grid of glassmorphic cards (3-column layout).
+- Each card describes a unique feature with an accompanying premium icon (SVG or high-res).
+- Hover effect: card lifts slightly, border glow intensifies.
+
+### 4. About Us / Mission
+- Split layout: Text on one side, a glowing abstract visual on the other.
+- Content focusing on the futuristic vision of the company.
+
+### 5. Services Pipeline
+- A vertical timeline or step-by-step visual.
+- Connecting lines with glowing effects depicting flow.
+
+### 6. Interactive Dashboard Preview
+- A mock dashboard UI embedded within a large glass panel.
+- Interactive charts or toggles demonstrating the platform capability.
+- Real JavaScript interactions for swapping views.
+
+### 7. Testimonials / Social Proof
+- Horizontal scrolling or grid of user review cards.
+- Avatar images, star ratings, and detailed user feedback.
+- Glass panels with varying levels of opacity depending on focus.
+
+### 8. Pricing Tiers
+- Three-tier pricing table.
+- Center Pro tier highlighted with a brighter gradient border and a persistent subtle aura.
+- Animated toggle switch for Monthly / Yearly billing (functional via JS).
+
+### 9. FAQ Accordion
+- List of frequently asked questions.
+- Click to expand/collapse with smooth height transitions.
+- Chevron icons that rotate upon opening.
+- Real text answers regarding platform capabilities.
+
+### 10. Team Section
+- Profile cards for key team members.
+- High-quality portrait placeholders or CSS patterns.
+- Social links appearing on hover via glassmorphic overlays.
+
+### 11. Newsletter / CTA Banner
+- A full-width horizontal banner with a heavy blur and massive glowing background behind it.
+- Email input field with a sleek glass styling.
+- Submit button with a loading state interaction.
+
+### 12. Footer
+- Multi-column footer inside a glass panel.
+- Links categorized (Product, Resources, Company, Legal).
+- Copyright info and social media icons.
+- Back-to-top button.
+
+## Interaction & Animation Requirements
+- **Scroll Reveals:** Sections and elements fade in and translate slightly upward softly as they enter the viewport using IntersectionObserver.
+- **Parallax Orbs:** Background glowing orbs shift position based on scroll or mouse movement.
+- **Button Micro-interactions:** Magnetic hover effects on primary buttons where the text/icon slightly tracks the mouse cursor.
+- **Smooth Transitions:** All state changes (hover, focus, active) must have CSS transitions (0.3s - 0.5s ease-out).
+
+## Technical Implementation Notes
+- Entire application to be contained in one index.html file.
+- Total HTML lines must exceed 600.
+- Inline CSS and JS are required to achieve the single-file constraint.
+- Strictly no placeholder text. Use realistic, thematic copy throughout.
+- Ensure performant rendering of blurs by avoiding excessive layering of heavy filters where unnecessary.
+
+
+# Modern Premium Glassmorphism & Glo UI Design Specification
+
+## Overview
+This document specifies the requirements for a high-end web application featuring Modern Premium Glassmorphism and Glo UI. The design should evoke a futuristic, ethereal, yet professional look, with overlapping translucent elements, glowing orbs, and rich interactive components.
+
+## Core Aesthetic
+- **Color Palette:** Deep, rich backgrounds (#0f172a, #0b0f19) contrasting with vibrant glowing orbs (teal, magenta, cyan, violet).
+- **Typography:** Sleek, modern sans-serif fonts (e.g., Inter, Space Grotesk). Large headings with bold weights, readable body text with high contrast against the dark background.
+- **Glassmorphism:** Widespread use of backdrop-filter: blur(16px), semi-transparent panels (rgba(255, 255, 255, 0.05)), and delicate 1px solid white borders with very low opacity (rgba(255, 255, 255, 0.1)).
+- **Borders & Shapes:** Copious use of conic-gradient and linear-gradient borders to simulate highlights on glass edges. Substantial border-radius (16px - 24px) for cards.
+- **Lighting:** Ambient blurred orbs (large circular divs with filter: blur(100px)) floating behind the main content layer.
+
+## Layout & Structure (12+ Sections)
+
+### 1. Navigation / Header
+- Sticky, glassmorphic header.
+- Logo with a glowing text effect.
+- Navigation links with underline-on-hover micro-interactions.
+- A prominent Get Started button with a glowing border and hover states.
+
+### 2. Hero Section
+- Immersive hero area with large typography.
+- Background featuring animated, slow-moving colored orbs.
+- Two calls to action: Primary (solid glow) and Secondary (glass outlined).
+- Subtitle detailing the core value proposition.
+
+### 3. Features Grid
+- Grid of glassmorphic cards (3-column layout).
+- Each card describes a unique feature with an accompanying premium icon (SVG or high-res).
+- Hover effect: card lifts slightly, border glow intensifies.
+
+### 4. About Us / Mission
+- Split layout: Text on one side, a glowing abstract visual on the other.
+- Content focusing on the futuristic vision of the company.
+
+### 5. Services Pipeline
+- A vertical timeline or step-by-step visual.
+- Connecting lines with glowing effects depicting flow.
+
+### 6. Interactive Dashboard Preview
+- A mock dashboard UI embedded within a large glass panel.
+- Interactive charts or toggles demonstrating the platform capability.
+- Real JavaScript interactions for swapping views.
+
+### 7. Testimonials / Social Proof
+- Horizontal scrolling or grid of user review cards.
+- Avatar images, star ratings, and detailed user feedback.
+- Glass panels with varying levels of opacity depending on focus.
+
+### 8. Pricing Tiers
+- Three-tier pricing table.
+- Center Pro tier highlighted with a brighter gradient border and a persistent subtle aura.
+- Animated toggle switch for Monthly / Yearly billing (functional via JS).
+
+### 9. FAQ Accordion
+- List of frequently asked questions.
+- Click to expand/collapse with smooth height transitions.
+- Chevron icons that rotate upon opening.
+- Real text answers regarding platform capabilities.
+
+### 10. Team Section
+- Profile cards for key team members.
+- High-quality portrait placeholders or CSS patterns.
+- Social links appearing on hover via glassmorphic overlays.
+
+### 11. Newsletter / CTA Banner
+- A full-width horizontal banner with a heavy blur and massive glowing background behind it.
+- Email input field with a sleek glass styling.
+- Submit button with a loading state interaction.
+
+### 12. Footer
+- Multi-column footer inside a glass panel.
+- Links categorized (Product, Resources, Company, Legal).
+- Copyright info and social media icons.
+- Back-to-top button.
+
+## Interaction & Animation Requirements
+- **Scroll Reveals:** Sections and elements fade in and translate slightly upward softly as they enter the viewport using IntersectionObserver.
+- **Parallax Orbs:** Background glowing orbs shift position based on scroll or mouse movement.
+- **Button Micro-interactions:** Magnetic hover effects on primary buttons where the text/icon slightly tracks the mouse cursor.
+- **Smooth Transitions:** All state changes (hover, focus, active) must have CSS transitions (0.3s - 0.5s ease-out).
+
+## Technical Implementation Notes
+- Entire application to be contained in one index.html file.
+- Total HTML lines must exceed 600.
+- Inline CSS and JS are required to achieve the single-file constraint.
+- Strictly no placeholder text. Use realistic, thematic copy throughout.
+- Ensure performant rendering of blurs by avoiding excessive layering of heavy filters where unnecessary.
+
+

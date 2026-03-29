@@ -1,1829 +1,1260 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrameSchool - 摄影作品集教育平台</title>
+    <title>Atelier Meridian | Modern Premium Glassmorphism</title>
     <style>
+        :root {
+            /* Colors */
+            --bg-void: #030305;
+            --glass-bg-light: rgba(255, 255, 255, 0.03);
+            --glass-bg-medium: rgba(255, 255, 255, 0.06);
+            --glass-bg-heavy: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            /* Accent Glo */
+            --glo-gold: rgba(212, 175, 55, 0.6);
+            --glo-magenta: rgba(255, 0, 128, 0.6);
+            --glo-sapphire: rgba(15, 82, 186, 0.6);
+            --glo-amethyst: rgba(153, 102, 204, 0.6);
+            --glo-azure: rgba(0, 127, 255, 0.6);
+            /* Semantic */
+            --status-ready: #00e5ff;
+            --status-risk: #ffab00;
+            --status-delayed: #ff1744;
+            --status-recovered: #00e676;
+            /* Typography */
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.65);
+            --text-tertiary: rgba(255, 255, 255, 0.4);
+            /* Radii */
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-pill: 9999px;
+            /* Layout */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 32px;
+            --space-lg: 64px;
+            --space-xl: 128px;
+            /* Fonts */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --color-white: #fafafa;
-            --color-slate: #64748b;
-            --color-slate-light: #94a3b8;
-            --color-blue: #3b82f6;
-            --color-blue-muted: #60a5fa;
-            --color-sand: #d4c4b0;
-            --color-sand-light: #e8dfd3;
-            --color-charcoal: #1e293b;
-            --color-charcoal-light: #334155;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--color-white);
-            color: var(--color-charcoal);
+            background-color: var(--bg-void);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        /* Ambient Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .orb-1 { width: 600px; height: 600px; background: var(--glo-amethyst); top: -200px; left: -200px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--glo-sapphire); bottom: 100px; right: -100px; animation-delay: -5s; }
+        .orb-3 { width: 500px; height: 500px; background: var(--glo-gold); top: 40%; left: 30%; opacity: 0.3; animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+            100% { transform: translate(-50px, 100px) scale(0.9); }
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        /* Glass Utility */
+        .glass-panel {
+            background: var(--glass-bg-light);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        /* Navbar */
-        .navbar {
+        .conic-border {
+            position: relative;
+        }
+        .conic-border::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: conic-gradient(from var(--angle, 0deg), transparent 0%, var(--glo-gold) 50%, transparent 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spin 4s linear infinite;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+        @keyframes spin {
+            to { --angle: 360deg; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        section {
+            padding: var(--space-xl) 0;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+        .serif {
+            font-family: var(--font-serif);
+        }
+
+        /* Section 1: Navigation */
+        nav {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.25rem 2rem;
+            width: 100%;
+            z-index: 100;
+            padding: var(--space-sm) var(--space-md);
             transition: all 0.3s ease;
-            background: transparent;
         }
-
-        .navbar.scrolled {
-            background: rgba(250, 250, 250, 0.85);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(100, 116, 139, 0.1);
-            padding: 0.875rem 2rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .navbar-container {
-            max-width: 1400px;
-            margin: 0 auto;
+        .glass-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--glass-bg-medium);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-pill);
+            padding: var(--space-sm) var(--space-md);
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-charcoal);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .nav-logo {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
-
         .nav-links {
             display: flex;
-            gap: 2.5rem;
-            list-style: none;
+            gap: var(--space-md);
         }
-
         .nav-links a {
-            color: var(--color-slate);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9375rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-            position: relative;
+            font-size: 0.9rem;
+            transition: color 0.3s;
         }
-
         .nav-links a:hover {
-            color: var(--color-charcoal);
+            color: var(--text-primary);
         }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-blue);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.625rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.9375rem;
+        .nav-cta button {
+            background: var(--text-primary);
+            color: var(--bg-void);
+            border: none;
+            padding: 10px 24px;
+            border-radius: var(--radius-pill);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--color-charcoal);
-            border: 1px solid var(--color-slate-light);
-        }
-
-        .btn-secondary:hover {
-            background: var(--color-charcoal);
-            color: white;
-            border-color: var(--color-charcoal);
+        .nav-cta button:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 15px var(--glass-border);
         }
 
-        .btn-secondary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary {
-            background: var(--color-charcoal);
-            color: white;
-            border: 1px solid var(--color-charcoal);
-        }
-
-        .btn-primary:hover {
-            background: var(--color-charcoal-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-large {
-            padding: 0.875rem 2rem;
-            font-size: 1rem;
-        }
-
-        /* Hero Section */
+        /* Section 1: Ambient Hero */
         .hero {
             min-height: 100vh;
-            padding: 8rem 2rem 6rem;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(180deg, var(--color-white) 0%, #f1f5f9 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 80%;
-            height: 150%;
-            background: radial-gradient(ellipse, rgba(212, 196, 176, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-content {
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: white;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            color: var(--color-slate);
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .hero-badge-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: var(--color-charcoal);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .hero h1 span {
-            color: var(--color-blue);
-        }
-
-        .hero-description {
-            font-size: 1.25rem;
-            color: var(--color-slate);
-            margin-bottom: 2rem;
-            max-width: 540px;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
-        .hero-proof {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .hero-avatars {
-            display: flex;
-        }
-
-        .hero-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 3px solid white;
-            margin-left: -12px;
-            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
+            text-align: center;
+            padding-top: 100px;
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--space-lg);
+        }
+        .hero-ctas {
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: center;
+        }
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 16px 36px;
+            border-radius: var(--radius-pill);
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 16px 36px;
+            border-radius: var(--radius-pill);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            color: #fff;
         }
 
-        .hero-avatar:first-child {
-            margin-left: 0;
-        }
-
-        .hero-proof-text {
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-        }
-
-        .hero-proof-text strong {
-            color: var(--color-charcoal);
-        }
-
-        .hero-visual {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-image-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .hero-image {
-            aspect-ratio: 4/3;
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-            border-radius: 12px;
+        /* Section 2: Proof Strip */
+        .proof-strip {
+            padding: var(--space-md) 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            background: var(--glass-bg-light);
+            backdrop-filter: blur(10px);
             overflow: hidden;
+        }
+        .proof-track {
+            display: flex;
+            gap: var(--space-xl);
+            white-space: nowrap;
+            align-items: center;
+            opacity: 0.6;
+        }
+        .proof-item {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* Section 3: Ritual Grid (Bento Box) */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--space-sm);
+            margin-top: var(--space-xl);
+        }
+        .bento-item {
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            background: var(--glass-bg-medium);
+            border: 1px solid var(--glass-border);
             position: relative;
-            box-shadow: var(--shadow-lg);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        .hero-image:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.3);
         }
+        .bento-item.large { grid-column: span 8; }
+        .bento-item.medium { grid-column: span 4; }
+        .bento-item.tall { grid-column: span 4; grid-row: span 2; }
+        @media (max-width: 1024px) {
+            .bento-item.large, .bento-item.medium, .bento-item.tall { grid-column: span 12; grid-row: auto; }
+        }
+        .bento-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .bento-item p { color: var(--text-secondary); font-size: 0.95rem; }
+        .bento-icon { width: 40px; height: 40px; margin-bottom: var(--space-sm); fill: var(--text-primary); }
 
-        .hero-image::before {
+        /* Section 4: The Glo Console (Tabs) */
+        .glo-console {
+            margin-top: var(--space-xl);
+        }
+        .console-header { text-align: center; margin-bottom: var(--space-lg); }
+        .console-header h2 { font-size: 2.5rem; }
+        .console-window {
+            background: rgba(10, 10, 12, 0.7);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(30px);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .console-nav {
+            display: flex;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.02);
+            padding: 0 var(--space-sm);
+        }
+        .console-tab {
+            padding: 20px 30px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        .console-tab:hover { color: var(--text-primary); }
+        .console-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--glo-gold);
+            background: linear-gradient(to top, rgba(212, 175, 55, 0.1), transparent);
+        }
+        .console-body {
+            padding: var(--space-lg);
+            position: relative;
+            min-height: 400px;
+        }
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dashboard-mockup {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: var(--space-md);
+        }
+        .mock-sidebar ul { list-style: none; }
+        .mock-sidebar li { padding: 10px; margin-bottom: 5px; border-radius: var(--radius-sm); color: var(--text-secondary); }
+        .mock-sidebar li.active { background: var(--glass-bg-medium); color: #fff; }
+        .mock-main { display: flex; flex-direction: column; gap: var(--space-md); }
+        .mock-card { background: var(--glass-bg-light); border: 1px solid var(--glass-border); padding: var(--space-md); border-radius: var(--radius-md); }
+        .mock-card-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin-bottom: 10px; }
+
+        /* Section 5: Choreography Flow (Timeline) */
+        .choreography { margin-top: var(--space-xl); position: relative; }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-xl) 0;
+        }
+        .timeline::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(212, 196, 176, 0.1) 100%);
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--glass-border), transparent);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: var(--space-md);
+            opacity: 0.5;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+        .timeline-item.in-view { opacity: 1; transform: scale(1.02); }
+        .timeline-content {
+            width: 80%;
+            padding: var(--space-md);
+            background: var(--glass-bg-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            right: calc(50% - 6px);
+            top: 40px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-void);
+            border: 2px solid var(--glo-sapphire);
+            box-shadow: 0 0 10px var(--glo-sapphire);
+        }
+        .timeline-item:nth-child(even)::after {
+            left: calc(50% - 6px);
         }
 
-        .hero-image svg {
+        /* Section 6: Guest Recovery (Accordion) */
+        .recovery-grid {
+            max-width: 800px;
+            margin: var(--space-lg) auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        .accordion-item {
+            background: var(--glass-bg-light);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .accordion-header {
+            padding: var(--space-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: transparent;
+            user-select: none;
+        }
+        .accordion-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            padding: 0 var(--space-md);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+        .accordion-item.open .accordion-body {
+            padding: 0 var(--space-md) var(--space-md) var(--space-md);
+            max-height: 200px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .status-ready { background: rgba(0, 229, 255, 0.1); color: var(--status-ready); border: 1px solid rgba(0,229,255,0.3); }
+        .status-risk { background: rgba(255, 171, 0, 0.1); color: var(--status-risk); border: 1px solid rgba(255,171,0,0.3); }
+
+        /* Section 7: Event Readiness (Conic Border Banner) */
+        .event-banner {
+            margin-top: var(--space-xl);
+            padding: var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.4);
+        }
+        .event-banner h2 { font-size: 3rem; margin-bottom: 1rem; }
+        .event-banner p { font-size: 1.2rem; color: var(--text-secondary); max-width: 500px; }
+
+        /* Section 8: Leadership Visibility (Stats) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        .stat-card {
+            background: var(--glass-bg-medium);
+            border: 1px solid var(--glass-border);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 3rem;
+            font-family: var(--font-mono);
+            font-weight: 300;
+            margin: var(--space-sm) 0;
+            color: var(--glo-gold);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+        
+        /* Bar Chart CSS */
+        .css-chart {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding-top: var(--space-lg);
+            border-bottom: 1px solid var(--glass-border);
+            margin-top: var(--space-md);
+        }
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--glo-azure), transparent);
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            transition: height 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+            position: relative;
+        }
+        .chart-bar:hover::after {
+            content: attr(data-val);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg-heavy);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        /* Section 9: Service Call Sheet */
+        .call-sheet {
+            background: var(--glass-bg-light);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        .sheet-row {
+            display: grid;
+            grid-template-columns: 100px 200px 1fr 100px;
+            align-items: center;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .sheet-row:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .sheet-row.hidden-details .sheet-detail { opacity: 0.3; filter: blur(4px); }
+        .sheet-time { font-family: var(--font-mono); color: var(--text-secondary); }
+        .sheet-role { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: var(--glo-sapphire); }
+
+        /* Section 10: Ambient Alert Gallery */
+        .alert-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            position: fixed;
+            right: var(--space-md);
+            bottom: var(--space-md);
+            z-index: 1000;
+        }
+        .toast {
+            background: rgba(20,20,25,0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--status-ready);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 300px;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast.show { transform: translateX(0); }
+        .toast-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+        .toast-desc { font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* Section 11: Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        .quote-card {
+            background: var(--glass-bg-light);
+            border-left: 1px solid var(--glass-border);
+            padding: var(--space-lg);
+            position: relative;
+        }
+        .quote-card::before {
+            content: '"';
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            color: rgba(255,255,255,0.1);
+        }
+        .quote-text {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        .quote-author {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+        }
+
+        /* Section 12: Footer */
+        footer {
+            margin-top: var(--space-xl);
+            padding: var(--space-xl) 0 var(--space-md);
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            background: linear-gradient(to top, rgba(15, 82, 186, 0.05), transparent);
+        }
+        .footer-cta {
+            font-size: 3rem;
+            margin-bottom: var(--space-lg);
+        }
+        .glow-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px 50px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .glow-btn::before {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 48px;
-            height: 48px;
-            opacity: 0.3;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--glo-gold) 0%, transparent 60%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s;
+            z-index: -1;
+            opacity: 0.4;
         }
-
-        .hero-image-large {
-            grid-row: span 2;
-            aspect-ratio: auto;
+        .glow-btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
         }
-
-        /* Learning Outcomes Section */
-        .section {
-            padding: 6rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 640px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-label {
-            display: inline-block;
-            padding: 0.375rem 1rem;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--color-blue);
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: 50px;
-            margin-bottom: 1rem;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--color-charcoal);
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .section-description {
-            font-size: 1.125rem;
-            color: var(--color-slate);
-        }
-
-        .outcomes-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .outcome-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(100, 116, 139, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .outcome-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(59, 130, 246, 0.2);
-        }
-
-        .outcome-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--color-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .outcome-label {
-            font-size: 0.875rem;
-            color: var(--color-slate);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-        }
-
-        .outcome-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .outcome-desc {
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-        }
-
-        /* Course Tracks Section */
-        .tracks {
-            background: #f8fafc;
-        }
-
-        .tracks-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .track-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(100, 116, 139, 0.08);
-        }
-
-        .track-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .track-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
-            color: white;
-        }
-
-        .track-level {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-
-        .track-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .track-duration {
-            font-size: 0.9375rem;
-            opacity: 0.9;
-        }
-
-        .track-body {
-            padding: 2rem;
-        }
-
-        .track-modules {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .track-modules li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(100, 116, 139, 0.1);
-            font-size: 0.9375rem;
-            color: var(--color-slate);
+        .glow-btn:hover { border-color: rgba(255,255,255,0.8); }
+        
+        .footer-links {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
         }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+        .copyright { color: var(--text-tertiary); font-size: 0.8rem; }
 
-        .track-modules li:last-child {
-            border-bottom: none;
-        }
-
-        .track-modules li::before {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 50%;
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .track-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-charcoal);
-            margin-bottom: 1rem;
-        }
-
-        .track-price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--color-slate);
-        }
-
-        .track-cta {
-            width: 100%;
-        }
-
-        /* Critique Workflow Section */
-        .workflow {
-            background: white;
-        }
-
-        .workflow-steps {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .workflow-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--color-sand) 0%, var(--color-blue-muted) 50%, var(--color-sand) 100%);
-        }
-
-        .workflow-step {
-            text-align: center;
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .workflow-icon {
-            width: 80px;
-            height: 80px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: var(--shadow-lg);
-            border: 2px solid var(--color-sand-light);
-            transition: all 0.3s ease;
-        }
-
-        .workflow-step:hover .workflow-icon {
-            transform: scale(1.1);
-            border-color: var(--color-blue);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .workflow-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: var(--color-charcoal);
-        }
-
-        .workflow-step h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .workflow-step p {
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-            max-width: 200px;
-            margin: 0 auto;
-        }
-
-        /* Instructors Section */
-        .instructors {
-            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
-        }
-
-        .instructors-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .instructor-card {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(100, 116, 139, 0.08);
-        }
-
-        .instructor-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .instructor-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: var(--color-charcoal);
-            transition: transform 0.3s ease;
-        }
-
-        .instructor-card:hover .instructor-avatar {
-            transform: scale(1.05);
-        }
-
-        .instructor-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
-            margin-bottom: 0.25rem;
-        }
-
-        .instructor-role {
-            font-size: 0.9375rem;
-            color: var(--color-blue);
-            margin-bottom: 1rem;
-        }
-
-        .instructor-bio {
-            font-size: 0.875rem;
-            color: var(--color-slate);
-            line-height: 1.6;
-        }
-
-        /* Student Gallery Section */
-        .gallery {
-            background: white;
-        }
-
-        .gallery-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .gallery-item {
-            aspect-ratio: 4/3;
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.02);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.1) 0%, transparent 100%);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(30, 41, 59, 0.8) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 1.5rem;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            pointer-events: none;
+            transition: opacity 0.3s;
         }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-student {
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 0.25rem;
-        }
-
-        .gallery-project {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Pricing Section */
-        .pricing {
-            background: #f8fafc;
-        }
-
-        .pricing-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .pricing-card {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: var(--shadow-md);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .pricing-card.featured {
-            border-color: var(--color-blue);
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--color-blue);
-            color: white;
-            padding: 0.375rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .pricing-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-desc {
-            font-size: 1rem;
-            color: var(--color-slate);
-            margin-bottom: 2rem;
-        }
-
-        .pricing-amount {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--color-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-amount span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--color-slate);
-        }
-
-        .pricing-billing {
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features li {
-            padding: 0.75rem 0;
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            width: 24px;
-            height: 24px;
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .pricing-cta {
-            width: 100%;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            background: white;
-        }
-
-        .testimonials-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: #f8fafc;
-            padding: 2rem;
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            background: white;
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-4px);
-        }
-
-        .testimonial-quote {
-            font-size: 1.125rem;
-            color: var(--color-charcoal);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .testimonial-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-sand-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: var(--color-charcoal);
-        }
-
-        .testimonial-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
-        }
-
-        .testimonial-info p {
-            font-size: 0.875rem;
-            color: var(--color-slate);
-        }
-
-        /* FAQ Section */
-        .faq {
-            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
-        }
-
-        .faq-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            border: 1px solid rgba(100, 116, 139, 0.08);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .faq-question:hover {
-            background: rgba(59, 130, 246, 0.02);
-        }
-
-        .faq-question h3 {
-            font-size: 1.0625rem;
-            font-weight: 600;
-            color: var(--color-charcoal);
-        }
-
-        .faq-icon {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding: 0 1.5rem 1.5rem;
-        }
-
-        .faq-answer p {
-            font-size: 0.9375rem;
-            color: var(--color-slate);
-            line-height: 1.7;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--glass-bg-heavy);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            width: 90%;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s;
+        }
+        .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none; border: none; color: #fff;
+            font-size: 1.5rem; cursor: pointer;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--color-charcoal);
-        }
-
-        .btn-white:hover {
-            background: var(--color-sand-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-outline-white {
-            background: transparent;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-outline-white:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 4rem 2rem 2rem;
-            background: var(--color-charcoal);
-            color: white;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 1rem;
-            font-size: 0.9375rem;
-        }
-
-        .footer-links h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-copyright {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .footer-social a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .footer-social svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        /* Counter Animation */
-        .counter {
-            display: inline-block;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .outcomes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .tracks-grid,
-            .instructors-grid,
-            .gallery-grid,
-            .testimonials-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding: 6rem 1.5rem 4rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-ctas {
-                flex-direction: column;
-            }
-
-            .section {
-                padding: 4rem 1.5rem;
-            }
-
-            .section h2 {
-                font-size: 1.875rem;
-            }
-
-            .outcomes-grid,
-            .tracks-grid,
-            .instructors-grid,
-            .gallery-grid,
-            .testimonials-grid,
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .workflow-steps {
-                flex-direction: column;
-                gap: 3rem;
-            }
-
-            .workflow-steps::before {
-                display: none;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .cta h2 {
-                font-size: 1.875rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="navbar-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-                FrameSchool
-            </a>
-            <ul class="nav-links">
-                <li><a href="#outcomes">学习成果</a></li>
-                <li><a href="#tracks">课程体系</a></li>
-                <li><a href="#instructors">导师团队</a></li>
-                <li><a href="#pricing">价格方案</a></li>
-                <li><a href="#faq">常见问题</a></li>
-            </ul>
+
+    <!-- Ambient Background -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- Section 1: Navigation -->
+    <nav id="navbar">
+        <div class="glass-nav">
+            <div class="nav-logo serif">Atelier Meridian</div>
+            <div class="nav-links">
+                <a href="#platform">Platform</a>
+                <a href="#rituals">Service Rituals</a>
+                <a href="#console">The Glo Console</a>
+                <a href="#leadership">Leadership</a>
+            </div>
             <div class="nav-cta">
-                <button type="button" class="btn btn-secondary">登录</button>
-                <button type="button" class="btn btn-primary">免费试听</button>
+                <button onclick="openModal()">Request Access</button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Section 1: Ambient Hero -->
     <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content reveal">
-                <div class="hero-badge">
-                    <span class="hero-badge-dot"></span>
-                    2024年摄影教育创新奖得主
-                </div>
-                <h1>打造专业级<br><span>摄影作品集</span></h1>
-                <p class="hero-description">FrameSchool 是面向年轻创意人的摄影作品集教育平台。从审美培养到项目叙事，从作品筛选到呈现技巧，我们帮助你建立独特的视觉语言，打造能打动画廊、客户和观众的专业作品集。</p>
-                <div class="hero-ctas">
-                    <button type="button" class="btn btn-primary btn-large">开始免费课程</button>
-                    <button type="button" class="btn btn-secondary btn-large">查看学员作品</button>
-                </div>
-                <div class="hero-proof">
-                    <div class="hero-avatars">
-                        <div class="hero-avatar">李</div>
-                        <div class="hero-avatar">王</div>
-                        <div class="hero-avatar">张</div>
-                        <div class="hero-avatar">陈</div>
-                    </div>
-                    <p class="hero-proof-text"><strong>2,847</strong> 位学员已完成作品集构建</p>
-                </div>
-            </div>
-            <div class="hero-visual reveal">
-                <div class="hero-image-grid">
-                    <div class="hero-image hero-image-large">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                    </div>
-                    <div class="hero-image">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                    </div>
-                    <div class="hero-image">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                    </div>
-                </div>
+        <div class="container">
+            <h1 class="serif">The Symphony of<br>Invisible Service</h1>
+            <p>A hospitality operations platform for design-led hotels, private residences, and members clubs. Master your service rituals with the precision of a Swiss timepiece.</p>
+            <div class="hero-ctas">
+                <button class="btn-primary" onclick="openModal()">Experience the Console</button>
+                <button class="btn-secondary">Read the Manifesto</button>
             </div>
         </div>
     </section>
 
-    <!-- Learning Outcomes Section -->
-    <section class="section" id="outcomes">
-        <div class="section-header reveal">
-            <span class="section-label">学习成果</span>
-            <h2>从爱好者到专业创作者的蜕变</h2>
-            <p class="section-description">我们的课程体系经过精心设计，确保每位学员都能在四个核心维度上获得实质性提升</p>
+    <!-- Section 2: Proof Strip -->
+    <section class="proof-strip">
+        <div class="proof-track" id="proof-track">
+            <!-- Populated via JS for continuous scroll -->
+            <span class="proof-item">Aman</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Soho House</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Rosewood</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">The Ned</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Six Senses</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Edition Hotels</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Aman</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Soho House</span>
+            <span class="proof-item">&bull;</span>
+            <span class="proof-item">Rosewood</span>
         </div>
-        <div class="outcomes-grid">
-            <div class="outcome-card reveal">
-                <div class="outcome-number"><span class="counter" data-target="12">0</span>周</div>
-                <div class="outcome-label">系统训练周期</div>
-                <h3 class="outcome-title">审美体系构建</h3>
-                <p class="outcome-desc">从视觉史论到当代摄影语言，建立完整的审美判断框架，学会识别和创造有深度的影像作品。</p>
+    </section>
+
+    <!-- Section 3: Ritual Grid -->
+    <section id="rituals" class="container">
+        <h2 class="serif" style="text-align:center; font-size: 2.5rem; margin-bottom: 2rem;">Choreograph Every Touchpoint</h2>
+        <div class="bento-grid">
+            <div class="bento-item large glass-panel">
+                <svg class="bento-icon" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13.5h-13L12 6.5z"/></svg>
+                <h3>The Grand Arrival</h3>
+                <p>Track guest transit in real-time. Valet, reception, and luggage teams are perfectly synchronized before the vehicle pulls into the driveway. Welcome drinks are prepared at optimal temperature.</p>
             </div>
-            <div class="outcome-card reveal">
-                <div class="outcome-number"><span class="counter" data-target="3">0</span>个项目</div>
-                <div class="outcome-label">完整作品集</div>
-                <h3 class="outcome-title">项目叙事能力</h3>
-                <p class="outcome-desc">掌握从概念发想、视觉调研到最终呈现的全流程，能够独立完成具有个人风格的摄影项目。</p>
+            <div class="bento-item medium glass-panel">
+                <svg class="bento-icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+                <h3>Housekeeping Stealth</h3>
+                <p>Invisible turnover. Rooms are restored to perfection while guests are dining, triggered automatically by system geofences and reservations.</p>
             </div>
-            <div class="outcome-card reveal">
-                <div class="outcome-number"><span class="counter" data-target="24">0</span>次</div>
-                <div class="outcome-label">专业点评</div>
-                <h3 class="outcome-title">作品精修打磨</h3>
-                <p class="outcome-desc">通过导师一对一作品点评和同伴互评，不断优化作品质量，达到专业展示水准。</p>
+            <div class="bento-item tall glass-panel">
+                <h3>Event Readiness</h3>
+                <p>From private boardroom dinners to full-scale ballroom galas. Track floral deliveries, catering timelines, and AV setups with down-to-the-minute precision. Staffing levels automatically adjust based on guest density.</p>
+                <div style="margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                    <span class="status-badge status-ready">All Systems Online</span>
+                </div>
             </div>
-            <div class="outcome-card reveal">
-                <div class="outcome-number"><span class="counter" data-target="85">0</span>%</div>
-                <div class="outcome-label">学员满意度</div>
-                <h3 class="outcome-title">职业发展支持</h3>
-                <p class="outcome-desc">获得画廊推荐、艺术驻留申请指导和商业合作机会对接，助力职业道路起步。</p>
+            <div class="bento-item large glass-panel">
+                <h3>VVIP Preferences</h3>
+                <p>Deep profiles built intuitively. Remember exactly how they prefer their coffee, their required pillow firmness, and their favorite reading chair placement. Turn raw data into legendary service moments.</p>
             </div>
         </div>
     </section>
 
-    <!-- Course Tracks Section -->
-    <section class="section tracks" id="tracks">
-        <div class="section-header reveal">
-            <span class="section-label">课程体系</span>
-            <h2>为不同阶段量身定制的学习路径</h2>
-            <p class="section-description">无论你是刚接触摄影的初学者，还是希望精进技艺的进阶创作者，都能找到适合自己的成长路径</p>
+    <!-- Section 4: The Glo Console -->
+    <section id="console" class="container glo-console">
+        <div class="console-header">
+            <h2 class="serif">The Glo Console</h2>
+            <p style="color:var(--text-secondary)">A command center designed not for data entry, but for fluid operational mastery.</p>
         </div>
-        <div class="tracks-grid">
-            <div class="track-card reveal">
-                <div class="track-header">
-                    <div class="track-level">基础阶段</div>
-                    <h3 class="track-title">视觉语言入门</h3>
-                    <p class="track-duration">8周 · 每周6小时</p>
-                </div>
-                <div class="track-body">
-                    <ul class="track-modules">
-                        <li>摄影史与视觉文化基础</li>
-                        <li>构图与光线控制原理</li>
-                        <li>色彩理论与情感表达</li>
-                        <li>单幅作品精修工作坊</li>
-                        <li>作品集基础规划</li>
-                    </ul>
-                    <div class="track-price">¥4,999 <span>/ 完整课程</span></div>
-                    <button type="button" class="btn btn-secondary track-cta">了解详情</button>
-                </div>
+        <div class="console-window conic-border">
+            <div class="console-nav">
+                <div class="console-tab active" onclick="switchTab(event, 'tab-overview')">Live Overview</div>
+                <div class="console-tab" onclick="switchTab(event, 'tab-dispatch')">Staff Dispatch</div>
+                <div class="console-tab" onclick="switchTab(event, 'tab-incident')">Incident Recovery</div>
             </div>
-            <div class="track-card reveal">
-                <div class="track-header">
-                    <div class="track-level">进阶阶段</div>
-                    <h3 class="track-title">项目叙事精进</h3>
-                    <p class="track-duration">12周 · 每周8小时</p>
-                </div>
-                <div class="track-body">
-                    <ul class="track-modules">
-                        <li>系列作品概念发想方法</li>
-                        <li>视觉调研与参考分析</li>
-                        <li>项目拍摄与编辑流程</li>
-                        <li>作品陈述与文字配合</li>
-                        <li>模拟画廊提案演练</li>
-                    </ul>
-                    <div class="track-price">¥8,999 <span>/ 完整课程</span></div>
-                    <button type="button" class="btn btn-primary track-cta">立即报名</button>
-                </div>
-            </div>
-            <div class="track-card reveal">
-                <div class="track-header">
-                    <div class="track-level">专业阶段</div>
-                    <h3 class="track-title">职业作品集构建</h3>
-                    <p class="track-duration">16周 · 灵活安排</p>
-                </div>
-                <div class="track-body">
-                    <ul class="track-modules">
-                        <li>个人风格定位与品牌塑造</li>
-                        <li>多项目组合策略</li>
-                        <li>线上/线下展示方案设计</li>
-                        <li>行业资源对接与推广</li>
-                        <li>毕业展览与出版机会</li>
-                    </ul>
-                    <div class="track-price">¥15,999 <span>/ 完整课程</span></div>
-                    <button type="button" class="btn btn-secondary track-cta">预约咨询</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Critique Workflow Section -->
-    <section class="section workflow">
-        <div class="section-header reveal">
-            <span class="section-label">作品点评流程</span>
-            <h2>专业级作品打磨体系</h2>
-            <p class="section-description">我们的点评流程模拟真实画廊和出版机构的评审标准，帮助你从专业视角审视和提升作品</p>
-        </div>
-        <div class="workflow-steps reveal">
-            <div class="workflow-step">
-                <div class="workflow-icon">
-                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                </div>
-                <h3>提交作品</h3>
-                <p>上传你的项目草稿，包括作品图片和初步的项目陈述</p>
-            </div>
-            <div class="workflow-step">
-                <div class="workflow-icon">
-                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <h3>同伴互评</h3>
-                <p>与同期学员交换反馈，获得多元视角的观察和建议</p>
-            </div>
-            <div class="workflow-step">
-                <div class="workflow-icon">
-                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                </div>
-                <h3>导师点评</h3>
-                <p>行业导师提供一对一深度反馈，指出改进方向和优化建议</p>
-            </div>
-            <div class="workflow-step">
-                <div class="workflow-icon">
-                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
-                </div>
-                <h3>迭代优化</h3>
-                <p>根据反馈修改作品，提交新版本进行复评，直至达到展示标准</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Instructors Section -->
-    <section class="section instructors" id="instructors">
-        <div class="section-header reveal">
-            <span class="section-label">导师团队</span>
-            <h2>来自顶尖机构的行业专家</h2>
-            <p class="section-description">我们的导师团队由活跃于摄影、艺术策展和视觉出版领域的专业人士组成</p>
-        </div>
-        <div class="instructors-grid">
-            <div class="instructor-card reveal">
-                <div class="instructor-avatar">林</div>
-                <h3 class="instructor-name">林晓薇</h3>
-                <p class="instructor-role">艺术总监 · 策展人</p>
-                <p class="instructor-bio">曾任上海当代艺术博物馆摄影策展人，策划过多场国际摄影展览，擅长帮助艺术家定位个人风格。</p>
-            </div>
-            <div class="instructor-card reveal">
-                <div class="instructor-avatar">张</div>
-                <h3 class="instructor-name">张远航</h3>
-                <p class="instructor-role">商业摄影师 · 出版人</p>
-                <p class="instructor-bio">作品刊登于《Aperture》《Foam》等国际杂志，出版过三本个人摄影集，精通项目叙事与出版流程。</p>
-            </div>
-            <div class="instructor-card reveal">
-                <div class="instructor-avatar">王</div>
-                <h3 class="instructor-name">王艺萌</h3>
-                <p class="instructor-role">图片编辑 · 视觉顾问</p>
-                <p class="instructor-bio">前《生活》杂志图片编辑，为多位摄影师策划展览和出版项目，擅长作品筛选与序列编排。</p>
-            </div>
-            <div class="instructor-card reveal">
-                <div class="instructor-avatar">陈</div>
-                <h3 class="instructor-name">陈默涵</h3>
-                <p class="instructor-role">纪实摄影师 · 教育者</p>
-                <p class="instructor-bio">玛格南图片社提名摄影师，长期关注城市空间与社会变迁，作品被多家美术馆和机构收藏。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Student Gallery Section -->
-    <section class="section gallery" id="gallery">
-        <div class="section-header reveal">
-            <span class="section-label">学员作品</span>
-            <h2>真实的学习成果展示</h2>
-            <p class="section-description">浏览我们学员的优秀作品集项目，了解 FrameSchool 的学习成果</p>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">李明远</p>
-                    <p class="gallery-project">《城市缝隙》系列</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">王思琪</p>
-                    <p class="gallery-project">《日常仪式》项目</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">张浩然</p>
-                    <p class="gallery-project">《边缘地带》纪实</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">陈雨萱</p>
-                    <p class="gallery-project">《光影对话》系列</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">刘子轩</p>
-                    <p class="gallery-project">《时间切片》项目</p>
-                </div>
-            </div>
-            <div class="gallery-item reveal">
-                <div class="gallery-overlay">
-                    <p class="gallery-student">赵雅琳</p>
-                    <p class="gallery-project">《静默之声》系列</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="section pricing" id="pricing">
-        <div class="section-header reveal">
-            <span class="section-label">价格方案</span>
-            <h2>选择适合你的学习计划</h2>
-            <p class="section-description">我们提供灵活的付费方案，让优质摄影教育触手可及</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card reveal">
-                <h3 class="pricing-name">单课程购买</h3>
-                <p class="pricing-desc">按阶段购买，灵活学习</p>
-                <div class="pricing-amount">¥4,999<span> 起</span></div>
-                <p class="pricing-billing">一次性付费，永久访问课程内容</p>
-                <ul class="pricing-features">
-                    <li>完整视频课程访问权限</li>
-                    <li>课程资料下载</li>
-                    <li>学员社区讨论区</li>
-                    <li>8次作品点评机会</li>
-                    <li>结业证书</li>
-                </ul>
-                <button type="button" class="btn btn-secondary pricing-cta">选择此方案</button>
-            </div>
-            <div class="pricing-card featured reveal">
-                <span class="pricing-badge">最受欢迎</span>
-                <h3 class="pricing-name">完整学位计划</h3>
-                <p class="pricing-desc">三阶段系统学习，导师全程陪伴</p>
-                <div class="pricing-amount">¥24,999<span> / 全套</span></div>
-                <p class="pricing-billing">节省 ¥5,000，含 36周完整学习周期</p>
-                <ul class="pricing-features">
-                    <li>全部三个阶段课程内容</li>
-                    <li>1对1导师辅导（每月2次）</li>
-                    <li>无限次作品点评</li>
-                    <li>毕业展览机会</li>
-                    <li>行业资源对接</li>
-                    <li>出版咨询与推荐</li>
-                </ul>
-                <button type="button" class="btn btn-primary pricing-cta">立即报名</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="section testimonials" id="testimonials">
-        <div class="section-header reveal">
-            <span class="section-label">学员评价</span>
-            <h2>听听他们怎么说</h2>
-            <p class="section-description">来自不同背景的学员分享他们在 FrameSchool 的学习体验</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal">
-                <p class="testimonial-quote">"FrameSchool 彻底改变了我对摄影的理解。以前我只关注技术参数，现在我学会了用图像讲故事。我的第一个项目《城市缝隙》已经在两个画廊展出。"</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">李</div>
-                    <div class="testimonial-info">
-                        <h4>李明远</h4>
-                        <p>自由摄影师 · 北京</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card reveal">
-                <p class="testimonial-quote">"导师的点评非常专业且具体，每次都能指出我自己看不到的问题。12周的学习让我的作品从业余水平提升到了可以投稿国际杂志的水准。"</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">王</div>
-                    <div class="testimonial-info">
-                        <h4>王思琪</h4>
-                        <p>视觉设计师 · 上海</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card reveal">
-                <p class="testimonial-quote">"作为转行进入摄影领域的人，FrameSchool 给了我系统性的知识框架和信心。现在我已经接到了第一个商业拍摄项目，感谢这个平台！"</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">张</div>
-                    <div class="testimonial-info">
-                        <h4>张浩然</h4>
-                        <p>独立摄影师 · 深圳</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="section faq" id="faq">
-        <div class="section-header reveal">
-            <span class="section-label">常见问题</span>
-            <h2>你可能想知道的</h2>
-            <p class="section-description">关于课程、学习和职业发展的常见问题解答</p>
-        </div>
-        <div class="faq-list">
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>我需要具备什么摄影基础才能开始学习？</h3>
-                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>基础课程不需要任何摄影经验，我们会从相机操作、曝光三要素等基础知识讲起。进阶和专业课程建议先完成基础课程或具备相当的拍摄经验。如果你不确定自己的水平，可以预约免费的能力评估咨询。</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>课程是录播还是直播？学习时间灵活吗？</h3>
-                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>核心课程采用录播形式，你可以根据自己的时间安排学习。每周会有固定的直播答疑和作品点评环节，如果时间冲突可以观看回放。作业提交有截止时间，但我们会提供合理的延期机制。</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>完成课程后能获得什么证书或资质？</h3>
-                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>完成每个阶段的学习并通过作品评审后，你将获得 FrameSchool 的结业证书。完成完整学位计划的学员还将获得导师推荐信和毕业展览机会。我们与多家画廊和出版机构建立了合作关系，优秀学员可获得推荐。</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>如果我对课程不满意，可以退款吗？</h3>
-                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>我们提供14天无理由退款保证。如果你在购买后14天内觉得课程不适合自己，可以申请全额退款，无需说明理由。超过14天后，如果因特殊原因无法继续学习，可以联系我们协商课程延期或转让。</p>
-                </div>
-            </div>
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>课程会教授后期修图技术吗？</h3>
-                    <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>我们的重点是培养摄影思维和项目构建能力，而非软件操作技巧。课程会涉及基本的后期调色和编辑原则，但不会深入讲解Photoshop或Lightroom的具体操作。如果你需要学习后期技术，我们会推荐优质的配套资源。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="reveal">
-            <h2>准备好开始你的摄影之旅了吗？</h2>
-            <p>加入 FrameSchool，与志同道合的创作者一起成长，打造属于你的专业作品集</p>
-            <div class="cta-buttons">
-                <button type="button" class="btn btn-white btn-large">免费试听课程</button>
-                <button type="button" class="btn btn-outline-white btn-large">预约咨询</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="logo" style="color: white;">
-                        <div class="logo-icon">
-                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <div class="console-body">
+                <div id="tab-overview" class="tab-content active">
+                    <div class="dashboard-mockup">
+                        <div class="mock-sidebar">
+                            <ul>
+                                <li class="active">Today's Arrivals (14)</li>
+                                <li>In-House VIPs (3)</li>
+                                <li>Departures (12)</li>
+                                <li>Event Roster</li>
+                            </ul>
                         </div>
-                        FrameSchool
-                    </a>
-                    <p>FrameSchool 是面向年轻创意人的摄影作品集教育平台，致力于培养具有独特视觉语言的专业创作者。</p>
+                        <div class="mock-main">
+                            <div class="mock-card">
+                                <div class="mock-card-title">Pending Arrival: Mr. Sterling</div>
+                                <h3 style="font-size:1.5rem; margin-bottom: 10px;">ETA: 14 Mins</h3>
+                                <div style="display:flex; gap: 10px;">
+                                    <span class="status-badge status-risk">Luggage team short 1</span>
+                                    <span class="status-badge status-ready">Suite 402 Inspected</span>
+                                </div>
+                            </div>
+                            <div class="mock-card">
+                                <div class="mock-card-title">General Sentiment Analysis</div>
+                                <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow:hidden; margin-top:10px;">
+                                    <div style="height: 100%; width: 92%; background: var(--status-ready);"></div>
+                                </div>
+                                <p style="font-size:0.8rem; margin-top:5px; color:var(--text-secondary)">92% of interactions rated 'Exceptional' today.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <h4>课程</h4>
-                    <ul>
-                        <li><a href="#">视觉语言入门</a></li>
-                        <li><a href="#">项目叙事精进</a></li>
-                        <li><a href="#">职业作品集构建</a></li>
-                        <li><a href="#">企业培训</a></li>
-                    </ul>
+                <div id="tab-dispatch" class="tab-content">
+                    <h3 style="margin-bottom:20px;">Active Units</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="mock-card"><div class="mock-card-title">Housekeeping Team Alpha</div><p>Floor 4 - 80% Complete</p></div>
+                        <div class="mock-card"><div class="mock-card-title">Valet Stand</div><p>High volume expected at 18:00</p></div>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <h4>资源</h4>
-                    <ul>
-                        <li><a href="#">学员作品</a></li>
-                        <li><a href="#">导师博客</a></li>
-                        <li><a href="#">摄影书单</a></li>
-                        <li><a href="#">行业资讯</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>关于</h4>
-                    <ul>
-                        <li><a href="#">关于我们</a></li>
-                        <li><a href="#">加入团队</a></li>
-                        <li><a href="#">联系我们</a></li>
-                        <li><a href="#">隐私政策</a></li>
-                    </ul>
+                <div id="tab-incident" class="tab-content">
+                    <h3 style="margin-bottom:20px;">Open Anomalies</h3>
+                    <div class="mock-card" style="border-left: 3px solid var(--status-delayed);">
+                        <div class="mock-card-title">Room Service Delay (Suite 501)</div>
+                        <p>Order running 12 mins late. Recovery protocol activated. Comped dessert assigned to order.</p>
+                        <button style="margin-top: 10px; background: rgba(255,255,255,0.1); border:none; color:#fff; padding: 5px 15px; border-radius:4px; font-size:0.8rem; cursor:pointer;">Authorize Apology Amenity</button>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2024 FrameSchool. 保留所有权利。</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="微信">
-                        <svg viewBox="0 0 24 24"><path d="M8.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/><path d="M12 2C6.48 2 2 6.03 2 11c0 2.76 1.36 5.23 3.5 6.86V22l4.09-2.24c.78.15 1.58.24 2.41.24 5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
-                    </a>
-                    <a href="#" aria-label="微博">
-                        <svg viewBox="0 0 24 24"><path d="M20.2 12.8c.6-.2 1.1-.7 1.3-1.3.3-.9 0-1.9-.7-2.5-.7-.6-1.7-.7-2.5-.3-.3.1-.5.3-.7.5-.2-.7-.7-1.3-1.4-1.6-.9-.4-1.9-.3-2.7.2-.4.3-.7.6-.9 1.1-.5-.3-1.1-.4-1.7-.3-1 .2-1.8.9-2.1 1.9-.1.5-.1 1 .1 1.5-.6.1-1.2.4-1.6.9-.6.7-.7 1.7-.3 2.5.4.8 1.2 1.4 2.1 1.5-.1.3-.2.7-.1 1 .2 1 1 1.8 2 2 .5.1 1 0 1.5-.2.4.6 1.1 1 1.8 1.1 1 .1 1.9-.3 2.5-1.1.3-.4.5-.9.5-1.4.6.1 1.2 0 1.8-.2 1.2-.4 2-1.5 2-2.8 0-.6-.2-1.2-.5-1.7.4-.2.8-.5 1.1-.9.5-.7.6-1.6.2-2.4z"/></svg>
-                    </a>
-                    <a href="#" aria-label="小红书">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm5 8h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                    </a>
+        </div>
+    </section>
+
+    <!-- Section 5: Choreography Flow -->
+    <section class="container choreography">
+        <h2 class="serif" style="text-align:center; font-size: 2.5rem; margin-bottom: 2rem;">The Guest Timeline</h2>
+        <div class="timeline" id="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span style="color:var(--glo-gold); font-family:var(--font-mono)">14:00 (T-120 mins)</span>
+                    <h3 style="margin: 10px 0;">Pre-Arrival Inspection</h3>
+                    <p style="font-size:0.9rem; color:var(--text-secondary)">Director of Rooms conducts final visual sweep. Climate control set to 21°C.</p>
                 </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span style="color:var(--glo-gold); font-family:var(--font-mono)">15:45 (T-15 mins)</span>
+                    <h3 style="margin: 10px 0;">Proximity Alert Triggered</h3>
+                    <p style="font-size:0.9rem; color:var(--text-secondary)">Guest vehicle passes geofence. Doorman, Luggage Porter, and Reception manager move to positions.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span style="color:var(--glo-gold); font-family:var(--font-mono)">16:00 (Zero Hour)</span>
+                    <h3 style="margin: 10px 0;">The Touchdown</h3>
+                    <p style="font-size:0.9rem; color:var(--text-secondary)">Door opened within 3 seconds of parking. Address by name. Immediate escort to suite. Zero front-desk friction.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span style="color:var(--glo-gold); font-family:var(--font-mono)">16:15 (T+15 mins)</span>
+                    <h3 style="margin: 10px 0;">Luggage Placement</h3>
+                    <p style="font-size:0.9rem; color:var(--text-secondary)">Baggage staged in dressing area unseen by guest during welcome tour.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Guest Recovery -->
+    <section class="container">
+        <h2 class="serif" style="text-align:center; font-size: 2.5rem; margin-bottom: 2rem;">Algorithmic Empathy</h2>
+        <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin: 0 auto 3rem;">When friction occurs, execution must be flawless. Our workflows guide staff through high-stress recovery scenarios with grace.</p>
+        
+        <div class="recovery-grid" id="accordion">
+            <div class="accordion-item glass-panel open">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">Noise Complaint Protocol</span>
+                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <p style="padding-bottom: 15px;">Step 1: Security dispatched to assess (SLA: 3 mins).<br>
+                    Step 2: If verified, polite intervention.<br>
+                    Step 3: Affected guest contacted via preferred channel. Soft move offered if inventory allows. Complimentary breakfast automatically flagged for next morning.</p>
+                </div>
+            </div>
+            <div class="accordion-item glass-panel">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">Luggage Delay Sequence</span>
+                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <p style="padding-bottom: 15px;">If airline loses baggage: Concierge opens emergency overnight kit workflow. Custom sizing profile pulled from CRM. Fresh attire procured from boutique partners within 2 hours. Frequent updates pushed to guest app discreetly.</p>
+                </div>
+            </div>
+            <div class="accordion-item glass-panel">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span class="accordion-title">Dining Allergy Strike</span>
+                    <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="accordion-body">
+                    <p style="padding-bottom: 15px;">If a known restriction is flagged near a dish, Kitchen Display System instantly flashes red. Expo chief must enter override code. Manager alerted to verify with table. Total fail-safe against severe reactions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Event Readiness Banner -->
+    <section style="padding:0; margin: var(--space-xl) 0;">
+        <div class="event-banner glass-panel conic-border">
+            <div>
+                <h2 class="serif">Banqueting & Beyond</h2>
+                <p>Synchronize hundreds of moving parts. Manage culinary drops, floral load-ins, and talent rehearsals on a unified master clock visible to every earpiece in the building.</p>
+            </div>
+            <div>
+                <button class="btn-primary" style="background:var(--glo-magenta); border:none;">Explore Event Ops</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: Leadership Visibility -->
+    <section id="leadership" class="container">
+        <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem;">The C-Suite Perspective</h2>
+        <p style="color:var(--text-secondary); max-width:500px; margin-bottom: 2rem;">Move from retrospective reporting to proactive governance. Real-time metrics that signify operational health.</p>
+        
+        <div class="stats-grid" id="stats">
+            <div class="stat-card">
+                <div class="stat-label">Avg Speed of Service</div>
+                <div class="stat-value"><span class="count-up" data-target="4">0</span>.<span class="count-up" data-target="2">0</span>m</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Recovery Success</div>
+                <div class="stat-value"><span class="count-up" data-target="98">0</span>%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Guest Retention</div>
+                <div class="stat-value"><span class="count-up" data-target="86">0</span>%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Task Efficiency</div>
+                <div class="stat-value">+<span class="count-up" data-target="32">0</span>%</div>
+            </div>
+        </div>
+
+        <div class="css-chart" id="bar-chart">
+            <div class="chart-bar" style="height: 0%" data-target="40%" data-val="Mon: 42"></div>
+            <div class="chart-bar" style="height: 0%" data-target="55%" data-val="Tue: 58"></div>
+            <div class="chart-bar" style="height: 0%" data-target="45%" data-val="Wed: 47"></div>
+            <div class="chart-bar" style="height: 0%" data-target="70%" data-val="Thu: 73"></div>
+            <div class="chart-bar" style="height: 0%" data-target="95%" data-val="Fri: 98"></div>
+            <div class="chart-bar" style="height: 0%" data-target="100%" data-val="Sat: 105"></div>
+            <div class="chart-bar" style="height: 0%" data-target="80%" data-val="Sun: 84"></div>
+        </div>
+        <p style="text-align:center; font-size:0.8rem; color:var(--text-tertiary); margin-top:10px;">7-Day Volume Intensity Index</p>
+    </section>
+
+    <!-- Section 9: Service Call Sheet -->
+    <section class="container">
+        <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 2rem;">Live Run of Show</h2>
+        <div class="call-sheet">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                <span style="font-weight:bold; letter-spacing:2px;">OPERATIONS LOG</span>
+                <span style="color:var(--status-ready)">&#9679; LIVE</span>
+            </div>
+            <div class="sheet-row hidden-details" onclick="this.classList.toggle('hidden-details')">
+                <div class="sheet-time">08:00</div>
+                <div class="sheet-role">Concierge</div>
+                <div class="sheet-detail">Procure rare vintage wine for Penthouse arrival. Vendor contacted.</div>
+                <div><span class="status-badge status-ready">Done</span></div>
+            </div>
+            <div class="sheet-row hidden-details" onclick="this.classList.toggle('hidden-details')">
+                <div class="sheet-time">11:15</div>
+                <div class="sheet-role">Engineering</div>
+                <div class="sheet-detail">HVAC anomaly in Ballroom B. Replacing filter unit. Est 20 mins.</div>
+                <div><span class="status-badge status-risk">Active</span></div>
+            </div>
+            <div class="sheet-row hidden-details" onclick="this.classList.toggle('hidden-details')">
+                <div class="sheet-time">14:30</div>
+                <div class="sheet-role">Housekeeping</div>
+                <div class="sheet-detail">VIP Turndown sequence initiated. Specific essential oil placement.</div>
+                <div><span class="status-badge status-ready">Done</span></div>
+            </div>
+            <div class="sheet-row hidden-details" onclick="this.classList.toggle('hidden-details')">
+                <div class="sheet-time">19:00</div>
+                <div class="sheet-role">F&B Director</div>
+                <div class="sheet-detail">Pre-service briefing in main restaurant. Focus on allergy mapping.</div>
+                <div><span class="status-badge" style="background:rgba(255,255,255,0.1)">Pending</span></div>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-tertiary); text-align:center; margin-top:20px;">Click rows to unmask restricted details.</p>
+        </div>
+    </section>
+
+    <!-- Section 10: Ambient Alerts -->
+    <!-- Displayed dynamically via JS on bottom right -->
+    <div class="alert-gallery" id="alert-gallery">
+        <!-- Toasts injected via JS -->
+    </div>
+
+    <!-- Section 11: Testimonials -->
+    <section class="container">
+        <h2 class="serif" style="text-align:center; font-size: 2.5rem; margin-bottom: 2rem;">Voices of Hospitality</h2>
+        <div class="testimonials">
+            <div class="quote-card glass-panel">
+                <p class="quote-text">Atelier Meridian finally gave our staff the digital equivalent of a finely tailored uniform. It moves with them.</p>
+                <div class="quote-author">GM, Five Star Resort, London</div>
+            </div>
+            <div class="quote-card glass-panel">
+                <p class="quote-text">We dropped our response times by forty percent simply because the system predicts the request before the guest dials the phone.</p>
+                <div class="quote-author">VP Operations, Global Luxury Brand</div>
+            </div>
+            <div class="quote-card glass-panel">
+                <p class="quote-text">It possesses an elegance I didn't think was possible in backend software. Our team actually enjoys looking at it.</p>
+                <div class="quote-author">Director of IT, Private Members Club</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 12: Footer & Final CTA -->
+    <footer>
+        <div class="container">
+            <h2 class="serif footer-cta">Elevate Your Standard.</h2>
+            <button class="glow-btn" onclick="openModal()">Initialize Trial Protocol</button>
+            
+            <div style="margin-top: var(--space-xl);">
+                <div class="nav-logo serif" style="margin-bottom: 20px;">Atelier Meridian</div>
+                <div class="footer-links">
+                    <a href="#">Manifesto</a>
+                    <a href="#">Security</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Contact Desk</a>
+                </div>
+                <p class="copyright">&copy; 2025-2026 Atelier Meridian Ops LLC. Designed for the exceptional.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Modal Form -->
+    <div class="modal-overlay" id="access-modal">
+        <div class="modal conic-border">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 class="serif" style="font-size:2rem; margin-bottom:10px;">Request Access</h2>
+            <p style="color:var(--text-secondary); margin-bottom:20px;">For qualified portfolios only.</p>
+            <form id="contact-form" onsubmit="event.preventDefault(); submitForm();">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; font-size:0.8rem; margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-tertiary)">Property Name</label>
+                    <input type="text" required style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--glass-border); color:#fff; border-radius:4px; font-family:inherit;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; font-size:0.8rem; margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-tertiary)">Work Email</label>
+                    <input type="email" required style="width:100%; padding:12px; background:rgba(0,0,0,0.5); border:1px solid var(--glass-border); color:#fff; border-radius:4px; font-family:inherit;">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:10px;">Transmit Request</button>
+            </form>
+            <div id="form-success" style="display:none; text-align:center; padding: 20px 0;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--status-recovered)" stroke-width="2" style="margin-bottom:10px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                <h3 style="color:var(--status-recovered)">Request Received</h3>
+                <p style="font-size:0.9rem; color:var(--text-secondary);">An associate will review your portfolio.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script wiring -->
     <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
+        // 1. Sticky Nav Shrink
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                nav.style.padding = '8px 16px';
+                nav.firstElementChild.style.background = 'rgba(255, 255, 255, 0.08)';
             } else {
-                navbar.classList.remove('scrolled');
+                nav.style.padding = '16px 32px';
+                nav.firstElementChild.style.background = 'rgba(255, 255, 255, 0.06)';
             }
         });
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+        // 2. Tabs logic
+        function switchTab(evt, tabId) {
+            const tabs = document.querySelectorAll('.console-tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            evt.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // 3. Accordion logic
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isOpen = item.classList.contains('open');
+            
+            // Close all
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('open');
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+
+            // Open clicked if it wasn't open
+            if(!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // 4. Modal logic
+        const modal = document.getElementById('access-modal');
+        function openModal() {
+            modal.classList.add('active');
+            document.getElementById('contact-form').style.display = 'block';
+            document.getElementById('form-success').style.display = 'none';
+            document.getElementById('contact-form').reset();
+        }
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+        function submitForm() {
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+            setTimeout(() => { closeModal(); }, 2500);
+        }
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
         });
 
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Counter animation
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries) => {
+        // 5. Timeline Intersection Observer
+        const observerOpts = { threshold: 0.5 };
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
-
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current);
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = target;
-                        }
-                    };
-
-                    updateCounter();
-                    counterObserver.unobserve(counter);
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
                 }
             });
-        }, { threshold: 0.5 });
+        }, observerOpts);
 
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // FAQ accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => i.classList.remove('active'));
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
         });
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+        // 6. Count-up and Bar Chart Animation on scroll
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    // Trigger charts
+                    document.querySelectorAll('.chart-bar').forEach(bar => {
+                        bar.style.height = bar.getAttribute('data-target');
                     });
-                }
-            });
-        });
-
-        // Button click feedback
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (!this.getAttribute('href')?.startsWith('#')) {
-                    // Show coming soon for buttons without actual links
-                    const hasLink = this.getAttribute('href') || this.closest('a');
-                    if (!hasLink && !this.closest('.faq-question')) {
-                        const originalText = this.textContent;
-                        this.textContent = '即将推出';
-                        setTimeout(() => {
-                            this.textContent = originalText;
-                        }, 1500);
+                    
+                    // Trigger counters
+                    if(!entry.target.classList.contains('counted')) {
+                        document.querySelectorAll('.count-up').forEach(counter => {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 2000; // 2 seconds
+                            const step = target / (duration / 16);
+                            let current = 0;
+                            
+                            const updateCounter = () => {
+                                current += step;
+                                if(current < target) {
+                                    counter.innerText = Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            updateCounter();
+                        });
+                        entry.target.classList.add('counted');
                     }
                 }
             });
-        });
+        }, { threshold: 0.2 });
+        
+        const statsSection = document.getElementById('stats');
+        if(statsSection) {
+            statsObserver.observe(statsSection.parentElement);
+        }
+
+        // 7. Ambient Alert Gallery (Toasts)
+        const mockAlerts = [
+            { title: 'VIP Arrival: T-10 Mins', desc: 'Mr. & Mrs. Vance approaching Geofence.', status: 'ready' },
+            { title: 'Housekeeping Sync', desc: 'Turndown started for Penthouse A.', status: 'recovered' },
+            { title: 'Inventory Warning', desc: 'Sparkling water stock below threshold at Pool Bar.', status: 'risk' },
+            { title: 'Maintenance Closed', elevator: 'Elevator 4 restored to service.', status: 'ready' }
+        ];
+
+        let alertIndex = 0;
+        function showNextAlert() {
+            if(alertIndex >= mockAlerts.length) alertIndex = 0;
+            const alertData = mockAlerts[alertIndex];
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            let borderColor = 'var(--status-ready)';
+            if(alertData.status === 'risk') borderColor = 'var(--status-risk)';
+            if(alertData.status === 'recovered') borderColor = 'var(--status-recovered)';
+            toast.style.borderLeftColor = borderColor;
+
+            toast.innerHTML = 
+                <div class="toast-title"></div>
+                <div class="toast-desc"></div>
+            ;
+            
+            const gallery = document.getElementById('alert-gallery');
+            gallery.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => { toast.classList.add('show'); }, 100);
+            
+            // Remove after 4s
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => { toast.remove(); }, 500);
+            }, 4000);
+
+            alertIndex++;
+        }
+
+        // Cycle alerts every 6 seconds
+        setInterval(showNextAlert, 6000);
+        // Show first alert after 2 seconds
+        setTimeout(showNextAlert, 2000);
+
     </script>
 </body>
 </html>

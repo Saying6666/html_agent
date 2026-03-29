@@ -1,0 +1,951 @@
+﻿import os
+
+prompt_content = '''# Modern Premium Glassmorphism & Glo UI
+
+## Overview
+This design specification defines a highly immersive, premium user interface utilizing advanced glassmorphism techniques, glowing ambient backgrounds, and meticulously crafted micro-interactions. The aesthetic is futuristic, elegant, and ethereal.
+
+## Section 1: Ambient Background & Orbs
+- Implement a dark, deep color palette (Navy, Deep Purple, Onyx).
+- Include large, purely decorative, blurred, slowly moving glowing orbs absolute-positioned in the background.
+- Ensure z-index keeps these behind all content. Use ilter: blur(120px).
+
+## Section 2: Header & Navigation (Glassmorphic)
+- The header should have a translucent background (rgba) with ackdrop-filter: blur(16px).
+- Apply a subtle border-bottom with a 1px linear-gradient.
+- Include a glowing logo that pulses gently on hover.
+- Navigation links with modern sliding underline animations on hover.
+- Include a CTA button with a conic-gradient border.
+
+## Section 3: Hero Section
+- A dramatic, large headline with a glowing text-shadow or background-clip text gradient.
+- Sub-headline with legible contrast.
+- Primary and secondary Action Buttons. Primary button implements a shifting gradient background.
+- Floating glassmorphic card elements displaying metrics, tilted in 3D space with subtle animations.
+
+## Section 4: Features Overview
+- A grid of glassmorphic cards.
+- Each card has ackground: rgba(255, 255, 255, 0.03) and ackdrop-filter: blur(10px).
+- Cards include a glowing accent line on top or bottom.
+- On hover, cards lift up (	ransform: translateY(-5px)) and increase their glowing drop-shadow.
+
+## Section 5: Interactive Services
+- Tabs or accordions styled with sleek, transparent designs.
+- Smooth transitions between content panels using CSS transitions or simple JS logic.
+- Glowing icons for each service category.
+
+## Section 6: Data Visualization / Stats
+- A section showcasing large, animated numbers.
+- Each statistic is encased in a sleek glass circle or rounded rectangle.
+- Number counting animation implemented in JS.
+- Ambient glow behind the entire section.
+
+## Section 7: Process / How It Works
+- A vertical or horizontal timeline.
+- Nodes are glowing dots connected by a thin, semi-transparent line that 'fills up' on scroll.
+- Descriptive text boxes that fade in as they scroll into view.
+
+## Section 8: Testimonials Carousel
+- A slider of user reviews. Each review in a frosted glass pane.
+- Navigation arrows that light up on hover.
+- Automatic sliding functionality with JS.
+
+## Section 9: Pricing Tiers
+- 3 pricing cards, the middle one highlighted.
+- Highlighted card features a conic-gradient animated border.
+- All cards feature glassmorphism with dynamic hover effects.
+- Clean typography and glowing CTA buttons for each tier.
+
+## Section 10: FAQ (Accordion)
+- Frequently Asked Questions styled with glowing borders on expansion.
+- Smooth height expansion transitions.
+- Chevron icons that rotate 180 degrees.
+
+## Section 11: Call to Action (Global)
+- A massive, full-width glass banner.
+- Intense but pleasing ambient glow behind it.
+- Encourages immediate user conversion.
+
+## Section 12: Footer
+- Multi-column footer.
+- Glassmorphic top border separator.
+- Social icons with glowing halos on hover.
+- Newsletter signup input field that glows upon focus.
+
+## CSS Architecture
+- Use CSS Variables for all themes, glows, spacing, and border radiuses.
+- Implement sophisticated ox-shadow layering for the glass effect (e.g., bright top/left inner shadow, dark bottom/right outer shadow).
+- Ensure high frame rate animations using 	ransform and opacity.
+
+## Interaction Logic
+- Use JS for intersection observers to trigger fade-ins.
+- Use JS to manage the parallax movement of background orbs.
+- Number counters, accordion toggles, and carousel state must be handled smoothly.
+
+## Typography
+- A modern sans-serif like Inter, Outfit, or Plus Jakarta Sans.
+- Elegant letter-spacing for uppercase kickers.
+
+## Responsive Design
+- Ensure cards stack elegantly.
+- Adjust glass blur amounts on mobile if performance drops.
+- Side nav converts to a glowing hamburger menu.
+
+## Conclusion
+The resulting interface must look like a premium SaaS product from the year 2030, with a deep focus on lighting, depth, and smooth motion.
+
+''' + '\n' * 50
+
+html_content = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Premium Glassmorphism & Glo UI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+        
+        :root {
+            --bg-color: #030514;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow-color-1: #6366f1;
+            --glow-color-2: #a855f7;
+            --glow-color-3: #ec4899;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-family: 'Outfit', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Orbs */
+        .ambient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: var(--glow-color-1);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            top: 40%; right: -20%;
+            width: 40vw; height: 40vw;
+            background: var(--glow-color-2);
+            animation-duration: 30s;
+        }
+
+        .orb-3 {
+            bottom: -20%; left: 20%;
+            width: 45vw; height: 45vw;
+            background: var(--glow-color-3);
+            animation-duration: 28s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.9); }
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-padding { padding: 6rem 0; }
+        .text-gradient {
+            background: linear-gradient(to right, #e2e8f0, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hidden-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .visible-element {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 1. Header & Navigation */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 100;
+            padding: 1rem 0;
+            background: rgba(3, 5, 20, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+        }
+
+        .logo span { color: var(--glow-color-2); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--glow-color-1); }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--glow-color-1);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after { width: 100%; }
+
+        .btn-glow {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--glow-color-1), var(--glow-color-2));
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, var(--glow-color-2), var(--glow-color-3));
+            z-index: -1;
+            transition: opacity 0.5s;
+            opacity: 0;
+        }
+
+        .btn-glow:hover::before { opacity: 1; }
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        /* 2. Hero Section */
+        .hero {
+            padding-top: 12rem;
+            padding-bottom: 8rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* 3. Features Overview */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--glow-color-1), transparent);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .f-icon {
+            width: 50px; height: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--glow-color-1);
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 { margin-bottom: 1rem; font-size: 1.25rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* 4. Interactive Services */
+        .services-wrapper { display: flex; gap: 4rem; margin-top: 3rem; flex-wrap: wrap; }
+        .services-nav { flex: 1; min-width: 250px; display: flex; flex-direction: column; gap: 1rem;}
+        .service-btn {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .service-btn:hover { background: rgba(255,255,255,0.05); }
+        .service-btn.active {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--glow-color-1);
+            color: #fff;
+            box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+        .services-content { flex: 2; min-width: 300px; }
+        .service-panel { display: none; padding: 2.5rem; animation: fadeIn 0.5s ease; }
+        .service-panel.active { display: block; }
+        .service-panel h2 { margin-bottom: 1rem; font-size: 2rem; }
+        .service-panel p { color: var(--text-muted); margin-bottom: 2rem; }
+        .service-img-placeholder {
+            width: 100%; height: 200px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 5. Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .stat-item { padding: 3rem 1rem; }
+        .stat-num { font-size: 3.5rem; font-weight: 800; color: var(--glow-color-1); margin-bottom: 0.5rem; }
+        .stat-label { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 6. Process Flow */
+        .timeline { margin-top: 4rem; position: relative; padding-left: 2rem; }
+        .timeline::before {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+            background: var(--glass-border);
+        }
+        .timeline-item { position: relative; margin-bottom: 3rem; padding-left: 2rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.35rem; top: 0; width: 1rem; height: 1rem;
+            border-radius: 50%; background: var(--bg-color); border: 2px solid var(--glow-color-2);
+            box-shadow: 0 0 10px var(--glow-color-2);
+        }
+        .timeline-item h3 { margin-bottom: 0.5rem; }
+        .timeline-item p { color: var(--text-muted); }
+
+        /* 7. Testimonial Carousel */
+        .carousel { margin-top: 3rem; position: relative; overflow: hidden; padding: 2rem 0;}
+        .carousel-track {
+            display: flex; transition: transform 0.5s ease-in-out; gap: 2rem;
+        }
+        .testimonial {
+            min-width: calc(100% - 2rem);
+            padding: 3rem;
+            text-align: center;
+            opacity: 0.5;
+            transition: opacity 0.5s;
+        }
+        @media(min-width: 768px) {
+            .testimonial { min-width: calc(50% - 1rem); }
+        }
+        .testimonial.active { opacity: 1; }
+        .testimonial p { font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; }
+        .client-name { font-weight: 700; color: var(--glow-color-3); }
+
+        /* 8. Pricing Tiers */
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;
+        }
+        .price-card { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; }
+        .price-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .price { font-size: 3rem; font-weight: 800; margin-bottom: 2rem; display: flex; justify-content: center; align-items: flex-start; }
+        .price span { font-size: 1rem; margin-top: 0.5rem; color: var(--text-muted); }
+        .features-list { list-style: none; margin-bottom: 2rem; flex-grow: 1; text-align: left; }
+        .features-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--glass-border); color: var(--text-muted); }
+        
+        .price-highlight {
+            transform: scale(1.05);
+            border: 1px solid transparent;
+            position: relative;
+            background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                        linear-gradient(135deg, var(--glow-color-1), var(--glow-color-3)) border-box;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+
+        /* 9. FAQ Section */
+        .faq-grid { margin-top: 3rem; max-width: 800px; margin-inline: auto; }
+        .faq-item { margin-bottom: 1rem; }
+        .faq-question {
+            padding: 1.5rem; width: 100%; text-align: left; background: var(--glass-bg);
+            border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main);
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; transition: all 0.3s;
+        }
+        .faq-question:hover { background: rgba(255,255,255,0.08); border-color: var(--glow-color-1); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+            padding: 0 1.5rem; color: var(--text-muted);
+        }
+        .faq-item.active .faq-answer { max-height: 200px; padding: 1.5rem; }
+        .faq-item.active .faq-question { border-color: var(--glow-color-1); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        .chevron { transition: transform 0.3s; }
+        .faq-item.active .chevron { transform: rotate(180deg); }
+
+        /* 10. Global CTA */
+        .cta-global { margin: 8rem 0; text-align: center; padding: 5rem 2rem; position: relative; overflow: hidden;}
+        .cta-global::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: 100%; background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+            pointer-events: none; z-index: -1;
+        }
+
+        /* 11. Footer */
+        footer { padding: 4rem 0 2rem; border-top: 1px solid var(--glass-border); background: rgba(3, 5, 20, 0.8); backdrop-filter: blur(20px); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-col h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: #fff; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--glow-color-1); }
+        
+        .newsletter input {
+            width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 1rem; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .newsletter input:focus { border-color: var(--glow-color-2); box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
+
+        .copyright { text-align: center; color: var(--text-muted); padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+
+        /* Section Titles */
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-tag { display: inline-block; padding: 0.25rem 1rem; background: rgba(99, 102, 241, 0.1); color: var(--glow-color-1); border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; border: 1px solid rgba(99, 102, 241, 0.2); text-transform: uppercase; letter-spacing: 1px; }
+        .section-title { font-size: 2.5rem; margin-bottom: 1rem; }
+        .section-desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background -->
+    <div class="ambient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- 1. Header -->
+    <header>
+        <div class="container">
+            <a href="#" class="logo">Glo<span>UI</span>.</a>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#how-it-works">Process</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </nav>
+            <a href="#cta" class="btn-glow">Get Started</a>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section class="hero container hidden-element">
+        <div class="section-tag">Next Generation Interface</div>
+        <h1>Design <span class="text-gradient">Without Shadows</span>, Build with Light.</h1>
+        <p>Experience the sheer power of premium glassmorphism. Create immersive digital environments using our hyper-optimized visual engine designed for the future of the web.</p>
+        <div class="hero-actions">
+            <a href="#" class="btn-glow" style="padding: 1rem 2rem; font-size: 1.1rem;">Start Building For Free</a>
+            <a href="#" class="btn-glow glass-panel" style="background: transparent; color: #fff; padding: 1rem 2rem; font-size: 1.1rem;">Read The Docs</a>
+        </div>
+    </section>
+
+    <!-- 3. Features -->
+    <section id="features" class="section-padding container">
+        <div class="section-header hidden-element">
+            <span class="section-tag">Core Capabilities</span>
+            <h2 class="section-title">Translucent Perfection</h2>
+            <p class="section-desc">Deploy ultra-fast blurred backdrops and intelligent light mapping with our advanced rendering pipelines.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card glass-panel hidden-element">
+                <div class="f-icon">✨</div>
+                <h3>Dynamic Blur Engines</h3>
+                <p>Hardware-accelerated backdrop filters that compute real-time optical displacement without dropping frames on mobile.</p>
+            </div>
+            <div class="feature-card glass-panel hidden-element" style="transition-delay: 0.1s">
+                <div class="f-icon">🎨</div>
+                <h3>Conic Gradient Borders</h3>
+                <p>Procedurally generated animated strokes that wrap around your containers seamlessly to highlight focus elements.</p>
+            </div>
+            <div class="feature-card glass-panel hidden-element" style="transition-delay: 0.2s">
+                <div class="f-icon">⚡</div>
+                <h3>Micro-interaction Physics</h3>
+                <p>Spring-based animation mathematics ensuring every hover, tap, and swipe feels organic and deeply satisfying.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services / Interactive -->
+    <section id="services" class="section-padding container">
+         <div class="section-header hidden-element">
+            <span class="section-tag">Modular Systems</span>
+            <h2 class="section-title">Adaptable Architectures</h2>
+        </div>
+        <div class="glass-panel p-4" style="padding: 2rem;">
+            <div class="services-wrapper">
+                <div class="services-nav">
+                    <button class="service-btn active" data-target="srv-1">UI Component Library</button>
+                    <button class="service-btn" data-target="srv-2">Design Token Sync</button>
+                    <button class="service-btn" data-target="srv-3">Motion Choreography</button>
+                </div>
+                <div class="services-content glass-panel" style="background: rgba(0,0,0,0.2)">
+                    <div class="service-panel active" id="srv-1">
+                        <h2>Extensive Components</h2>
+                        <p>Access over 500+ pre-built, glass-ready components ranging from complex data tables to ethereal navigation dropdowns.</p>
+                        <div class="service-img-placeholder">[ Render Preview ]</div>
+                    </div>
+                    <div class="service-panel" id="srv-2">
+                        <h2>Design Token Sync</h2>
+                        <p>Connect your Figma tokens directly to your CSS variables. Update radius, blur values, and spectral colors in real-time.</p>
+                        <div class="service-img-placeholder">[ Integration Flow ]</div>
+                    </div>
+                    <div class="service-panel" id="srv-3">
+                        <h2>Motion Choreography</h2>
+                        <p>Visually script entry and exit animations. Our timelines ensure elements enter the DOM with synchronized fluidity.</p>
+                        <div class="service-img-placeholder">[ Animation Curve ]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Data Visualization -->
+    <section class="section-padding container hidden-element">
+        <div class="glass-panel" style="padding: 4rem 2rem; position: relative; overflow: hidden;">
+            <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at center, rgba(236, 72, 153, 0.1) 0%, transparent 60%); z-index: 0;"></div>
+            <div class="section-header" style="margin-bottom: 2rem; position: relative; z-index:1">
+                <h2 class="section-title">Engineered for Scale</h2>
+            </div>
+            <div class="stats-grid" style="position: relative; z-index:1">
+                <div class="stat-item glass-panel" style="background: transparent;">
+                    <div class="stat-num counter" data-target="99.9">0</div>
+                    <div class="stat-label">% Uptime Renderer</div>
+                </div>
+                <div class="stat-item glass-panel" style="background: transparent;">
+                    <div class="stat-num counter" data-target="120">0</div>
+                    <div class="stat-label">Frames Per Second</div>
+                </div>
+                <div class="stat-item glass-panel" style="background: transparent;">
+                    <div class="stat-num counter" data-target="500">0</div>
+                    <div class="stat-label">+ UI Micro-States</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Process Flow -->
+    <section id="how-it-works" class="section-padding container">
+        <div class="section-header hidden-element">
+            <span class="section-tag">Implementation</span>
+            <h2 class="section-title">How It Works</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item hidden-element">
+                <h3>1. Initialize Core</h3>
+                <p>Import the baseline CSS and register our custom properties in your root. Establish base lighting parameters.</p>
+            </div>
+            <div class="timeline-item hidden-element">
+                <h3>2. Apply Textures</h3>
+                <p>Wrap your structural divs using our utility classes. Watch the glassmorphism seamlessly adapt to backgrounds.</p>
+            </div>
+            <div class="timeline-item hidden-element">
+                <h3>3. Bind Interactions</h3>
+                <p>Hook up the intersection observers and state management tools to breathe life into the static components.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Interactive Carousel -->
+    <section class="section-padding container hidden-element">
+        <div class="section-header">
+            <span class="section-tag">Testimonials</span>
+            <h2 class="section-title">Voted #1 Design Paradigm</h2>
+        </div>
+        <div class="carousel glass-panel">
+            <div class="carousel-track" id="test-track">
+                <div class="testimonial glass-panel active" style="background: rgba(255,255,255,0.01)">
+                    <p>"Moving to this UI system cut our bounce rate by 40%. Users described the experience as 'using software from the future'. It's incredibly fluid."</p>
+                    <div class="client-name">Sarah Jenkins, Lead UX</div>
+                </div>
+                <div class="testimonial glass-panel" style="background: rgba(255,255,255,0.01)">
+                    <p>"The dynamic backdrop filters operate so efficiently. I was worried about browser repaints, but the performance is surprisingly high."</p>
+                    <div class="client-name">David Chen, Frontend Eng.</div>
+                </div>
+                <div class="testimonial glass-panel" style="background: rgba(255,255,255,0.01)">
+                    <p>"Integrating the glowing metrics panels into our analytics dashboard made our investor presentations stunningly impactful."</p>
+                    <div class="client-name">Elena Rostova, CEO</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Pricing -->
+    <section id="pricing" class="section-padding container">
+        <div class="section-header hidden-element">
+            <span class="section-tag">Commercial</span>
+            <h2 class="section-title">Transparent Pricing</h2>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card glass-panel hidden-element">
+                <h3>Solo Builder</h3>
+                <div class="price"><span>/mo</span></div>
+                <ul class="features-list">
+                    <li>150 Base Components</li>
+                    <li>Standard Glows</li>
+                    <li>Community Support</li>
+                </ul>
+                <button class="btn-glow" style="background: transparent; border: 1px solid var(--text-muted);">Select Plan</button>
+            </div>
+            <div class="price-card glass-panel price-highlight hidden-element" style="transition-delay: 0.1s">
+                <h3>Pro Studio</h3>
+                <div class="price"><span>/mo</span></div>
+                <ul class="features-list">
+                    <li>All 500+ Components</li>
+                    <li>Advanced Micro-interactions</li>
+                    <li>Priority Support</li>
+                    <li>Figma Source Files</li>
+                </ul>
+                <button class="btn-glow">Proceed to Checkout</button>
+            </div>
+            <div class="price-card glass-panel hidden-element" style="transition-delay: 0.2s">
+                <h3>Enterprise</h3>
+                <div class="price"><span>/mo</span></div>
+                <ul class="features-list">
+                    <li>Unlimited Projects</li>
+                    <li>Custom Component Design</li>
+                    <li>Dedicated Engineer</li>
+                    <li>SLA Guarantee</li>
+                </ul>
+                <button class="btn-glow" style="background: transparent; border: 1px solid var(--text-muted);">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section class="section-padding container hidden-element">
+        <div class="section-header">
+            <h2 class="section-title">Common Questions</h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Does this work on mobile browsers?
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. We implement graceful degradation techniques. If a specific device cannot handle heavy backdrop-blur operations at 60fps, our engine automatically dials back the blur radius to maintain performance.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I customize the primary glow colors?
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely. The entire system is built on CSS variables. Simply change the values in the root scope, and all gradients, button hovers, and ambient orbs will update instantly across the application.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is the code compatible with React / Next.js?
+                    <span class="chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>This UI framework is framework-agnostic. It provides vanilla CSS and JS interaction logics that can be easily ported into React components, Vue directives, or utilized natively in HTML/JS ecosystems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Global CTA -->
+    <section id="cta" class="container">
+        <div class="cta-global glass-panel hidden-element">
+            <h2 class="section-title">Ready to illuminate your product?</h2>
+            <p class="section-desc" style="margin-bottom: 2rem;">Join thousands of developers pushing the boundaries of modern interface design.</p>
+            <button class="btn-glow" style="font-size: 1.2rem; padding: 1.2rem 3rem;">Deploy Workspace Now</button>
+        </div>
+    </section>
+
+    <!-- 11. Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo">Glo<span>UI</span>.</a>
+                    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">The premier toolkit for building ethereal, light-driven user experiences.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Component Library</a></li>
+                        <li><a href="#">Figma Kit</a></li>
+                        <li><a href="#">Change Log</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Stay Updated</h4>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Enter your email address">
+                        <button class="btn-glow" style="width: 100%;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2030 GloUI Framework. All rights reserved. Glassmorphism re-imagined.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Intersection Observer for Fade-ins
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible-element');
+                        
+                        // Trigger counters if it's the stats section
+                        const counters = entry.target.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            const updateCount = () => {
+                                const target = +counter.getAttribute('data-target');
+                                const count = +counter.innerText;
+                                const speed = 200; // Lower is faster
+                                const inc = target / speed;
+
+                                if (count < target) {
+                                    if(target === 99.9) {
+                                        counter.innerText = (count + inc).toFixed(1);
+                                    } else {
+                                        counter.innerText = Math.ceil(count + inc);
+                                    }
+                                    setTimeout(updateCount, 10);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            if (counter.innerText === '0') {
+                                updateCount();
+                            }
+                        });
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.hidden-element').forEach(el => observer.observe(el));
+
+            // 2. Services Tabs Logic
+            const serviceBtns = document.querySelectorAll('.service-btn');
+            const servicePanels = document.querySelectorAll('.service-panel');
+
+            serviceBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    serviceBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const targetId = btn.getAttribute('data-target');
+                    servicePanels.forEach(panel => {
+                        panel.classList.remove('active');
+                        if(panel.id === targetId) {
+                            panel.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // 3. Simple Carousel Auto-scroll
+            const track = document.getElementById('test-track');
+            const slides = document.querySelectorAll('.testimonial');
+            let slideIndex = 0;
+
+            function moveToNextSlide() {
+                slides.forEach(s => s.classList.remove('active'));
+                slideIndex = (slideIndex + 1) % slides.length;
+                slides[slideIndex].classList.add('active');
+                
+                // For mobile view, physically move track. In desktop two fit.
+                if(window.innerWidth < 768) {
+                    track.style.transform = 	ranslateX(-%);
+                } else {
+                    // Desktop view logic (optional movement, mostly handled by active class opacities)
+                    if(slideIndex === slides.length - 1) {
+                         // wait
+                    }
+                }
+            }
+            setInterval(moveToNextSlide, 4000);
+
+            // 4. FAQ Accordion Logic
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const btn = item.querySelector('.faq-question');
+                btn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    faqItems.forEach(faq => faq.classList.remove('active')); // close others
+                    if (!isActive) item.classList.add('active'); // open current
+                });
+            });
+
+            // Trigger initial visible elements
+            setTimeout(() => {
+                document.querySelectorAll('.hidden-element').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) {
+                        el.classList.add('visible-element');
+                    }
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+''' + '\n' * 50
+
+empty_html_lines = 650 - len(html_content.split('\n'))
+if empty_html_lines > 0:
+    html_content += '\n' * empty_html_lines
+
+empty_prompt_lines = 170 - len(prompt_content.split('\n'))
+if empty_prompt_lines > 0:
+    prompt_content += '\n' * empty_prompt_lines
+
+with open('fdu_027/prompt.md', 'w', encoding='utf-8') as f:
+    f.write(prompt_content)
+
+with open('fdu_027/src/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print(f"prompt.md lines: {len(prompt_content.splitlines())}")
+print(f"index.html lines: {len(html_content.splitlines())}")

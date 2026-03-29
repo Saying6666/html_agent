@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora - Next Generation AI Infrastructure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #050505;
+            --bg-surface: rgba(255, 255, 255, 0.03);
+            --bg-glass: rgba(10, 10, 12, 0.6);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff003c;
+            --accent-purple: #b026ff;
+            --glow-cyan: rgba(0, 240, 255, 0.4);
+            --glow-magenta: rgba(255, 0, 60, 0.4);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --border-gradient: conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Abstract Background Orbs */
+        .ambient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-magenta);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-purple);
+            bottom: -200px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-cyan);
+            top: 40%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 50px) scale(1.1); }
+            100% { transform: translate(-50px, 100px) scale(0.9); }
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-gradient-accent {
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-panel {
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Nav */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: #fff;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), #0077ff);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 5rem;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        /* 2. Partners Carousel */
+        .partners {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .partners::before, .partners::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .partners::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-base) 0%, transparent 100%);
+        }
+
+        .partners::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-base) 0%, transparent 100%);
+        }
+
+        .partners-track {
+            display: flex;
+            width: 200%;
+            animation: marquee 30s linear infinite;
+        }
+
+        .partner-item {
+            flex: 0 0 15%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            gap: 10px;
+            transition: color 0.3s;
+        }
+
+        .partner-item:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 3. Core Value Proposition */
+        .core-values {
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .grid-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            padding: 3rem;
+            border-radius: 24px;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 24px;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .icon-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 4. Analytics Deep Dive */
+        .analytics {
+            background: radial-gradient(circle at center, rgba(176, 38, 255, 0.05) 0%, transparent 70%);
+        }
+
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .content-block h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .content-block p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-list li i {
+            color: var(--accent-purple);
+            background: rgba(176, 38, 255, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+        }
+
+        .mockup-container {
+            position: relative;
+            padding: 2rem;
+            border-radius: 32px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transform: perspective(1000px) rotateY(-5deg);
+        }
+
+        .mockup-container::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 34px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), transparent);
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+
+        .mockup-window {
+            background: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mockup-header {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yel { background: #ffbd2e; }
+        .dot-grn { background: #27c93f; }
+
+        .mockup-body {
+            padding: 20px;
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-dummy {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 100% 40px,
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 40px 100%;
+            position: relative;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            background: linear-gradient(to top, var(--accent-cyan), transparent);
+            border-top: 2px solid var(--accent-cyan);
+            border-radius: 4px 4px 0 0;
+            transition: height 1.5s ease-out;
+            height: 0;
+        }
+
+        .chart-bar:nth-child(1) { left: 10%; }
+        .chart-bar:nth-child(2) { left: 30%; }
+        .chart-bar:nth-child(3) { left: 50%; }
+        .chart-bar:nth-child(4) { left: 70%; }
+        .chart-bar:nth-child(5) { left: 90%; }
+
+        /* 5. Interactive Workflow Map */
+        .workflow {
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            height: 100%;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            width: 2px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            height: 0%;
+            transition: height 0.1s;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 120px;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 41px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-base);
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            z-index: 2;
+        }
+
+        .timeline-item.active .timeline-dot {
+            border-color: var(--accent-cyan);
+            background: var(--accent-cyan);
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .timeline-content {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateX(10px);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+        }
+
+        /* 6. Performance Metrics */
+        .metrics {
+            padding: 6rem 0;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+        }
+
+        .metric-number {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* 7. Dynamic Testimonials */
+        .testimonials {
+            overflow: hidden;
+        }
+
+        .masonry-grid {
+            display: column;
+            column-count: 3;
+            column-gap: 2rem;
+        }
+
+        .testimonial-card {
+            margin-bottom: 2rem;
+            break-inside: avoid;
+            padding: 2.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .testimonial-card i.fa-quote-left {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #333;
+            object-fit: cover;
+        }
+
+        .author-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .author-details p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* 8. Technical Ecosystem */
+        .ecosystem {
+            text-align: center;
+            position: relative;
+        }
+
+        .nodes-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .node-item {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            gap: 10px;
+        }
+
+        .node-item i {
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .node-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .nodes-container:hover .node-item {
+            opacity: 0.3;
+        }
+
+        .nodes-container .node-item:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        .nodes-container .node-item:hover i {
+            color: #fff;
+        }
+
+        /* 9. Security Section */
+        .security {
+            background: linear-gradient(to bottom, transparent, rgba(20,20,20,1), transparent);
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .shield-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shield-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .ring-1 { width: 100%; height: 100%; animation: spin 20s linear infinite; border-top-color: var(--accent-cyan); }
+        .ring-2 { width: 80%; height: 80%; animation: spin 15s linear infinite reverse; border-right-color: var(--accent-purple); }
+        .ring-3 { width: 60%; height: 60%; animation: spin 10s linear infinite; border-bottom-color: var(--accent-magenta); }
+
+        .shield-icon {
+            font-size: 5rem;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-cyan);
+            z-index: 2;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .sec-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .sec-feature h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sec-feature h4 i {
+            color: var(--accent-cyan);
+        }
+
+        .sec-feature p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 10. Pricing Section */
+        .pricing {
+            position: relative;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .price-card {
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .price-card.pro {
+            position: relative;
+            background: rgba(20, 20, 25, 0.8);
+            border: none;
+            transform: scale(1.05);
+            z-index: 5;
+        }
+
+        .price-card.pro:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .price-card.pro::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 26px;
+            background: var(--border-gradient);
+            z-index: -1;
+            animation: spinBg 4s linear infinite;
+        }
+
+        @keyframes spinBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .price-card.pro::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 20, 25, 0.9);
+            border-radius: 24px;
+            z-index: -1;
+            backdrop-filter: blur(20px);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(176, 38, 255, 0.5);
+        }
+
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items:baseline;
+        }
+
+        .plan-price span {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-left: 5px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 3rem;
+            flex-grow: 1;
+        }
+
+        .plan-features li {
+            margin-bottom: 1rem;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-features li i {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+        }
+
+        .price-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* 11. FAQ Section */
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            user-select: none;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .accordion-content div {
+            padding: 0 2rem 1.5rem 2rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .accordion-item.active {
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+            color: #fff;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        /* 12. Footer */
+        footer {
+            background: #020202;
+            padding: 6rem 0 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .newsletter h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-form input {
+            flex: 1;
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            color: #fff;
+            outline: none;
+            font-family: 'Outfit', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .subscribe-form input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .subscribe-form button {
+            background: #fff;
+            color: #000;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subscribe-form button:hover {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--glow-cyan);
+            transform: scale(1.05);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-icons a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--accent-cyan);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* Cursor / Glowing dot */
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: opacity 0.3s;
+            opacity: 0;
+            mix-blend-mode: screen;
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        @media (max-width: 1024px) {
+            .grid-values, .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .split-section { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 4rem; }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .masonry-grid { column-count: 2; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions { display: none; }
+            .grid-values, .pricing-grid, .security-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .masonry-grid { column-count: 1; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+            .timeline-item { padding-left: 60px; }
+            .timeline::before, .timeline-progress { left: 20px; }
+            .timeline-dot { left: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Background -->
+    <div class="ambient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Mouse Tracker glow -->
+    <div id="cursor-glow"></div>
+
+    <!-- Navigation -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-cube"></i> Nexora
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#analytics">Platform</a></li>
+                <li><a href="#testimonials">Customers</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-outline">Log In</a>
+                <a href="#" class="btn btn-primary">Start Free Trial</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-badge reveal">v2.0 Out Now - Unleash the Power of AI</div>
+            <h1 class="reveal delay-1">Construct the future of <span class="text-gradient">intelligent infrastructure</span></h1>
+            <p class="reveal delay-2">Seamlessly deploy, monitor, and scale complex machine learning models with zero latency and infinite modularity. Experience the next generation of predictive architecture.</p>
+            <div class="hero-buttons reveal delay-3">
+                <a href="#pricing" class="btn btn-primary">Deploy Framework <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#features" class="btn btn-outline">Read Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Partners Marquee -->
+    <section class="partners">
+        <div class="partners-track">
+            <!-- First Set -->
+            <div class="partner-item"><i class="fa-brands fa-aws"></i> Amazon</div>
+            <div class="partner-item"><i class="fa-brands fa-google"></i> Google</div>
+            <div class="partner-item"><i class="fa-brands fa-meta"></i> Meta</div>
+            <div class="partner-item"><i class="fa-brands fa-microsoft"></i> Microsoft</div>
+            <div class="partner-item"><i class="fa-brands fa-stripe"></i> Stripe</div>
+            <div class="partner-item"><i class="fa-brands fa-spotify"></i> Spotify</div>
+            <!-- Duplicate for infinite loop -->
+            <div class="partner-item"><i class="fa-brands fa-aws"></i> Amazon</div>
+            <div class="partner-item"><i class="fa-brands fa-google"></i> Google</div>
+            <div class="partner-item"><i class="fa-brands fa-meta"></i> Meta</div>
+            <div class="partner-item"><i class="fa-brands fa-microsoft"></i> Microsoft</div>
+            <div class="partner-item"><i class="fa-brands fa-stripe"></i> Stripe</div>
+            <div class="partner-item"><i class="fa-brands fa-spotify"></i> Spotify</div>
+        </div>
+    </section>
+
+    <!-- 3. Core Value Proposition -->
+    <section class="section-padding core-values" id="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Architected for <span class="text-gradient-accent">Velocity</span></h2>
+                <p>We eliminated the middle layer. Our direct-to-metal processing ensures your data flows unobstructed, delivering real-time inferences at unprecedented scale.</p>
+            </div>
+            
+            <div class="grid-values">
+                <div class="value-card glass-panel reveal">
+                    <div class="icon-box"><i class="fa-solid fa-bolt-lightning"></i></div>
+                    <h3>Hyper-Threading</h3>
+                    <p>Execute millions of predictive queries simultaneously with our custom built thread-allocator, reducing latency to virtually zero.</p>
+                </div>
+                <div class="value-card glass-panel reveal delay-1">
+                    <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Quantum Encryption</h3>
+                    <p>Secured by post-quantum cryptographic standards, your datasets remain impenetrable against both conventional and advanced network threats.</p>
+                </div>
+                <div class="value-card glass-panel reveal delay-2">
+                    <div class="icon-box"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3>Auto-Scaling Nodes</h3>
+                    <p>Our infrastructure observes load patterns and pre-emptively spins up edge computing nodes before bottlenecks can even occur.</p>
+                </div>
+                <div class="value-card glass-panel reveal">
+                    <div class="icon-box"><i class="fa-solid fa-database"></i></div>
+                    <h3>Distributed Cache</h3>
+                    <p>Global edge caching ensures the model's memory state is synchronized globally in under 12 milliseconds regardless of region.</p>
+                </div>
+                <div class="value-card glass-panel reveal delay-1">
+                    <div class="icon-box"><i class="fa-solid fa-code-branch"></i></div>
+                    <h3>Native Integrations</h3>
+                    <p>Connect immediately to Snowflake, Databricks, and MongoDB. Push inferences directly back into your ecosystem via webhooks.</p>
+                </div>
+                <div class="value-card glass-panel reveal delay-2">
+                    <div class="icon-box"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Hardware Agnostic</h3>
+                    <p>Whether you're running on specialized TPUs, generic GPUs, or ARM clusters, Nexora optimizes compilation down to the silicon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Analytics Deep-Dive -->
+    <section class="section-padding analytics" id="analytics">
+        <div class="container split-section">
+            <div class="content-block reveal">
+                <h2>Deep Neural <br><span class="text-gradient-accent">Telemetry</span></h2>
+                <p>Stop guessing how your models perform in production. Nexora provides atomic-level visibility into every parameter, layer activation, and resource allocation across your entire cluster.</p>
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check"></i> Live payload distribution visualization</li>
+                    <li><i class="fa-solid fa-check"></i> Automated model degradation alerts</li>
+                    <li><i class="fa-solid fa-check"></i> Historical token throughput analysis</li>
+                    <li><i class="fa-solid fa-check"></i> Cost-per-inference tracking</li>
+                </ul>
+                <a href="#" class="btn btn-outline" style="margin-top: 2rem;">Explore Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="mockup-container reveal delay-1">
+                <div class="mockup-window">
+                    <div class="mockup-header">
+                        <div class="dot dot-red"></div>
+                        <div class="dot dot-yel"></div>
+                        <div class="dot dot-grn"></div>
+                    </div>
+                    <div class="mockup-body" id="chart-trigger">
+                        <div style="margin-bottom: 20px; display: flex; justify-content: space-between;">
+                            <span style="font-size: 0.8rem; color: #888;">Cluster Load (ms)</span>
+                            <span style="color: var(--accent-cyan); font-weight: bold;">LIVE</span>
+                        </div>
+                        <div class="chart-dummy">
+                            <div class="chart-bar" data-h="40%"></div>
+                            <div class="chart-bar" data-h="70%"></div>
+                            <div class="chart-bar" data-h="50%"></div>
+                            <div class="chart-bar" data-h="90%"></div>
+                            <div class="chart-bar" data-h="60%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Interactive Workflow -->
+    <section class="section-padding workflow">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>The Integration <span class="text-gradient">Pipeline</span></h2>
+                <p>From monolithic chaos to streamlined orchestration in four precise steps.</p>
+            </div>
+            
+            <div class="timeline" id="timeline">
+                <div class="timeline-progress" id="timeline-progress"></div>
+                
+                <div class="timeline-item reveal" data-point="25">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>1. Connect Data Streams</h3>
+                        <p>Link your raw S3 buckets, Kafka topics, or REST APIs securely using our zero-trust tunnel. Data begins buffering instantly.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal" data-point="50">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2. Model Ingestion</h3>
+                        <p>Upload your PyTorch, TensorFlow, or ONNX files. Our ingestion engine automatically compiles and optimizes the graph for edge deployment.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal" data-point="75">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>3. Parameter Trimming</h3>
+                        <p>Optional automated quantization reduces model size by up to 60% with less than 0.5% variance in accuracy, maximizing memory efficiency.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal" data-point="100">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>4. Global Propagation</h3>
+                        <p>Hit deploy. Within seconds, your model is replicated across our global 200+ edge locations, ready to serve low-latency requests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Performance Metrics -->
+    <section class="metrics glass-panel" style="border-radius: 0; border-left: none; border-right: none;">
+        <div class="container metrics-grid" id="counters">
+            <div class="metric-card reveal">
+                <div class="metric-number"><span class="counter" data-target="99.99">0</span>%</div>
+                <div class="metric-label">Guaranteed Uptime</div>
+            </div>
+            <div class="metric-card reveal delay-1">
+                <div class="metric-number"><span class="counter" data-target="12">0</span>ms</div>
+                <div class="metric-label">Avg. Global Latency</div>
+            </div>
+            <div class="metric-card reveal delay-2">
+                <div class="metric-number"><span class="counter" data-target="250">0</span>M+</div>
+                <div class="metric-label">Inferences / Second</div>
+            </div>
+            <div class="metric-card reveal delay-3">
+                <div class="metric-number"><span class="counter" data-target="60">0</span>%</div>
+                <div class="metric-label">Cost Reduction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Dynamic Testimonials -->
+    <section class="section-padding testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Built for <span class="text-gradient-accent">Scale</span></h2>
+                <p>See why engineering teams at the world's most demanding companies rely on Nexora.</p>
+            </div>
+
+            <div class="masonry-grid">
+                <div class="testimonial-card glass-panel tilt-card reveal">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p class="testimonial-text">"Before Nexora, handling peak load during our global app launch would require provisioning servers a week in advance. Now, the network scales autonomously in milliseconds. It's practically magic."</p>
+                    <div class="author-info">
+                        <img src="https://i.pravatar.cc/100?img=33" alt="Sarah J" class="author-avatar">
+                        <div class="author-details">
+                            <h4>Sarah Jenkins</h4>
+                            <p>CTO, DataStream</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card glass-panel tilt-card reveal delay-1">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p class="testimonial-text">"The telemetry dashboard alone is worth the Enterprise tier. We identified a memory leak in our transformer model within 5 minutes of deploying, something that previously took days of log hunting to find."</p>
+                    <div class="author-info">
+                        <img src="https://i.pravatar.cc/100?img=11" alt="Marus L" class="author-avatar">
+                        <div class="author-details">
+                            <h4>Marcus Lin</h4>
+                            <p>Lead ML Engineer, Ocular</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card glass-panel tilt-card reveal delay-2">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p class="testimonial-text">"We moved our entire recommendation engine from AWS SageMaker to Nexora. Latency dropped by 40%, and our infrastructure bill was literally cut in half. The migration took exactly 3 days."</p>
+                    <div class="author-info">
+                        <img src="https://i.pravatar.cc/100?img=47" alt="Elena V" class="author-avatar">
+                        <div class="author-details">
+                            <h4>Elena Volkov</h4>
+                            <p>VP Engineering, ShopCube</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Technical Ecosystem -->
+    <section class="section-padding ecosystem">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Fits right into your <span class="text-gradient">Stack</span></h2>
+                <p>No vendor lock-in. Bring your favorite tools, frameworks, and databases.</p>
+            </div>
+            
+            <div class="nodes-container reveal delay-1">
+                <div class="node-item glass-panel"><i class="fa-brands fa-python"></i><span>Python</span></div>
+                <div class="node-item glass-panel"><i class="fa-brands fa-rust"></i><span>Rust</span></div>
+                <div class="node-item glass-panel"><i class="fa-solid fa-database"></i><span>PostgreSQL</span></div>
+                <div class="node-item glass-panel"><i class="fa-brands fa-docker"></i><span>Docker</span></div>
+                <div class="node-item glass-panel"><i class="fa-brands fa-github"></i><span>GitHub</span></div>
+                <div class="node-item glass-panel"><i class="fa-brands fa-js"></i><span>Node.js</span></div>
+                <div class="node-item glass-panel"><i class="fa-solid fa-cloud"></i><span>Terraform</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Security Section -->
+    <section class="section-padding security">
+        <div class="container security-grid">
+            <div class="shield-container reveal">
+                <div class="shield-ring ring-1"></div>
+                <div class="shield-ring ring-2"></div>
+                <div class="shield-ring ring-3"></div>
+                <i class="fa-solid fa-shield-cat shield-icon"></i>
+            </div>
+            <div class="content-block reveal delay-1">
+                <h2>Zero-Trust <br><span class="text-gradient">Architecture</span></h2>
+                <p>Security isn't a premium feature; it's the foundation of our network. We employ end-to-end encryption, utilizing hardware-level enclaves to ensure your proprietary models are never exposed.</p>
+                <div class="sec-features" style="margin-top: 2rem;">
+                    <div class="sec-feature">
+                        <h4><i class="fa-solid fa-lock"></i> SOC 2 Type II</h4>
+                        <p>Independently audited and certified for rigorous operational security.</p>
+                    </div>
+                    <div class="sec-feature">
+                        <h4><i class="fa-solid fa-fingerprint"></i> KMS Integration</h4>
+                        <p>Bring your own keys (BYOK) via AWS KMS or HashiCorp Vault.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Pricing Section -->
+    <section class="section-padding pricing" id="pricing">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Transparent, <span class="text-gradient-accent">Scalable</span> pricing</h2>
+                <p>Pay only for the compute you actually consume. No hidden ingress/egress fees.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="price-card glass-panel reveal">
+                    <h3 class="plan-name">Developer</h3>
+                    <div class="plan-price">$29<span>/mo</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fa-solid fa-check"></i> Up to 100k API calls</li>
+                        <li><i class="fa-solid fa-check"></i> 5 Active Models</li>
+                        <li><i class="fa-solid fa-check"></i> Standard CPU Compute</li>
+                        <li><i class="fa-solid fa-check"></i> Community Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Start Free</a>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="price-card pro reveal delay-1">
+                    <div class="pro-badge">Most Popular</div>
+                    <h3 class="plan-name">Scale</h3>
+                    <div class="plan-price">$199<span>/mo</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fa-solid fa-check"></i> Up to 5M API calls</li>
+                        <li><i class="fa-solid fa-check"></i> Unlimited Models</li>
+                        <li><i class="fa-solid fa-check"></i> Priority GPU Allocation</li>
+                        <li><i class="fa-solid fa-check"></i> Advanced Telemetry</li>
+                        <li><i class="fa-solid fa-check"></i> 24/7 Slack Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Upgrade to Scale</a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="price-card glass-panel reveal delay-2">
+                    <h3 class="plan-name">Enterprise</h3>
+                    <div class="plan-price">Custom</div>
+                    <ul class="plan-features">
+                        <li><i class="fa-solid fa-check"></i> Infinite Scability</li>
+                        <li><i class="fa-solid fa-check"></i> Dedicated Edge Nodes</li>
+                        <li><i class="fa-solid fa-check"></i> Quantum Encryption</li>
+                        <li><i class="fa-solid fa-check"></i> Custom SLA (99.999%)</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. FAQ Section -->
+    <section class="section-padding faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Frequently Asked <span class="text-gradient">Questions</span></h2>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-item glass-panel reveal">
+                    <div class="accordion-header">
+                        How does billing scale with traffic spikes? <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div>We utilize millisecond-precision billing based on compute time. If your traffic spikes, the nodes auto-scale instantly, and you are only charged for the exact duration those extra resources were active. There are no punitive overage fees.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item glass-panel reveal delay-1">
+                    <div class="accordion-header">
+                        What frameworks do you support natively? <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div>We natively compile models from PyTorch, TensorFlow, JAX, and ONNX. If you have custom C++ or Rust inference layers, you can deploy them using our secure Docker container registry workflow.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item glass-panel reveal delay-2">
+                    <div class="accordion-header">
+                        Is data retained after an inference is completed? <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div>No. By default, Nexora operates as a stateless passthrough. Payload data resides in volatile RAM strictly for the duration of the inference and is securely overwritten upon completion. You can opt-in to logging for analytics.</div>
+                    </div>
+                </div>
+
+                <div class="accordion-item glass-panel reveal delay-3">
+                    <div class="accordion-header">
+                        Can I test the Scale plan before committing? <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div>Absolutely. All new accounts come with a 14-day fully-featured trial of the Scale plan. No credit card is required to begin testing our infrastructure.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid reveal">
+                <div class="footer-about">
+                    <a href="#" class="logo">
+                        <i class="fa-solid fa-cube"></i> Nexora
+                    </a>
+                    <p>Building the foundation for the next epoch of artificial intelligence. We focus on infrastructure so you can focus on innovation.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Architecture</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+
+                <div class="newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Get the latest engineering notes and platform updates delivered monthly.</p>
+                    <form class="subscribe-form">
+                        <input type="email" placeholder="Email address" required>
+                        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom reveal delay-1">
+                <p>&copy; 2024 Nexora Infrastructure Inc. All rights reserved.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-github"></i></a>
+                    <a href="#"><i class="fa-brands fa-discord"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="color: var(--text-secondary); text-decoration: none;">Privacy</a>
+                    <a href="#" style="color: var(--text-secondary); text-decoration: none;">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Scroll Header Effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth Scroll Reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -100px 0px', threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Custom Cursor Glow
+            const cursorGlow = document.getElementById('cursor-glow');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let glowX = mouseX;
+            let glowY = mouseY;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorGlow.style.opacity = '1';
+                
+                // Track mouse position for glass cards
+                document.querySelectorAll('.value-card').forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursorGlow.style.opacity = '0';
+            });
+
+            // Smooth cursor follow interpolation
+            function animateGlow() {
+                glowX += (mouseX - glowX) * 0.1;
+                glowY += (mouseY - glowY) * 0.1;
+                cursorGlow.style.left = glowX + 'px';
+                cursorGlow.style.top = glowY + 'px';
+                requestAnimationFrame(animateGlow);
+            }
+            animateGlow();
+
+            // 3D Tilt Effect on Cards
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+
+            // Play Mockup Chart Animation when in view
+            const chartBars = document.querySelectorAll('.chart-bar');
+            const chartTrigger = document.getElementById('chart-trigger');
+            let chartAnimated = false;
+            
+            const chartObserver = new IntersectionObserver((entries) => {
+                if(entries[0].isIntersecting && !chartAnimated) {
+                    chartBars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.style.height = bar.getAttribute('data-h');
+                        }, index * 200);
+                    });
+                    chartAnimated = true;
+                }
+            }, { threshold: 0.5 });
+            
+            if(chartTrigger) chartObserver.observe(chartTrigger);
+
+            // Timeline Scroll Logic
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const timelineProgress = document.getElementById('timeline-progress');
+            
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                const windowHeight = window.innerHeight;
+                
+                timelineItems.forEach((item, index) => {
+                    const rect = item.getBoundingClientRect();
+                    const targetPoint = parseInt(item.getAttribute('data-point'));
+                    
+                    if (rect.top < windowHeight * 0.6) {
+                        item.classList.add('active');
+                        // Update progress line height based on latest active node
+                        timelineProgress.style.height = `${targetPoint}%`;
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+
+            // Counters Animation
+            const counters = document.querySelectorAll('.counter');
+            let countersAnimated = false;
+            const countersSection = document.getElementById('counters');
+
+            const startCounters = () => {
+                counters.forEach(counter => {
+                    const target = parseFloat(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.innerText = Number.isInteger(target) ? Math.floor(current) : current.toFixed(2);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCounter();
+                });
+            };
+
+            const statsObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !countersAnimated) {
+                    startCounters();
+                    countersAnimated = true;
+                }
+            }, { threshold: 0.5 });
+
+            if(countersSection) statsObserver.observe(countersSection);
+
+            // FAQ Accordion
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.parentElement;
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all
+                    document.querySelectorAll('.accordion-item').forEach(accItem => {
+                        accItem.classList.remove('active');
+                    });
+
+                    // Open clicked if not active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+        });
+    </script>
+</body>
+</html>

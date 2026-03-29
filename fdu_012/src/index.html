@@ -1,35 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dusk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CanopyCoin | Offset Your Digital Life</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>Nera Pulse House | Modern Recovery</title>
     <style>
         :root {
-            --bg-primary: #F4F0E6;
-            --bg-secondary: #D9E2D8;
-            --accent-green: #2E5C31;
-            --accent-lime: #D4F842;
-            --border-dark: #1A1A1A;
-            --text-main: #1A1A1A;
-            --text-muted: #4A5D4E;
-            --font-display: 'Space Grotesk', system-ui, sans-serif;
-            --font-body: 'Inter', system-ui, sans-serif;
-            --border-thick: 3px solid var(--border-dark);
-            --border-thin: 1px solid var(--border-dark);
-            --shadow-default: 6px 6px 0px var(--border-dark);
-            --shadow-hover: 2px 2px 0px var(--border-dark);
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 16px;
-            --transition-snappy: 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Typography */
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            
+            /* Sizing & Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-round: 9999px;
+            
+            /* Glassmorphism Defaults */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --glass-blur: blur(24px);
+            
+            /* Base Transition */
+            --trans-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Default Theme: Dusk */
+        [data-theme="dusk"] {
+            --bg-base: #110e0d;
+            --text-main: #fdfaf6;
+            --text-muted: rgba(253, 250, 246, 0.6);
+            --orb-1: #e65c00;
+            --orb-2: #F9D423;
+            --orb-3: #8a2be2;
+            --accent: #e65c00;
+            --accent-glass: rgba(230, 92, 0, 0.2);
+        }
+
+        /* Theme: Night */
+        [data-theme="night"] {
+            --bg-base: #050510;
+            --text-main: #eef2ff;
+            --text-muted: rgba(238, 242, 255, 0.6);
+            --orb-1: #0044ff;
+            --orb-2: #1e00ff;
+            --orb-3: #6b00ff;
+            --accent: #0044ff;
+            --accent-glass: rgba(0, 68, 255, 0.2);
+        }
+
+        /* Theme: Dawn */
+        [data-theme="dawn"] {
+            --bg-base: #f7f6f5;
+            --text-main: #1a1a1a;
+            --text-muted: rgba(26, 26, 26, 0.6);
+            --orb-1: #ff7e5f;
+            --orb-2: #feb47b;
+            --orb-3: #ffd5a1;
+            --accent: #ff7e5f;
+            --accent-glass: rgba(255, 126, 95, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -38,1837 +77,1179 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-body);
-            background-color: var(--bg-primary);
+            font-family: var(--font-sans);
+            background-color: var(--bg-base);
             color: var(--text-main);
-            line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 1s ease, color 1s ease;
+            position: relative;
         }
 
-        body::before {
-            content: '';
+        h1, h2, h3, .serif {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        /* Ambient Background Orbs */
+        .ambient-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
             pointer-events: none;
-            z-index: 9999;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: var(--font-display);
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button {
-            font-family: var(--font-body);
-            cursor: pointer;
-            border: none;
-            background: none;
-        }
-
-        .skip-link {
+        .orb {
             position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--accent-green);
-            color: white;
-            padding: 8px 16px;
-            z-index: 10000;
-            transition: top 0.3s;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float-orb 20s infinite alternate ease-in-out;
+            transition: background 1.5s ease;
         }
 
-        .skip-link:focus {
-            top: 0;
+        .orb-1 { width: 50vw; height: 50vw; top: -10vw; left: -10vw; background: var(--orb-1); animation-delay: 0s; }
+        .orb-2 { width: 40vw; height: 40vw; bottom: -5vw; right: -5vw; background: var(--orb-2); animation-delay: -5s; }
+        .orb-3 { width: 45vw; height: 45vw; top: 30vw; left: 30vw; background: var(--orb-3); animation-delay: -10s; }
+
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(5vw, -5vw) scale(1.1); }
+            66% { transform: translate(-5vw, 10vw) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 20px 40px;
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conic-border {
+            position: relative;
+        }
+        
+        .conic-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            padding: 2px;
+            background: conic-gradient(from var(--border-angle, 0deg), transparent, var(--accent), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            animation: rotate-border 4s linear infinite;
+        }
+
+        @property --border-angle {
+            syntax: "<angle>";
+            inherits: true;
+            initial-value: 0deg;
+        }
+
+        @keyframes rotate-border {
+            to { --border-angle: 360deg; }
+        }
+
+        /* Section 1: Aura Banner */
+        .aura-banner {
+            position: relative;
+            z-index: 100;
+            padding: var(--space-xs) var(--space-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all var(--transition-smooth);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.2);
+            color: var(--text-main);
+        }
+        
+        [data-theme="dawn"] .aura-banner {
+            background: rgba(255,255,255,0.4);
         }
 
-        .navbar.scrolled {
-            background: var(--bg-primary);
-            box-shadow: var(--shadow-default);
-            border-bottom: var(--border-thick);
-            padding: 12px 40px;
-        }
-
-        .nav-logo {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
+        .capacity-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 10px #4ade80;
+            animation: pulse-dot 2s infinite;
+        }
 
-        .nav-logo svg {
-            width: 32px;
-            height: 32px;
+        @keyframes pulse-dot {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        /* Section 2: Sticky Glass Navigation */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            width: 100%;
+            padding: var(--space-sm) var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--trans-smooth);
+        }
+
+        .sticky-nav.scrolled {
+            padding: var(--space-xs) var(--space-lg);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
-            align-items: center;
+            gap: var(--space-md);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
-
         .nav-links a {
-            font-weight: 500;
-            transition: color var(--transition-snappy);
+            color: var(--text-main);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
-
         .nav-links a:hover {
-            color: var(--accent-green);
-        }
-
-        .nav-cta {
-            background: var(--accent-lime);
-            border: var(--border-thick);
-            padding: 12px 24px;
-            font-weight: 600;
-            box-shadow: var(--shadow-default);
-            transition: all var(--transition-snappy);
-        }
-
-        .nav-cta:hover {
-            transform: translate(4px, 4px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .nav-cta:active {
-            transform: translate(6px, 6px);
-            box-shadow: none;
-        }
-
-        .nav-cta:focus {
-            outline: 3px dashed var(--accent-green);
-            outline-offset: 4px;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            padding: 8px;
-        }
-
-        .mobile-menu-btn span {
-            width: 24px;
-            height: 3px;
-            background: var(--border-dark);
-            transition: all 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 40px 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1440px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            width: 100%;
-        }
-
-        .hero-text h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            margin-bottom: 24px;
-            line-height: 1.1;
-        }
-
-        .hero-text p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            max-width: 500px;
-        }
-
-        .hero-form {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .hero-form input {
-            flex: 1;
-            padding: 16px 20px;
-            border: var(--border-thick);
-            font-size: 1rem;
-            background: white;
-            box-shadow: var(--shadow-default);
-        }
-
-        .hero-form input:focus {
-            outline: 3px dashed var(--accent-green);
-            outline-offset: 2px;
-        }
-
-        .hero-form button {
-            background: var(--accent-green);
-            color: white;
-            border: var(--border-thick);
-            padding: 16px 32px;
-            font-weight: 600;
-            font-size: 1rem;
-            box-shadow: var(--shadow-default);
-            transition: all var(--transition-snappy);
-        }
-
-        .hero-form button:hover {
-            transform: translate(4px, 4px);
-            box-shadow: var(--shadow-hover);
-            background: var(--accent-lime);
-            color: var(--border-dark);
-        }
-
-        .hero-form button:active {
-            transform: translate(6px, 6px);
-            box-shadow: none;
-        }
-
-        .hero-visual {
-            position: relative;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .leaf {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            transition: transform 0.3s ease;
-        }
-
-        .leaf svg {
-            width: 100%;
-            height: 100%;
-            fill: var(--accent-green);
-        }
-
-        .leaf-1 {
-            top: 10%;
-            left: 20%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .leaf-2 {
-            top: 30%;
-            right: 10%;
-            animation: float 8s ease-in-out infinite 1s;
-        }
-
-        .leaf-3 {
-            bottom: 20%;
-            left: 30%;
-            animation: float 7s ease-in-out infinite 0.5s;
-        }
-
-        .leaf-4 {
-            bottom: 30%;
-            right: 25%;
-            animation: float 5s ease-in-out infinite 1.5s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        /* Dashboard Preview */
-        .dashboard-section {
-            padding: 80px 40px;
-            background: var(--bg-secondary);
-            border-top: var(--border-thick);
-            border-bottom: var(--border-thick);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 60px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 16px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.125rem;
-        }
-
-        .dashboard-card {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            padding: 32px;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: var(--border-thin);
-        }
-
-        .dashboard-title {
-            font-family: var(--font-display);
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .live-badge {
-            background: var(--accent-lime);
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: var(--border-thick);
-        }
-
-        .subscription-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .subscription-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border: var(--border-thin);
-            transition: all var(--transition-snappy);
-        }
-
-        .subscription-item:hover {
-            background: var(--bg-primary);
-            transform: translateX(4px);
-        }
-
-        .sub-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-secondary);
-            border: var(--border-thick);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.75rem;
-        }
-
-        .sub-info {
-            flex: 1;
-        }
-
-        .sub-name {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .sub-detail {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .sub-co2 {
-            font-family: var(--font-display);
-            font-weight: 600;
-            color: var(--accent-green);
-        }
-
-        .dashboard-total {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: var(--border-thick);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .total-label {
-            font-weight: 500;
-        }
-
-        .total-value {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-green);
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 100px 40px;
-        }
-
-        .tabs-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .tabs-nav {
-            display: flex;
-            gap: 0;
-            margin-bottom: 40px;
-            border-bottom: var(--border-thick);
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 20px 32px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: var(--border-thick);
-            border-bottom: none;
-            background: white;
-            margin-right: -3px;
-            transition: all var(--transition-snappy);
-        }
-
-        .tab-btn.active {
-            background: var(--accent-lime);
-        }
-
-        .tab-btn:hover:not(.active) {
-            background: var(--bg-secondary);
-        }
-
-        .tab-btn:focus {
-            outline: 3px dashed var(--accent-green);
-            outline-offset: -6px;
-        }
-
-        .tab-panel {
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .tab-panel.active {
-            display: grid;
-        }
-
-        .tab-content h3 {
-            font-size: 2rem;
-            margin-bottom: 16px;
-        }
-
-        .tab-content p {
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            font-size: 1.125rem;
-        }
-
-        .tab-visual {
-            background: var(--bg-secondary);
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-        }
-
-        .step-number {
-            font-family: var(--font-display);
-            font-size: 8rem;
-            font-weight: 700;
-            color: var(--accent-green);
-            opacity: 0.2;
-            line-height: 1;
-        }
-
-        /* Impact Section */
-        .impact-section {
-            padding: 100px 40px;
-            background: var(--accent-green);
-            color: white;
-            border-top: var(--border-thick);
-            border-bottom: var(--border-thick);
-        }
-
-        .impact-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            text-align: center;
-        }
-
-        .impact-stat h3 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            margin-bottom: 8px;
-            color: var(--accent-lime);
-        }
-
-        .impact-stat p {
-            font-size: 1.125rem;
-            opacity: 0.9;
-        }
-
-        /* Integrations */
-        .integrations {
-            padding: 100px 40px;
-        }
-
-        .integrations-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .integration-card {
-            background: white;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            padding: 32px;
-            text-align: center;
-            transition: all var(--transition-snappy);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .integration-card.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        .integration-card:hover {
-            transform: translate(4px, 4px);
-            box-shadow: var(--shadow-hover);
-            background: var(--accent-lime);
+        .nav-actions .btn {
+            padding: 8px 24px;
+            border-radius: var(--radius-round);
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--trans-smooth);
+        }
+        .nav-actions .btn:hover {
+            background: var(--text-main);
+            color: var(--bg-base);
         }
 
-        .integration-card:active {
-            transform: translate(6px, 6px);
-            box-shadow: none;
-        }
-
-        .int-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--bg-secondary);
-            border: var(--border-thick);
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        .int-name {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .int-category {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        /* Forestry Projects */
-        .forestry-section {
-            padding: 100px 40px;
-            background: var(--bg-secondary);
-            border-top: var(--border-thick);
-        }
-
-        .projects-grid {
-            max-width: 1200px;
+        /* Main Container */
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
+            padding: 0 var(--space-lg);
         }
 
-        .project-card {
-            background: white;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            overflow: hidden;
-            transition: all var(--transition-snappy);
+        /* Section 3: Circadian Wheel Hero */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: var(--space-xl) 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            letter-spacing: -0.02em;
+        }
+        .hero p.subtitle {
+            font-size: 1.25rem;
+            max-width: 600px;
+            color: var(--text-muted);
+            margin-bottom: var(--space-lg);
+            line-height: 1.6;
+        }
+
+        .circadian-wheel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: var(--space-xl);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
         }
 
-        .project-card:hover {
-            transform: translate(4px, 4px);
-            box-shadow: var(--shadow-hover);
+        .wheel-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .wheel-segment {
+            fill: transparent;
+            stroke: var(--glass-border);
+            stroke-width: 2;
+            transition: stroke 0.3s, stroke-width 0.3s;
+        }
+        
+        .wheel-segment:hover {
+            stroke-width: 4;
+            stroke: var(--text-muted);
         }
 
-        .project-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--accent-green) 100%);
+        .wheel-segment.active {
+            stroke: var(--accent);
+            stroke-width: 6;
+            filter: drop-shadow(0 0 10px var(--accent));
+        }
+
+        .mode-label {
+            position: absolute;
+            font-size: 1.5rem;
+            font-family: var(--font-serif);
+            pointer-events: none;
+        }
+
+        .hero-ctas {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-size: 3rem;
-            color: white;
+            gap: var(--space-sm);
         }
 
-        .project-info {
-            padding: 24px;
-        }
-
-        .project-location {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .project-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .project-stats {
-            display: flex;
-            gap: 24px;
-            font-size: 0.875rem;
-        }
-
-        .project-stat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .stat-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-lime);
-            border: var(--border-thick);
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 40px;
-        }
-
-        .testimonials-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-        }
-
-        .testimonial-card {
-            background: white;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            padding: 32px;
-            transition: all var(--transition-snappy);
-        }
-
-        .testimonial-card:hover {
-            transform: translate(4px, 4px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .testimonial-card.featured {
-            background: var(--accent-green);
-            color: white;
-        }
-
-        .testimonial-card.featured .testimonial-text {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .testimonial-quote {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            line-height: 1;
-            margin-bottom: 16px;
-            color: var(--accent-lime);
-        }
-
-        .testimonial-card.featured .testimonial-quote {
-            color: var(--accent-lime);
-        }
-
-        .testimonial-text {
-            font-size: 1.125rem;
-            margin-bottom: 24px;
+        .btn-glass {
+            padding: 16px 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
             color: var(--text-main);
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: var(--glass-blur);
+            transition: var(--trans-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .btn-glass:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px var(--accent-glass);
+            border-color: var(--accent);
         }
 
-        .testimonial-author {
+        /* Section 4: Credential Seals */
+        .credentials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .seal {
+            padding: var(--space-md);
+            text-align: center;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .seal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, var(--accent-glass), transparent);
+        }
+        
+        .seal-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .seal-value {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+        }
+
+        /* Section 5: Suite Stage */
+        .suite-stage {
+            padding: var(--space-xl) 0;
+        }
+
+        .section-header {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .suite-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: var(--space-md);
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--trans-smooth);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            border-bottom-color: var(--accent);
+        }
+
+        .suite-portal {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: var(--space-lg);
+            min-height: 500px;
+        }
+
+        .suite-visual {
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--glass-bg), transparent);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .suite-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--glass-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        .abstract-form {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            filter: blur(60px);
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: all 1s ease;
+        }
+
+        .suite-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+        
+        .suite-detail-row {
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .suite-modality {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Section 6: Instrument Panel */
+        .instrument-panel {
+            padding: var(--space-xl) 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+        }
+
+        .metric-card {
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
             gap: 16px;
         }
 
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: var(--bg-secondary);
-            border: var(--border-thick);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-
-        .testimonial-card.featured .author-avatar {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: white;
-        }
-
-        .author-name {
-            font-weight: 600;
-        }
-
-        .author-role {
-            font-size: 0.875rem;
+        .metric-header {
+            font-size: 0.85rem;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .testimonial-card.featured .author-role {
-            color: rgba(255, 255, 255, 0.7);
+        .metric-value {
+            font-family: var(--font-mono);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glass);
         }
 
-        /* FAQ */
-        .faq-section {
-            padding: 100px 40px;
-            background: var(--bg-secondary);
-            border-top: var(--border-thick);
+        .metric-chart {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
         }
 
-        .faq-container {
+        .bar {
+            flex: 1;
+            background: var(--glass-border);
+            border-radius: 2px 2px 0 0;
+            transition: height 1s ease, background 0.3s ease;
+        }
+        
+        .bar:hover {
+            background: var(--accent);
+        }
+
+        /* Section 7: Ritual Library */
+        .ritual-library {
+            padding: var(--space-xl) 0;
+        }
+
+        .ritual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .ritual-card {
+            height: 350px;
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .ritual-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .ritual-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glass) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: inherit;
+        }
+
+        .ritual-card:hover::before {
+            opacity: 1;
+        }
+
+        .ritual-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            z-index: 1;
+        }
+
+        .ritual-duration {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        /* Section 8: Ambient Cultural */
+        .cultural {
+            padding: var(--space-xl) 0;
+        }
+
+        .ledger-row {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--trans-smooth);
+            cursor: pointer;
+        }
+        
+        .ledger-row:hover {
+            background: var(--glass-bg);
+            padding-left: var(--space-sm);
+        }
+
+        .ledger-date {
+            font-family: var(--font-mono);
+            color: var(--accent);
+        }
+        
+        .ledger-desc h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        /* Section 9: Tiers */
+        .tiers {
+            padding: var(--space-xl) 0;
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .tier-card {
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .tier-price {
+            font-family: var(--font-mono);
+            font-size: 3rem;
+            margin: var(--space-md) 0;
+        }
+
+        /* Section 10: Concierge */
+        .concierge {
+            padding: var(--space-xl) 0;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        .faq-item {
-            background: white;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            margin-bottom: 16px;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 24px;
+        .chat-window {
+            height: 400px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.125rem;
-            font-weight: 600;
-            text-align: left;
-            transition: background var(--transition-snappy);
+            flex-direction: column;
+            padding: var(--space-md);
         }
 
-        .faq-question:hover {
-            background: var(--bg-primary);
-        }
-
-        .faq-question:focus {
-            outline: 3px dashed var(--accent-green);
-            outline-offset: -6px;
-        }
-
-        .faq-icon {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding: 0 24px 24px;
-        }
-
-        .faq-answer p {
-            color: var(--text-muted);
-        }
-
-        /* Footer */
-        .footer {
-            padding: 80px 40px 40px;
-            background: var(--border-dark);
-            color: white;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand h3 {
-            font-size: 1.5rem;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 24px;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 8px;
-        }
-
-        .newsletter-form input {
+        .chat-history {
             flex: 1;
-            padding: 12px 16px;
-            border: 3px solid white;
-            background: transparent;
-            color: white;
-            font-size: 0.875rem;
-        }
-
-        .newsletter-form input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .newsletter-form button {
-            background: var(--accent-lime);
-            color: var(--border-dark);
-            border: 3px solid white;
-            padding: 12px 20px;
-            font-weight: 600;
-            transition: all var(--transition-snappy);
-        }
-
-        .newsletter-form button:hover {
-            background: white;
-        }
-
-        .footer-links h4 {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            color: var(--accent-lime);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            transition: color var(--transition-snappy);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-lime);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-copyright {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.875rem;
-        }
-
-        .footer-social {
-            display: flex;
+            flex-direction: column;
             gap: 16px;
         }
 
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+        .chat-bubble {
+            background: rgba(0,0,0,0.2);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            max-width: 80%;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .chat-bubble.ai {
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .chat-inputs {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-snappy);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .chip {
+            padding: 8px 16px;
+            border-radius: var(--radius-round);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 0.8rem;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chip:hover {
+            background: var(--accent);
+            color: #fff;
         }
 
-        .social-link:hover {
-            background: var(--accent-lime);
-            border-color: var(--accent-lime);
-            color: var(--border-dark);
+        /* Section 11: Manifesto */
+        .manifesto {
+            padding: var(--space-xl) 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .manifesto h2 {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            line-height: 1.2;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+        /* Section 12: Footer */
+        .footer-site {
+            padding: var(--space-xl) 0 var(--space-md);
+            border-top: 1px solid var(--glass-border);
+            backdrop-filter: blur(40px);
+            background: rgba(0,0,0,0.5);
+            margin-top: var(--space-xl);
+        }
+        [data-theme="dawn"] .footer-site {
+            background: rgba(255,255,255,0.7);
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
         }
 
-        .modal {
-            background: var(--bg-primary);
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            transform: scale(0.9);
-            transition: transform 0.3s;
+        .footer-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-bottom: var(--space-sm);
+            color: var(--text-muted);
+            text-transform: uppercase;
         }
 
-        .modal-overlay.active .modal {
-            transform: scale(1);
+        .footer-col ul {
+            list-style: none;
         }
-
-        .modal-header {
-            padding: 24px;
-            border-bottom: var(--border-thick);
+        
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-col ul a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer-bottom {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-        }
-
-        .modal-close {
-            width: 40px;
-            height: 40px;
-            border: var(--border-thick);
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all var(--transition-snappy);
-        }
-
-        .modal-close:hover {
-            background: var(--accent-lime);
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--accent-green) 100%);
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-size: 4rem;
-            color: white;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background: var(--border-dark);
-            color: white;
-            padding: 16px 24px;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-default);
-            z-index: 3000;
-            transform: translateX(150%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .toast.active {
-            transform: translateX(0);
-        }
-
-        .toast-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .toast-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--accent-lime);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-dark);
-            font-weight: 700;
-        }
-
-        /* Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--glass-border);
+            padding-top: var(--space-md);
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .hero-visual {
-                height: 300px;
-            }
-
-            .tab-panel {
-                grid-template-columns: 1fr;
-            }
-
-            .tab-visual {
-                order: -1;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
-            .navbar {
-                padding: 16px 20px;
+            .metrics-grid, .credentials, .tier-grid, .footer-grid {
+                grid-template-columns: 1fr;
             }
-
+            .suite-portal {
+                grid-template-columns: 1fr;
+            }
+            .ledger-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
             .nav-links {
                 display: none;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero {
-                padding: 100px 20px 60px;
-            }
-
-            .hero-form {
-                flex-direction: column;
-            }
-
-            .tabs-nav {
-                flex-direction: column;
-            }
-
-            .tab-btn {
-                margin-right: 0;
-                margin-bottom: -3px;
-                border-bottom: var(--border-thick);
-            }
-
-            .impact-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .integrations-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .integrations-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .leaf {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
-
 <body>
-    <a href="#main" class="skip-link">Skip to Main Content</a>
 
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-logo">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path
-                    d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 4c5.514 0 10 4.486 10 10 0 2.5-1.176 4.872-3.2 6.4L16 12l-6.8 10.4C7.176 20.872 6 18.5 6 16c0-5.514 4.486-10 10-10z"
-                    fill="#2E5C31" />
-            </svg>
-            CanopyCoin
+    <!-- Ambient Background -->
+    <div class="ambient-canvas">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- 1. Aura Banner -->
+    <div class="aura-banner">
+        <div class="capacity-indicator">
+            <span class="dot"></span>
+            Current Capacity: 24/50
         </div>
+        <div id="banner-mode-text">Activating Dusk Protocol</div>
+    </div>
+
+    <!-- 2. Sticky Glass Navigation -->
+    <nav class="sticky-nav" id="main-nav">
+        <div class="logo">NERA</div>
         <div class="nav-links">
-            <a href="#how-it-works">How It Works</a>
-            <a href="#impact">Impact</a>
-            <a href="#projects">Projects</a>
-            <a href="#faq">FAQ</a>
-            <button class="nav-cta" onclick="showToast()">Connect Wallet</button>
+            <a href="#suites">Therapy Suites</a>
+            <a href="#biometrics">Instrument Panel</a>
+            <a href="#library">Rituals</a>
+            <a href="#programming">Programming</a>
         </div>
-        <button class="mobile-menu-btn" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+        <div class="nav-actions">
+            <button class="btn">Member Portal</button>
+        </div>
     </nav>
 
-    <main id="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Offset Your Digital Life</h1>
-                    <p>Calculate the carbon footprint of your digital subscriptions and micro-invest spare change into
-                        urban forestry projects worldwide.</p>
-                    <form class="hero-form" onsubmit="event.preventDefault(); showToast();">
-                        <input type="email" placeholder="Enter your email" aria-label="Email address" required>
-                        <button type="submit">Get Started</button>
-                    </form>
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">Join 50,000+ digital nomads making a
-                        difference</p>
+    <div class="container">
+        
+        <!-- 3. Circadian Wheel Hero -->
+        <section class="hero glass-panel" style="margin-top: 2rem; border-color: transparent; background: transparent; backdrop-filter: none; box-shadow: none;">
+            <div class="circadian-wheel glass-panel" id="c-wheel">
+                <svg viewBox="0 0 100 100" class="wheel-svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+                    <!-- Dusk Arc -->
+                    <path d="M 50 5 a 45 45 0 0 1 38.97 22.5" class="wheel-segment active" data-mode="dusk" />
+                    <!-- Night Arc -->
+                    <path d="M 88.97 27.5 a 45 45 0 0 1 -77.94 0" class="wheel-segment" data-mode="night" />
+                    <!-- Dawn Arc -->
+                    <path d="M 11.03 27.5 a 45 45 0 0 1 38.97 -22.5" class="wheel-segment" data-mode="dawn" />
+                </svg>
+                <div class="mode-label" id="wheel-label">Dusk</div>
+            </div>
+            <h1>Calibrate Your Cadence</h1>
+            <p class="subtitle">An instrument-grade recovery environment. Align your physiology with precision light cues, contrast therapy, and biometric feedback.</p>
+            <div class="hero-ctas">
+                <button class="btn-glass conic-border">Initiate Application</button>
+                <button class="btn-glass" style="background: transparent;">Explore Regimen</button>
+            </div>
+        </section>
+
+        <!-- 4. Credential Seals -->
+        <section class="credentials">
+            <div class="seal glass-panel">
+                <div class="seal-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                 </div>
-                <div class="hero-visual">
-                    <div class="leaf leaf-1" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 5 C20 20 5 50 5 70 C5 85 25 95 50 95 C75 95 95 85 95 70 C95 50 80 20 50 5Z" />
-                            <path d="M50 20 L50 80" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
-                        </svg>
+                <div class="seal-title">Partnership</div>
+                <div class="seal-value">Stanford Bio-Lab</div>
+            </div>
+            <div class="seal glass-panel">
+                <div class="seal-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M5 20V4a2 2 0 012-2h10a2 2 0 012 2v16M9 20V8h6v12"/></svg>
+                </div>
+                <div class="seal-title">Architecture</div>
+                <div class="seal-value">OMA Spatial</div>
+            </div>
+            <div class="seal glass-panel">
+                <div class="seal-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="seal-title">Protocol</div>
+                <div class="seal-value">Huberman Std.</div>
+            </div>
+        </section>
+
+        <!-- 5. Suite Stage -->
+        <section class="suite-stage" id="suites">
+            <div class="section-header">
+                <h2 class="serif" style="font-size: 3rem;">Thermal Instrument Suites</h2>
+            </div>
+            <div class="suite-tabs">
+                <button class="tab-btn active" data-target="suite-01">01 / The Forge</button>
+                <button class="tab-btn" data-target="suite-02">02 / The Glacier</button>
+                <button class="tab-btn" data-target="suite-03">03 / The Hyperbaric</button>
+                <button class="tab-btn" data-target="suite-04">04 / The Float</button>
+            </div>
+            <div class="suite-portal glass-panel">
+                <div class="suite-visual">
+                    <div class="abstract-form" id="suite-form" style="background: #e65c00;"></div>
+                </div>
+                <div class="suite-details" style="padding: 2rem;">
+                    <div class="suite-detail-row">
+                        <span class="suite-modality">Modality</span>
+                        <h3 class="serif" style="font-size: 2rem;" id="suite-title">Infrared & Dry Sauna</h3>
                     </div>
-                    <div class="leaf leaf-2" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 5 C20 20 5 50 5 70 C5 85 25 95 50 95 C75 95 95 85 95 70 C95 50 80 20 50 5Z" />
-                            <path d="M50 20 L50 80" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
-                        </svg>
+                    <div class="suite-detail-row">
+                        <span class="suite-modality">Physiological Goal</span>
+                        <p id="suite-desc">Trigger heat shock proteins, simulate profound cardiovascular exertion, and flush interstitial fluid pathways. Calibrated at 185°F.</p>
                     </div>
-                    <div class="leaf leaf-3" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 5 C20 20 5 50 5 70 C5 85 25 95 50 95 C75 95 95 85 95 70 C95 50 80 20 50 5Z" />
-                            <path d="M50 20 L50 80" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
-                        </svg>
-                    </div>
-                    <div class="leaf leaf-4" aria-hidden="true">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 5 C20 20 5 50 5 70 C5 85 25 95 50 95 C75 95 95 85 95 70 C95 50 80 20 50 5Z" />
-                            <path d="M50 20 L50 80" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
-                        </svg>
+                    <div class="suite-detail-row">
+                        <span class="suite-modality">Recommended Duration</span>
+                        <p class="mono" id="suite-dur">12 – 18 Minutes</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dashboard Preview -->
-        <section class="dashboard-section">
-            <div class="section-header reveal">
-                <h2>Your Carbon Dashboard</h2>
-                <p>Real-time tracking of your digital footprint across all subscriptions</p>
+        <!-- 6. Instrument Panel -->
+        <section class="instrument-panel" id="biometrics">
+            <div class="section-header">
+                <h2 class="serif" style="font-size: 3rem;">Telemetry (Aggregated)</h2>
             </div>
-            <div class="dashboard-card reveal">
-                <div class="dashboard-header">
-                    <span class="dashboard-title">Monthly Carbon Impact</span>
-                    <span class="live-badge">LIVE</span>
-                </div>
-                <div class="subscription-list">
-                    <div class="subscription-item">
-                        <div class="sub-icon">N</div>
-                        <div class="sub-info">
-                            <div class="sub-name">Netflix Streaming</div>
-                            <div class="sub-detail">4K UHD, ~40hrs/month</div>
-                        </div>
-                        <div class="sub-co2">12.4 kg CO2</div>
-                    </div>
-                    <div class="subscription-item">
-                        <div class="sub-icon">A</div>
-                        <div class="sub-info">
-                            <div class="sub-name">AWS Cloud Services</div>
-                            <div class="sub-detail">Compute & Storage</div>
-                        </div>
-                        <div class="sub-co2">28.7 kg CO2</div>
-                    </div>
-                    <div class="subscription-item">
-                        <div class="sub-icon">S</div>
-                        <div class="sub-info">
-                            <div class="sub-name">Spotify Music</div>
-                            <div class="sub-detail">~120hrs streaming</div>
-                        </div>
-                        <div class="sub-co2">4.2 kg CO2</div>
-                    </div>
-                    <div class="subscription-item">
-                        <div class="sub-icon">Z</div>
-                        <div class="sub-info">
-                            <div class="sub-name">Zoom Meetings</div>
-                            <div class="sub-detail">Video calls, ~25hrs</div>
-                        </div>
-                        <div class="sub-co2">3.8 kg CO2</div>
+            <div class="metrics-grid">
+                <div class="metric-card glass-panel conic-border">
+                    <span class="metric-header">Avg. Member HRV Shift</span>
+                    <span class="metric-value counter" data-val="24">+24%</span>
+                    <div class="metric-chart">
+                        <div class="bar" style="height: 20%"></div>
+                        <div class="bar" style="height: 35%"></div>
+                        <div class="bar" style="height: 25%"></div>
+                        <div class="bar" style="height: 60%"></div>
+                        <div class="bar" style="height: 50%"></div>
+                        <div class="bar" style="height: 80%"></div>
+                        <div class="bar" style="height: 100%"></div>
                     </div>
                 </div>
-                <div class="dashboard-total">
-                    <span class="total-label">Total Offset Needed</span>
-                    <span class="total-value" data-count="49.1">0 kg CO2</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works -->
-        <section class="how-it-works" id="how-it-works">
-            <div class="section-header reveal">
-                <h2>How It Works</h2>
-                <p>Three simple steps to make your digital life carbon neutral</p>
-            </div>
-            <div class="tabs-container reveal">
-                <div class="tabs-nav" role="tablist">
-                    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-1"
-                        onclick="switchTab(0)">1. Connect</button>
-                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-2"
-                        onclick="switchTab(1)">2. Calculate</button>
-                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-3"
-                        onclick="switchTab(2)">3. Plant</button>
-                </div>
-                <div class="tab-panel active" id="tab-1" role="tabpanel">
-                    <div class="tab-content">
-                        <h3>Connect Your Accounts</h3>
-                        <p>Securely link your digital subscriptions and bank accounts. We use bank-grade encryption and
-                            never store your credentials. Our AI analyzes your spending patterns to identify
-                            carbon-intensive services.</p>
-                        <button class="nav-cta" onclick="showToast()">Start Connecting</button>
-                    </div>
-                    <div class="tab-visual">
-                        <div class="step-number">01</div>
+                <div class="metric-card glass-panel">
+                    <span class="metric-header">Deep Sleep Extension</span>
+                    <span class="metric-value counter" data-val="41">+41m</span>
+                    <div class="metric-chart">
+                        <div class="bar" style="height: 30%"></div>
+                        <div class="bar" style="height: 40%"></div>
+                        <div class="bar" style="height: 60%"></div>
+                        <div class="bar" style="height: 50%"></div>
+                        <div class="bar" style="height: 70%"></div>
+                        <div class="bar" style="height: 85%"></div>
+                        <div class="bar" style="height: 95%"></div>
                     </div>
                 </div>
-                <div class="tab-panel" id="tab-2" role="tabpanel">
-                    <div class="tab-content">
-                        <h3>Calculate Your Impact</h3>
-                        <p>Our proprietary algorithm converts your digital activity into accurate carbon equivalents.
-                            From streaming hours to cloud storage, every digital action has an environmental cost we
-                            help you understand.</p>
-                        <button class="nav-cta" onclick="showToast()">See Sample Report</button>
-                    </div>
-                    <div class="tab-visual">
-                        <div class="step-number">02</div>
-                    </div>
-                </div>
-                <div class="tab-panel" id="tab-3" role="tabpanel">
-                    <div class="tab-content">
-                        <h3>Plant Trees Automatically</h3>
-                        <p>Round up your transactions and invest spare change into verified urban forestry projects.
-                            Track your growing forest in real-time and see the tangible impact of your contributions.
-                        </p>
-                        <button class="nav-cta" onclick="showToast()">View Projects</button>
-                    </div>
-                    <div class="tab-visual">
-                        <div class="step-number">03</div>
+                <div class="metric-card glass-panel">
+                    <span class="metric-header">Basal Temp Regulation</span>
+                    <span class="metric-value counter" data-val="1.2">-1.2°</span>
+                    <div class="metric-chart">
+                        <div class="bar" style="height: 90%"></div>
+                        <div class="bar" style="height: 80%"></div>
+                        <div class="bar" style="height: 60%"></div>
+                        <div class="bar" style="height: 40%"></div>
+                        <div class="bar" style="height: 30%"></div>
+                        <div class="bar" style="height: 20%"></div>
+                        <div class="bar" style="height: 10%"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Impact Section -->
-        <section class="impact-section" id="impact">
-            <div class="impact-grid">
-                <div class="impact-stat reveal">
-                    <h3 data-count="2504120">0</h3>
-                    <p>lbs CO2 Offset</p>
+        <!-- 7. Ritual Library -->
+        <section class="ritual-library" id="library">
+            <div class="section-header">
+                <h2 class="serif" style="font-size: 3rem;">Prescribed Rituals</h2>
+            </div>
+            <div class="ritual-grid">
+                <div class="ritual-card glass-panel hover-glow">
+                    <h3 class="ritual-title">The 14-Minute Plunge</h3>
+                    <span class="ritual-duration">Cold Water Immersion / Breathwork</span>
                 </div>
-                <div class="impact-stat reveal">
-                    <h3 data-count="48592">0</h3>
-                    <p>Trees Planted</p>
+                <div class="ritual-card glass-panel hover-glow">
+                    <h3 class="ritual-title">Circadian Reset</h3>
+                    <span class="ritual-duration">Light Therapy / Mobility</span>
                 </div>
-                <div class="impact-stat reveal">
-                    <h3 data-count="52347">0</h3>
-                    <p>Nomad Members</p>
+                <div class="ritual-card glass-panel hover-glow">
+                    <h3 class="ritual-title">Vagal Tone Cal.</h3>
+                    <span class="ritual-duration">Sound Baths / Hyperbaric</span>
                 </div>
             </div>
         </section>
 
-        <!-- Integrations -->
-        <section class="integrations">
-            <div class="section-header reveal">
-                <h2>Works With Your Tools</h2>
-                <p>Seamlessly integrates with the apps digital nomads use daily</p>
+        <!-- 8. Ambient Cultural -->
+        <section class="cultural" id="programming">
+            <div class="section-header">
+                <h2 class="serif" style="font-size: 3rem;">Cultural Programming</h2>
             </div>
-            <div class="integrations-grid">
-                <div class="integration-card" style="transition-delay: 0.1s;">
-                    <div class="int-icon">Sl</div>
-                    <div class="int-name">Slack</div>
-                    <div class="int-category">Communication</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.2s;">
-                    <div class="int-icon">Zm</div>
-                    <div class="int-name">Zoom</div>
-                    <div class="int-category">Video Calls</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.3s;">
-                    <div class="int-icon">Fg</div>
-                    <div class="int-name">Figma</div>
-                    <div class="int-category">Design</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.4s;">
-                    <div class="int-icon">Gh</div>
-                    <div class="int-name">GitHub</div>
-                    <div class="int-category">Development</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.5s;">
-                    <div class="int-icon">Nt</div>
-                    <div class="int-name">Notion</div>
-                    <div class="int-category">Productivity</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.6s;">
-                    <div class="int-icon">Sp</div>
-                    <div class="int-name">Spotify</div>
-                    <div class="int-category">Entertainment</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.7s;">
-                    <div class="int-icon">Aw</div>
-                    <div class="int-name">AWS</div>
-                    <div class="int-category">Cloud</div>
-                </div>
-                <div class="integration-card" style="transition-delay: 0.8s;">
-                    <div class="int-icon">Dr</div>
-                    <div class="int-name">Dropbox</div>
-                    <div class="int-category">Storage</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Forestry Projects -->
-        <section class="forestry-section" id="projects">
-            <div class="section-header reveal">
-                <h2>Urban Forestry Projects</h2>
-                <p>Your contributions fund verified reforestation in cities worldwide</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card reveal" onclick="openModal('Brooklyn Reforestation')">
-                    <div class="project-image">B</div>
-                    <div class="project-info">
-                        <div class="project-location">New York, USA</div>
-                        <div class="project-name">Brooklyn Reforestation</div>
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>12,450 trees</span>
-                            </div>
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>89% funded</span>
-                            </div>
-                        </div>
+            <div class="glass-panel" style="padding: 1rem 2rem;">
+                <div class="ledger-row">
+                    <div class="ledger-date">SEP 14 / DUSK</div>
+                    <div class="ledger-desc">
+                        <h3 class="serif">The Architecture of Silence</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Acoustic performance in the main salt atrium by Ryuichi Sakamoto's ensemble.</p>
                     </div>
                 </div>
-                <div class="project-card reveal" onclick="openModal('Berlin Tech Park')">
-                    <div class="project-image" style="background: linear-gradient(135deg, #4A5D4E 0%, #2E5C31 100%);">Be
-                    </div>
-                    <div class="project-info">
-                        <div class="project-location">Berlin, Germany</div>
-                        <div class="project-name">Berlin Tech Park Greening</div>
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>8,200 trees</span>
-                            </div>
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>94% funded</span>
-                            </div>
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-date">OCT 02 / NIGHT</div>
+                    <div class="ledger-desc">
+                        <h3 class="serif">Dr. Matthew Walker Seminar</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Private fireside chat on extreme sleep augmentation protocols.</p>
                     </div>
                 </div>
-                <div class="project-card reveal" onclick="openModal('Tokyo Urban Forest')">
-                    <div class="project-image" style="background: linear-gradient(135deg, #D9E2D8 0%, #4A5D4E 100%);">T
-                    </div>
-                    <div class="project-info">
-                        <div class="project-location">Tokyo, Japan</div>
-                        <div class="project-name">Tokyo Urban Forest</div>
-                        <div class="project-stats">
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>15,800 trees</span>
-                            </div>
-                            <div class="project-stat">
-                                <div class="stat-dot"></div>
-                                <span>67% funded</span>
-                            </div>
-                        </div>
+                <div class="ledger-row" style="border:none;">
+                    <div class="ledger-date">OCT 18 / DAWN</div>
+                    <div class="ledger-desc">
+                        <h3 class="serif">Dynamic Mobility Flow</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Guided dawn structural integrity training led by Kelly Starrett.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials -->
-        <section class="testimonials">
-            <div class="section-header reveal">
-                <h2>Nomad Stories</h2>
-                <p>Hear from digital nomads offsetting their footprint</p>
+        <!-- 9. Generative Tiers -->
+        <section class="tiers">
+            <div class="section-header" style="justify-content: center;">
+                <h2 class="serif" style="font-size: 3rem; text-align:center;">Membership Architecture</h2>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">CanopyCoin made me realize how much my digital habits impact the planet.
-                        Now I plant a tree for every Zoom call.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MK</div>
-                        <div>
-                            <div class="author-name">Maria Kim</div>
-                            <div class="author-role">Product Designer, Remote</div>
-                        </div>
-                    </div>
+            <div class="tier-grid">
+                <div class="tier-card glass-panel">
+                    <h3 class="serif" style="font-size: 2rem;">Pulse Initiate</h3>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Full access to thermal suites, standard biometrics, and baseline recovery routines.</p>
+                    <div class="tier-price">$380<span style="font-size:1rem; color:var(--text-muted);">/mo</span></div>
+                    <button class="btn-glass" style="width: 100%; justify-content: center;">Apply Now</button>
                 </div>
-                <div class="testimonial-card featured reveal">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">As a developer running cloud infrastructure 24/7, my carbon footprint
-                        was huge. CanopyCoin helps me give back in a meaningful way.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JR</div>
-                        <div>
-                            <div class="author-name">James Rodriguez</div>
-                            <div class="author-role">Full-Stack Developer</div>
-                        </div>
-                    </div>
+                <div class="tier-card glass-panel conic-border">
+                    <h3 class="serif" style="font-size: 2rem;">Nera Vanguard</h3>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Unlimited hyperbaric, 1-on-1 coaching, reserved cultural ticketing, priority suite booking.</p>
+                    <div class="tier-price">$850<span style="font-size:1rem; color:var(--text-muted);">/mo</span></div>
+                    <button class="btn-glass conic-border" style="width: 100%; justify-content: center; background: var(--text-main); color: var(--bg-base); font-weight: bold;">Submit Dossier</button>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ -->
-        <section class="faq-section" id="faq">
-            <div class="section-header reveal">
-                <h2>Common Questions</h2>
-                <p>Everything you need to know about CanopyCoin</p>
-            </div>
-            <div class="faq-container">
-                <div class="faq-item reveal">
-                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-                        How accurate is the carbon calculation?
-                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We use peer-reviewed carbon intensity data from the International Energy Agency and leading
-                            climate research institutions. Our algorithm factors in server locations, usage patterns,
-                            and renewable energy mix to provide highly accurate estimates.</p>
+        <!-- 10. Concierge AI -->
+        <section class="concierge">
+            <div class="chat-window glass-panel conic-border">
+                <div class="chat-history" id="chat-history">
+                    <div class="chat-bubble ai">
+                        <strong>Nera Oracle</strong><br>
+                        Good evening. I note your resting heart rate is slightly elevated today. Shall I prepare The Glacier suite at 39°F, or would you prefer a gentler Dusk light protocol?
                     </div>
                 </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-                        Where are the trees planted?
-                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We partner with verified urban forestry organizations in 15+ cities worldwide. Each project
-                            is vetted for ecological benefit, local community impact, and long-term sustainability. You
-                            can track your specific contributions in real-time.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-                        Is my financial data secure?
-                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Absolutely. We use bank-grade 256-bit encryption and never store your login credentials. We
-                            partner with Plaid and similar secure APIs for read-only access to transaction data. Your
-                            privacy and security are our top priorities.</p>
-                    </div>
-                </div>
-                <div class="faq-item reveal">
-                    <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
-                        Can I choose which projects to support?
-                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! Premium members can select specific forestry projects by location and type. Free members
-                            contribute to our general fund which distributes resources across all active projects based
-                            on need and impact potential.</p>
-                    </div>
+                <div class="chat-inputs">
+                    <button class="chip" onclick="simulateChat('Book The Glacier suite.')">Book The Glacier</button>
+                    <button class="chip" onclick="simulateChat('Start Dusk Protocol.')">Dusk Protocol</button>
+                    <button class="chip" onclick="simulateChat('Check my daily readiness.')">Daily Readiness</button>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 4c5.514 0 10 4.486 10 10 0 2.5-1.176 4.872-3.2 6.4L16 12l-6.8 10.4C7.176 20.872 6 18.5 6 16c0-5.514 4.486-10 10-10z"
-                            fill="#D4F842" />
-                    </svg>
-                    CanopyCoin
-                </h3>
-                <p>Offset your digital footprint, one transaction at a time. Join the movement of conscious digital
-                    nomads.</p>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); showToast();">
-                    <input type="email" placeholder="Your email" aria-label="Newsletter email">
-                    <button type="submit">Join</button>
-                </form>
+        <!-- 11. Manifesto -->
+        <section class="manifesto">
+            <h2 class="serif">We are not a gym. <br>We are an instrument for your physiology. <br><span style="color:var(--accent); font-style:italic;">Operate accordingly.</span></h2>
+        </section>
+
+    </div>
+
+    <!-- 12. Architectural Footer -->
+    <footer class="footer-site">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Nera House</h4>
+                    <ul>
+                        <li><a href="#">The Concept</a></li>
+                        <li><a href="#">Design Ethos</a></li>
+                        <li><a href="#">Founders</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Instruments</h4>
+                    <ul>
+                        <li><a href="#">Thermal Transfer</a></li>
+                        <li><a href="#">Hyperbaric Oxygen</a></li>
+                        <li><a href="#">Photobiomodulation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Residencies</h4>
+                    <ul>
+                        <li><a href="#">New York</a></li>
+                        <li><a href="#">Los Angeles</a></li>
+                        <li><a href="#">London</a></li>
+                        <li><a href="#">Tokyo (2026)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Inquiries</h4>
+                    <ul>
+                        <li><a href="#">Concierge</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-links">
-                <h4>Product</h4>
-                <ul>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Integrations</a></li>
-                    <li><a href="#">API</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms</a></li>
-                    <li><a href="#">Security</a></li>
-                    <li><a href="#">Cookies</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="footer-copyright">2024 CanopyCoin. All rights reserved. Made with love for the planet.</p>
-            <div class="footer-social">
-                <a href="#" class="social-link" aria-label="Twitter">X</a>
-                <a href="#" class="social-link" aria-label="LinkedIn">in</a>
-                <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+            <div class="footer-bottom">
+                <span>&copy; 2025 Nera Pulse House. All rights reserved.</span>
+                <span>Designed for physiological excellence.</span>
             </div>
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
-        onclick="closeModalOnOverlay(event)">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Project Details</h3>
-                <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image">P</div>
-                <p>This urban forestry project aims to restore green spaces in urban areas while sequestering carbon
-                    dioxide from the atmosphere. Your contribution helps plant native tree species that support local
-                    biodiversity and improve air quality for city residents.</p>
-                <p style="margin-top: 16px;"><strong>Impact:</strong> Each tree planted will absorb approximately 48 lbs
-                    of CO2 annually once mature.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast -->
-    <div class="toast" id="toast" role="alert" aria-live="polite">
-        <div class="toast-content">
-            <div class="toast-icon">!</div>
-            <span>Coming soon! Join our waitlist.</span>
-        </div>
-    </div>
-
     <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
+        // 1. Sticky Nav Logic
+        const nav = document.getElementById('main-nav');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+            if(window.scrollY > 50) {
+                nav.classList.add('scrolled');
             } else {
-                navbar.classList.remove('scrolled');
+                nav.classList.remove('scrolled');
             }
         });
 
-        // Tab switching
-        function switchTab(index) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const panels = document.querySelectorAll('.tab-panel');
-
-            tabs.forEach((tab, i) => {
-                if (i === index) {
-                    tab.classList.add('active');
-                    tab.setAttribute('aria-selected', 'true');
-                } else {
-                    tab.classList.remove('active');
-                    tab.setAttribute('aria-selected', 'false');
-                }
+        // 2. Circadian Wheel Theme Switcher
+        const segments = document.querySelectorAll('.wheel-segment');
+        const wheelLabel = document.getElementById('wheel-label');
+        const html = document.documentElement;
+        const bannerText = document.getElementById('banner-mode-text');
+        
+        segments.forEach(seg => {
+            seg.addEventListener('click', (e) => {
+                segments.forEach(s => s.classList.remove('active'));
+                const target = e.target;
+                target.classList.add('active');
+                
+                const mode = target.getAttribute('data-mode');
+                html.setAttribute('data-theme', mode);
+                wheelLabel.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+                bannerText.textContent = `Activating ${mode.charAt(0).toUpperCase() + mode.slice(1)} Protocol`;
             });
-
-            panels.forEach((panel, i) => {
-                if (i === index) {
-                    panel.classList.add('active');
-                } else {
-                    panel.classList.remove('active');
-                }
-            });
-        }
-
-        // FAQ toggle
-        function toggleFaq(button) {
-            const item = button.parentElement;
-            const isActive = item.classList.contains('active');
-
-            // Close all
-            document.querySelectorAll('.faq-item').forEach(faq => {
-                faq.classList.remove('active');
-                faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-            });
-
-            // Open clicked if wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-                button.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        // Modal
-        function openModal(projectName) {
-            const modal = document.getElementById('modal');
-            document.getElementById('modal-title').textContent = projectName;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function closeModalOnOverlay(event) {
-            if (event.target === event.currentTarget) {
-                closeModal();
-            }
-        }
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
         });
 
-        // Toast
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('active');
-            setTimeout(() => {
-                toast.classList.remove('active');
-            }, 3000);
-        }
+        // 3. Suite Tabs Logic
+        const suiteTabs = document.querySelectorAll('.tab-btn');
+        const suiteTitle = document.getElementById('suite-title');
+        const suiteDesc = document.getElementById('suite-desc');
+        const suiteDur = document.getElementById('suite-dur');
+        const suiteForm = document.getElementById('suite-form');
 
-        // Count up animation
-        function animateCounter(element, target, duration = 2000) {
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                if (target > 1000) {
-                    element.textContent = Math.floor(current).toLocaleString();
-                } else {
-                    element.textContent = current.toFixed(1);
-                }
-            }, 16);
-        }
-
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
+        const suiteData = {
+            'suite-01': { title: 'Infrared & Dry Sauna', desc: 'Trigger heat shock proteins, simulate profound cardiovascular exertion, and flush interstitial fluid pathways. Calibrated at 185°F.', dur: '12 – 18 Minutes', color: 'var(--orb-1)' },
+            'suite-02': { title: 'Cryo Plunge', desc: 'Acute cold water immersion inducing deep vasoconstriction followed by rebound vasodilation. Massive dopamine baseline elevation.', dur: '3 – 6 Minutes', color: 'var(--orb-2)' },
+            'suite-03': { title: 'Hyperbaric Oxygen', desc: 'Breathe 100% pure oxygen in a pressurized chamber. Accelerates recovery from neuro-cognitive fatigue and tissue micro-tears.', dur: '60 – 90 Minutes', color: 'var(--orb-3)' },
+            'suite-04': { title: 'Sensory Deprivation', desc: 'Zero-gravity salt isolation tank. Eliminate proprioceptive input to force parasympathetic nervous system dominance and Theta waves.', dur: '45 – 60 Minutes', color: 'var(--accent)' }
         };
 
+        suiteTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                suiteTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const target = tab.getAttribute('data-target');
+                const data = suiteData[target];
+                
+                suiteTitle.style.opacity = 0;
+                suiteDesc.style.opacity = 0;
+                setTimeout(() => {
+                    suiteTitle.textContent = data.title;
+                    suiteDesc.textContent = data.desc;
+                    suiteDur.textContent = data.dur;
+                    suiteForm.style.background = data.color;
+                    
+                    if(target === 'suite-01') suiteForm.style.borderRadius = "50%";
+                    if(target === 'suite-02') suiteForm.style.borderRadius = "10%";
+                    if(target === 'suite-03') suiteForm.style.borderRadius = "30% 70% 70% 30% / 30% 30% 70% 70%";
+                    if(target === 'suite-04') suiteForm.style.borderRadius = "50% 50% 50% 50% / 20% 80% 20% 80%";
+
+                    suiteTitle.style.opacity = 1;
+                    suiteDesc.style.opacity = 1;
+                }, 300);
+            });
+        });
+
+        // 4. Hover Glow Tracking (Cards)
+        document.querySelectorAll('.hover-glow').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 5. Number Counter Animation on Scroll
+        const counters = document.querySelectorAll('.counter');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                if(entry.isIntersecting) {
+                    const el = entry.target;
+                    const finalVal = parseFloat(el.getAttribute('data-val'));
+                    const isFloat = !Number.isInteger(finalVal);
+                    let currentVal = 0;
+                    const duration = 2000; // ms
+                    const interval = 20; 
+                    const step = finalVal / (duration / interval);
+                    
+                    const sign = el.textContent.includes('+') ? '+' : (el.textContent.includes('-') ? '-' : '');
+                    const suffix = el.textContent.replace(/[0-9.+\-]/g, '');
 
-                    // Animate counters if present
-                    const counters = entry.target.querySelectorAll('[data-count]');
-                    counters.forEach(counter => {
-                        const target = parseFloat(counter.getAttribute('data-count'));
-                        if (counter.textContent.includes('kg')) {
-                            animateCounter(counter, target);
-                            setTimeout(() => {
-                                counter.textContent = target + ' kg CO2';
-                            }, 2000);
-                        } else {
-                            animateCounter(counter, target);
+                    const counterInterval = setInterval(() => {
+                        currentVal += step;
+                        if(currentVal >= Math.abs(finalVal)) {
+                            currentVal = Math.abs(finalVal);
+                            clearInterval(counterInterval);
                         }
-                    });
+                        const display = isFloat ? currentVal.toFixed(1) : Math.floor(currentVal);
+                        el.textContent = `${sign}${display}${suffix}`;
+                    }, interval);
 
-                    observer.unobserve(entry.target);
+                    observer.unobserve(el);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.5 });
+        
+        counters.forEach(c => observer.observe(c));
 
-        // Observe elements
-        document.querySelectorAll('.reveal, .integration-card').forEach(el => {
-            observer.observe(el);
-        });
+        // 6. Concierge Chat Simulation
+        window.simulateChat = function(userMessage) {
+            const hist = document.getElementById('chat-history');
+            
+            // Add User message
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble';
+            userBubble.style.alignSelf = 'flex-end';
+            userBubble.style.borderBottomRightRadius = '0';
+            userBubble.style.background = 'var(--accent)';
+            userBubble.style.color = '#fff';
+            userBubble.innerHTML = `<strong>You</strong><br>${userMessage}`;
+            hist.appendChild(userBubble);
+            
+            // Scroll to bottom
+            hist.scrollTop = hist.scrollHeight;
 
-        // Leaf mouse interaction
-        document.querySelectorAll('.leaf').forEach(leaf => {
-            leaf.addEventListener('mousemove', (e) => {
-                const rect = leaf.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                leaf.style.transform = `perspective(600px) rotateX(${-y * 0.1}deg) rotateY(${x * 0.1}deg)`;
-            });
-
-            leaf.addEventListener('mouseleave', () => {
-                leaf.style.transform = '';
-            });
-        });
+            // Simulate AI typing
+            setTimeout(() => {
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble ai';
+                aiBubble.innerHTML = `<strong>Nera Oracle</strong><br><em>Processing request... Confirmed. Your telemetry has been updated and the suite is preparing. Estimated time to readiness: 4 minutes.</em>`;
+                hist.appendChild(aiBubble);
+                hist.scrollTop = hist.scrollHeight;
+            }, 1000);
+        }
     </script>
 </body>
-
 </html>

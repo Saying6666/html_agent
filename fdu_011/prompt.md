@@ -1,40 +1,236 @@
-# fdu_011
+# Modern Premium Glassmorphism & Glo UI Design Prompt
 
-## Round 1
-Create a premium long-scroll single-file `src/index.html` for a **SaaS landing page** called **Northwall**.
-Concept: a cybersecurity consulting studio turned productized advisory platform for enterprise buyers who need board-level clarity, incident preparedness, and modern security guidance.
-Audience: enterprise buyers, security leaders, and executive stakeholders evaluating a credible cybersecurity partner with premium positioning.
-Style direction: **Minimalist** with references to editorial commerce restraint, premium monochrome interfaces, and refined modern brand sites.
-Component language: minimal cards, quiet comparison modules, understated navigation, carefully framed trust sections, and elegant CTA moments.
-Color direction: warm neutrals, charcoal, soft stone, muted olive accents, and disciplined contrast with almost no visual noise.
-Typography direction: refined minimalist headings paired with restrained sans-serif body text.
-Motion direction: calm, subtle, tactile, and understated.
-Build a complete page with these sections: sticky navbar, hero, trust logos, risk metrics, service pillars, response workflow, compliance coverage, testimonials, pricing or advisory plans, FAQ, CTA, footer.
-Required interactions: hover states, pricing toggle, modal CTA, smooth scrolling, navbar blur.
-The page should feel like a refined premium security advisory brand rather than a fear-based template.
+## 1. Core Visual Identity
+- **Glassmorphism**: Extensive use of `backdrop-filter: blur()`, semi-transparent backgrounds with borders simulating glass edges (e.g., `rgba(255, 255, 255, 0.1)`).
+- **Glo UI / Ambient Lighting**: Floating colored orbs blurred extremely using `filter: blur(100px)` running asynchronously behind the glass panels giving a dynamic glowing feel.
+- **Conic & Linear Gradients**: Soft holographic gradient backgrounds and borders using conic and linear gradients. Deep obsidian or dark midnight blue backdrop to let the glows pop.
+- **Typography**: Clean, modern sans-serif (Inter, Plus Jakarta Sans) with variable font weights, tight tracking, using text-fill color with gradients.
 
-## Round 2
-Deepen the layout and content density.
-The hero should lead with confidence, risk reduction, and executive clarity rather than fear-heavy security marketing.
-Add believable copy around vCISO guidance, tabletop exercises, cloud posture reviews, incident planning, security roadmap design, and compliance translation for leadership teams.
-Balance conversion structure with product credibility through believable copy, differentiated modules, and workflow storytelling that feels product-real.
-Keep the page visually restrained but content-rich, with premium spacing and enough detail to support long-scroll conversion.
-Keep enough vertical depth for a long full-page screenshot, with multiple strong section transitions and no thin filler sections.
+## 2. Layout & Structure (12+ Sections)
+1. **Hero Section**: Huge dimensional glowing typography, layered glass cards, floating UI elements, calls to action with glowing borders.
+2. **Features Grid**: Bounding glass panels, each having internal glows on hover, crisp iconography.
+3. **Analytics Dashboard**: Fake dashboard elements inside a massive glass container, showing charts drawn with SVG and soft dropshadows.
+4. **How it Works**: A vertical timeline with a glowing thread connecting floating glass nodes.
+5. **Services**: Horizontal scrolling strip of glass cards detailing various services.
+6. **Testimonials**: A masonry layout of user reviews inside frosted glass containers.
+7. **Pricing Tiers**: Packages with glass effect, the "pro" tier having a shifting conic-gradient border.
+8. **Integrations**: A circular orbit or grid of logos floating in glass bubbles.
+9. **FAQ**: Executed as collapsible glass accordions with smooth transition animations.
+10. **About Us / Mission**: Split layout with text and an interactive glowing sphere or 3D element simulated in CSS/JS.
+11. **Newsletter / CTA**: Full-width glowing banner with a glassmorphic input group and subscribe button.
+12. **Footer**: Elaborate multi-column footer with semi-transparent frosted background and subtle glowing accents.
 
-## Round 3
-Polish all interaction states and compliance details.
-Make the pricing toggle visibly change plan framing or advisory package details, and ensure the modal CTA opens and closes cleanly without feeling intrusive.
-Smooth scrolling and the navbar blur transition should feel polished and intentionally branded.
-Ensure the layout is responsive for desktop and tablet widths while preserving the quiet premium tone.
-Keep all CSS and JS inline inside `index.html`.
-Do not use React, Vue, Svelte, jQuery, or any build step.
-Do not reference local images, local fonts, local CSS, or local JS.
-Use remote imagery only if needed and inline SVG icons.
-Return only the final `src/index.html` content with no explanation.
+## 3. Micro-Interactions & Animations
+- **Hover States**: Cards lift, borders brighten, glows intensity increases.
+- **Parallax / Mouse Move**: Elements shift slightly based on mouse position to accentuate depth.
+- **Scroll Reveal**: Sections fade in and slide up while scrolling, leveraging Intersection Observer.
+- **Magnetic Buttons**: Buttons follow the cursor slightly when hovered.
 
-## Round 4
-Final refinement pass.
-The result should feel restrained, high-trust, and executive-ready while still converting clearly.
-Avoid hacker clichés, green terminal gimmicks, and empty enterprise jargon.
-Ensure enough depth for a long full-page screenshot and visible interactive states throughout.
-Return one complete self-contained `index.html`.
+## 4. Technical Constraints
+- Single HTML file (>600 lines).
+- Inline CSS and JS.
+- No external libraries except standard fonts or icons (FontAwesome/Google Fonts).
+- Absolutely NO PLACEHOLDER text (lorem ipsum). Use realistic, premium SaaS copy.
+
+## 5. Depth and Layering Details
+- `z-index` management is critical.
+- Background: Very dark color `#07090F`.
+- Ambient layer: Absolute positioning, large blurred divs with `#ff007f`, `#7928ca`, `#00e5ff`.
+- Glass layer: `background: rgba(255, 255, 255, 0.03)`, `border: 1px solid rgba(255, 255, 255, 0.1)`, `box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3)`.
+- Content layer: High contrast white/grey text.
+
+## 6. Detailed Copywriting Focus
+Ensure all text reads like a top-tier tech platform.
+- Title: "The Future of Fluid Intelligence"
+- Subtitle: "Harness the power of AI encapsulated in pure glass and light."
+- Features: Data Synthesis, Pattern Recognition, Neural Mapping.
+
+## 7. Responsiveness
+- CSS Grid and Flexbox for fluid adaptation.
+- Media queries to adjust padding, font sizes, and stack columns on mobile devices.
+
+## 8. Interactive JS specifics
+- `mousemove` listener on document or sections to adjust `--x` and `--y` CSS variables for the background glows.
+- Custom cursor tracker.
+- Accordion functionality for FAQ.
+
+## 9. Performance
+- Use `will-change: transform` on animated elements.
+- Optimize blur filters to not tank framerate (limit number of blurred large elements).
+
+## 10. Design Sign-off
+Must feel like an Apple/Vercel/Linear hybrid with extra sci-fi glow.
+
+## 11. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 12. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 13. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 14. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 15. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 16. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 17. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 18. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 19. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 20. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 21. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 22. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 23. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 24. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 25. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 26. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 27. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 28. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 29. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 30. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 31. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 32. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 33. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 34. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 35. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 36. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 37. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 38. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+## 39. Additional Heuristics & Specifics
+- Maintain structural integrity across breakpoints ensuring accessibility.
+- Ensure contrast accessibility despite glass effects on text layers.
+- Focus on pure CSS styling where possible to maximize 60fps animations.
+- Avoid layout thrashing. Optimize animations with requestAnimationFrame.

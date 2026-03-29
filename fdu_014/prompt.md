@@ -1,40 +1,161 @@
-# fdu_014
-
 ## Round 1
-Create a premium long-scroll single-file `src/index.html` for a **portfolio site** called **HearthSignal**.
-Concept: an AI observability platform presented through a warm portfolio-style case-study narrative that makes technical reliability feel more human and strategic.
-Audience: creative professionals, design-minded operators, and product storytellers who want to showcase technical products with more narrative warmth.
-Style direction: **Organic Warm** with references to human-centered SaaS brands, warm editorial product pages, and artisanal modern storytelling.
-Component language: soft rounded modules, editorial case-study panels, warm stat blocks, layered product previews, and calm CTA sections.
-Color direction: oat, sand, clay, espresso, muted sage, and soft terracotta accents with grounded contrast.
-Typography direction: friendly but premium display headings paired with warm contemporary body text.
-Motion direction: gentle, human, and polished with soft reveals and tasteful state changes.
-Build a complete page with these sections: navbar, hero intro, selected work grid, project spotlight, outcome stories, process section, testimonials, FAQ, contact/footer CTA.
-Required interactions: hover states, active states, carousel or rotating highlights, counters, FAQ accordion.
-The page should feel like a premium narrative portfolio for a serious technical platform, not a soft lifestyle landing page.
 
-## Round 2
-Deepen the layout and content density.
-The hero should introduce the platform like a flagship case study with outcome-led storytelling, layered UI previews, and a warm strategic tone.
-Add believable copy around model quality monitoring, incident review, alert tuning, root-cause workflows, evaluation loops, and cross-functional decision making.
-Make the story feel curated and case-study-led, not like a simple gallery of cards with weak context.
-Use richer narrative pacing between technical proof, human outcomes, and portfolio storytelling.
-Keep enough vertical depth for a long full-page screenshot, with multiple strong section transitions and no thin filler sections.
+Project:
+Create a 2025-2026 single-page marketing site for **Aster Vale**.
+Aster Vale is a membership-based urban wellness club blending:
+longevity coaching.
+sensory architecture.
+recovery studios.
+concierge scheduling.
 
-## Round 3
-Polish all interaction states and compliance details.
-Hover and active states should read clearly across cards, links, CTA modules, and featured highlights.
-Any rotating highlight modules should feel intentional rather than gimmicky, counters should animate with clean timing, and the FAQ accordion should feel polished and easy to scan.
-Ensure the layout is responsive for desktop and tablet widths while preserving the warm premium identity.
-Keep all CSS and JS inline inside `index.html`.
-Do not use React, Vue, Svelte, jQuery, or any build step.
-Do not reference local images, local fonts, local CSS, or local JS.
-Use remote imagery only if needed and inline SVG icons.
-Return only the final `src/index.html` content with no explanation.
+This case must feel like an architectural publication artifact.
+Not a generic wellness landing page.
+Not a generic "luxury club" site.
+Not a generic SaaS page.
 
-## Round 4
-Final refinement pass.
-The result should feel strategic, human, and premium while still carrying believable technical depth.
-Avoid vague AI hype, empty abstract blobs, and generic case-study copy with no technical stakes.
-Ensure enough depth for a long full-page screenshot and visible interactive states throughout.
-Return one complete self-contained `index.html`.
+Core deliverable constraints (non-negotiable):
+Return one complete self-contained single-file `index.html` only.
+All CSS must be inside a single `<style>`.
+All JavaScript must be inside a single `<script>`.
+Inline CSS and inline JavaScript only.
+No build step.
+No frameworks:
+no React.
+no Vue.
+no Svelte.
+No libraries:
+no jQuery.
+no GSAP.
+No external libraries of any kind.
+No external frameworks of any kind.
+Do not reference local images.
+Do not reference local fonts.
+Do not reference local CSS.
+Do not reference local JS.
+Do not reference external images.
+Do not reference external fonts.
+Prefer pure CSS + inline SVG for diagrams and linework.
+Do not use `style=""` inline attributes in markup.
+Keep final HTML readable and multi-line.
+
+Mandatory outcome:
+The page must be long-scroll and dense enough to feel real.
+It must contain a believable amount of content and structure.
+It must support a full-page screenshot without filler.
+
+Target: Modern Premium Glassmorphism & Glo UI
+You must utilize 12+ detailed sections:
+1. Ambient Hero Header with moving blurred orb background.
+2. The Aster Vale Vision: Glassmorphic cards overlaying nature-inspired glo-effects.
+3. Architecture & Sensory Details: 3-column layout featuring frosted glass borders.
+4. Recovery Studios Intro: High end typography with glowing conic gradients.
+5. Interactive Service Menu: Tabs that shift ambient lighting.
+6. Membership Tiers: Nested glass cards, subtle neon typography.
+7. Concierge Scheduling Showcase: Visualizing a seamless schedule interface on glass.
+8. Longevity Metrics & Data: Dashboards built with deep blur and glowing lines.
+9. Community Pledges: Grid of testimonials in frosted glass capsules.
+10. Dynamic Philosophy Scroll: Sticky scroll with background transitions.
+11. Location & Booking: Minimalist maps made of SVG and glow lines.
+12. Footer with immersive deep blur effects.
+
+Technical constraints for Glassmorphism & Glo UI:
+- Use `backdrop-filter: blur(20px) saturate(180%)`.
+- Dynamic glowing backdrops with keyframe animations.
+- Conic gradients for borders and backgrounds.
+- High contrast, dark themes with jewel-tone ambient lights.
+- Extensive use of rgba() variables to control opacity dynamically.
+
+Ensure the final `index.html` is larger than 600 lines containing all 12 sections with REAL polished text and detailed JS micro-interactions.
+No placeholder dummy text allowed.
+
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.
+Ensure full compliance with constraints and no build steps whatsoever.

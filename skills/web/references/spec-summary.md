@@ -55,9 +55,17 @@ fdu_002/
 ## Prompt Rules
 
 - Minimum 3 rounds
+- Prefer 4 rounds and require the final `prompt.md` to be at least 150 lines unless the user explicitly asks for a shorter format
 - Include only prompts given to AI, not AI responses
 - Specific and design-directed, not vague
-- Prefer explicit style, palette, font, sections, animation, and responsive requirements
+- Prefer explicit content coverage, interaction behavior, information hierarchy, accessibility, responsive requirements, and technical constraints
+- Do not hard-code style labels, palette identities, or mood-word stacks into the prompt
+- Avoid repeated aesthetic trigger words that make many cases converge to the same look
+- Let the model decide the final visual style from the case content instead of prescribing it in the prompt
+- If a prompt can be summarized as “preset a moodboard, then fill content into it,” rewrite it
+- Use prompt text to constrain content and capability coverage, not to force `midnight/editorial/luxury/glass/glow` style convergence
+- Do not hit the line-count target with empty padding; use the extra space for stronger structural constraints, richer interaction details, responsive behavior, accessibility, state design, and differentiation tests
+- Skill enforcement note: rewritten `prompt.md` files should default to `>= 150` meaningful lines, and blank filler does not count toward that target
 
 ## HTML Rules
 

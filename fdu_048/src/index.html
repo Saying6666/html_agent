@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brink Protocol</title>
+  <style>
+    :root {
+      --bg: #091114; --bg-2: #0f1c21; --panel: rgba(15, 29, 35, 0.84);
+      --panel-2: rgba(22, 38, 45, 0.78); --line: rgba(199, 151, 102, 0.22);
+      --line-2: rgba(222, 228, 216, 0.15); --text: #edf0e8; --muted: #abb3ab;
+      --accent: #c7925c; --accent-2: #7fd0c9; --danger: #f18468; --ok: #a8d88c;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.34); --radius: 24px; --radius-sm: 14px;
+      --max: 1200px; --sec: clamp(4rem, 8vw, 7rem); --ease: cubic-bezier(.2,.7,.1,1);
+      --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --body: "Segoe UI", "Trebuchet MS", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); font: 16px/1.55 var(--body);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(127, 208, 201, 0.14), transparent 22rem),
+        radial-gradient(circle at 80% 0%, rgba(199, 146, 92, 0.16), transparent 26rem),
+        linear-gradient(180deg, #071012, #0d171b 45%, #081014);
+      min-height: 100vh; overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    }
+    body::before {
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 130px 130px;
+      mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+    }
+    body::after { background: radial-gradient(circle at center, transparent, rgba(0,0,0,.45)); }
+    a, button { color: inherit; }
+    .wrap { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+    .section { padding: var(--sec) 0; position: relative; }
+    .eyebrow, .stat-label, .brand-kicker, .mini {
+      text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; color: var(--muted);
+    }
+    h1, h2, h3 { font-family: var(--display); margin: 0 0 .6rem; line-height: .95; }
+    h1 { font-size: clamp(3.4rem, 8vw, 6.8rem); max-width: 8ch; }
+    h2 { font-size: clamp(2.2rem, 5vw, 4rem); }
+    p { margin: 0; color: var(--muted); }
+    .panel, .card, .metric, .proof, .timeline-item, .faq-item, .form-shell, .case {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--line-2); border-radius: 24px; box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    }
+    .nav {
+      position: sticky; top: 0; z-index: 20; border-bottom: 1px solid transparent;
+      transition: background .4s var(--ease), border-color .4s var(--ease);
+    }
+    .nav.scrolled {
+      background: rgba(7, 16, 18, .75); border-color: var(--line);
+      -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    }
+    .nav .wrap, .hero, .hero-actions, .nav-links, .status, .tabs, .toggle, .proofs, .metrics, .footer-grid {
+      display: flex; gap: 1rem;
+    }
+    .nav .wrap { align-items: center; justify-content: space-between; padding: 1rem 0; }
+    .brand { display: flex; gap: .9rem; align-items: center; text-decoration: none; }
+    .brand-mark {
+      width: 2.8rem; aspect-ratio: 1; border-radius: 50%;
+      background: conic-gradient(from 200deg, var(--accent), transparent, var(--accent-2), transparent, var(--accent));
+      border: 1px solid var(--line); box-shadow: inset 0 0 0 6px rgba(7,16,18,.8);
+    }
+    .nav-links { flex-wrap: wrap; }
+    .nav-links a, .tab, .toggle button, .faq-q {
+      text-decoration: none; border: 1px solid transparent; border-radius: 999px;
+      padding: .62rem .95rem; background: transparent;
+      transition: all .18s var(--ease);
+    }
+    .nav-links a.active, .nav-links a:hover, .tab[aria-selected="true"], .toggle .is-on {
+      color: var(--text); border-color: var(--line); background: rgba(199, 146, 92, .12);
+    }
+    .status {
+      align-items: center; padding: .65rem .9rem; border: 1px solid var(--line);
+      border-radius: 999px; font-size: .84rem; color: var(--text);
+    }
+    .dot {
+      width: .58rem; height: .58rem; border-radius: 50%; background: var(--ok);
+      box-shadow: 0 0 0 5px rgba(168,216,140,.14);
+    }
+    .btn, input, textarea {
+      border-radius: 999px; border: 1px solid var(--line); font: inherit;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .7rem;
+      min-height: 3rem; padding: 0 1.15rem; background: rgba(199,146,92,.12);
+      color: var(--text); text-decoration: none; cursor: pointer;
+    }
+    .btn:hover, .tab:hover, .toggle button:hover, .faq-q:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .btn:active, .tab:active, .toggle button:active, .faq-q:active { transform: translateY(0); }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), #d8a877); color: #111; font-weight: 700; }
+    :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+    .hero {
+      padding: 4.5rem 0 2rem; align-items: stretch; justify-content: space-between;
+      gap: clamp(1.4rem, 4vw, 3rem);
+    }
+    .hero-copy, .hero-board { flex: 1 1 0; }
+    .hero-copy p { max-width: 34rem; font-size: 1.05rem; }
+    .hero-actions { margin-top: 1.5rem; flex-wrap: wrap; }
+    .hero-board { padding: 1.2rem; overflow: hidden; }
+    .board-top, .timeline, .compare-grid, .story-grid, .grid-3, .command, .footer-grid {
+      display: grid; gap: 1rem;
+    }
+    .board-top { grid-template-columns: 1.1fr .9fr; margin-bottom: 1rem; }
+    .card, .metric, .proof, .timeline-item, .faq-item { padding: 1.1rem; }
+    .card strong, .metric strong, .case strong { display: block; font-size: 1.8rem; color: var(--text); }
+    .gauge {
+      height: 13rem; border-radius: 18px;
+      background:
+        radial-gradient(circle at center, rgba(127,208,201,.24), transparent 45%),
+        conic-gradient(from 200deg, rgba(199,146,92,.9), rgba(127,208,201,.1), rgba(199,146,92,.9));
+      border: 1px solid var(--line); display: grid; place-items: center;
+    }
+    .proofs, .metrics { flex-wrap: wrap; }
+    .proof, .metric { flex: 1 1 11rem; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .command { grid-template-columns: .8fr 1.2fr; align-items: start; }
+    .tabs { flex-wrap: wrap; margin-bottom: 1rem; }
+    .tab-panel[hidden] { display: none; }
+    .tab-panel { padding: 1.2rem; min-height: 18rem; }
+    .signal-list { display: grid; gap: .8rem; margin-top: 1rem; }
+    .signal-list div, .compare-side ul, .story-grid article, .footer-grid > div {
+      padding: 1rem; border-radius: 14px; border: 1px solid var(--line-2); background: rgba(255,255,255,.02);
+    }
+    .metrics { margin-top: 1.3rem; }
+    .timeline { grid-template-columns: repeat(4, 1fr); }
+    .timeline-item span, .compare-side li { display: block; color: var(--muted); margin-top: .4rem; }
+    .toggle { flex-wrap: wrap; margin: 1rem 0; }
+    .compare-grid { grid-template-columns: repeat(2, 1fr); }
+    .compare-side ul { list-style: none; margin: 1rem 0 0; padding: 1rem; }
+    .compare-side li + li { margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--line-2); }
+    .case { padding: 1.4rem; display: grid; grid-template-columns: 1.15fr .85fr; gap: 1rem; }
+    .story-grid { grid-template-columns: repeat(3, 1fr); }
+    .faq-item { overflow: clip; }
+    .faq-q {
+      width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center;
+      color: var(--text); cursor: pointer;
+    }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s var(--ease), margin .4s var(--ease);
+    }
+    .faq-item.open .faq-a { max-height: 11rem; margin-top: .9rem; }
+    .form-shell { padding: 1.3rem; }
+    form { display: grid; gap: .9rem; }
+    label { display: grid; gap: .35rem; color: var(--text); }
+    input, textarea {
+      width: 100%; background: rgba(7,16,18,.45); color: var(--text);
+      padding: .88rem 1rem; border-radius: 18px;
+    }
+    textarea { min-height: 7rem; resize: vertical; }
+    .footer-grid { grid-template-columns: 1.2fr .8fr .8fr; }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .stagger > * {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+    .reveal.visible .stagger > * { opacity: 1; transform: none; }
+    .proofs > *:nth-child(1), .grid-3 > *:nth-child(1), .story-grid > *:nth-child(1) { transition-delay: 80ms; }
+    .proofs > *:nth-child(2), .grid-3 > *:nth-child(2), .story-grid > *:nth-child(2) { transition-delay: 160ms; }
+    .proofs > *:nth-child(3), .grid-3 > *:nth-child(3), .story-grid > *:nth-child(3) { transition-delay: 240ms; }
+    .proofs > *:nth-child(4) { transition-delay: 320ms; }
+    .toast, .modal { position: fixed; z-index: 40; }
+    .toast {
+      inset: auto 1rem 1rem auto; max-width: 19rem; padding: .95rem 1rem;
+      border-radius: 18px; background: rgba(8,17,20,.92); border: 1px solid var(--line);
+      box-shadow: var(--shadow); opacity: 0; transform: translateY(12px); pointer-events: none;
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .modal {
+      inset: 0; display: none; place-items: center; padding: 1rem; background: rgba(4,10,12,.72);
+    }
+    .modal.open { display: grid; }
+    .modal-card { width: min(100%, 34rem); padding: 1.4rem; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .icon-btn {
+      width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--line);
+      background: transparent; color: var(--text); cursor: pointer;
+    }
+    @media (max-width: 1023px) {
+      .hero, .command, .case, .board-top, .footer-grid { grid-template-columns: 1fr; display: grid; }
+      .timeline, .story-grid, .grid-3, .compare-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav .wrap { align-items: flex-start; }
+    }
+    @media (max-width: 767px) {
+      .timeline, .story-grid, .grid-3, .compare-grid { grid-template-columns: 1fr; }
+      h1 { font-size: clamp(2.8rem, 18vw, 4.3rem); }
+      .nav-links { display: none; }
+      .proofs, .metrics, .hero-actions { flex-direction: column; }
+      .section { padding: 3.5rem 0; }
+    }
+    @media (min-width: 1440px) {
+      .hero { padding-top: 5.5rem; }
+      .hero-board { transform: translateY(1.2rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="top">
+    <nav class="wrap" aria-label="Primary">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span><span class="brand-kicker">Brink Protocol</span><strong>Continuity command for exposed systems</strong></span>
+      </a>
+      <div class="nav-links">
+        <a href="#system">System</a><a href="#command">Command</a><a href="#timeline">Timeline</a><a href="#proof">Proof</a><a href="#faq">FAQ</a>
+      </div>
+      <div class="status" aria-live="polite"><span class="dot" aria-hidden="true"></span> readiness index 98.2</div>
+      <button class="btn primary" data-open-modal>Open a readiness pilot</button>
+    </nav>
+  </header>
+  <main>
+    <section class="wrap hero section reveal" id="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Incident readiness platform</p>
+        <h1>When the grid shakes, teams move in one line.</h1>
+        <p>Brink Protocol turns runbooks, field signals, partner escalations, and continuity decisions into one live operating surface for airports, utilities, carriers, and public-service networks.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#command">See the command view</a>
+          <button class="btn" data-open-modal>Request field pilot</button>
+        </div>
+      </div>
+      <div class="hero-board panel">
+        <div class="board-top">
+          <div class="card"><span class="mini">Escalation mesh</span><strong>14 min</strong><p>average time from anomaly to coordinated response across transit, facilities, and vendor teams.</p></div>
+          <div class="gauge"><div><p class="mini">risk spread</p><strong>Contained</strong></div></div>
+        </div>
+        <div class="signal-list">
+          <div><span class="mini">North corridor</span><strong>Power instability at station cluster C</strong><p>Auto-routed to facilities, dispatch, and customer operations.</p></div>
+          <div><span class="mini">Response lock</span><strong>Fallback transport script activated</strong><p>Passenger notices, field staffing, and partner ledger updated in 9 seconds.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section reveal" id="proof">
+      <div class="proofs stagger">
+        <div class="proof"><span class="mini">Used by</span><strong>Helio Port</strong></div>
+        <div class="proof"><span class="mini">Used by</span><strong>Northline Rail</strong></div>
+        <div class="proof"><span class="mini">Used by</span><strong>Delta Grid</strong></div>
+        <div class="proof"><span class="mini">Used by</span><strong>Civic Water</strong></div>
+      </div>
+    </section>
+
+    <section class="wrap section reveal" id="system">
+      <p class="eyebrow">Field system</p>
+      <h2>Built for tense hours, not dashboard theater.</h2>
+      <div class="grid-3 stagger">
+        <article class="card"><strong>Signal fusion</strong><p>Pull sensor alerts, shift notes, inbound calls, and partner feeds into one ranked incident board.</p></article>
+        <article class="card"><strong>Shared command</strong><p>Operators, legal, customer comms, and field crews act from the same state without spreadsheet drift.</p></article>
+        <article class="card"><strong>Proof trail</strong><p>Every action leaves a time-stamped ledger for compliance reviews and after-action learning.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal" id="command">
+      <div class="command">
+        <div>
+          <p class="eyebrow">Command view</p>
+          <h2>One surface for detection, response, and briefings.</h2>
+          <div class="tabs" role="tablist" aria-label="Command views">
+            <button class="tab" id="tab-0" role="tab" aria-selected="true" aria-controls="panel-0">Detect</button>
+            <button class="tab" id="tab-1" role="tab" aria-selected="false" aria-controls="panel-1">Orchestrate</button>
+            <button class="tab" id="tab-2" role="tab" aria-selected="false" aria-controls="panel-2">Brief</button>
+          </div>
+        </div>
+        <div class="panel">
+          <section class="tab-panel" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+            <strong>Detect weak signals before they become public incidents.</strong>
+            <div class="signal-list"><div>Severity ladder auto-groups related anomalies and flags route-level spread.</div><div>Analyst notes remain attached to the source event, not pasted into chat fragments.</div></div>
+          </section>
+          <section class="tab-panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1" hidden>
+            <strong>Run role-specific actions without losing central control.</strong>
+            <div class="signal-list"><div>Escalation branches launch for field, customer, vendor, and regulator teams.</div><div>Board states shift from monitor to contain to recovery with full audit continuity.</div></div>
+          </section>
+          <section class="tab-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+            <strong>Brief leadership with live consequence views.</strong>
+            <div class="signal-list"><div>Auto-built brief cards summarize exposure, response velocity, and pending approvals.</div><div>Exportable board snapshots keep leadership informed without reopening a dozen tools.</div></div>
+          </section>
+        </div>
+      </div>
+      <div class="metrics">
+        <article class="metric"><span class="stat-label">coordinated alerts</span><strong data-count="420">0</strong><p>priority incidents processed this quarter</p></article>
+        <article class="metric"><span class="stat-label">time saved</span><strong data-count="63">0</strong><p>fewer minutes to first aligned response</p></article>
+        <article class="metric"><span class="stat-label">handoff drift</span><strong data-count="82">0</strong><p>reduction in duplicate field work</p></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal" id="timeline">
+      <p class="eyebrow">Escalation choreography</p>
+      <h2>A response line that stays readable under pressure.</h2>
+      <div class="timeline">
+        <article class="timeline-item"><strong>01 detect</strong><span>Signals cluster by geography, severity, and service dependency.</span></article>
+        <article class="timeline-item"><strong>02 contain</strong><span>Playbooks assign owners, fallback routes, and customer actions.</span></article>
+        <article class="timeline-item"><strong>03 brief</strong><span>Leads receive concise exposure summaries with approvals in context.</span></article>
+        <article class="timeline-item"><strong>04 recover</strong><span>Resolution logs convert directly into review-ready continuity records.</span></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal">
+      <p class="eyebrow">Stack comparison</p>
+      <h2>Replace fragmented response rituals with one operating cadence.</h2>
+      <div class="toggle" role="group" aria-label="Workflow comparison">
+        <button class="is-on" data-mode="old">Fragmented stack</button>
+        <button data-mode="new">Brink workflow</button>
+      </div>
+      <div class="compare-grid">
+        <article class="compare-side card"><strong class="compare-title">Fragmented stack</strong><ul class="compare-list"></ul></article>
+        <article class="compare-side card"><strong>Brink Protocol</strong><ul id="compare-good"></ul></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal">
+      <div class="case">
+        <div>
+          <p class="eyebrow">Case study</p>
+          <h2>Northline Rail reduced passenger-impact decisions from 47 minutes to 11.</h2>
+          <p>During a regional outage, dispatch, station ops, field maintenance, and customer teams moved from conflicting updates to one visible response thread.</p>
+        </div>
+        <div class="card"><span class="mini">Outcome</span><strong>31%</strong><p>fewer abandoned handoffs across vendor and field channels in the first 60 days.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap section reveal">
+      <p class="eyebrow">Operator notes</p>
+      <div class="story-grid stagger">
+        <article class="card"><strong>Transit ops</strong><p>"The board tells us what changed, who owns it, and what the public feels next."</p></article>
+        <article class="card"><strong>Utility control</strong><p>"We stopped rebuilding the same briefing in three channels every time a feeder went unstable."</p></article>
+        <article class="card"><strong>Airport response</strong><p>"Leadership sees risk spread live, not after someone cleans up the slide."</p></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal" id="faq">
+      <p class="eyebrow">Questions</p>
+      <h2>What teams ask before they switch.</h2>
+      <div class="signal-list">
+        <article class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq-a-1">Does Brink replace existing ticketing and dispatch tools?<span>+</span></button><div class="faq-a" id="faq-a-1"><p>No. It sits above them to unify state, routing, and executive visibility, while preserving source systems.</p></div></article>
+        <article class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq-a-2">Can we start with one region or one incident type?<span>+</span></button><div class="faq-a" id="faq-a-2"><p>Yes. Most pilots begin with a corridor, station group, or service-critical workflow before wider rollout.</p></div></article>
+        <article class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq-a-3">How does the audit trail help compliance reviews?<span>+</span></button><div class="faq-a" id="faq-a-3"><p>Every board action and decision state is time-stamped, preserving what changed, who acted, and what dependencies were affected.</p></div></article>
+      </div>
+    </section>
+
+    <section class="wrap section reveal">
+      <div class="form-shell">
+        <p class="eyebrow">Pilot request</p>
+        <h2>Map your first 30 days of readiness.</h2>
+        <form id="pilot-form">
+          <label>Work email<input name="email" type="email" placeholder="ops@network.example" required></label>
+          <label>Environment focus<textarea name="scope" placeholder="Rail corridor, water utility, airport operations..." required></textarea></label>
+          <button class="btn primary" type="submit">Request pilot review</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap section">
+    <div class="footer-grid">
+      <div><span class="brand-kicker">Brink Protocol</span><p>Continuity command for exposed systems.</p></div>
+      <div><strong>Explore</strong><p>System</p><p>Command</p><p>Proof</p></div>
+      <div><strong>Contact</strong><p>pilot@brinkprotocol.com</p><p>ISO-ready audit exports available.</p></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Pilot request staged. A readiness architect will follow up shortly.</div>
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <div><p class="eyebrow">Pilot intake</p><h3 id="modal-title">Open a readiness pilot</h3></div>
+        <button class="icon-btn" aria-label="Close pilot form" data-close-modal>×</button>
+      </div>
+      <form id="modal-form">
+        <label>Name<input name="name" type="text" required></label>
+        <label>Team email<input name="email" type="email" required></label>
+        <label>Primary exposure<textarea name="details" required></textarea></label>
+        <button class="btn primary" type="submit">Stage pilot</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const nav = document.querySelector('.nav');
+    const links = [...document.querySelectorAll('.nav-links a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+    const revealEls = document.querySelectorAll('.reveal');
+    const tabs = [...document.querySelectorAll('.tab')];
+    const panels = [...document.querySelectorAll('.tab-panel')];
+    const toast = document.getElementById('toast');
+    const modal = document.getElementById('modal');
+    const compareList = document.querySelector('.compare-list');
+    const compareGood = document.getElementById('compare-good');
+    const compareData = {
+      old: ['Alerts split across chat, tickets, and spreadsheets.', 'Field and comms teams brief from different versions.', 'Leadership gets summaries after the delay is already public.'],
+      new: ['One ranked board merges signals, owners, and consequence views.', 'Every role acts from the same live state and decision ledger.', 'Leadership sees exposure and approval blockers in real time.']
+    };
+    const showToast = msg => {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast.t);
+      showToast.t = setTimeout(() => toast.classList.remove('show'), 2600);
+    };
+    const renderCompare = mode => {
+      compareList.innerHTML = compareData[mode].map(v => `<li>${v}</li>`).join('');
+      compareGood.innerHTML = compareData.new.map(v => `<li>${v}</li>`).join('');
+      document.querySelector('.compare-title').textContent = mode === 'old' ? 'Fragmented stack' : 'Traditional response';
+    };
+    renderCompare('old');
+
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 24), { passive: true });
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    }), { threshold: .18 });
+    revealEls.forEach(el => observer.observe(el));
+
+    const countObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting || entry.target.dataset.done) return;
+      entry.target.dataset.done = '1';
+      const end = Number(entry.target.dataset.count);
+      let n = 0;
+      const tick = () => {
+        n += Math.max(1, Math.ceil(end / 24));
+        entry.target.textContent = n >= end ? end : n;
+        if (n < end) requestAnimationFrame(tick);
+      };
+      tick();
+    }), { threshold: .4 });
+    document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => {
+      tabs.forEach((t, idx) => t.setAttribute('aria-selected', idx === i));
+      panels.forEach((p, idx) => { p.hidden = idx !== i; });
+    }));
+    document.querySelector('.tabs').addEventListener('keydown', e => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length].focus();
+      }
+    });
+
+    document.querySelectorAll('.faq-q').forEach(btn => btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      btn.querySelector('span').textContent = open ? '−' : '+';
+    }));
+
+    document.querySelectorAll('[data-open-modal]').forEach(btn => btn.addEventListener('click', () => {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.querySelector('input').focus();
+    }));
+    const closeModal = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+    document.querySelector('[data-close-modal]').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    document.querySelectorAll('.toggle button').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.toggle button').forEach(b => b.classList.toggle('is-on', b === btn));
+      renderCompare(btn.dataset.mode);
+    }));
+
+    [document.getElementById('pilot-form'), document.getElementById('modal-form')].forEach(form => form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      form.reset();
+      closeModal();
+      showToast('Pilot request staged. Response planning starts within one business day.');
+    }));
+
+    const sectionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+    }), { rootMargin: '-40% 0px -45% 0px' });
+    sections.filter(Boolean).forEach(section => sectionObserver.observe(section));
+  </script>
+</body>
+</html>
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
+<!-- Pad -->
