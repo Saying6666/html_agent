@@ -1,4 +1,5 @@
-# FDU_017: Modern Premium Glassmorphism & Glo UI
+## Round 1: Role + Design System + Sections
+
 
 ## Objective
 Create a cutting-edge landing page implementing "Modern Premium Glassmorphism & Glo UI", focusing on fluid backdrop-filters, conic-gradient borders, ambient blurred orbs, and ultra-smooth micro-interactions.
@@ -56,6 +57,13 @@ Create a cutting-edge landing page implementing "Modern Premium Glassmorphism & 
     *   A submit button that seemingly absorbs light and flashes brightly on click.
 12. **Expansive Premium Footer**:
     *   Multi-column footer layout.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
     *   A large glowing orb hidden slightly below the page edge casting light upwards.
     *   Social links, detailed navigation, and copyright text with subtle hover blooms.
 
@@ -115,6 +123,13 @@ Create a cutting-edge landing page implementing "Modern Premium Glassmorphism & 
 // Extended detail requirement 39: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 40: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 41: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 // Extended detail requirement 42: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 43: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 44: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
@@ -169,6 +184,12 @@ Create a cutting-edge landing page implementing "Modern Premium Glassmorphism & 
 // Extended detail requirement 93: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 94: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 95: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 // Extended detail requirement 96: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 97: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.
 // Extended detail requirement 98: The UI must reflect a profound understanding of modern web aesthetics. Attention to sub-pixel rendering and GPU acceleration is critical for these blur layers to not drop frames on mobile devices. Smooth transitions > rigid states.

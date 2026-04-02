@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Design Prompt
 
 ## 1. Core Visual Identity
@@ -76,6 +78,13 @@ Must feel like an Apple/Vercel/Linear hybrid with extra sci-fi glow.
 ## 13. Additional Heuristics & Specifics
 - Maintain structural integrity across breakpoints ensuring accessibility.
 - Ensure contrast accessibility despite glass effects on text layers.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - Focus on pure CSS styling where possible to maximize 60fps animations.
 - Avoid layout thrashing. Optimize animations with requestAnimationFrame.
 
@@ -155,6 +164,13 @@ Must feel like an Apple/Vercel/Linear hybrid with extra sci-fi glow.
 - Maintain structural integrity across breakpoints ensuring accessibility.
 - Ensure contrast accessibility despite glass effects on text layers.
 - Focus on pure CSS styling where possible to maximize 60fps animations.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - Avoid layout thrashing. Optimize animations with requestAnimationFrame.
 
 ## 27. Additional Heuristics & Specifics
@@ -228,6 +244,12 @@ Must feel like an Apple/Vercel/Linear hybrid with extra sci-fi glow.
 - Ensure contrast accessibility despite glass effects on text layers.
 - Focus on pure CSS styling where possible to maximize 60fps animations.
 - Avoid layout thrashing. Optimize animations with requestAnimationFrame.
+
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
 
 ## 39. Additional Heuristics & Specifics
 - Maintain structural integrity across breakpoints ensuring accessibility.

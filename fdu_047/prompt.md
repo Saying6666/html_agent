@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI - Next-Gen Financial OS
 
 ## 1. Project Overview
@@ -74,6 +76,13 @@
 ### 9. Developer Experience (API Code Block)
 - A dark code editor window rendered in HTML/CSS.
 - Glowing syntax highlighting.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - Left side: Glass card describing the developer-first approach.
 - Right side: The code typing out (via CSS steps or JS).
 
@@ -152,6 +161,13 @@
 - Center: Features, Solutions, Resources, Pricing.
 - Right: "Login" text, and an "Open Account" shimmering button.
 
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
+
 ### 2. Hero Section (Immersive & Glowing)
 - Central massive heading: "Re-architecting Enterprise Wealth."
 - Subtitle: "A unified API, stunning dashboard, and seamless transactions for next-gen companies."
@@ -223,6 +239,12 @@
 
 ## 5. Development Strategy
 1. **Setup**: Define CSS variables and keyframes for orbs.
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 2. **Backdrop**: Implement fixed ambient blobs spanning the entire page body.
 3. **Glass Mixin**: Create reusable .glass-card, .glass-panel, .glow-border CSS classes.
 4. **Sections**: Iteratively build out sections 1-13 using flex/grid.

@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 ﻿# Drift Ledger: The Next-Generation Maritime Intelligence Platform
 # Project Brief & Requirements Document
 
@@ -63,6 +65,13 @@ The layout must be vast and comprehensive. Include at least the following 12 sec
 
 ### Section 3: Trust Strip
 - High-end textual operator and insurer endorsements.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - Glowing text slowly pulsing.
 
 ### Section 4: Signal Grid
@@ -128,6 +137,13 @@ The layout must be vast and comprehensive. Include at least the following 12 sec
 - Prefer fluid cubic-bezier curves for all transitions.
 
 ## 10. Responsive Re-composition Constraints
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - At least 2 major modules must fundamentally change form on mobile.
 - Keep the first mobile viewport unmistakably maritime and premium.
 - Do not collapse into a single boring centered column of identical cards.
@@ -188,6 +204,12 @@ Before delivering the final asset, the following structural checks must be guara
 - Include a visual scrubber element that manipulates DOM directly to reflect temporal adjustments.
 
 ## 18. Extensibility
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 Ensure the HTML is structured so adding another tab or accordion item is copy-paste trivial. Maintain atomic CSS classes where possible but prioritize a strict bespoke BEM-style where things get complex like .dossier-step--active.
 
 ## 19. Additional Constraints

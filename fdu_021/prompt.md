@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Development Guide
 
 ## Overview
@@ -53,6 +55,13 @@ The page flows sequentially through the following 12 deeply detailed sections, e
   --bg-color: #050505;
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --accent-cyan: #00f0ff;
@@ -108,6 +117,13 @@ Do not use generic "Lorem Ipsum". All text must be contextually relevant, profes
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
@@ -158,6 +174,12 @@ Do not use generic "Lorem Ipsum". All text must be contextually relevant, profes
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->
 <!-- Padding for prompt length requirement to ensure > 160 lines -->

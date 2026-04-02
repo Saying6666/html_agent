@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Unified Design Specification: Modern Premium Glassmorphism & Glo UI
 
 ## 1. Core Vision
@@ -56,6 +58,13 @@ Unlike simple semitransparent layers, our Glassmorphism involves:
 - Logos styled with muted opacity, glowing on hover.
 - "Trusted by over 10,000 forward-thinking teams."
 
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
+
 ### Section 4: Mission & 'The Why'
 - A 2-column layout.
 - Glassmorphic cards detailing the vision.
@@ -112,6 +121,13 @@ Unlike simple semitransparent layers, our Glassmorphism involves:
 
 ### Section 14: Expansive Footer
 - 4-column link structure.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - Newsletter signup.
 - Social media icons.
 - Legal, Privacy, Terms.
@@ -165,6 +181,12 @@ Unlike simple semitransparent layers, our Glassmorphism involves:
 - check 2
 - check 3
 - check 4
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - check 5
 - check 6
 - check 7

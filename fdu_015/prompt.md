@@ -1,10 +1,4 @@
-# Modern Premium Glassmorphism UI
-
-# Modern Premium Glassmorphism UI
-
-# Modern Premium Glassmorphism UI
-
-# Modern Premium Glassmorphism UI
+## Round 1: Role + Design System + Sections
 
 # Modern Premium Glassmorphism UI
 
@@ -86,8 +80,12 @@ This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, 
 ## Specs
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
 
-## Specs
-This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
 
 ## Specs
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
@@ -177,6 +175,13 @@ This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, 
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
 
 ## Specs
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
 
 ## Specs
@@ -256,6 +261,15 @@ This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, 
 
 ## Specs
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
+
+## Specs
+This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.
+
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
 
 ## Specs
 This should have backdrop-filter, conic-gradient borders, ambient blurred orbs, and real micro-interactions.

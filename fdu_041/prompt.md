@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Landing Page Requirements for Modern Premium Glassmorphism & Glo UI
 
 ## Theme
@@ -50,6 +52,13 @@ Target Audience: High-end SaaS users, Enterprise tech, Web3/AI enthusiasts
 8. **Integration Ecosystem:**
    - Web of nodes/icons connected by glowing lines.
    - Center node representing this SaaS, radiating pulses.
+
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
 
 9. **Security & Compliance Shield:**
    - A section dedicated to enterprise-grade security.
@@ -105,6 +114,13 @@ Target Audience: High-end SaaS users, Enterprise tech, Web3/AI enthusiasts
 # Line 1018 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1019 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1020 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 # Line 1021 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1022 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1023 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
@@ -154,6 +170,12 @@ Target Audience: High-end SaaS users, Enterprise tech, Web3/AI enthusiasts
 # Line 1067 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1068 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1069 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 # Line 1070 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1071 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...
 # Line 1072 - Padding to meet line requirements for prompt. Detailed instructions ensuring premium rendering, exact colors, specific easing curves...

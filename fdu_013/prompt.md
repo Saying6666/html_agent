@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Round 1
 
 Project: **Aether Quay - Next Generation**
@@ -69,6 +71,13 @@ A high-tech terminal board.
 ### 07. Booking Protocol & Flow
 - Step-by-step UI. 
 - Connecting SVG lines. Active steps glow.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - Detailed copy explaining the biometric boarding pass and smart luggage handling.
 
 ### 08. Membership Tiers
@@ -141,6 +150,13 @@ No Markdown formatting around the HTML output, just the raw HTML code in index.h
 #- Lore expansion detail 25: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 26: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 27: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 #- Lore expansion detail 28: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 29: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 30: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
@@ -208,6 +224,12 @@ No Markdown formatting around the HTML output, just the raw HTML code in index.h
 #- Lore expansion detail 92: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 93: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 94: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 #- Lore expansion detail 95: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 96: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.
 #- Lore expansion detail 97: Ensuring extreme detail and length constraint for prompt generation to meet the >160 lines requirement securely. Elaborate on the high-tech terminal aspects, the oceanic abyssal stations, and the stratospheric rail links.

@@ -1,112 +1,196 @@
-﻿## Round 1
+## Round 1
 
-Project: **Helio Harbor**
-Type: electric dayboat club (members-only marina access, guided coastal routes, concierge provisioning, sunset work lounges)
-Audience: members, concierge partners, small teams that want effortless coastal mobility
-Timeframe: 2025-2026
+Create a production-grade 2025-2026 single-page site for Helio Harbor.
+Helio Harbor is a members-only electric dayboat club with concierge coastal routing.
+The page must feel like a premium mobility product, not a generic marketing template.
+The experience should blend daylight leisure energy with precise operational detail.
 
-Deliverable: generate one complete single-file index.html (>600 lines)
+Audience:
+- private members booking coastal sessions
+- concierge partners coordinating guest plans
+- operations staff managing vessels and dock windows
 
-North star:
-This must feel like a daylight-meets-sunset ultra-premium mobility brand.
-Bright, glowing, hyper-modern, and fluid.
-Target "Modern Premium Glassmorphism & Glo UI".
+Brand tone:
+- refined
+- confident
+- bright without being playful
+- service-oriented and specific
 
-Visual world (commit to a specific Glassmorphism & Glow language):
-Theme: Modern Premium Glassmorphism & Glo UI.
-Backgrounds should feature ambient blurred orbs, subtle gradients that shift and float.
-Surfaces should use backdrop-filter: blur(20px) and semi-transparent backgrounds.
-Borders should feature conic-gradient or linear-gradient treatments.
+Technical constraints:
+- return one complete self-contained index.html
+- one file only
+- CSS in one style block
+- JavaScript in one script block
+- no frameworks
+- no external libraries
+- no local assets
+- no style attributes in markup
 
-Palette constraints:
-- Base: obsidian or deep space blue overlaid with ambient glows.
-- Orbs/Glows: cyan mist, magenta flare, sun gold, electric teal, and deep coral.
-- Glass panels: semi-transparent black or white (depending on theme, let's go with dark glass for maximum glow impact).
-- Highlights: electric cyan and hyper pink.
-- Texts: crisp white, icy silver, and subtle translucent whites.
+Visual direction:
+- modern premium glass surfaces
+- luminous accents inspired by morning sun and sea reflections
+- layered atmospheric gradients with restrained glow
+- high-clarity typography and data chips
 
-Material motifs:
-- Frosted glass cards and panels.
-- Conic-gradient borders to suggest precision-machined edges glowing with energy.
-- Ambient blurred orbs (filter: blur(100px)) floating behind the glass layout.
-- Glow-infused icons and typography.
+Define a complete token system in CSS root variables:
+- background primary
+- background elevated
+- glass surface levels
+- glass border levels
+- text primary
+- text secondary
+- text tertiary
+- accent cyan
+- accent coral
+- accent gold
+- status open
+- status caution
+- status closed
+- radius scale
+- spacing scale
+- shadow scale
+- type scale
+- transition duration scale
+- transition easing scale
 
-Typography:
-- Display: ultra-modern sans-serif, tight tracking, crisp weights.
-- Body: highly readable geometric sans.
-- Numbers: tabular, razor-sharp numerals for tides, range, and times.
+Structural requirements:
+- at least 12 substantial sections
+- no repeated one-pattern card stack
+- include at least two chapters with distinct layout logic
+- include one oversized expressive chapter that breaks standard rhythm
 
-Layout archetype (do not drift):
-A hyper-modern digital terminal for coastal exploration.
-Build at least 12 distinct sections with different structural logic:
-Section 1: "Hero Halo" (full-bleed, huge glowing titles, ambient orbs, primary CTAs).
-Section 2: "Marquee Strip" (scrolling or static metrics band, frosted glass backdrop).
-Section 3: "Harbor Overview" (a macroscopic view of electric mobility, glowing accents).
-Section 4: "Glass Fleet" (vessels presented as floating cards with conic borders and specs).
-Section 5: "Tide & Transit Desk" (interactive console with Tabs).
-Section 6: "Glow Map & Route Journal" (story entries + map-linked notes, inline-SVG glowing map).
-Section 7: "Metrics Band" (Count-ups, nautical miles hosted, response time, glowing digits).
-Section 8: "Concierge Module" (provisioning checklist and itinerary support, glowing list items).
-Section 9: "Vantage Points" (gallery of coastal destinations, glass frames).
-Section 10: "Membership Passes" (tiered passes inside premium frosted glass panes).
-Section 11: "Club Rules & FAQ" (Accordion binder within a glowing container).
-Section 12: "Final Departure" (Booking/inquiry form and final CTA banner within a massive glass enclosure).
+Required section coverage:
+- sticky glass navigation with capacity indicator
+- hero with circadian-style sun path motif
+- live operations strip for marina timing
+- fleet showcase with detailed vessel cards
+- tide and transit desk with tabbed data
+- route journal with map-linked notes
+- impact metrics with count-up behavior
+- concierge planning module
+- membership passes comparison
+- compliance and policy accordion
+- booking modal trigger region
+- closing conversion section with form
+- structured footer with policy and location links
 
-Signature devices (must be obvious in the first viewport):
-1) Ambient floating orbs in the background.
-2) Frosted glass hero card.
-3) A sun path or navigation tracker in glowing SVG.
-All three must be built with pure CSS and inline SVG.
-No stock imagery.
+Copy quality requirements:
+- real service language
+- believable boating and marina terms
+- concise but specific operational details
+- no vague filler statements
+- no decorative text blocks without product meaning
 
-Design system requirements (CSS :root tokens, use consistently):
-- background tokens: void black, deep indigo, orb-teal, orb-magenta.
-- glass tokens: glass-surface, glass-surface-hover, glass-border.
-- text tokens: pure-white, silver-haze, muted-glass, electric-teal.
-- accent tokens: sun-gold, hyper-magenta.
-- semantic status tokens: open-cyan, closed-red, waitlist-yellow.
-- radii scale: 16px, 24px, 32px for glass surfaces.
-- shadow scale: soft glowing drop-shadows.
-- blur scale: backdrop-filter: blur(24px).
-- spacing scale and content width tokens.
-- type scale tokens for display/h1/h2/h3/body/label/fine print.
-- motion tokens: transitions for hover states, floating animations.
+Signature requirement:
+- first viewport must clearly communicate Helio Harbor identity
+- at least one hero instrument must look interactive and purposeful
+- visual atmosphere must support readability and conversion
 
-Hard technical constraints (non-negotiable):
-- Output one complete self-contained index.html (>600 lines)
-- All CSS must be inside a single <style>
-- All JS must be inside a single <script>
-- Inline CSS/JS only
-- No React, no Vue, no Svelte
-- No GSAP, no jQuery, no external libraries
-- No build step
-- Do not reference local images, local fonts, local CSS, or local JS
-- Do not reference external images or external fonts
-- If visuals are needed, use pure CSS and inline SVG only
-- Do not use style="" attributes in markup
-- Keep the final HTML multi-line, readable, and maintainable
-- NO PLACEHOLDERS. Fill all 12+ sections with real text.
-- Wire all interactions (Tabs, Modals, Accordions, Toasts, Count-ups) with REAL JS in <script>.
+## Round 2
 
-Content coverage (ingredients, not a fixed page skeleton):
-Include 12 substantial sections.
-Reorder and reinterpret freely.
-Avoid the generic landing-page silhouette.
+Implement at least 8 meaningful interactions with real behavior:
+- modal
+- accordion
+- toast
+- tabs
+- scroll reveal
+- stagger animation
+- count-up
+- navbar scroll transition
 
-Required Helio Harbor content blocks:
-1) Skip link and accessible landmarks.
-2) Sticky navbar, frosted glass, harbor status chip, primary CTA.
-3) Hero section with animated ambient orbs behind a massive glass card.
-4) Operations strip: marina hours, weather window, range.
-5) Fleet showcase (3+ vessels).
-6) Route map & journal.
-7) Tide & Transit desk (Tabs for Live Tides, Weekly, Seasonal).
-8) Metrics (count-ups).
-9) Concierge section.
-10) Membership passes.
-11) FAQ (Accordion).
-12) Footer with marina details, policies, accessibility.
+Interaction mapping:
+- modal opens from primary hero CTA and secondary booking CTA
+- modal includes practical intake fields for session planning
+- modal supports close via button overlay and Escape key
+- accordion handles policy and membership edge cases
+- tabs power the tide and transit desk with real content switching
+- toast confirms successful action with clear status wording
+- scroll reveal applies chapter-aware motion rather than identical fade everywhere
+- stagger animation applies to fleet cards or itinerary items
+- count-up runs on viewport entry and does not loop endlessly
+- navbar transitions to compact mode with preserved usability
 
-You must embrace Glassmorphism, conic-gradient borders on cards (e.g. border-image: conic-gradient(...) 1; or pseudo-element approaches), ambient orbs (absolute positioning with mix-blend-mode or filter: blur()), and real micro-interactions (e.g., hover states that shift gradients).
-No empty tags, no lorem ipsum. Write actual marketing copy for a premium electric dayboat club.
-Write complete JS for tabs, accordions, count-ups, and an onboarding toast.
+Additional case-specific interactions:
+- route card expansion showing stop-by-stop details
+- session duration chips with active selection state
+- fleet card tilt or glow response on pointer movement
+- availability toggle that changes supporting copy
+
+State requirements:
+- explicit default hover active focus states for all clickable controls
+- selected state for tabs and chips
+- expanded state cues for accordion panels
+- disabled state styling where applicable
+- high-contrast keyboard focus visibility
+
+Motion requirements:
+- cubic-bezier timing for core transitions
+- avoid excessive movement that harms clarity
+- maintain smoothness in scrolling and panel transitions
+- reduced motion mode must simplify nonessential effects
+
+## Round 3
+
+Responsive breakpoints:
+- at and above 1440
+- from 1024 to 1439
+- from 768 to 1023
+- below 768
+
+Responsive behavior constraints:
+- preserve identity of hero and operations strip at all sizes
+- avoid collapsing every section into identical cards
+- keep dock schedule and tide data scannable on mobile
+- ensure CTA and booking paths remain obvious on small screens
+- maintain balanced spacing and hierarchy across breakpoints
+- keep primary controls reachable with thumb-friendly sizing
+
+Accessibility requirements:
+- semantic landmarks using header nav main section footer
+- proper heading hierarchy
+- labels for all form controls
+- aria labels for icon-only controls
+- keyboard navigation for modal tabs accordion and navigation
+- visible focus indicators across components
+- avoid color-only meaning for status
+- maintain readable contrast for text and controls
+- include reduced motion support for reveal and count-up effects
+
+Form accessibility requirements:
+- clear field labels and helper text where needed
+- validation feedback that is understandable and specific
+- success message behavior tied to toast and form state
+
+Performance and maintainability:
+- avoid unnecessary repaint-heavy effects
+- keep script logic modular and readable
+- keep CSS token usage consistent and centralized
+
+## Round 4
+
+Final polish checklist:
+- all design tokens are applied consistently
+- each major chapter has distinct visual structure
+- interactions are complete and functionally meaningful
+- content reads like a real premium service product
+- navigation and booking flows are clear from first scroll
+- no broken components or unfinished visual artifacts
+- source remains readable and maintainable
+
+Validation checklist:
+- modal open and close behavior works in all trigger paths
+- tabs update active state and corresponding content panel
+- accordion panel states are synchronized with controls
+- count-up values animate once when entering viewport
+- navbar transition remains stable on repeated scroll
+- toast messaging appears and dismisses predictably
+- keyboard users can operate core features without traps
+
+Quality bar:
+- first screen feels unmistakably tied to Helio Harbor
+- middle chapters demonstrate real operational utility
+- final section presents a credible booking handoff
+- overall craft level matches modern premium product sites
+
+Return only the final code for one index.html.
+GENERATE THE FINAL CODE NOW

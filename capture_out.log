@@ -1,0 +1,172 @@
+[INFO] 共 50 个任务: fdu_001, fdu_002, fdu_003, fdu_004, fdu_005, fdu_006, fdu_007, fdu_008, fdu_009, fdu_010, fdu_011, fdu_012, fdu_013, fdu_014, fdu_015, fdu_016, fdu_017, fdu_018, fdu_019, fdu_020, fdu_021, fdu_022, fdu_023, fdu_024, fdu_025, fdu_026, fdu_027, fdu_028, fdu_029, fdu_030, fdu_031, fdu_032, fdu_033, fdu_034, fdu_035, fdu_036, fdu_037, fdu_038, fdu_039, fdu_040, fdu_041, fdu_042, fdu_043, fdu_044, fdu_045, fdu_046, fdu_047, fdu_048, fdu_049, fdu_050
+[INFO] 步骤: screenshot, video
+[INFO] HTML 模式: manual
+
+############################################################
+  [1/50] fdu_001
+############################################################
+
+============================================================
+  任务: fdu_001
+  步骤: screenshot, video
+  HTML 模式: manual
+============================================================
+
+
+--- [3/4] 全页截图 ---
+[INFO] Capturing screenshot for C:\Users\saying\Desktop\html_agent\fdu_001\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_001/src/index.html
+  Viewport width: 1920px
+[OK] Screenshot saved to C:\Users\saying\Desktop\html_agent\fdu_001\preview.png (410.6 KB)
+
+--- [4/4] 自动录屏 ---
+[INFO] 正在录屏 C:\Users\saying\Desktop\html_agent\fdu_001\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_001/src/index.html
+  分辨率: 1920x1080
+  目标时长: 35s, 24fps
+  [CLICK] tab 切换
+  [CLICK] tab 切换
+  [CLICK] accordion 展开
+[INFO] 录制完成，实际时长 220.9s
+[INFO] 原始视频: C:\Users\saying\AppData\Local\Temp\tmp3c0wwmfi\7f6c0d88739c66ac0ce3cf8da5d29a27.webm (15.1 MB)
+[INFO] 正在用 ffmpeg 转码为 MP4 (24fps)...
+[OK] 视频已保存 C:\Users\saying\Desktop\html_agent\fdu_001\video.mp4 (4.3 MB)
+
+[DONE] fdu_001 完成，耗时 248.9s
+
+--- 交付物检查 (fdu_001) ---
+  [OK] prompt.md            (7.3 KB)
+  [OK] src/index.html       (36.6 KB)
+  [OK] preview.png          (410.6 KB)
+  [OK] video.mp4            (4.3 MB)
+  >>> fdu_001 交付物完整!
+
+############################################################
+  [2/50] fdu_002
+############################################################
+
+============================================================
+  任务: fdu_002
+  步骤: screenshot, video
+  HTML 模式: manual
+============================================================
+
+
+--- [3/4] 全页截图 ---
+[INFO] Capturing screenshot for C:\Users\saying\Desktop\html_agent\fdu_002\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_002/src/index.html
+  Viewport width: 1920px
+[OK] Screenshot saved to C:\Users\saying\Desktop\html_agent\fdu_002\preview.png (511.0 KB)
+
+--- [4/4] 自动录屏 ---
+[INFO] 正在录屏 C:\Users\saying\Desktop\html_agent\fdu_002\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_002/src/index.html
+  分辨率: 1920x1080
+  目标时长: 35s, 24fps
+  [CLICK] tab 切换
+  [CLICK] tab 切换
+[INFO] 录制完成，实际时长 35.0s
+[INFO] 原始视频: C:\Users\saying\AppData\Local\Temp\tmpgkq8p1pf\d2860504e803d16009fa747c5e1aaa17.webm (4.4 MB)
+[INFO] 正在用 ffmpeg 转码为 MP4 (24fps)...
+[OK] 视频已保存 C:\Users\saying\Desktop\html_agent\fdu_002\video.mp4 (3.1 MB)
+
+[DONE] fdu_002 完成，耗时 58.5s
+
+--- 交付物检查 (fdu_002) ---
+  [OK] prompt.md            (12.9 KB)
+  [OK] src/index.html       (31.9 KB)
+  [OK] preview.png          (511.0 KB)
+  [OK] video.mp4            (3.1 MB)
+  >>> fdu_002 交付物完整!
+
+############################################################
+  [3/50] fdu_003
+############################################################
+
+============================================================
+  任务: fdu_003
+  步骤: screenshot, video
+  HTML 模式: manual
+============================================================
+
+
+--- [3/4] 全页截图 ---
+[INFO] Capturing screenshot for C:\Users\saying\Desktop\html_agent\fdu_003\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_003/src/index.html
+  Viewport width: 1920px
+[OK] Screenshot saved to C:\Users\saying\Desktop\html_agent\fdu_003\preview.png (583.0 KB)
+
+--- [4/4] 自动录屏 ---
+[INFO] 正在录屏 C:\Users\saying\Desktop\html_agent\fdu_003\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_003/src/index.html
+  分辨率: 1920x1080
+  目标时长: 35s, 24fps
+  [CLICK] tab 切换
+  [CLICK] tab 切换
+  [CLICK] accordion 展开
+  [CLICK] accordion 展开
+[INFO] 录制完成，实际时长 35.0s
+[INFO] 原始视频: C:\Users\saying\AppData\Local\Temp\tmp1i2ntf7s\960784276a96d86d6e79d2ba4f700708.webm (2.6 MB)
+[INFO] 正在用 ffmpeg 转码为 MP4 (24fps)...
+[OK] 视频已保存 C:\Users\saying\Desktop\html_agent\fdu_003\video.mp4 (4.2 MB)
+
+[DONE] fdu_003 完成，耗时 58.6s
+
+--- 交付物检查 (fdu_003) ---
+  [OK] prompt.md            (7.8 KB)
+  [OK] src/index.html       (41.4 KB)
+  [OK] preview.png          (583.0 KB)
+  [OK] video.mp4            (4.2 MB)
+  >>> fdu_003 交付物完整!
+
+############################################################
+  [4/50] fdu_004
+############################################################
+
+============================================================
+  任务: fdu_004
+  步骤: screenshot, video
+  HTML 模式: manual
+============================================================
+
+
+--- [3/4] 全页截图 ---
+[INFO] Capturing screenshot for C:\Users\saying\Desktop\html_agent\fdu_004\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_004/src/index.html
+  Viewport width: 1920px
+[OK] Screenshot saved to C:\Users\saying\Desktop\html_agent\fdu_004\preview.png (1495.0 KB)
+
+--- [4/4] 自动录屏 ---
+[INFO] 正在录屏 C:\Users\saying\Desktop\html_agent\fdu_004\src\index.html
+  URL: file:///C:/Users/saying/Desktop/html_agent/fdu_004/src/index.html
+  分辨率: 1920x1080
+  目标时长: 35s, 24fps
+  [CLICK] accordion 展开
+  [CLICK] accordion 展开
+[INFO] 录制完成，实际时长 35.0s
+[INFO] 原始视频: C:\Users\saying\AppData\Local\Temp\tmp9f2me0ra\40d7dcebc48ca11345f02c2aaec08d6a.webm (4.9 MB)
+[INFO] 正在用 ffmpeg 转码为 MP4 (24fps)...
+[OK] 视频已保存 C:\Users\saying\Desktop\html_agent\fdu_004\video.mp4 (5.5 MB)
+
+[DONE] fdu_004 完成，耗时 60.9s
+
+--- 交付物检查 (fdu_004) ---
+  [OK] prompt.md            (16.6 KB)
+  [OK] src/index.html       (44.7 KB)
+  [OK] preview.png          (1.5 MB)
+  [OK] video.mp4            (5.5 MB)
+  >>> fdu_004 交付物完整!
+
+############################################################
+  [5/50] fdu_005
+############################################################
+
+============================================================
+  任务: fdu_005
+  步骤: screenshot, video
+  HTML 模式: manual
+============================================================
+
+
+--- [3/4] 全页截图 ---
+[ERROR] C:\Users\saying\Desktop\html_agent\fdu_005\src\index.html does not exist

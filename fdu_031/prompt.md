@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Landing Page
 
 ## 1. Project Overview
@@ -54,6 +56,13 @@ Absolutely no filler text (e.g., Lorem Ipsum). Every section must be populated w
 ## 7. Review Checklist
 - [ ] Are there at least 12 distinct sections?
 - [ ] Is the design built on dark mode with Glassmorphism and Glo UI principles?
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - [ ] Are ambient blurred orbs present in the background?
 - [ ] Do borders utilize conic or dynamic gradients?
 - [ ] Is all text real (no placeholders)?
@@ -111,6 +120,13 @@ Absolutely no filler text (e.g., Lorem Ipsum). Every section must be populated w
 - Ensure modern, pixel-perfect alignment in section 1.
 - Ensure modern, pixel-perfect alignment in section 2.- Additional constraint required for the perfect execution detail part 1
 - Additional constraint required for the perfect execution detail part 2
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - Additional constraint required for the perfect execution detail part 3
 - Additional constraint required for the perfect execution detail part 4
 - Additional constraint required for the perfect execution detail part 5
@@ -163,6 +179,12 @@ Absolutely no filler text (e.g., Lorem Ipsum). Every section must be populated w
 - Additional constraint required for the perfect execution detail part 52
 - Additional constraint required for the perfect execution detail part 53
 - Additional constraint required for the perfect execution detail part 54
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - Additional constraint required for the perfect execution detail part 55
 - Additional constraint required for the perfect execution detail part 56
 - Additional constraint required for the perfect execution detail part 57

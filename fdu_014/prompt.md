@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 ## Round 1
 
 Project:
@@ -51,6 +53,13 @@ You must utilize 12+ detailed sections:
 4. Recovery Studios Intro: High end typography with glowing conic gradients.
 5. Interactive Service Menu: Tabs that shift ambient lighting.
 6. Membership Tiers: Nested glass cards, subtle neon typography.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 7. Concierge Scheduling Showcase: Visualizing a seamless schedule interface on glass.
 8. Longevity Metrics & Data: Dashboards built with deep blur and glowing lines.
 9. Community Pledges: Grid of testimonials in frosted glass capsules.
@@ -105,6 +114,13 @@ Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
@@ -154,6 +170,12 @@ Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.
 Ensure full compliance with constraints and no build steps whatsoever.

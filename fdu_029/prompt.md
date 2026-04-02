@@ -1,162 +1,175 @@
-# BentoLingo - Enterprise Language Readiness Platform (Premium Glassmorphism & Glo UI)
+## Round 1
+You are a lead product storyteller and senior frontend engineer.
+Create a single-file `index.html` for an enterprise language readiness platform.
+The page must communicate strategic value to operations leaders and executives.
+Style direction is premium glass surfaces, disciplined glow, and precise typography.
+All code must live in one file with inline CSS and inline JavaScript.
+No external frameworks, no package imports, and no external media.
+Use semantic HTML and clear structural landmarks.
+Craft real copy with specific benefits and measurable outcomes.
+Write concise, credible, and conversion-focused content.
+Set design tokens in `:root` for spacing, color, motion, blur, and radii.
+Build a deep dark canvas with restrained neon accents.
+Blend translucent panels with border light and layered shadows.
+Use backdrop blur where supported and graceful fallback where unsupported.
+Introduce ambient gradient fields behind core modules.
+Ensure effects enhance hierarchy instead of creating noise.
+Create a sticky top navigation with clear section jump links.
+Top navigation must include primary CTA and secondary navigation cluster.
+Hero section must include positioning statement and operational proof.
+Add a short evidence row with trusted customer names as text marks.
+Add a KPI board with four metrics tied to business process health.
+Add a pain map section describing communication friction points.
+Add a solution framework section with three implementation pillars.
+Add a feature matrix with six detailed feature cards.
+Each feature card must include capability, impact, and owner persona.
+Add an adoption timeline covering discovery to steady-state operation.
+Add an interactive role view for HR, sales, support, and engineering.
+Role view must switch content via tabs.
+Add a readiness score section with explanatory legend.
+Add a case story section with baseline and improved metrics.
+Add an ROI estimator section with interactive inputs.
+Add a pricing section with tier differentiation and governance notes.
+Add a security and compliance section with policy highlights.
+Add a FAQ section with practical buying and implementation questions.
+Add a final CTA section framed as executive next step.
+Add a footer with documentation, legal, and regional contact paths.
+Keep copy mature and suitable for board-level review.
+Avoid vague claims and avoid inflated promises.
+Use consistent spacing rhythm and visual cadence.
+Keep content width readable and scan-friendly.
+Use meaningful labels on controls and forms.
+Ensure keyboard users can reach every action.
+Ensure focus indicators are highly visible on dark backgrounds.
+Provide clear headings for all major modules.
+Keep hierarchy consistent from top to bottom.
+Define responsive behavior for desktop, tablet, and mobile.
+Use a mobile nav drawer with proper state handling.
+Keep mobile interactions smooth and understandable.
+Ensure page still looks premium on low-resolution displays.
+Close Round 1 by confirming production-grade standards.
 
-## Overview
-Design and implement a production-grade single-file website for **BentoLingo**, an enterprise language readiness platform for globally distributed teams. The target aesthetic is "Modern Premium Glassmorphism & Glo UI". The user experience should feel like an executive-ready instrument panel and rollout planner: measurable, credible, operational, and calm with highly sophisticated visual fidelity.
+## Round 2
+Implement interaction logic with clean vanilla JavaScript.
+Use IntersectionObserver for section reveal transitions.
+Reveal cards with subtle stagger for readability.
+Animate KPI values when their section becomes visible.
+Build tab logic for role-based readiness with keyboard support.
+Update ARIA states on every tab interaction.
+Add accordion behavior for FAQ with one expanded item at a time.
+Animate accordion height smoothly without jank.
+Rotate disclosure icons based on open state.
+Add a testimonial carousel with manual controls.
+Allow touch drag navigation in the carousel.
+Pause automatic movement on hover or focus.
+Resume motion after interaction ends.
+Add scroll spy behavior for top navigation links.
+Highlight active section based on viewport position.
+Add smooth anchor scrolling with reduced motion fallback.
+Add a back-to-top control triggered by scroll depth.
+Use requestAnimationFrame for scroll-linked visual updates.
+Apply subtle parallax on ambient glow elements.
+Keep parallax amplitude low for comfort.
+Disable parallax when reduced motion is requested.
+Add form validation for newsletter or contact capture.
+Use inline helper text to explain invalid input.
+Use polite toast messaging for success confirmation.
+Ensure toast can be dismissed by keyboard.
+Keep interaction timing between 160ms and 320ms where possible.
+Use a consistent easing curve family across components.
+Prevent click handlers from binding multiple times.
+Check all query selectors before event binding.
+Initialize scripts on DOMContentLoaded.
+Modularize script by feature function blocks.
+Avoid global variable pollution.
+Ensure no console warnings during typical usage.
+Ensure no uncaught exceptions during rapid interactions.
+Add lightweight state management for tabs and accordion.
+Use dataset attributes where this simplifies control mapping.
+Avoid hidden state that cannot be inferred from DOM.
+Keep JS comments short and practical.
+Keep CSS transitions focused on transform and opacity.
+Avoid expensive effects during scroll.
+Use class toggles instead of inline style manipulation.
+Preserve readable code structure in both CSS and JS.
+End Round 2 by requiring stable and elegant behavior.
 
-## Technical Constraints (Non-negotiable)
-- Single self-contained `index.html` file (placed in `src/index.html`).
-- All CSS strictly inside `<style>` and JavaScript inside `<script>`.
-- Fully inline code — NO build steps.
-- ZERO external dependencies (no React, Vue, jQuery, Tailwind CDN, Bootstrap, FontAwesome, etc.).
-- NO external assets like web fonts (use native system fonts), local images, or external scripts.
-- No inline `style=""` attributes.
-- Use raw vanilla JavaScript and semantic HTML5 natively.
+## Round 3
+Enforce accessibility and responsive quality gates.
+Use one `h1` and maintain logical heading progression.
+Include landmark roles for header, main, nav, and footer.
+Ensure all control elements have discernible text.
+Provide `aria-label` for icon-only buttons.
+Never hide focus states without replacement.
+Use high-contrast text on translucent surfaces.
+Keep body text size comfortable across devices.
+Maintain target sizes suitable for touch usage.
+Support keyboard operation for all interactive modules.
+Support Escape to close mobile navigation drawer.
+Prevent background scroll when mobile drawer is open.
+Restore focus to menu button when drawer closes.
+Use `aria-expanded` on drawer and accordion toggles.
+Use `aria-controls` where relationships need explicit mapping.
+Ensure form fields are associated with labels.
+Use descriptive error messages for validation.
+Avoid color-only indicators for critical states.
+Verify no horizontal overflow at 360px viewport width.
+Adapt grid sections to one-column layouts on small screens.
+Keep CTA blocks readable on narrow viewports.
+Avoid clipping long words in cards and buttons.
+Use clamp-based typography where appropriate.
+Preserve spacing rhythm when modules stack vertically.
+Reduce blur and heavy effects on weaker mobile devices.
+Provide fallback colors when blur is unsupported.
+Keep z-index layering documented and simple.
+Avoid absolute positioning that breaks reading order.
+Ensure tab panels remain accessible when hidden.
+Hide inactive panels from assistive tech when appropriate.
+Keep slider controls reachable in tab order.
+Allow testimonial cards to wrap text naturally.
+Keep pricing cards equalized without fixed text heights.
+Ensure FAQ transitions do not block screen reader updates.
+Keep script execution non-blocking for initial render.
+Avoid synchronous heavy computation on load.
+Prioritize quick first visual feedback.
+Use clear class naming conventions.
+Group CSS by module for maintainability.
+Avoid excessive selector specificity.
+Avoid duplicated declarations across components.
+Validate there are no duplicate element IDs.
+Confirm internal anchor targets all exist.
+Confirm all section links scroll to intended destination.
+Confirm reduced motion path still communicates hierarchy.
+End Round 3 by confirming cross-device robustness.
 
-## Design System: Modern Premium Glassmorphism & Glo UI
-- **Color Palette & Glo Effects:**
-  - Background: Deep, immersive dark space (#0a0a0f).
-  - Ambient Orbs: Large blurred, slow-moving radial gradients (cyan, purple, deep blue) placed strategically in the background to provide a glowing atmosphere without overwhelming the content.
-  - Accents & Glo: Use soft neon glows around primary elements and buttons (#5a67d8, #00d2ff, #f0abfc).
-  - Typography: Crisp white, off-white, and muted slate tones for strong contrast against the dark background.
-- **Glassmorphism Elements:**
-  - Cards, panels, and navigation must use `backdrop-filter: blur(20px)` with subtle semi-transparent backgrounds (e.g., `rgba(255, 255, 255, 0.05)`).
-  - Borders: implement conic-gradient or linear-gradient semi-transparent borders to catch the virtual light.
-  - Drop Shadows: Soft, diffuse, colored drop-shadows to enhance depth.
-- **Typography & Details:**
-  - Use system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif.
-  - Letter spacing, crisp font-weight variations, uppercase headers with low opacity for section labels.
-- **Interactions & Micro-interactions:**
-  - Hover states should slightly increase brightness or shift border gradients smoothly.
-  - Entrance animations using `IntersectionObserver` fading and sliding in gracefully.
-  - Interactive components: Data visualizations that update on hover, tabs, sliders, toggles that glide into place.
-  - Smooth parallax effect on ambient background orbs.
-
-## Information Architecture (12+ Sections)
-The platform must flow intelligently as an executive briefing and interactive control panel. ALL SECTIONS MUST FEATURE REAL, CREDIBLE TEXT. No placeholder "lorem ipsum".
-
-1. **Global Navigation (Glass Header)**
-   - Fixed, glassmorphism header with a subtle bottom border.
-   - Logo, Products, Solutions, Customers, Pricing, and a glowing CTA ("Get Access").
-2. **Hero Heroic Setup (Hero Section)**
-   - Title: "Measure & Master Global Language Readiness"
-   - Subtitle: "BentoLingo turns cultural divides into strategic advantages. Deploy premium language upskilling that connects global workforces seamlessly."
-   - Ambient floating orbs in the background. Glowing CTA and secondary text link. Dashboard preview graphic represented via CSS and HTML layout (Not an image).
-3. **Enterprise Validation (Trust Strip)**
-   - Logos of global conglomerates mocked up purely via CSS typography and geometric shapes (e.g., NexusCorp, Quantum Dynamics, Horizon Logistics, Vertex).
-4. **The Readiness Scoreboard (Interactive Dashboard Module)**
-   - A magnificent glass-bento-grid display of language readiness signals.
-   - Interactive metric cards showing score changes.
-   - Mocked data charts built natively in CSS (e.g., proficiency vs tenure).
-5. **Role-based Readiness (Tabbed Interface)**
-   - Breakdowns for Sales, Engineering, Leadership, and Operations.
-   - Clickable tabs that change the displayed metric and description smoothly.
-6. **Risk Analysis Panel (Diagnostic Module)**
-   - Highlights communication bottlenecks across regions with glowing amber and blue indicators.
-   - "Identified friction points in APAC to EMEA technical handoffs".
-7. **The Program Builder (Interactive Planning Interface)**
-   - An operational planner. Let users click through steps to map out a rollout.
-   - e.g., Step 1: Audit, Step 2: Target Selection, Step 3: Deployment.
-8. **Coaching Route Map (Visual Timeline)**
-   - A vertical or horizontal glowing line showing the employee journey from onboarding to fluency.
-9. **Core Offerings (Grid Module)**
-   - 4-column glass layout detailing features: Live Coaching, Asynchronous Micro-learning, Accent Localization, Enterprise Analytics.
-10. **Testimonials / Executive Endorsement (Quote Section)**
-    - Glowing glass cards featuring deep quotes from fictional executives on ROI and communication alignment.
-11. **Technical Integration & Security (Infographic Module)**
-    - Details on SSO, API features, and data privacy standard compliance.
-12. **ROI Calculator (Interactive Interactive Component)**
-    - Sliders natively built with HTML inputs that adjust calculated savings in meeting time and project alignment.
-13. **Final Call to Action (Glo Poster)**
-    - Huge, gradient-heavy section. Give it an ethereal neon light treatment. 
-    - "Ready to sync the world?"
-14. **Granular Footer**
-    - Multi-column footer. Links to product, legal, careers, resources, investors.
-
-## Content & Data Fidelity
-- Use real, highly professional corporate language.
-- Every metric, label, tooltip, and button must contain meaningful text.
-- Over 600 lines of highly crafted HTML/CSS/JS.
-- DO NOT use placeholders. Every element must be deeply considered to reflect an elite product.
-
-## Execution Checklist
-- [ ] 12+ unique sections.
-- [ ] Extensive Glassmorphism (backdrop-filter, transparent backgrounds).
-- [ ] Authentic, executive copy.
-- [ ] Substantial, interactive JS (IntersectionObserver, dynamic tabs, ROI calculator).
-- [ ] No external assets, pure inline code.
-- [ ] Absolute perfection in aesthetic pacing.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-- Additional constraint metric check 0
-- Additional constraint metric check 1
-- Additional constraint metric check 2
-- Additional constraint metric check 3
-- Additional constraint metric check 4
-- Additional constraint metric check 5
-- Additional constraint metric check 6
-- Additional constraint metric check 7
-- Additional constraint metric check 8
-- Additional constraint metric check 9
-- Additional constraint metric check 10
-- Additional constraint metric check 11
-- Additional constraint metric check 12
-- Additional constraint metric check 13
-- Additional constraint metric check 14
-- Additional constraint metric check 15
-- Additional constraint metric check 16
-- Additional constraint metric check 17
-- Additional constraint metric check 18
-- Additional constraint metric check 19
-- Additional constraint metric check 20
-- Additional constraint metric check 21
-- Additional constraint metric check 22
-- Additional constraint metric check 23
-- Additional constraint metric check 24
-- Additional constraint metric check 25
-- Additional constraint metric check 26
-- Additional constraint metric check 27
-- Additional constraint metric check 28
-- Additional constraint metric check 29
-- Additional constraint metric check 30
-- Additional constraint metric check 31
-- Additional constraint metric check 32
-- Additional constraint metric check 33
-- Additional constraint metric check 34
-- Additional constraint metric check 35
-- Additional constraint metric check 36
-- Additional constraint metric check 37
-- Additional constraint metric check 38
-- Additional constraint metric check 39
-- Additional constraint metric check 40
-- Additional constraint metric check 41
-- Additional constraint metric check 42
-- Additional constraint metric check 43
-- Additional constraint metric check 44
+## Round 4
+Run final QA before outputting final HTML.
+Verify every required section is present and complete.
+Verify visual language stays coherent across the full page.
+Verify copy remains professional and context-aware.
+Verify no section reads like filler.
+Verify all controls have clear interaction feedback.
+Verify tab, accordion, slider, and form flows are stable.
+Verify reduced motion mode disables decorative movement.
+Verify no external resources are required for rendering.
+Verify all CSS and JS remain inline in this file.
+Verify no inline `style` attributes are present.
+Verify keyboard-only navigation works end to end.
+Verify focus order follows reading order.
+Verify focus rings remain visible on dark surfaces.
+Verify contrast is strong for text and controls.
+Verify mobile drawer opens, traps correctly, and closes cleanly.
+Verify anchor navigation points to valid section IDs.
+Verify no dead links appear in nav or footer.
+Verify all major CTA actions remain visible on mobile.
+Verify pricing content is clear and non-ambiguous.
+Verify ROI estimator updates numbers accurately.
+Verify validation copy helps users recover quickly.
+Verify toast behavior is non-intrusive and dismissible.
+Verify footer includes legal and contact essentials.
+Verify no console errors appear during interaction testing.
+Verify no runtime failures occur during repeated toggles.
+Verify spacing and typography remain polished at all breakpoints.
+Verify final result feels premium and credible.
+Verify the document is ready for immediate publishing.
+Return only final `index.html` code.

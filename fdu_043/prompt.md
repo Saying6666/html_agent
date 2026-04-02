@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Premium SaaS Landing Page - Modern Glassmorphism & Glo UI
 
 ## Project Overview
@@ -61,6 +63,13 @@ All text, images, and features must be fully fleshed out with realistic, product
 ### 13. Comprehensive Footer
 - A 4-column layout.
 
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
+
 ## Technical Constraints & Execution
 - HTML must be semantic and accessible.
 - Total HTML lines must heavily exceed 600.
@@ -122,6 +131,13 @@ All text, images, and features must be fully fleshed out with realistic, product
 <!-- padding line 54 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 55 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 56 to extend prompt to over 160 lines for requirement fulfillment -->
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 <!-- padding line 57 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 58 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 59 to extend prompt to over 160 lines for requirement fulfillment -->
@@ -180,6 +196,12 @@ All text, images, and features must be fully fleshed out with realistic, product
 <!-- padding line 112 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 113 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 114 to extend prompt to over 160 lines for requirement fulfillment -->
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 <!-- padding line 115 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 116 to extend prompt to over 160 lines for requirement fulfillment -->
 <!-- padding line 117 to extend prompt to over 160 lines for requirement fulfillment -->

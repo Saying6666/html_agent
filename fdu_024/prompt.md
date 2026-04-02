@@ -1,163 +1,234 @@
-# FDU_024: Modern Premium Glassmorphism & Glo UI
+## Round 1
 
-## Core Vision
-This design must be an ultra-premium, dark-themed platform employing deep, rich colors integrated with "glowing," ethereal glassmorphism (Glassmorphism & Glow UI). The aesthetic should mimic the feeling of deep-sea bioluminescence or high-end futuristic hardware. We need a luxurious space combining semi-transparent surfaces, deep gradients, blurred floating orbs, and luminous accents to guide user attention.
+You are a principal product designer and frontend engineer.
+Create a launch-grade single page for **Lumen Trench Cloud**.
+Lumen Trench Cloud is a deep-ocean data and routing platform for autonomous submersibles.
+The visual language must feel premium, technical, and editorial.
+The page must look like a real product site from 2025-2026.
+The page must not look like a classroom demo.
+The page must not look like a generic startup template.
 
-## Design System & Theme
-- **Background**: Deep obsidian or twilight black (#090A0F, #12141D).
-- **Glow Accents**: Neon cyan (#00F0FF), electric purple (#8A2BE2), and warm magenta (#D900FF).
-- **Glassmorphism**: Panels should use 
-gba(255, 255, 255, 0.03) with ackdrop-filter: blur(16px) and delicate 1px borders using linear gradients or conic gradients to simulate edge lighting.
-- **Typography**: Primary font Inter or Space Grotesk. Clear hierarchy with subtle letter-spacing, glowing hover effects on headings.
-- **Ambient Light**: CSS radial-gradients positioned absolutely behind content blocks with ilter: blur(100px) to create a pervasive but non-intrusive glow.
-- **Animation**: Smooth 400ms cubic-bezier transitions for hovers. Intersection Observer animations for scroll reveals. Orbs should slowly drift in the background using CSS keyframes.
+Primary audience:
+- robotics CTOs
+- marine infrastructure operators
+- subsea research labs
+- compliance and risk teams
 
-## Section 1: Immersive Navigation
-- Fixed header with a highly blurred background (ackdrop-filter: blur(24px)).
-- Logo with a shimmering neon gradient text clip.
-- Menu links (Home, Ecosystem, Technology, Nodes, Community) with underline glow animations.
-- "Launch App" button with a dynamic conic-gradient border spinning.
+Primary outcome:
+- help a visitor understand the product quickly
+- communicate trust and technical depth
+- move qualified teams to request a live mission review
 
-## Section 2: Hero & Value Proposition
-- A dramatic, cinematic hero section.
-- Huge, bold typography: "Transcend the Digital Void".
-- Subheadline explaining the futuristic platform offering decentralized computation and glowing ambient processing.
-- Two call-to-action buttons: one solid with inner glow, one glass-styled outline.
-- Interactive 3D CSS tilting card or a glowing floating orb cluster graphic (built with CSS).
+Design direction:
+- modern premium glassmorphism and glow UI
+- deep-water darkness with restrained luminous accents
+- layered frosted surfaces over atmospheric gradients
+- precise typography with clear information hierarchy
 
-## Section 3: Core Features (Glass Cards Grid)
-- 3 to 4 premium glass cards.
-- Each card has a pseudo-element border using linear gradients.
-- Hover state: The card lifts, and an internal glow follows the cursor (simulated via radial gradient on hover) or just an inner shadow glow.
-- Icons should be crisp SVG, glowing slightly.
-- Text: Real content about "Quantum Security", "Infinite Scalability", and "Zero-Latency Architecture".
+Hard technical rules:
+- output exactly one complete `index.html`
+- include all CSS inside one `<style>` block
+- include all JavaScript inside one `<script>` block
+- do not use React, Vue, Svelte, jQuery, GSAP, or Tailwind CDN
+- do not use local assets
+- do not use external JavaScript libraries
+- if imagery is needed, use inline SVG and CSS gradients
+- do not use `style=""` attributes in markup
+- final code must be readable, multi-line, and maintainable
 
-## Section 4: Data Visualization & Metrics (Dashboard Preview)
-- A section showcasing the platform's power via a mocked-up dashboard UI.
-- The dashboard is a large glass container.
-- Contains glowing progress bars, CSS-based pie charts or line graphs (made nicely with SVG and stroke-dasharray animations).
-- Real numbers: ".2B TVL", "8.4M TPS", "0.001s Latency".
+Define a full token system in `:root`:
+- background tiers
+- surface tiers
+- border and separator colors
+- primary and secondary text colors
+- accent colors
+- semantic status colors
+- spacing scale
+- radius scale
+- shadow scale
+- blur strengths
+- transition durations
+- easing functions
+- content width limits
+- section paddings
 
-## Section 5: The Orb Ecosystem (Ticker & Marquee)
-- Infinite marquee showing partner logos or ecosystem node networks.
-- Glowing text and subtle grayscale logos that glow with brand colors on hover.
-- Soft gradient masks on the left and right edges.
+Content and layout requirements:
+- build at least 12 meaningful sections
+- each section must have a distinct structure
+- avoid repeating one card style everywhere
+- include both data-dense and editorial sections
+- at least one section must break the centered container rhythm
 
-## Section 6: How It Works (Step-by-Step)
-- Vertical timeline or glowing stepping stones.
-- Step 1: Initialization. "Connect your neural rig or standard web3 wallet."
-- Step 2: Processing. "Deploy your compute vectors into the glowing abyss."
-- Step 3: Synthesis. "Harvest the refined data with zero friction."
-- Hovering over a step illuminates the path to the next step.
+Required section coverage:
+- sticky mission navbar
+- hero with mission statement and two CTAs
+- trust strip with partner-grade proof points
+- live trench dashboard module
+- mission timeline module
+- autonomous fleet map module
+- anomaly response playbook
+- metrics with instrumentation framing
+- use-case matrix by operator type
+- customer quote or field report section
+- compliance and data governance FAQ
+- final conversion section with form
+- detailed footer with policy links and contacts
 
-## Section 7: Security Protocols & Privacy
-- Left side: Glowing shield or lock graphic made of interlocking geometric SVG shapes.
-- Right side: Detailed explanation of encryption standards. Mentioning AES-512, Quantum Resistance, and Decentralized Custody.
-- A glassmorphic accordion/collapsible list for FAQs on security.
+Hero expectations:
+- strong headline tied to subsea intelligence
+- concise subheadline with concrete value
+- one primary CTA and one secondary CTA
+- atmospheric background with soft motion
+- visual focal point that cannot be mistaken for another case
 
-## Section 8: Testimonials (Holographic Avatars)
-- A carousel of reviews from "Top Tier Architects" and "Cybernetic Engineers".
-- Avatars should have an inner shadow and glowing border.
-- Reviews should focus on the impact of the glo-ui platform.
+Copy requirements:
+- use specific language
+- avoid vague hype
+- avoid filler adjectives
+- avoid fake or impossible claims
+- ensure terminology matches marine operations context
 
-## Section 9: Developer API & CLI Tools
-- A section targeting developers.
-- A terminal-like window simulating code typing or displaying snippet.
-- Glowing neon green or cyan text for code syntax (> run platform --init --glow).
-- Glassmorphic "Copy to Clipboard" button which shows a real tooltip via JS.
+Information architecture requirements:
+- progress from mission context to system capabilities
+- then move to evidence and operational trust
+- then close with implementation path and conversion
 
-## Section 10: Pricing / Node Tiers
-- Tier 1: "Neon" - Free tier.
-- Tier 2: "Plasma" - Premium tier with the most intense glowing card.
-- Tier 3: "Antimatter" - Enterprise tier, dark glass with subtle violent red underglow.
-- Interactive toggle for Monthly/Annual billing that recalculates the prices realistically with JS.
+Quality constraints:
+- no placeholders
+- no unfinished notes
+- no omitted blocks
+- no fake controls
+- no dead links disguised as interactions
 
-## Section 11: Call to Action (The Singularity)
-- A massive glowing orb behind the content.
-- "Ready to merge with the network?"
-- Input field for email newsletter with a glowing focus state.
-- Submit button that exhibits a neon ripple effect on click.
+## Round 2
 
-## Section 12: Complex Mega-Footer
-- 4 column layouts for links.
-- Social icons functioning with glowing hover bounds.
-- Live status indicator: A pulsing green dot indicating "Network Status: Optimal".
-- Copyright, privacy policy, and subtle background gradient.
+Implement at least 8 meaningful interactions with real JavaScript logic.
+You must include all of the following interaction types:
+- modal
+- accordion
+- toast
+- tabs
+- scroll reveal
+- stagger animation
+- count-up numbers
+- navbar transition on scroll
 
-## Technical & Structural Requirements
-1. HTML must be > 600 lines purely to implement a rich, complete document, avoiding lorem ipsum. Use detailed, creative, realistic tech copy.
-2. CSS must map precisely to the Glassmorphism & Glow UI guidelines:
-   - Deep use of position: absolute, ackground: radial-gradient, ilter: blur().
-   - Advanced pseudo-elements (::before, ::after) for glowing borders.
-3. JavaScript must be implemented cleanly:
-   - Custom cursor glow (moves with mouse).
-   - IntersectionObserver for scroll-fade-in elements.
-   - Pricing toggle logic.
-   - Modal or Toast for "Launch App" click.
-   - Accordion logic for Section 7.
-4. NO EXTERNAL CSS or dependencies. 100% custom styling in a single <style> block.
-5. NO PLACEHOLDERS. Do not leave "TODO" or "Insert Text Here".
-6. Must be perfectly responsive (Mobile first flexbox/grid adjustments).
+Interaction mapping requirements:
+- modal opens from at least two CTAs
+- modal supports keyboard close with Escape
+- modal includes a believable request flow
+- accordion is used for compliance or policy details
+- toast confirms a real action
+- tabs switch mission contexts or operator views
+- scroll reveal is applied to major section entrances
+- stagger applies to lists, not random decorative elements
+- count-up starts when metrics become visible
+- navbar compacts or changes glass density after scroll
 
-## Strict Line Count Enforcement
-- Do not compress HTML logic into single lines. Use proper indentation.
-- Write expansive, engaging copy to fill the space effectively and create realistic heights and layouts for the futuristic theme.
-- Add comprehensive inline CSS animations, complex UI controls, and thorough aria-labels to easily hit the 600+ line objective logically.
+Add at least 3 additional case-specific interactions:
+- anomaly severity filter chips
+- fleet status toggles
+- mission window selector
 
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
-- Additional strict styling requirement: Maintain contrast ratios for accessible glassmorphism.
+State design requirements:
+- define clear default states
+- define clear hover states
+- define clear active states
+- define clear focus-visible states
+- state changes must involve more than color only
+- include border, shadow, transform, or content changes where appropriate
+
+Form behavior requirements:
+- validate required fields
+- show inline feedback for invalid entries
+- submit path triggers a toast
+- ensure labels are present and explicit
+
+Motion direction:
+- motion should feel precise and instrument-like
+- avoid gimmicky bouncing
+- avoid excessive looping distractions
+- prioritize smooth transitions with cubic-bezier easing
+- ensure motion supports comprehension rather than decoration
+
+Interaction reliability:
+- controls must be clickable and testable
+- no non-functional demo controls
+- no hidden logic dependencies on external libraries
+
+## Round 3
+
+Build responsive behavior across four breakpoints:
+- desktop wide: 1440px and above
+- desktop standard: 1024px to 1439px
+- tablet: 768px to 1023px
+- mobile: below 768px
+
+Responsive requirements:
+- preserve narrative structure at all sizes
+- avoid collapsing everything into identical stacked cards
+- ensure at least two major modules materially reflow on mobile
+- keep hero impact and mission clarity on small screens
+- maintain readable line lengths and spacing rhythm
+
+Accessibility requirements:
+- use semantic landmarks: `header`, `nav`, `main`, `section`, `footer`
+- maintain a valid heading hierarchy
+- provide ARIA attributes for modal, tabs, accordion, and toast
+- provide accessible names for all inputs
+- provide `aria-label` for icon-only buttons
+- ensure keyboard navigation for all major interactions
+- ensure visible focus outlines
+- ensure adequate color contrast
+- ensure status and state are not conveyed by color alone
+
+Reduced motion requirements:
+- support `prefers-reduced-motion`
+- minimize or remove non-essential animation in reduced mode
+- keep interactions understandable without motion
+- allow count-up values to snap to final values if needed
+
+Performance and robustness:
+- avoid expensive continuous layout thrashing
+- keep animation properties GPU-friendly where possible
+- avoid giant unbounded shadows that hurt readability
+- keep JS modular and readable
+
+Technical integrity checks:
+- keep everything in one HTML file
+- no broken closing tags
+- no malformed scripts
+- no inline style attributes in HTML elements
+
+## Round 4
+
+Polish pass requirements:
+- tighten spacing consistency across sections
+- align typography scale with hierarchy intent
+- refine glass layering so panels feel physically coherent
+- ensure accent usage is intentional and limited
+- remove any repetitive visual motifs that feel templated
+
+Final acceptance checklist:
+- one complete `index.html`
+- all CSS in `<style>`
+- all JS in `<script>`
+- no external framework runtime
+- no placeholder comments or text
+- at least 12 meaningful sections
+- all required interactions implemented
+- responsive behavior validated across four breakpoints
+- accessibility requirements covered
+- reduced motion behavior covered
+
+Differentiation checks:
+- first screen should clearly communicate subsea mission intelligence
+- main modules should not mirror generic SaaS hero-feature-pricing flow
+- data modules should look purpose-built, not copied dashboard tiles
+- conversion area should feel like a real enterprise handoff
+
+Output requirements:
+- return only the final code
+- return code only for one single `index.html`
+
+GENERATE THE FINAL CODE NOW

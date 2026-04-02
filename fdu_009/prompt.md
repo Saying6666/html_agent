@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Atelier Meridian - 2025-2026 Launch Site (Modern Premium Glassmorphism & Glo UI)
 
 Build a 2025-2026 launch site for **Atelier Meridian**.
@@ -87,6 +89,13 @@ Hard delivery constraints:
 4. No frameworks: no React, no Vue, no Svelte.
 5. No external libraries: no GSAP, no jQuery.
 6. No build step. No local assets and no local file references.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 7. No external images, fonts, CSS, or JS. Use pure CSS and inline SVG only.
 8. Do not use style="" attributes in markup.
 9. Responsive and accessible are mandatory.
@@ -176,6 +185,13 @@ Token system requirements (define in CSS :root and use):
 - Accent Glo: Neon Gold, Magenta, Sapphire, Amethyst, Azure.
 - Semantic: Ready (Cyan), At-Risk (Amber), Delayed (Crimson), Recovered (Emerald).
 - Radii: Sleek rounded corners (e.g., 16px, 24px, 32px, pill-shaped).
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - Spacing: generous internal padding for breathing room inside frosted glass.
 - Blur: variable backdrop blurs (4px, 12px, 24px).
 
@@ -261,6 +277,12 @@ Layout & Content Mandate (12+ Sections):
 12. "Footer / Final CTA": Massive glowing CTA button with complex hover effects, copyright, and extensive site links.
 
 Interactive constraints:
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - Use real JS to handle Tabs, Modals, Accordions, Toasts, and Count-ups.
 - NO dummy placeholders like <!-- content goes here -->.
 - All 12+ sections must have real text and high-res structural HTML.

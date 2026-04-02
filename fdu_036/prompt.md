@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Framework
 
 ## Overview
@@ -57,6 +59,13 @@ This project requires a state-of-the-art landing page featuring a premium glassm
 - Glass cards with user avatars, glowing stars, and real quotes.
 - A horizontal slider or grid layout.
 
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
+
 ### 10. Integration Ecosystem
 - A central glowing hub representing the main product.
 - Orbiting or connected glass nodes representing tools (Slack, Notion, Figma, etc.).
@@ -115,6 +124,13 @@ Make sure the markup is deeply nested and logically structured.
 10
 11
 12
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 13
 14
 15
@@ -169,6 +185,12 @@ Line
 Line 
 Line 
 Line 
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 Line 
 Line 
 Line 

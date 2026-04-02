@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 ## Round 1
 
 You are building a single-page 2025-2026 launch website for a product that manages high-value cultural assets.
@@ -118,6 +120,13 @@ The platform combines:
 - shipment orchestration (handoffs, carriers, packing, customs notes)
 - registrar workflows (inventory, location, loan agreements, condition notes)   
 - condition reporting (inspection templates, photo placeholders, discrepancy flags)
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - private viewing coordination (calendar, guest list, access tiers)
 
 ### Design Language: Modern Premium Glassmorphism & Glo UI
@@ -239,6 +248,13 @@ The single-page site must have absolute depth and comprehensive content with at 
 <!-- Architectural expansion line 36 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 37 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 38 to enforce prompt detail and premium layout rendering. -->
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 <!-- Architectural expansion line 39 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 40 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 41 to enforce prompt detail and premium layout rendering. -->
@@ -355,6 +371,12 @@ The single-page site must have absolute depth and comprehensive content with at 
 <!-- Architectural expansion line 152 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 153 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 154 to enforce prompt detail and premium layout rendering. -->
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 <!-- Architectural expansion line 155 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 156 to enforce prompt detail and premium layout rendering. -->
 <!-- Architectural expansion line 157 to enforce prompt detail and premium layout rendering. -->

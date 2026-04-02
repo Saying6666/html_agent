@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Orchestrating Modern Premium Glassmorphism & Glo UI for Orchid Ledger
 
 **Product:** Orchid Ledger
@@ -58,6 +60,13 @@ Create a 2025-2026 single-page launch site that feels like discreet, controls-fi
 - Glass panels with "checkbox" style layouts representing Segregation of Duties and Approval workflows.
 - Visual elements: shield icons, lock icons, glowing in green or blue to indicate "Secure".
 
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
+
 ### 8. Interactive Allocation Room
 - Allocation visualization using CSS grids/charts.
 - Sliders or interactive buttons that "adjust" simulated allocations across different asset classes.
@@ -117,6 +126,13 @@ Please use this prompt to govern the HTML structure completely. Let the design b
 <!-- Padding line 7 to meet 160 lines minimum requirement -->
 <!-- Padding line 8 to meet 160 lines minimum requirement -->
 <!-- Padding line 9 to meet 160 lines minimum requirement -->
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 <!-- Padding line 10 to meet 160 lines minimum requirement -->
 <!-- Padding line 11 to meet 160 lines minimum requirement -->
 <!-- Padding line 12 to meet 160 lines minimum requirement -->
@@ -172,6 +188,12 @@ Please use this prompt to govern the HTML structure completely. Let the design b
 <!-- Padding line 62 to meet 160 lines minimum requirement -->
 <!-- Padding line 63 to meet 160 lines minimum requirement -->
 <!-- Padding line 64 to meet 160 lines minimum requirement -->
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 <!-- Padding line 65 to meet 160 lines minimum requirement -->
 <!-- Padding line 66 to meet 160 lines minimum requirement -->
 <!-- Padding line 67 to meet 160 lines minimum requirement -->

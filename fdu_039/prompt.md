@@ -1,193 +1,222 @@
-# fdu_039: Modern Premium Glassmorphism & Glo UI
-
-## 1. Project Overview
-The goal is to build an ultra-premium, cutting-edge landing page utilizing **Glassmorphism** and **Glo UI** (Glow UI) principles. 
-This layout will feature heavily on ambient blurred orbs, deeply layered backgrounds, conic-gradient borders, and rich micro-interactions.
-
-## 2. Core Vibe & Aesthetic
-- **Color Palette**: 
-  - Background: Deep obsidian (#0B0C10) or space black (#0f0f13) with vibrant glowing orbs (magenta, cyan, deep blue, electric purple).
-  - Cards: Semi-transparent white/gray (#ffffff05 or #ffffff10) with heavy backdrop-filter blur.
-  - Borders: Sleek linear/conic gradients that add a high-end framing to glass cards.
-- **Typography**: 
-  - Geometric sans-serif fonts (e.g., Space Grotesk, Inter, or Plus Jakarta Sans).
-  - High contrast for headings (glossy white/metallic) and muted grays for paragraphs.
-- **Textures / Patterns**:
-  - Grain/noise overlays, frosted glass panels, shimmering borders, luminous drop shadows.
-
-## 3. Section Requirements
-
-### 3.1. Navigation Bar (Sticky Glass)
-- Fixed at top with high blur (`backdrop-filter: blur(20px)`).
-- Left: Crystal-clear logo mark.
-- Middle: Links with glowing underline hover states.
-- Right: "Get Started" button with a gradient border and glowing drop shadow.
-
-### 3.2. Hero Area (The Cosmic Glow)
-- A massive headline with a gradient text fill.
-- Subheadline describing the ultimate value proposition.
-- Background: At least 3 large, soft, animated glowing orbs (CSS gradients with heavy blur) moving slowly behind the text.
-- CTAs: Primary "Create Account" (glowing), Secondary "View Demo" (glassy).
-
-### 3.3. Features Grid (Bento Box Glassmorphism)
-- A 3x3 or 4x2 grid of cards.
-- Each card has `rgba(255, 255, 255, 0.05)` background, a soft glowing border on hover, and an icon.
-- Content: Real text about security, performance, analytics, integrations, workflow, and scaling.
-
-### 3.4. Analytics Showcase / Dashboard Preview
-- Large centralized glassy container representing an app dashboard or graph.
-- Overlapping smaller glass cards showing "mock" data (e.g., "+145% Growth").
-
-### 3.5. How It Works (Step-by-Step)
-- Vertical timeline or horizontal flow.
-- Glassmorphic nodes connected by a glowing line.
-- Descriptions for Onboarding, Integration, and Optimization.
-
-### 3.6. Testimonials (Frosted Carousels)
-- Horizontal scroll or flex wrap of user reviews.
-- Avatar images, names, and roles.
-- Cards glow subtly in the color of the user's avatar.
-
-### 3.7. The Technology Stack / Ecosystem
-- A section displaying logos or names of supported technologies.
-- Enclosed in a pill-shaped glass container with an animated glowing border around the perimeter.
-
-### 3.8. Pricing Tiers (The Premium Tiers)
-- 3 cards (Starter, Pro, Enterprise).
-- The middle "Pro" tier has a stronger glass reflect, brighter glowing background orb, and a "Most Popular" shiny badge.
-- List of features with checkmarks. 
-
-### 3.9. FAQ Accordion
-- Clickable questions that expand.
-- The expanding body reveals glassy backgrounds.
-- Real questions and answers about billing, support, API access, etc.
-
-### 3.10. Team / Creators
-- Profiles of the founders or core team.
-- Frosted cards with high-res photos and glowing social links.
-
-### 3.11. Newsletter / Community Join
-- A wide call-out section with a form input.
-- Input field itself acts as a glass inset (inner shadow, blur).
-- Submit button glows on hover.
-
-### 3.12. Footer (The Dark Depths)
-- Minimalist but elegant footer.
-- 4 columns of links.
-- Social icons, copyright, terms, privacy policy.
-- A faint ambient glow at the bottom edge of the viewport.
-
-## 4. Technical Constraints
-- Single HTML file incorporating all CSS and JS.
-- No external CSS frameworks (Tailwind/Bootstrap). Plain CSS for maximum customizability of the glass/glow.
-- Modern JavaScript for interactions (intersection observers, hover effects, accordion toggles).
-- Complete and detailed content. At least 600+ lines of HTML/CSS/JS.
-
-## 5. Animation Details
-- Continuous translation/rotation of background gradient orbs (`mix-blend-mode: screen`, `filter: blur(100px)`).
-- Cards should have a `transform: translateY(-5px)` and `box-shadow` shift on hover.
-- Mouse-tracking glow on cards (JS based) if possible, or complex CSS hover states.
-
-## 6. Real Text Requirement
-- Do not use Lorem Ipsum. Create compelling marketing copy for a fictional SaaS product called 'AuraStack'.
-- Ensure all tiers, faqs, and descriptions are thoroughly detailed.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Round 1
+
+You are a principal product designer and frontend implementation lead.
+Create a launch-ready single-page site for **AuraStack**.
+AuraStack is an orchestration platform for AI-native workflow infrastructure.
+The page must feel polished, premium, and technically credible.
+The page must read like a real 2025-2026 software launch.
+The page must avoid generic startup page patterns.
+The page must avoid repetitive and interchangeable section styling.
+
+Audience:
+- platform engineering leads
+- automation architects
+- CTO office stakeholders
+- enterprise implementation teams
+
+Primary business objective:
+- explain AuraStack value and architecture quickly
+- build trust through concrete product mechanics
+- drive qualified demos and implementation calls
+
+Visual direction:
+- modern premium glassmorphism and glow UI
+- dark atmospheric background with restrained luminous accents
+- frosted panels, layered depth, and precise border treatment
+- typography that balances editorial impact and UI readability
+
+Hard technical constraints:
+- output exactly one complete `index.html`
+- put all CSS in one `<style>` block
+- put all JavaScript in one `<script>` block
+- no React, Vue, Svelte, jQuery, GSAP, Tailwind CDN, or equivalent
+- no external JavaScript dependencies
+- no local asset references
+- prefer inline SVG and CSS graphics over external images
+- do not use `style=""` inline attributes in markup
+- final code must be readable and maintainable
+
+Define and use a full `:root` token system:
+- background layers
+- surface layers
+- border and separator tokens
+- text hierarchy tokens
+- accent and accent-strong tokens
+- semantic status tokens
+- spacing scale
+- radius scale
+- shadow scale
+- blur scale
+- duration scale
+- easing scale
+- section width and rhythm tokens
+
+Required page composition:
+- minimum 12 meaningful sections or modules
+- at least one full-bleed narrative section
+- at least one high-density operations section
+- at least one asymmetrical layout section
+- avoid repeating one card recipe throughout
+
+Required content blocks:
+- sticky utility nav
+- hero with strong thesis and two CTAs
+- trust strip with customer-grade signals
+- orchestration control module
+- pipeline stage map
+- reliability and uptime evidence module
+- integration ecosystem module
+- role-based outcomes section
+- operator quote or case snapshot
+- governance and security FAQ
+- final conversion form
+- detailed legal and contact footer
+
+Hero section requirements:
+- distinctive headline tied to orchestration intelligence
+- concise and concrete supporting copy
+- two clearly differentiated CTAs
+- visual focal element that reinforces product mechanics
+
+Copy quality requirements:
+- specific and believable
+- no vague hype stacks
+- no placeholder text
+- no impossible claims
+- no generic filler
+
+Information flow requirements:
+- begin with pain and thesis
+- move into product operation model
+- then provide trust and proof
+- end with implementation and conversion
+
+## Round 2
+
+Implement at least 8 meaningful interactions using vanilla JavaScript.
+You must include:
+- modal
+- accordion
+- toast
+- tabs
+- scroll reveal
+- stagger animation
+- count-up
+- navbar transition on scroll
+
+Interaction mapping requirements:
+- modal opens from top and bottom conversion CTAs
+- modal supports Escape and focus handling
+- accordion presents governance and security answers
+- toast confirms meaningful user action
+- tabs switch between orchestration views or roles
+- scroll reveal introduces major section groups
+- stagger animates grouped items intentionally
+- count-up triggers once when metrics enter viewport
+- navbar compresses and changes surface treatment on scroll
+
+Add at least 3 product-specific interactions:
+- workflow complexity filter
+- deployment mode switch
+- region visibility toggle
+
+State design requirements:
+- explicit default states
+- explicit hover states
+- explicit active states
+- explicit focus-visible states
+- states must alter depth, shape, or movement in addition to color
+
+Form behavior requirements:
+- clear labels for every field
+- inline validation guidance
+- meaningful success feedback via toast
+- visible disabled and loading states
+
+Motion requirements:
+- smooth cubic-bezier timing
+- avoid excessive decorative motion
+- keep transitions tied to hierarchy and readability
+- ensure interaction feedback is immediate and clear
+
+Interaction integrity requirements:
+- no dead controls
+- no fake toggles
+- no missing event bindings
+
+## Round 3
+
+Implement responsive behavior at four breakpoints:
+- 1440px and above
+- 1024px to 1439px
+- 768px to 1023px
+- below 768px
+
+Responsive behavior requirements:
+- preserve narrative order and understanding
+- recompose at least two major modules on tablet or mobile
+- avoid repetitive one-column card walls
+- keep key CTAs discoverable and legible
+- maintain spacing rhythm and text readability
+
+Accessibility requirements:
+- semantic landmarks across the page
+- coherent heading hierarchy
+- ARIA patterns for modal, tabs, accordion, and toast
+- accessible labels for all form controls
+- `aria-label` for icon-only controls
+- keyboard support for all major interactions
+- visible focus indicators
+- sufficient contrast for text and controls
+- no color-only state communication
+
+Reduced motion requirements:
+- support `prefers-reduced-motion`
+- reduce or remove non-essential animation
+- preserve comprehension and navigation without motion
+- allow count-up values to resolve immediately in reduced mode
+
+Performance requirements:
+- avoid constant expensive repaints
+- favor transform and opacity where reasonable
+- keep JavaScript modular and clear
+- avoid unnecessary DOM churn
+
+Technical guardrails:
+- single-file output only
+- no malformed HTML structure
+- no broken script blocks
+- no placeholder comments
+- no inline style attributes
+
+## Round 4
+
+Final polish requirements:
+- align spacing rhythm section to section
+- sharpen typography hierarchy
+- tune glass layers for clarity and contrast
+- use glow accents deliberately and sparingly
+- remove repeated motifs that make the page look generic
+
+Final acceptance checklist:
+- one complete self-contained `index.html`
+- all CSS inside `<style>`
+- all JS inside `<script>`
+- no runtime dependency on external frameworks
+- at least 12 substantial modules
+- all required interactions implemented and testable
+- responsive behavior complete for four breakpoints
+- accessibility requirements covered
+- reduced-motion behavior covered
+- no placeholder text or filler notes
+
+Differentiation checks:
+- first viewport clearly communicates orchestration identity
+- middle modules look like real platform workflows
+- proof and metrics sections feel evidence-based
+- final conversion section reads as a credible implementation handoff
+
+Output instruction:
+- return only final code for one complete `index.html`
+
+GENERATE THE FINAL CODE NOW

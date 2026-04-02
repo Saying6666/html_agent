@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI
 
 ## Core Philosophy
@@ -63,6 +65,13 @@ We are building a highly immersive, futuristic web experience using modern Glass
 ## Interaction & Animation Specs (Vanilla JS & CSS)
 - **Intersection Observer**: Fade and translateY components entering the viewport.
 - **Mouse Move Glow**: "Glo UI" effect where the card background follows the cursor.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - **Smooth Scroll**, **Numbers Counter**, and **Dynamic Orbs**.
 
 ## Code Quality Requirements
@@ -128,6 +137,13 @@ We are building a highly immersive, futuristic web experience using modern Glass
 - Enhance depth with multiple layer of transparent shadows.
 - Ensure high frame rates and visually stunning layout.
 - Enhance depth with multiple layer of transparent shadows.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - Ensure high frame rates and visually stunning layout.
 - Enhance depth with multiple layer of transparent shadows.
 - Ensure high frame rates and visually stunning layout.
@@ -188,6 +204,12 @@ We are building a highly immersive, futuristic web experience using modern Glass
 - Additional context block 22
 - Additional context block 23
 - Additional context block 24
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - Additional context block 25
 - Additional context block 26
 - Additional context block 27

@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Design
 
 This document details the exhaustive requirements for building a state-of-the-art landing page utilizing advanced Glassmorphism combined with a vibrant "Glo UI" aesthetic. The design is intended for a high-end AI analytics platform named "Aetheris".
@@ -57,6 +59,13 @@ The landing page must implement EXACTLY 13 distinct sections, populated with com
 - A stylized replica of the product dashboard.
 - Includes animated progress bars or charting elements made of pure CSS.
 
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
+
 ### 9. Testimonials & Social Proof
 - Glass cards with blurred backgrounds fading over the ambient glowing orbs.
 - Real quotes from CTOs and Data Scientists.
@@ -114,6 +123,13 @@ The landing page must implement EXACTLY 13 distinct sections, populated with com
 <!-- Supplemental instruction line 24 for premium ui guidelines. -->
 <!-- Supplemental instruction line 25 for premium ui guidelines. -->
 <!-- Supplemental instruction line 26 for premium ui guidelines. -->
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 <!-- Supplemental instruction line 27 for premium ui guidelines. -->
 <!-- Supplemental instruction line 28 for premium ui guidelines. -->
 <!-- Supplemental instruction line 29 for premium ui guidelines. -->
@@ -168,6 +184,12 @@ The landing page must implement EXACTLY 13 distinct sections, populated with com
 <!-- Supplemental instruction line 78 for premium ui guidelines. -->
 <!-- Supplemental instruction line 79 for premium ui guidelines. -->
 <!-- Supplemental instruction line 80 for premium ui guidelines. -->
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 <!-- Supplemental instruction line 81 for premium ui guidelines. -->
 <!-- Supplemental instruction line 82 for premium ui guidelines. -->
 <!-- Supplemental instruction line 83 for premium ui guidelines. -->

@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI Development Guide
 
 ## 1. Core Vision & Aesthetic
@@ -70,6 +72,13 @@ We are aiming for a highly polished, futuristic user interface that heavily leve
 - Subtext for "Queries Processed", "Nodes Active", etc.
 
 ### Section 12: Final Call-to-Action & Footer
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
 - A massive, eye-catching glass banner driving signups.
 - Complex footer with 4 columns of links, newsletter signup, and brand logos.
 - Subtle legal text and copyright at the absolute bottom.
@@ -142,6 +151,13 @@ Make it perfectly responsive. Mobile views must collapse elegantly without losin
 - [ ] Added rule 45
 - [ ] Added rule 46
 - [ ] Added rule 47
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - [ ] Added rule 48
 - [ ] Added rule 49
 - [ ] Added rule 50
@@ -209,6 +225,12 @@ Make it perfectly responsive. Mobile views must collapse elegantly without losin
 - [ ] Added rule 112
 - [ ] Added rule 113
 - [ ] Added rule 114
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - [ ] Added rule 115
 - [ ] Added rule 116
 - [ ] Added rule 117

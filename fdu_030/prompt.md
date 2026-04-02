@@ -1,426 +1,222 @@
-# Modern Premium Glassmorphism & Glo UI Website Specification
-\n
-## 1. Overview
-The goal is to create a masterpiece of front-end development using modern premium glassmorphism and glow UI techniques. The entire page should look breathtaking with stunning ambient blurred orbs, backdrop-filter blurring, conic-gradient borders, and a highly polished layout. No external frameworks like React or Vue, pure HTML/CSS/JS.
-
-## 2. Design System
-- **Color Palette**: Dark moody background (#0f172a to #020617) with vibrant accent colors for orbs and glows (Cyan, Purple, Pink, Fuchsia).
-- **Typography**: Inter, Poppins, or system-ui. Crisp, clean, legible.
-- **Glassmorphism**: \ackground: rgba(255, 255, 255, 0.05)\, \ackdrop-filter: blur(12px)\.
-- **Borders**: Conic-gradient borders or 1px subtle glowing borders on hover.
-- **Shadows**: Soft, colored glows.
-
-## 3. Sections (12+ Required)
-### Section 1: Hero
-- Large ambient glowing orbs in the background.
-- Massive headline with gradient text.
-- Glassmorphic call-to-action button with a glowing effect.
-- Sub-text indicating premium quality.
-
-### Section 2: Features
-- 3 to 4 glassmorphic cards.
-- Each displaying a feature with an icon.
-- Hover effect: Card lifts up, background glow intensifies.
-
-### Section 3: About Us
-- Split layout: Image/visual on left, text on right.
-- Visual should use CSS mix-blend-mode and blurs.
-- Stats counters showing achievements.
-
-### Section 4: Services
-- A grid of services offered.
-- Elegant icons.
-- Deep, immersive background details.
-
-### Section 5: Interactive Showcase
-- A section with dynamic tabs or a slider.
-- Shows off different capabilities.
-- Smooth transitions.
-
-### Section 6: Testimonials
-- Glassmorphic review cards.
-- Avatar images, star ratings.
-- Infinite scrolling or elegant carousel.
-
-### Section 7: Pricing Plans
-- 3 pricing tiers.
-- The middle tier should be highlighted with a distinctive glow and conic gradient border.
-- Features list inside each tier.
-
-### Section 8: FAQ
-- Accordion style questions and answers.
-- Smooth expand/collapse animation using JS.
-- Glossy dark panels.
-
-### Section 9: Team
-- Team member profiles.
-- Glass panels covering their lower half with social links appearing on hover.
-
-### Section 10: Process / How it Works
-- Step-by-step vertical or horizontal timeline.
-- Glowing nodes connected by a semi-transparent line.
-- Text appearing clearly next to each node.
-
-### Section 11: Contact
-- A sleek, glassmorphic contact form.
-- Floating labels, glowing focus states on inputs.
-
-### Section 12: Footer
-- Links grid.
-- Newsletter signup.
-- Social media icons with hover glow.
-- Copyright text.
-
-## 4. Technical Requirements
-- Single HTML file structure (with embedded CSS and JS or inline if required).
-- More than 160 lines of prompt.
-- More than 600 lines of HTML code.
-- Fully responsive design.
-- No placeholders, all real content.
-- Performance optimized animations (transform, opacity).
-- Ambient orbs: create using empty divs with \ilter: blur(100px)\.
-
-## 5. Interactions & Micro-interactions
-- Cursor following glow on certain cards (JS mousemove event).
-- Smooth scrolling for anchor links.
-- Fade-in on scroll (IntersectionObserver).
-
-## 1. Overview
-The goal is to create a masterpiece of front-end development using modern premium glassmorphism and glow UI techniques. The entire page should look breathtaking with stunning ambient blurred orbs, backdrop-filter blurring, conic-gradient borders, and a highly polished layout. No external frameworks like React or Vue, pure HTML/CSS/JS.
-
-## 2. Design System
-- **Color Palette**: Dark moody background (#0f172a to #020617) with vibrant accent colors for orbs and glows (Cyan, Purple, Pink, Fuchsia).
-- **Typography**: Inter, Poppins, or system-ui. Crisp, clean, legible.
-- **Glassmorphism**: \ackground: rgba(255, 255, 255, 0.05)\, \ackdrop-filter: blur(12px)\.
-- **Borders**: Conic-gradient borders or 1px subtle glowing borders on hover.
-- **Shadows**: Soft, colored glows.
-
-## 3. Sections (12+ Required)
-### Section 1: Hero
-- Large ambient glowing orbs in the background.
-- Massive headline with gradient text.
-- Glassmorphic call-to-action button with a glowing effect.
-- Sub-text indicating premium quality.
-
-### Section 2: Features
-- 3 to 4 glassmorphic cards.
-- Each displaying a feature with an icon.
-- Hover effect: Card lifts up, background glow intensifies.
-
-### Section 3: About Us
-- Split layout: Image/visual on left, text on right.
-- Visual should use CSS mix-blend-mode and blurs.
-- Stats counters showing achievements.
-
-### Section 4: Services
-- A grid of services offered.
-- Elegant icons.
-- Deep, immersive background details.
-
-### Section 5: Interactive Showcase
-- A section with dynamic tabs or a slider.
-- Shows off different capabilities.
-- Smooth transitions.
-
-### Section 6: Testimonials
-- Glassmorphic review cards.
-- Avatar images, star ratings.
-- Infinite scrolling or elegant carousel.
-
-### Section 7: Pricing Plans
-- 3 pricing tiers.
-- The middle tier should be highlighted with a distinctive glow and conic gradient border.
-- Features list inside each tier.
-
-### Section 8: FAQ
-- Accordion style questions and answers.
-- Smooth expand/collapse animation using JS.
-- Glossy dark panels.
-
-### Section 9: Team
-- Team member profiles.
-- Glass panels covering their lower half with social links appearing on hover.
-
-### Section 10: Process / How it Works
-- Step-by-step vertical or horizontal timeline.
-- Glowing nodes connected by a semi-transparent line.
-- Text appearing clearly next to each node.
-
-### Section 11: Contact
-- A sleek, glassmorphic contact form.
-- Floating labels, glowing focus states on inputs.
-
-### Section 12: Footer
-- Links grid.
-- Newsletter signup.
-- Social media icons with hover glow.
-- Copyright text.
-
-## 4. Technical Requirements
-- Single HTML file structure (with embedded CSS and JS or inline if required).
-- More than 160 lines of prompt.
-- More than 600 lines of HTML code.
-- Fully responsive design.
-- No placeholders, all real content.
-- Performance optimized animations (transform, opacity).
-- Ambient orbs: create using empty divs with \ilter: blur(100px)\.
-
-## 5. Interactions & Micro-interactions
-- Cursor following glow on certain cards (JS mousemove event).
-- Smooth scrolling for anchor links.
-- Fade-in on scroll (IntersectionObserver).
-
-## 1. Overview
-The goal is to create a masterpiece of front-end development using modern premium glassmorphism and glow UI techniques. The entire page should look breathtaking with stunning ambient blurred orbs, backdrop-filter blurring, conic-gradient borders, and a highly polished layout. No external frameworks like React or Vue, pure HTML/CSS/JS.
-
-## 2. Design System
-- **Color Palette**: Dark moody background (#0f172a to #020617) with vibrant accent colors for orbs and glows (Cyan, Purple, Pink, Fuchsia).
-- **Typography**: Inter, Poppins, or system-ui. Crisp, clean, legible.
-- **Glassmorphism**: \ackground: rgba(255, 255, 255, 0.05)\, \ackdrop-filter: blur(12px)\.
-- **Borders**: Conic-gradient borders or 1px subtle glowing borders on hover.
-- **Shadows**: Soft, colored glows.
-
-## 3. Sections (12+ Required)
-### Section 1: Hero
-- Large ambient glowing orbs in the background.
-- Massive headline with gradient text.
-- Glassmorphic call-to-action button with a glowing effect.
-- Sub-text indicating premium quality.
-
-### Section 2: Features
-- 3 to 4 glassmorphic cards.
-- Each displaying a feature with an icon.
-- Hover effect: Card lifts up, background glow intensifies.
-
-### Section 3: About Us
-- Split layout: Image/visual on left, text on right.
-- Visual should use CSS mix-blend-mode and blurs.
-- Stats counters showing achievements.
-
-### Section 4: Services
-- A grid of services offered.
-- Elegant icons.
-- Deep, immersive background details.
-
-### Section 5: Interactive Showcase
-- A section with dynamic tabs or a slider.
-- Shows off different capabilities.
-- Smooth transitions.
-
-### Section 6: Testimonials
-- Glassmorphic review cards.
-- Avatar images, star ratings.
-- Infinite scrolling or elegant carousel.
-
-### Section 7: Pricing Plans
-- 3 pricing tiers.
-- The middle tier should be highlighted with a distinctive glow and conic gradient border.
-- Features list inside each tier.
-
-### Section 8: FAQ
-- Accordion style questions and answers.
-- Smooth expand/collapse animation using JS.
-- Glossy dark panels.
-
-### Section 9: Team
-- Team member profiles.
-- Glass panels covering their lower half with social links appearing on hover.
-
-### Section 10: Process / How it Works
-- Step-by-step vertical or horizontal timeline.
-- Glowing nodes connected by a semi-transparent line.
-- Text appearing clearly next to each node.
-
-### Section 11: Contact
-- A sleek, glassmorphic contact form.
-- Floating labels, glowing focus states on inputs.
-
-### Section 12: Footer
-- Links grid.
-- Newsletter signup.
-- Social media icons with hover glow.
-- Copyright text.
-
-## 4. Technical Requirements
-- Single HTML file structure (with embedded CSS and JS or inline if required).
-- More than 160 lines of prompt.
-- More than 600 lines of HTML code.
-- Fully responsive design.
-- No placeholders, all real content.
-- Performance optimized animations (transform, opacity).
-- Ambient orbs: create using empty divs with \ilter: blur(100px)\.
-
-## 5. Interactions & Micro-interactions
-- Cursor following glow on certain cards (JS mousemove event).
-- Smooth scrolling for anchor links.
-- Fade-in on scroll (IntersectionObserver).
-
-## 1. Overview
-The goal is to create a masterpiece of front-end development using modern premium glassmorphism and glow UI techniques. The entire page should look breathtaking with stunning ambient blurred orbs, backdrop-filter blurring, conic-gradient borders, and a highly polished layout. No external frameworks like React or Vue, pure HTML/CSS/JS.
-
-## 2. Design System
-- **Color Palette**: Dark moody background (#0f172a to #020617) with vibrant accent colors for orbs and glows (Cyan, Purple, Pink, Fuchsia).
-- **Typography**: Inter, Poppins, or system-ui. Crisp, clean, legible.
-- **Glassmorphism**: \ackground: rgba(255, 255, 255, 0.05)\, \ackdrop-filter: blur(12px)\.
-- **Borders**: Conic-gradient borders or 1px subtle glowing borders on hover.
-- **Shadows**: Soft, colored glows.
-
-## 3. Sections (12+ Required)
-### Section 1: Hero
-- Large ambient glowing orbs in the background.
-- Massive headline with gradient text.
-- Glassmorphic call-to-action button with a glowing effect.
-- Sub-text indicating premium quality.
-
-### Section 2: Features
-- 3 to 4 glassmorphic cards.
-- Each displaying a feature with an icon.
-- Hover effect: Card lifts up, background glow intensifies.
-
-### Section 3: About Us
-- Split layout: Image/visual on left, text on right.
-- Visual should use CSS mix-blend-mode and blurs.
-- Stats counters showing achievements.
-
-### Section 4: Services
-- A grid of services offered.
-- Elegant icons.
-- Deep, immersive background details.
-
-### Section 5: Interactive Showcase
-- A section with dynamic tabs or a slider.
-- Shows off different capabilities.
-- Smooth transitions.
-
-### Section 6: Testimonials
-- Glassmorphic review cards.
-- Avatar images, star ratings.
-- Infinite scrolling or elegant carousel.
-
-### Section 7: Pricing Plans
-- 3 pricing tiers.
-- The middle tier should be highlighted with a distinctive glow and conic gradient border.
-- Features list inside each tier.
-
-### Section 8: FAQ
-- Accordion style questions and answers.
-- Smooth expand/collapse animation using JS.
-- Glossy dark panels.
-
-### Section 9: Team
-- Team member profiles.
-- Glass panels covering their lower half with social links appearing on hover.
-
-### Section 10: Process / How it Works
-- Step-by-step vertical or horizontal timeline.
-- Glowing nodes connected by a semi-transparent line.
-- Text appearing clearly next to each node.
-
-### Section 11: Contact
-- A sleek, glassmorphic contact form.
-- Floating labels, glowing focus states on inputs.
-
-### Section 12: Footer
-- Links grid.
-- Newsletter signup.
-- Social media icons with hover glow.
-- Copyright text.
-
-## 4. Technical Requirements
-- Single HTML file structure (with embedded CSS and JS or inline if required).
-- More than 160 lines of prompt.
-- More than 600 lines of HTML code.
-- Fully responsive design.
-- No placeholders, all real content.
-- Performance optimized animations (transform, opacity).
-- Ambient orbs: create using empty divs with \ilter: blur(100px)\.
-
-## 5. Interactions & Micro-interactions
-- Cursor following glow on certain cards (JS mousemove event).
-- Smooth scrolling for anchor links.
-- Fade-in on scroll (IntersectionObserver).
-
-## 1. Overview
-The goal is to create a masterpiece of front-end development using modern premium glassmorphism and glow UI techniques. The entire page should look breathtaking with stunning ambient blurred orbs, backdrop-filter blurring, conic-gradient borders, and a highly polished layout. No external frameworks like React or Vue, pure HTML/CSS/JS.
-
-## 2. Design System
-- **Color Palette**: Dark moody background (#0f172a to #020617) with vibrant accent colors for orbs and glows (Cyan, Purple, Pink, Fuchsia).
-- **Typography**: Inter, Poppins, or system-ui. Crisp, clean, legible.
-- **Glassmorphism**: \ackground: rgba(255, 255, 255, 0.05)\, \ackdrop-filter: blur(12px)\.
-- **Borders**: Conic-gradient borders or 1px subtle glowing borders on hover.
-- **Shadows**: Soft, colored glows.
-
-## 3. Sections (12+ Required)
-### Section 1: Hero
-- Large ambient glowing orbs in the background.
-- Massive headline with gradient text.
-- Glassmorphic call-to-action button with a glowing effect.
-- Sub-text indicating premium quality.
-
-### Section 2: Features
-- 3 to 4 glassmorphic cards.
-- Each displaying a feature with an icon.
-- Hover effect: Card lifts up, background glow intensifies.
-
-### Section 3: About Us
-- Split layout: Image/visual on left, text on right.
-- Visual should use CSS mix-blend-mode and blurs.
-- Stats counters showing achievements.
-
-### Section 4: Services
-- A grid of services offered.
-- Elegant icons.
-- Deep, immersive background details.
-
-### Section 5: Interactive Showcase
-- A section with dynamic tabs or a slider.
-- Shows off different capabilities.
-- Smooth transitions.
-
-### Section 6: Testimonials
-- Glassmorphic review cards.
-- Avatar images, star ratings.
-- Infinite scrolling or elegant carousel.
-
-### Section 7: Pricing Plans
-- 3 pricing tiers.
-- The middle tier should be highlighted with a distinctive glow and conic gradient border.
-- Features list inside each tier.
-
-### Section 8: FAQ
-- Accordion style questions and answers.
-- Smooth expand/collapse animation using JS.
-- Glossy dark panels.
-
-### Section 9: Team
-- Team member profiles.
-- Glass panels covering their lower half with social links appearing on hover.
-
-### Section 10: Process / How it Works
-- Step-by-step vertical or horizontal timeline.
-- Glowing nodes connected by a semi-transparent line.
-- Text appearing clearly next to each node.
-
-### Section 11: Contact
-- A sleek, glassmorphic contact form.
-- Floating labels, glowing focus states on inputs.
-
-### Section 12: Footer
-- Links grid.
-- Newsletter signup.
-- Social media icons with hover glow.
-- Copyright text.
-
-## 4. Technical Requirements
-- Single HTML file structure (with embedded CSS and JS or inline if required).
-- More than 160 lines of prompt.
-- More than 600 lines of HTML code.
-- Fully responsive design.
-- No placeholders, all real content.
-- Performance optimized animations (transform, opacity).
-- Ambient orbs: create using empty divs with \ilter: blur(100px)\.
-
-## 5. Interactions & Micro-interactions
-- Cursor following glow on certain cards (JS mousemove event).
-- Smooth scrolling for anchor links.
-- Fade-in on scroll (IntersectionObserver).
+## Round 1
+
+You are acting as a lead design engineer for a flagship product launch.
+Create a one-page website for **NeuroDesign Studio**.
+NeuroDesign Studio is an AI-assisted interface design environment for advanced teams.
+The page should feel premium, modern, and unmistakably intentional.
+The page must resemble a real 2025-2026 product site.
+The page must avoid generic startup template patterns.
+The page must avoid repetitive hero-feature-pricing skeletons.
+
+Audience:
+- design systems leads
+- product designers
+- frontend architects
+- design tooling buyers
+
+Primary page objective:
+- communicate why NeuroDesign Studio is category-defining
+- demonstrate trust through concrete capability framing
+- drive qualified users to request early access
+
+Visual direction:
+- modern premium glassmorphism and glow UI
+- high-contrast dark canvas with controlled luminous edges
+- frosted layered surfaces and engineered micro-depth
+- expressive display typography paired with precise UI body type
+
+Hard output constraints:
+- produce exactly one complete `index.html`
+- keep all CSS in a single `<style>` block
+- keep all JavaScript in a single `<script>` block
+- no React, Vue, Svelte, jQuery, GSAP, or Tailwind CDN
+- no external JavaScript libraries
+- no local assets
+- avoid external images; rely on inline SVG and CSS constructs
+- do not use `style=""` inline attributes in markup
+- keep output readable and maintainable
+
+Define and apply a full token system under `:root`:
+- background tiers
+- glass surface tiers
+- border and divider colors
+- text hierarchy colors
+- accent palette
+- semantic status palette
+- spacing tokens
+- radius tokens
+- shadow tokens
+- blur tokens
+- motion duration tokens
+- motion easing tokens
+- content width and section rhythm tokens
+
+Required structure and coverage:
+- at least 12 substantial sections or modules
+- include at least one full-bleed section
+- include at least one asymmetrical layout
+- include at least one dense tooling panel
+- avoid repeating identical card grids
+
+Required sections:
+- sticky nav with status chip and CTA
+- hero with sharp value proposition and dual actions
+- proof strip with customer-grade trust markers
+- interactive product canvas module
+- feature matrix with meaningful grouping
+- workflow timeline from idea to shipped UI
+- metrics section with evidence framing
+- compatibility and integrations section
+- case spotlight or user quote section
+- governance and reliability FAQ
+- final request-access module
+- detailed footer with policies and legal links
+
+Hero expectations:
+- impactful headline tied to speed and quality of interface creation
+- supporting copy with clear utility and outcomes
+- primary and secondary CTA with distinct intent
+- hero visual that signals tool intelligence, not generic decoration
+
+Copy requirements:
+- concrete and product-specific wording
+- no empty hype language
+- no placeholder text
+- no impossible performance promises
+- maintain a professional product tone
+
+Information architecture:
+- start with category problem and thesis
+- move into product mechanics
+- then provide trust and outcomes
+- end with clear conversion path
+
+## Round 2
+
+Implement at least 8 meaningful interactions with vanilla JavaScript.
+You must include these interaction families:
+- modal
+- accordion
+- toast
+- tabs
+- scroll reveal
+- stagger animation
+- count-up metrics
+- navbar transition on scroll
+
+Interaction mapping requirements:
+- modal opens from both hero and lower-page CTA
+- modal supports Escape and focus management
+- accordion answers objections around reliability, data, and rollout
+- toast confirms a real event such as request submission
+- tabs switch between concrete product views
+- scroll reveal animates section entrances consistently
+- stagger animates grouped feature or timeline items
+- count-up activates when metrics enter viewport
+- navbar transitions to compact state with scroll
+
+Add at least 3 extra tool-specific interactions:
+- component density toggle
+- mode switch for drafting vs production
+- timeline filter for design stage
+
+State design requirements:
+- explicit default state for all controls
+- explicit hover state
+- explicit active state
+- explicit focus-visible state
+- state changes must include depth, border, or motion cues
+
+Form behavior requirements:
+- all inputs use descriptive labels
+- invalid states provide clear inline guidance
+- successful submit triggers toast confirmation
+- loading and disabled states are distinct
+
+Motion requirements:
+- use smooth cubic-bezier timing
+- keep motion purposeful and restrained
+- avoid ornamental noise animations
+- align transitions with information flow
+
+Interaction quality:
+- no dead controls
+- no fake toggles
+- no interactions requiring missing dependencies
+
+## Round 3
+
+Implement responsive behavior at four breakpoints:
+- 1440px and above
+- 1024px to 1439px
+- 768px to 1023px
+- below 768px
+
+Responsive requirements:
+- preserve narrative order and comprehension
+- recompose at least two major modules for smaller screens
+- avoid collapsing into repetitive stacked cards
+- keep CTAs visible and discoverable
+- maintain balanced spacing and readable text widths
+
+Accessibility requirements:
+- semantic landmarks throughout the page
+- valid heading hierarchy
+- ARIA support for modal, tabs, accordion, and toast
+- accessible labels for all form controls
+- `aria-label` on icon-only controls
+- full keyboard support for interactions
+- visible focus indicators
+- strong contrast in text and UI controls
+- do not rely on color alone for state changes
+
+Reduced motion requirements:
+- support `prefers-reduced-motion`
+- reduce non-essential animation in reduced mode
+- keep interactions understandable without movement
+- allow count-ups to resolve immediately when needed
+
+Performance requirements:
+- avoid expensive continuous repaints
+- use transform and opacity strategically for animation
+- keep scripting modular and readable
+- avoid unnecessary DOM churn
+
+Technical integrity checks:
+- single-file output only
+- no broken tags
+- no malformed script blocks
+- no placeholder comments
+- no inline style attributes in elements
+
+## Round 4
+
+Final polish requirements:
+- align typography and spacing rhythm across all sections
+- refine glass surfaces to avoid muddy layering
+- ensure accent glows support hierarchy, not clutter
+- remove visual repetition that weakens differentiation
+- check that key modules feel product-specific and ownable
+
+Final acceptance checklist:
+- one complete self-contained `index.html`
+- all CSS in `<style>`
+- all JS in `<script>`
+- no framework runtime dependencies
+- at least 12 substantial modules
+- all required interactions implemented and working
+- responsive behavior complete across four breakpoints
+- accessibility requirements covered
+- reduced-motion behavior covered
+- no placeholder text or filler comments
+
+Differentiation checks:
+- first viewport should clearly signal AI-native design tooling
+- mid-page modules should not look like generic SaaS cards
+- workflow and metrics should feel like real product evidence
+- final conversion section should feel credible for enterprise evaluation
+
+Output instruction:
+- return only the final code for a single `index.html`
+
+GENERATE THE FINAL CODE NOW

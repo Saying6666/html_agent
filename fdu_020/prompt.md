@@ -1,3 +1,5 @@
+## Round 1: Role + Design System + Sections
+
 # Modern Premium Glassmorphism & Glo UI - Landing Page Instructions
 
 ## Overview
@@ -53,6 +55,13 @@ Define EXACTLY these 12 sections, filled with REAL TEXT (no lorem ipsum).
 
 8. **Comparison Tool (Spreadsheets vs. Canopy Ledger)**
    - Interactive toggle / slider.
+
+## Round 2: Interactions + Animations
+
+- Ensure 8+ functional interactions using real JS.
+- Add hover, active, focus states.
+- Use smooth cubic-bezier animations.
+
    - Left side: "Legacy Spreadsheets" (dull, red accents, chaotic text).
    - Right side: "Canopy OS" (glassy, green/blue glows, structured data).
 
@@ -108,6 +117,13 @@ Implement real, functioning JS for:
 
 ## Vibe Check
 - "Is this just another dark layout?" -> NO. It must feel like looking into an expensive, glowing cryptographic artifact.
+
+## Round 3: Responsive + Accessibility
+
+- Must support 4 responsive breakpoints.
+- Include ARIA tags and keyboard navigation.
+- Handle prefers-reduced-motion.
+
 - "Are the borders plain?" -> NO. Use layered box-shadows and conic-gradient pseudo-elements to fake multi-refraction glass.
 - "Is the text boring?" -> NO. Write like an expensive strategy consultant mixed with a cryptographer. 
 - "Are there empty gaps?" -> NO. The blurred background orbs should fill the negative space beautifully.
@@ -158,6 +174,12 @@ Go beyond standard patterns. Over-engineer the CSS. Build a product that feels l
 - Additional requirement padding to strictly meet line count constraint.
 - Additional requirement padding to strictly meet line count constraint.
 - Additional requirement padding to strictly meet line count constraint.
+
+## Round 4: Final Polish + Generation
+
+- Review against final checklist.
+GENERATE THE FINAL CODE NOW.
+
 - Additional requirement padding to strictly meet line count constraint.
 - Additional requirement padding to strictly meet line count constraint.
 - Additional requirement padding to strictly meet line count constraint.

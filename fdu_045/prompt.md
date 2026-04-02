@@ -1,205 +1,223 @@
-# Modern Premium Glassmorphism & Glo UI Project
-## Overview
-Design a high-end web experience featuring ambient blurred glowing orbs, conic-gradient borders, frosted glass effects (backdrop-filter: blur), and liquid UI interactions.
+## Round 1
 
-## Specifications
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 0
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 1
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 2
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 3
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 4
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 5
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 6
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 7
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 8
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 9
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 10
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 11
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 12
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 13
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 14
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 15
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 16
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 17
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 18
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 19
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 20
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 21
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 22
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 23
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 24
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 25
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 26
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 27
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 28
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 29
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 30
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 31
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 32
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 33
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 34
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 35
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 36
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 37
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 38
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 39
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 40
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 41
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 42
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 43
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 44
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 45
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 46
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 47
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 48
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 49
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 50
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 51
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 52
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 53
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 54
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 55
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 56
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 57
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 58
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 59
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 60
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 61
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 62
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 63
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 64
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 65
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 66
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 67
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 68
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 69
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 70
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 71
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 72
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 73
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 74
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 75
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 76
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 77
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 78
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 79
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 80
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 81
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 82
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 83
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 84
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 85
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 86
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 87
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 88
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 89
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 90
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 91
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 92
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 93
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 94
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 95
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 96
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 97
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 98
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 99
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 100
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 101
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 102
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 103
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 104
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 105
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 106
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 107
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 108
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 109
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 110
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 111
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 112
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 113
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 114
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 115
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 116
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 117
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 118
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 119
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 120
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 121
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 122
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 123
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 124
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 125
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 126
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 127
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 128
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 129
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 130
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 131
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 132
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 133
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 134
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 135
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 136
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 137
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 138
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 139
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 140
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 141
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 142
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 143
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 144
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 145
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 146
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 147
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 148
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 149
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 150
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 151
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 152
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 153
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 154
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 155
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 156
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 157
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 158
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 159
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 160
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 161
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 162
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 163
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 164
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 165
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 166
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 167
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 168
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 169
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 170
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 171
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 172
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 173
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 174
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 175
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 176
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 177
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 178
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 179
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 180
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 181
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 182
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 183
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 184
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 185
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 186
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 187
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 188
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 189
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 190
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 191
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 192
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 193
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 194
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 195
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 196
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 197
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 198
-# fdu_045 - Modern Premium Glassmorphism & Glo UI - Constraint 199
+You are a staff-level product designer and frontend engineer.
+Create a premium single-page launch site for **Vectorlight Command**.
+Vectorlight Command is a realtime decision surface for distributed operations teams.
+The site should look like a real enterprise product launch from 2025-2026.
+The site should feel distinct, intentional, and high craft.
+The site must avoid generic SaaS page formulas.
+The site must avoid repetitive visual blocks that feel templated.
+
+Audience:
+- operations leaders
+- incident command managers
+- program directors
+- technical buyers evaluating platform rollout
+
+Primary objective:
+- explain value and workflow in minutes
+- establish trust through concrete implementation detail
+- convert qualified teams into briefing requests
+
+Visual direction:
+- modern premium glassmorphism and glow UI
+- deep neutral base with controlled spectral accents
+- layered frosted surfaces with precise edge treatment
+- confident typography with clear hierarchy
+
+Hard technical constraints:
+- output one complete `index.html` file
+- all CSS must be inside one `<style>` block
+- all JavaScript must be inside one `<script>` block
+- do not use React, Vue, Svelte, jQuery, GSAP, or Tailwind CDN
+- do not use any external JavaScript library
+- do not reference local files
+- avoid external images; use inline SVG and CSS graphics
+- do not use `style=""` inline attributes in markup
+- final output must be readable and maintainable
+
+Define and apply a complete `:root` token system:
+- base backgrounds
+- glass surfaces
+- border and divider tones
+- primary and muted text colors
+- accent and alert colors
+- semantic success/warning/error colors
+- spacing scale
+- radius scale
+- shadow scale
+- blur scale
+- motion duration scale
+- motion easing scale
+- section width and padding scale
+
+Required composition:
+- minimum 12 substantial sections or modules
+- at least one full-bleed storytelling section
+- at least one data-dense operational section
+- at least one asymmetrical section
+- avoid a repeated card grid as the whole page language
+
+Required content modules:
+- sticky command navbar with live status chip
+- hero thesis with two clear CTAs
+- trust and deployment signal strip
+- command board preview module
+- orchestration timeline module
+- region and squad coverage map module
+- incident protocol module
+- measurable outcomes module
+- role-based workflow section
+- field report or customer quote section
+- governance and compliance FAQ
+- conversion form module
+- detailed footer with legal and contact blocks
+
+Hero requirements:
+- headline that clearly frames command and coordination value
+- concise supporting copy with operational specificity
+- one primary CTA and one secondary CTA
+- visual center tied to command-state intelligence
+
+Copy requirements:
+- concrete, domain-relevant language
+- no vague hype phrases
+- no placeholder text
+- no impossible claims
+- no empty filler lines
+
+Information architecture:
+- start with mission context and pain
+- move into product mechanics
+- then provide evidence and trust
+- finish with implementation and conversion
+
+## Round 2
+
+Implement at least 8 meaningful interactions using vanilla JavaScript.
+You must include all of these:
+- modal
+- accordion
+- toast
+- tabs
+- scroll reveal
+- stagger animation
+- count-up
+- navbar transition on scroll
+
+Interaction mapping requirements:
+- modal opens from both hero and final CTA
+- modal supports Escape close and focus handling
+- accordion is used for governance and rollout concerns
+- toast confirms a real submission or action
+- tabs switch command views with meaningful content change
+- scroll reveal introduces section groups with consistent pattern
+- stagger animates grouped list items
+- count-up starts on viewport entry and runs once
+- navbar transitions compactness and surface on scroll
+
+Add at least 3 domain-specific interactions:
+- severity filter controls
+- response mode switch
+- region focus selector
+
+State design requirements:
+- explicit default state for all key controls
+- explicit hover state
+- explicit active state
+- explicit focus-visible state
+- state transitions should include depth or motion, not color only
+
+Form behavior requirements:
+- all fields have accessible labels
+- inline validation messages are clear and actionable
+- successful submit triggers toast confirmation
+- disabled/loading states are visibly distinct
+
+Motion requirements:
+- smooth cubic-bezier timing
+- avoid noisy decorative loops
+- motion should reinforce reading and control feedback
+- transitions should remain performant and consistent
+
+Interaction quality requirements:
+- no dead buttons
+- no fake toggles
+- no orphaned UI without logic
+
+## Round 3
+
+Implement responsive behavior for four breakpoints:
+- 1440px and above
+- 1024px to 1439px
+- 768px to 1023px
+- below 768px
+
+Responsive requirements:
+- preserve narrative intent on all breakpoints
+- recompose at least two major modules on smaller screens
+- avoid turning the page into repetitive stacked cards
+- keep CTA hierarchy clear on mobile
+- maintain readable line lengths and spacing
+
+Accessibility requirements:
+- use semantic landmarks throughout
+- maintain proper heading hierarchy
+- provide ARIA support for modal, tabs, accordion, and toast
+- ensure all form controls have accessible names
+- provide `aria-label` for icon-only controls
+- support full keyboard navigation for major interactions
+- provide visible focus indicators
+- maintain adequate contrast for text and controls
+- avoid color-only state communication
+
+Reduced motion requirements:
+- support `prefers-reduced-motion`
+- reduce non-essential animations in reduced mode
+- keep interaction clarity without motion
+- allow count-up values to resolve immediately when reduced mode is active
+
+Performance requirements:
+- avoid continuous expensive repaint effects
+- prefer transform and opacity where appropriate
+- keep JavaScript modular and easy to follow
+- avoid unnecessary event listener overhead
+
+Technical integrity requirements:
+- keep output as a single HTML file
+- ensure no malformed tags
+- ensure scripts close correctly
+- avoid placeholder comments
+- avoid inline style attributes in markup
+
+## Round 4
+
+Final polish requirements:
+- tighten spacing and alignment across all modules
+- verify typography hierarchy from hero to footer
+- refine glass layering for legibility and depth
+- keep glow accents strategic, not overwhelming
+- remove any sections that feel duplicate or generic
+
+Final acceptance checklist:
+- one complete self-contained `index.html`
+- all CSS in `<style>`
+- all JS in `<script>`
+- no framework runtime dependencies
+- at least 12 meaningful modules
+- all required interactions implemented and functional
+- responsive behavior complete across all four breakpoints
+- accessibility requirements covered
+- reduced-motion behavior covered
+- no placeholder copy or filler notes
+
+Differentiation checks:
+- first viewport should clearly signal command and response context
+- mid-page modules should resemble real operational interfaces
+- proof and metrics should read as credible evidence
+- final conversion should feel like a realistic enterprise next step
+
+Output instruction:
+- return only final code for one complete `index.html`
+
+GENERATE THE FINAL CODE NOW

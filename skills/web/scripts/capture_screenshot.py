@@ -23,14 +23,37 @@ except ImportError:
 
 PREPARE_PAGE_FOR_CAPTURE_JS = r"""
 () => {
-    const revealClassNames = ["in", "is-visible", "visible", "show", "revealed", "active"];
+    const revealClassNames = [
+        "in",
+        "is-visible",
+        "visible",
+        "show",
+        "shown",
+        "revealed",
+        "active",
+        "is-active",
+        "entered",
+        "is-inview",
+        "in-view",
+    ];
     const revealSelectors = [
         ".reveal",
+        ".fade-up",
+        ".fade-in",
+        ".fade",
+        ".animate-in",
+        ".enter",
         ".stagger",
         ".scroll-reveal",
+        ".scroll-fade",
+        ".in-view",
         "[data-reveal]",
         "[data-animate]",
-        "[class*='reveal']"
+        "[data-inview]",
+        "[class*='reveal']",
+        "[class*='fade']",
+        "[class*='animate']",
+        "[class*='in-view']",
     ];
 
     const makeVisible = (node) => {
@@ -42,6 +65,18 @@ PREPARE_PAGE_FOR_CAPTURE_JS = r"""
         node.style.animationPlayState = "paused";
     };
 
+    const looksLikeRevealTarget = (node) => {
+        if (!(node instanceof HTMLElement)) return false;
+        const classText = [...node.classList].join(" ").toLowerCase();
+        if (/(reveal|fade|animate|stagger|in-view|inview|enter)/.test(classText)) {
+            return true;
+        }
+
+        return [...node.attributes].some((attr) =>
+            /data-(reveal|animate|motion|scroll|inview|in-view|enter)/.test(attr.name.toLowerCase())
+        );
+    };
+
     document.documentElement.style.scrollBehavior = "auto";
     document.body.style.scrollBehavior = "auto";
 
@@ -50,6 +85,16 @@ PREPARE_PAGE_FOR_CAPTURE_JS = r"""
     });
 
     document.querySelectorAll(".stagger > *").forEach(makeVisible);
+
+    document.querySelectorAll("*").forEach((node) => {
+        if (!looksLikeRevealTarget(node)) return;
+        const style = getComputedStyle(node);
+        const rect = node.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        if (style.opacity === "0" || style.visibility === "hidden" || style.transform !== "none") {
+            makeVisible(node);
+        }
+    });
 
     document.querySelectorAll("[data-count]").forEach((node) => {
         const target = node.getAttribute("data-count");
